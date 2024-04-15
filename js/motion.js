@@ -18,7 +18,7 @@ NexT.motion.integrator = {
     if (!CONFIG.motion.async) this.queue = [this.queue];
     this.queue.forEach(sequence => {
       const timeline = window.anime.timeline({
-        duration: 80,//原来是200
+        duration: 10,//原来是200
         easing  : 'linear'
       });
       sequence.forEach(item => {
@@ -37,8 +37,8 @@ NexT.motion.middleWares = {
       sequence.push({
         targets,
         scaleX  : [0, 1],
-        duration: 150,//原来是500
-        deltaT  : '-=80'//原来是-=200
+        duration: 50,//原来是500
+        deltaT  : '-=10'//原来是-=200
       });
     }
 
@@ -47,7 +47,7 @@ NexT.motion.middleWares = {
         targets,
         opacity: 1,
         top    : 0,
-        deltaT : sequenceQueue ? '-=80' : '-=0' // 原来是-=200 ： ..0
+        deltaT : sequenceQueue ? '-=10' : '-=0' // 原来是-=200 ： ..0
       });
     }
 
@@ -65,7 +65,7 @@ NexT.motion.middleWares = {
         sequence.push({
           targets,
           complete: () => targets.classList.add('animated', menuItemTransition),
-          deltaT  : '-=80'//原来是-=200
+          deltaT  : '-=10'//原来是-=200
         });
       });
     }
@@ -93,7 +93,7 @@ NexT.motion.middleWares = {
         sequence.push({
           targets,
           complete: () => targets.classList.add('animated', animation),
-          deltaT  : '-=40'//原来是-=100
+          deltaT  : '-=5'//原来是-=100
         });
       });
     }
@@ -102,7 +102,7 @@ NexT.motion.middleWares = {
       sequence.push({
         targets,
         complete: () => targets.classList.add('animated', post_block),
-        deltaT  : '-=40'//原来是-=100
+        deltaT  : '-=5'//原来是-=100
       });
       animate(coll_header, targets.querySelectorAll('.collection-header'));
       animate(post_header, targets.querySelectorAll('.post-header'));
@@ -124,7 +124,7 @@ NexT.motion.middleWares = {
         sequence.push({
           targets,
           complete: () => targets.classList.add('animated', sidebarTransition),
-          deltaT  : '-=40'//原来是-=100
+          deltaT  : '-=20'//原来是-=100
         });
       });
     }
