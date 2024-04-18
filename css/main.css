@@ -2860,3 +2860,6 @@ header.header {
     margin-bottom: 10px;
   }
 }
+.wl-power {
+  display: none;
+}
