@@ -20,15 +20,15 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"tsukimiyanano.github.io","root":"/tsukimiya.github.io/","images":"/tsukimiya.github.io/images","scheme":"Pisces","darkmode":true,"version":"8.19.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/tsukimiya.github.io/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/tsukimiya.github.io/js/config.js"></script>
 
-    <meta name="description" content="目标：了解工程化的前端开发方式知道Webpack在实际开发中所起到的作用  我们只需要了解webpack的工作原理，并不要求我们掌握如何配置，因为工作中我们会使用一些工具如Vue-CLI脚手架，它们已经帮我们配置好了   [toc] 前端工程化的相关概念前端工程化指的是:在企业级的前端项目开发中，把前端开发所需的工具、技术、流程、经验等进行规范化、标准化。好处:前端开发自成体系，有一套标准的开发">
+    <meta name="description" content="目标：了解工程化的前端开发方式知道Webpack在实际开发中所起到的作用  我们只需要了解webpack的工作原理，并不要求我们掌握如何配置，因为工作中我们会使用一些工具如Vue-CLI脚手架，它们已经帮我们配置好了   [toc] 前端工程化相关概念前端工程化指的是:在企业级的前端项目开发中，把前端开发所需的工具、技术、流程、经验等进行规范化、标准化。好处:前端开发自成体系，有一套标准的开发方">
 <meta property="og:type" content="article">
 <meta property="og:title" content="前端工程化与Webpack">
 <meta property="og:url" content="https://tsukimiyanano.github.io/tsukimiya.github.io/2024/04/18/Vue/1.%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96%E4%B8%8EWebpack/index.html">
 <meta property="og:site_name" content="Ayu&#39;s Study Blog">
-<meta property="og:description" content="目标：了解工程化的前端开发方式知道Webpack在实际开发中所起到的作用  我们只需要了解webpack的工作原理，并不要求我们掌握如何配置，因为工作中我们会使用一些工具如Vue-CLI脚手架，它们已经帮我们配置好了   [toc] 前端工程化的相关概念前端工程化指的是:在企业级的前端项目开发中，把前端开发所需的工具、技术、流程、经验等进行规范化、标准化。好处:前端开发自成体系，有一套标准的开发">
+<meta property="og:description" content="目标：了解工程化的前端开发方式知道Webpack在实际开发中所起到的作用  我们只需要了解webpack的工作原理，并不要求我们掌握如何配置，因为工作中我们会使用一些工具如Vue-CLI脚手架，它们已经帮我们配置好了   [toc] 前端工程化相关概念前端工程化指的是:在企业级的前端项目开发中，把前端开发所需的工具、技术、流程、经验等进行规范化、标准化。好处:前端开发自成体系，有一套标准的开发方">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-04-18T15:41:46.733Z">
-<meta property="article:modified_time" content="2024-04-18T16:14:02.033Z">
+<meta property="article:modified_time" content="2024-04-19T03:18:56.981Z">
 <meta property="article:author" content="Ayu">
 <meta property="article:tag" content="Webpack">
 <meta property="article:tag" content="前端工程化">
@@ -142,7 +142,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96%E7%9A%84%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5"><span class="nav-number">1.</span> <span class="nav-text">前端工程化的相关概念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="nav-number">1.1.</span> <span class="nav-text">前端工程化的解决方案</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#webpack-%E7%9A%84%E5%B8%B8%E8%A7%81%E7%94%A8%E6%B3%95"><span class="nav-number">2.</span> <span class="nav-text">webpack 的常见用法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#webpack%E4%B8%AD%E7%9A%84%E6%8F%92%E4%BB%B6"><span class="nav-number">3.</span> <span class="nav-text">webpack中的插件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#webpack-dev-server"><span class="nav-number">3.1.</span> <span class="nav-text">webpack-dev-server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#html-webpack-plugin"><span class="nav-number">3.2.</span> <span class="nav-text">html-webpack-plugin</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#devServer-%E8%8A%82%E7%82%B9"><span class="nav-number">4.</span> <span class="nav-text">devServer 节点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#webpack%E4%B8%AD%E7%9A%84loader%EF%BC%88%E5%8A%A0%E8%BD%BD%E5%99%A8%EF%BC%89"><span class="nav-number">5.</span> <span class="nav-text">webpack中的loader（加载器）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#loader%E8%B0%83%E7%94%A8%E7%9A%84%E8%BF%87%E7%A8%8B"><span class="nav-number">5.1.</span> <span class="nav-text">loader调用的过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%9E%E9%A1%BEbase64%E5%9B%BE%E7%89%87%E7%9A%84%E4%BC%98%E7%BC%BA%E7%82%B9"><span class="nav-number">5.2.</span> <span class="nav-text">回顾base64图片的优缺点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%8B%E7%BB%8Dwebpack%E5%A4%84%E7%90%86%E6%A0%B7%E5%BC%8F%E7%9A%84%E8%BF%87%E7%A8%8B"><span class="nav-number">5.3.</span> <span class="nav-text">介绍webpack处理样式的过程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%93%E5%8C%85%E5%8F%91%E5%B8%83"><span class="nav-number">6.</span> <span class="nav-text">打包发布</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AEwebpack%E7%9A%84%E6%89%93%E5%8C%85%E5%8F%91%E5%B8%83"><span class="nav-number">6.1.</span> <span class="nav-text">配置webpack的打包发布</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%98%E5%8C%96%E5%9B%BE%E7%89%87%E5%92%8Cjs%E6%96%87%E4%BB%B6%E7%9A%84%E5%AD%98%E6%94%BE%E8%B7%AF%E5%BE%84"><span class="nav-number">6.2.</span> <span class="nav-text">优化图片和js文件的存放路径</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E5%92%8C%E4%BD%BF%E7%94%A8clean-webpack-plugin%E6%8F%92%E4%BB%B6%E8%87%AA%E5%8A%A8%E5%88%A0%E9%99%A4dist%E7%9B%AE%E5%BD%95"><span class="nav-number">6.3.</span> <span class="nav-text">配置和使用clean-webpack-plugin插件自动删除dist目录</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#source-Map-%E2%80%93-%E5%BC%80%E5%8F%91%E9%98%B6%E6%AE%B5%E4%BD%BF%E7%94%A8%E6%A3%80%E9%94%99%E7%9A%84"><span class="nav-number">7.</span> <span class="nav-text">source Map – 开发阶段使用检错的</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Source-Map%E7%9A%84%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5"><span class="nav-number">7.1.</span> <span class="nav-text">Source Map的最佳实践</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8B%93%E5%B1%95-%E2%80%93-webpack%E7%9A%84-%E5%8E%9F%E7%90%86-%E5%A5%BD%E5%A4%84-vue-devtools%E8%B0%83%E8%AF%95%E5%B7%A5%E5%85%B7%E5%AE%89%E8%A3%85"><span class="nav-number">8.</span> <span class="nav-text">拓展 – webpack的@原理&amp;好处 &amp;&amp; vue-devtools调试工具安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#webpack%E4%B8%AD-%E7%9A%84%E5%8E%9F%E7%90%86%E5%92%8C%E5%A5%BD%E5%A4%84"><span class="nav-number">8.1.</span> <span class="nav-text">webpack中@的原理和好处</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9C%A8Chrome%E6%B5%8F%E8%A7%88%E5%99%A8%E4%B8%AD%E5%AE%89%E8%A3%85vue-devtools%E8%B0%83%E8%AF%95%E5%B7%A5%E5%85%B7"><span class="nav-number">8.2.</span> <span class="nav-text">在Chrome浏览器中安装vue-devtools调试工具</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E9%99%85%E5%BC%80%E5%8F%91%E4%B8%AD%E4%B8%8D%E9%9C%80%E8%A6%81%E8%87%AA%E5%B7%B1%E9%85%8D%E7%BD%AEwebpack"><span class="nav-number">9.</span> <span class="nav-text">实际开发中不需要自己配置webpack</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96%E7%9B%B8%E5%85%B3%E6%A6%82%E5%BF%B5"><span class="nav-number">1.</span> <span class="nav-text">前端工程化相关概念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="nav-number">1.1.</span> <span class="nav-text">前端工程化解决方案</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#webpack-%E5%B8%B8%E8%A7%81%E7%94%A8%E6%B3%95"><span class="nav-number">2.</span> <span class="nav-text">webpack 常见用法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#webpack-%E6%8F%92%E4%BB%B6"><span class="nav-number">3.</span> <span class="nav-text">webpack 插件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#webpack-dev-server"><span class="nav-number">3.1.</span> <span class="nav-text">webpack-dev-server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#html-webpack-plugin"><span class="nav-number">3.2.</span> <span class="nav-text">html-webpack-plugin</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#devServer-%E8%8A%82%E7%82%B9"><span class="nav-number">4.</span> <span class="nav-text">devServer 节点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#webpack%E4%B8%AD%E7%9A%84loader%EF%BC%88%E5%8A%A0%E8%BD%BD%E5%99%A8%EF%BC%89"><span class="nav-number">5.</span> <span class="nav-text">webpack中的loader（加载器）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#loader-%E8%B0%83%E7%94%A8%E8%BF%87%E7%A8%8B"><span class="nav-number">5.1.</span> <span class="nav-text">loader 调用过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#base64%E5%9B%BE%E7%89%87%E7%9A%84%E4%BC%98%E7%BC%BA%E7%82%B9"><span class="nav-number">5.2.</span> <span class="nav-text">base64图片的优缺点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#webpack%E5%A4%84%E7%90%86%E6%A0%B7%E5%BC%8F%E7%9A%84%E8%BF%87%E7%A8%8B"><span class="nav-number">5.3.</span> <span class="nav-text">webpack处理样式的过程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%93%E5%8C%85%E5%8F%91%E5%B8%83"><span class="nav-number">6.</span> <span class="nav-text">打包发布</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AEwebpack"><span class="nav-number">6.1.</span> <span class="nav-text">配置webpack</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%98%E5%8C%96%E5%9B%BE%E7%89%87%E5%92%8Cjs%E6%96%87%E4%BB%B6%E5%AD%98%E6%94%BE%E8%B7%AF%E5%BE%84"><span class="nav-number">6.2.</span> <span class="nav-text">优化图片和js文件存放路径</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E5%92%8C%E4%BD%BF%E7%94%A8clean-webpack-plugin%E6%8F%92%E4%BB%B6%E8%87%AA%E5%8A%A8%E5%88%A0%E9%99%A4dist%E7%9B%AE%E5%BD%95"><span class="nav-number">6.3.</span> <span class="nav-text">配置和使用clean-webpack-plugin插件自动删除dist目录</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#source-Map-%E2%80%93-%E5%BC%80%E5%8F%91%E9%98%B6%E6%AE%B5%E6%A3%80%E9%94%99"><span class="nav-number">7.</span> <span class="nav-text">source Map – 开发阶段检错</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Source-Map%E7%9A%84%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5"><span class="nav-number">7.1.</span> <span class="nav-text">Source Map的最佳实践</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8B%93%E5%B1%95"><span class="nav-number">8.</span> <span class="nav-text">拓展</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#webpack%E4%B8%AD-%E7%9A%84%E5%8E%9F%E7%90%86%E5%92%8C%E5%A5%BD%E5%A4%84"><span class="nav-number">8.1.</span> <span class="nav-text">webpack中 @ 的原理和好处</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9C%A8%E6%B5%8F%E8%A7%88%E5%99%A8%E5%AE%89%E8%A3%85vue-devtools%E8%B0%83%E8%AF%95%E5%B7%A5%E5%85%B7"><span class="nav-number">8.2.</span> <span class="nav-text">在浏览器安装vue-devtools调试工具</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E9%99%85%E5%BC%80%E5%8F%91%E4%B8%AD%E4%B8%8D%E9%9C%80%E8%A6%81%E8%87%AA%E5%B7%B1%E9%85%8D%E7%BD%AEwebpack"><span class="nav-number">9.</span> <span class="nav-text">实际开发中不需要自己配置webpack</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -236,7 +236,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-04-19 00:14:02" itemprop="dateModified" datetime="2024-04-19T00:14:02+08:00">2024-04-19</time>
+      <time title="修改时间：2024-04-19 11:18:56" itemprop="dateModified" datetime="2024-04-19T11:18:56+08:00">2024-04-19</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -292,7 +292,7 @@
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>12 分钟</span>
+      <span>11 分钟</span>
     </span>
 </div>
 
@@ -309,7 +309,7 @@
 </blockquote>
 </blockquote>
 <p>[toc]</p>
-<h2 id="前端工程化的相关概念"><a href="#前端工程化的相关概念" class="headerlink" title="前端工程化的相关概念"></a>前端工程化的相关概念</h2><p>前端工程化指的是:在企业级的前端项目开发中，把前端开发所需的工具、技术、流程、经验等进行规范化、标准化。<br>好处:前端开发自成体系，有一套标准的开发方案和流程。</p>
+<h2 id="前端工程化相关概念"><a href="#前端工程化相关概念" class="headerlink" title="前端工程化相关概念"></a>前端工程化相关概念</h2><p>前端工程化指的是:在企业级的前端项目开发中，把前端开发所需的工具、技术、流程、经验等进行规范化、标准化。<br>好处:前端开发自成体系，有一套标准的开发方案和流程。</p>
 <p>实际的前端开发，是四个现代化：</p>
 <ul>
 <li><strong>模块化</strong> (js的模块化、cSs的模块化、资源的模块化) ———— js的复用</li>
@@ -317,7 +317,7 @@
 <li><strong>规范化</strong> (目录结构的划分、编码规范化、接口规范化、文档规范化、Git分支管理)</li>
 <li><strong>自动化</strong> (自动化构建、自动部署、自动化测试)</li>
 </ul>
-<h3 id="前端工程化的解决方案"><a href="#前端工程化的解决方案" class="headerlink" title="前端工程化的解决方案"></a>前端工程化的解决方案</h3><ul>
+<h3 id="前端工程化解决方案"><a href="#前端工程化解决方案" class="headerlink" title="前端工程化解决方案"></a>前端工程化解决方案</h3><ul>
 <li>早期的前端工程化解决方案:<ul>
 <li>grunt (<a target="_blank" rel="noopener" href="https://www.gruntjs.net/">https://www.gruntjs.net/</a>)</li>
 <li>gulp (<a target="_blank" rel="noopener" href="https://www.gulpjs.com.cn/">https://www.gulpjs.com.cn/</a>)</li>
@@ -329,7 +329,7 @@
 </ul>
 </li>
 </ul>
-<h2 id="webpack-的常见用法"><a href="#webpack-的常见用法" class="headerlink" title="webpack 的常见用法"></a>webpack 的常见用法</h2><ol>
+<h2 id="webpack-常见用法"><a href="#webpack-常见用法" class="headerlink" title="webpack 常见用法"></a>webpack 常见用法</h2><ol>
 <li><p>什么是webpack？<br> 概念：webPack是<strong>前端项目工程化的具体解决方案</strong>。<br> 主要功能: 它提供了友好的<strong>前端模块化开发支持</strong>，以及<strong>代码压缩混淆</strong>(干掉注释和空格)、<strong>处理浏览器端JavaScript的兼容性</strong>、<strong>性能优化</strong>等强大的功能。<br> 好处:让程序员把<strong>工作的重心</strong>放到具体功能的实现上，提高了前端开发效率和项目的可维护性。<br> 注意:目前Vue，React等前端项目，基本上都是基于webpack进行工程化开发的。</p>
 </li>
 <li><p>创建列表隔行变色项目</p>
@@ -365,7 +365,7 @@
 </li>
 </ol>
 <p>这个时候，我们会发现，每次我们更改index.js的代码之后，都需要再次执行npm run dev更新生成的文件才行，这样非常麻烦，所以我们需要用到webpack的插件</p>
-<h2 id="webpack中的插件"><a href="#webpack中的插件" class="headerlink" title="webpack中的插件"></a>webpack中的插件</h2><p>最常用的webpack插件有两个：</p>
+<h2 id="webpack-插件"><a href="#webpack-插件" class="headerlink" title="webpack 插件"></a>webpack 插件</h2><p>最常用的webpack插件有两个：</p>
 <ol>
 <li>webpack-dev-server<ul>
 <li>类似于node.js的nodemon工具</li>
@@ -459,7 +459,7 @@
 <p>5.2 配置babel-loader<br>打包处理js文件中的高级语法，比处理其他文件要多这么一步<br>在项目根目录下，创建名为 babel.config.js 的配置文件，定义Babel的配置项如下:</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">//这些配置从官方文档找到对应项直接粘过来就行了</span><br><span class="line">module.exports = &#123;</span><br><span class="line">    //声明babel 可用的插件</span><br><span class="line">    plugins: [[&#x27;@babel/plugin-proposal-decorators&#x27;, &#123; legacy: true &#125;]]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>详情请参考Babel的官网<a target="_blank" rel="noopener" href="https://babeljs.io/docs/en/babel-plugin-proposal-decorators">https://babeljs.io/docs/en/babel-plugin-proposal-decorators</a></p>
-<h3 id="loader调用的过程"><a href="#loader调用的过程" class="headerlink" title="loader调用的过程"></a>loader调用的过程</h3><ol>
+<h3 id="loader-调用过程"><a href="#loader-调用过程" class="headerlink" title="loader 调用过程"></a>loader 调用过程</h3><ol>
 <li>webpack默认只能打包处理.js结尾的文件，处理不了其它后缀的文件</li>
 <li>由于代码中包含了 index.css 这个文件，因此 webpack默认处理不了</li>
 <li><strong>当webpack 发现某个文件处理不了的时候，会查找 webpack.config.js 这个配置文件，看 module.rules 数组中，是否配置了对应的 loader 加载器。</strong></li>
@@ -468,18 +468,18 @@
 <li>当 style-loader 处理完毕之后，发现没有下一个 loader 了，于是就把处理的结果，转交给了 webpack</li>
 <li>webpack 把 style-loader 处理的结果，合并到&#x2F;dist&#x2F;bundle.js中，最终生成打包好的文件。</li>
 </ol>
-<h3 id="回顾base64图片的优缺点"><a href="#回顾base64图片的优缺点" class="headerlink" title="回顾base64图片的优缺点"></a>回顾base64图片的优缺点</h3><p>浏览器在拿到HTMl标签以后，需要再发送请求，拿到图片以后才能把图片渲染出来</p>
+<h3 id="base64图片的优缺点"><a href="#base64图片的优缺点" class="headerlink" title="base64图片的优缺点"></a>base64图片的优缺点</h3><p>浏览器在拿到HTMl标签以后，需要再发送请求，拿到图片以后才能把图片渲染出来</p>
 <p>但是使用用base64图片，在拿到img标签以后，就顺手的把图片对应的字符串也给请求下来了，可以防止发起一些不必要的网络请求</p>
 <p>如果页面有许多小图标，就要发送很多次请求，对性能来讲非常不好，就可以把图片都转成base64格式的字符串</p>
 <p>缺点：<br>图片转成base64，体积会增大一点点，所以大图片就不适合</p>
 <p><strong>ES6 import导入图片得到的是一个base64字符串</strong>(可以打印看一下)<br>如 <code>import logo from &#39;./images/logo.png&#39;</code></p>
-<h3 id="介绍webpack处理样式的过程"><a href="#介绍webpack处理样式的过程" class="headerlink" title="介绍webpack处理样式的过程"></a>介绍webpack处理样式的过程</h3><p>ES6在js文件导入样式<code>import &#39;./css/index.css&#39;</code><br>这种语法代表，只需要加载这个文件，把css样式给加载过来，不需要接收(接收的话，打印出来是undefined)</p>
+<h3 id="webpack处理样式的过程"><a href="#webpack处理样式的过程" class="headerlink" title="webpack处理样式的过程"></a>webpack处理样式的过程</h3><p>ES6在js文件导入样式<code>import &#39;./css/index.css&#39;</code><br>这种语法代表，只需要加载这个文件，把css样式给加载过来，不需要接收(接收的话，打印出来是undefined)</p>
 <p>webpack加载和处理js文件，处理的结果会生成一个新的js文件(如bundle.js)，而且会在页面引用过去，在这个bundle.js里面，会包含我们import引入的样式，在这个bundle.js里面，css样式会被转成js的方式去运行</p>
 <h2 id="打包发布"><a href="#打包发布" class="headerlink" title="打包发布"></a>打包发布</h2><p>我们如果要上线，应该拿到这些文件发给后端，让后端去部署上线<br>发布上线就是：<br>前端把项目生成一份最终的结果，有页面，配套的css js 图片等等<br>所有资源都在生成的文件夹里面，把所有内容打包发给后端<br>后端拿到结果去部署上线</p>
 <p>现在我们要解决的问题是：页面和bundle.js放到内存里面了，需要把它生成到实际的物理磁盘上。</p>
-<h3 id="配置webpack的打包发布"><a href="#配置webpack的打包发布" class="headerlink" title="配置webpack的打包发布"></a>配置webpack的打包发布</h3><p>在package.json文件的scripts节点下，新增build命令如下:<br>    <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&quot;scripts&quot;: &#123;</span><br><span class="line">    “dev&quot; : &quot;webpack serve&quot;，//开发环境中，运行dev命令</span><br><span class="line">    &quot;build&quot;: &quot;webpack --mode production&quot; //项目发布时，运行 build命令</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>    <code>--mode</code>是一个参数项，用来指定webpack的<strong>运行模式</strong>。production 代表生产环境，会对打包生成的文件进行<strong>代码压缩</strong>和<strong>性能优化</strong>。<br>    注意:通过<code>--mode</code>指定的参数项，会<strong>覆盖</strong>webpack.config.js 中的<code>--mode</code>选项。</p>
+<h3 id="配置webpack"><a href="#配置webpack" class="headerlink" title="配置webpack"></a>配置webpack</h3><p>在package.json文件的scripts节点下，新增build命令如下:<br>    <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&quot;scripts&quot;: &#123;</span><br><span class="line">    “dev&quot; : &quot;webpack serve&quot;，//开发环境中，运行dev命令</span><br><span class="line">    &quot;build&quot;: &quot;webpack --mode production&quot; //项目发布时，运行 build命令</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>    <code>--mode</code>是一个参数项，用来指定webpack的<strong>运行模式</strong>。production 代表生产环境，会对打包生成的文件进行<strong>代码压缩</strong>和<strong>性能优化</strong>。<br>    注意:通过<code>--mode</code>指定的参数项，会<strong>覆盖</strong>webpack.config.js 中的<code>--mode</code>选项。</p>
 <p>这里的dev命令是webpack serve，就是我们装的插件，是把文件生成到内存中，可以监听文件的更改自动执行npm run dev<br>而这里build就是要执行webpack命令把文件生成到磁盘上，这里注意要改成<br>    <code>set NODE_OPTIONS=--openssl-legacy-provider &amp;&amp; webpack --mode production</code></p>
-<h3 id="优化图片和js文件的存放路径"><a href="#优化图片和js文件的存放路径" class="headerlink" title="优化图片和js文件的存放路径"></a>优化图片和js文件的存放路径</h3><ol>
+<h3 id="优化图片和js文件存放路径"><a href="#优化图片和js文件存放路径" class="headerlink" title="优化图片和js文件存放路径"></a>优化图片和js文件存放路径</h3><ol>
 <li>js文件<br>在webpack.js的output对象属性中，把filename前面加上个文件夹<br> <code>filename:&#39;js/bundle.js&#39;</code></li>
 <li>图片<br>修改webpack.config.js 中的url-loader配置项，新增outputPath选项即可指定图片文件的输出路径: <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    test: /.jpg|png|gif$/ ,</span><br><span class="line">    use: &#123;</span><br><span class="line">        loader: &#x27;url-loader&#x27;,</span><br><span class="line">        options: &#123;</span><br><span class="line">            limit: 22228,</span><br><span class="line">            //明确指定把打包生成的图片文件，存储到dist目录下的 image 文件夹中</span><br><span class="line">            outputPath: &#x27;image&#x27;,</span><br><span class="line">        &#125;,</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
  或者直接用?xx&#x3D;xx&amp;xx&#x3D;xx的方式在loader后面携带参数 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123; test: /\.jpg|png|gif$/, use: &#x27;url-loader?limit=22229&amp;outputPath=images&#x27; &#125;</span><br></pre></td></tr></table></figure></li>
@@ -492,7 +492,7 @@
 <ul>
 <li><strong>检验是否是删除之后重新生产的方法</strong>：<br>可以在dist文件夹下新建如1.txt文件，重新打包，如果文件还在，说明是没有删除直接打包的，如果不再了，那就是删除之后重新打包。</li>
 </ul>
-<h2 id="source-Map-–-开发阶段使用检错的"><a href="#source-Map-–-开发阶段使用检错的" class="headerlink" title="source Map – 开发阶段使用检错的"></a>source Map – 开发阶段使用检错的</h2><p>告诉你文件的报错位置，用于调试bug<br>开发阶段 npm run dev 检错的<br><strong>在发布项目的时候，处于安全性考虑，建议关闭SourceMap</strong>。防止一些人通过报错位置来拿到我们的源代码(通过修改页面代码来主动让页面某功能报错来拿到该功能位置的源码这样吗？)<br>新版本开发环境建议使用cheap-module-source-map？</p>
+<h2 id="source-Map-–-开发阶段检错"><a href="#source-Map-–-开发阶段检错" class="headerlink" title="source Map – 开发阶段检错"></a>source Map – 开发阶段检错</h2><p>告诉你文件的报错位置，用于调试bug<br>开发阶段 npm run dev 检错的<br><strong>在发布项目的时候，处于安全性考虑，建议关闭SourceMap</strong>。防止一些人通过报错位置来拿到我们的源代码(通过修改页面代码来主动让页面某功能报错来拿到该功能位置的源码这样吗？)<br>新版本开发环境建议使用cheap-module-source-map？</p>
 <ol>
 <li>什么是 source Map<br> <strong>Source Map就是一个信息文件，里面储存着位置信息</strong>。也就是说，Source Map文件中存储着压缩混淆后的代码，所对应的<strong>转换前的位置</strong>。<br> 有了它，出错的时候，<strong>除错工具将直接显示原始代码，而不是转换后的代码</strong>，能够极大的方便后期的调试。</li>
 </ol>
@@ -522,13 +522,13 @@
 </ul>
 </li>
 </ol>
-<h2 id="拓展-–-webpack的-原理-好处-vue-devtools调试工具安装"><a href="#拓展-–-webpack的-原理-好处-vue-devtools调试工具安装" class="headerlink" title="拓展 – webpack的@原理&amp;好处 &amp;&amp; vue-devtools调试工具安装"></a>拓展 – webpack的@原理&amp;好处 &amp;&amp; vue-devtools调试工具安装</h2><ul>
+<h2 id="拓展"><a href="#拓展" class="headerlink" title="拓展"></a>拓展</h2><ul>
 <li>两次 ctrl + c 可以直接结束 webpack serve？<br>原本需要一次ctrl + c 然后按Y + enter结束</li>
 </ul>
-<h3 id="webpack中-的原理和好处"><a href="#webpack中-的原理和好处" class="headerlink" title="webpack中@的原理和好处"></a>webpack中@的原理和好处</h3><p>这样一个场景：<br>src目录下 有一个info文件 js&#x2F;text&#x2F;info<br>而这个info文件要导入src目录下的msg.js文件<br>就需要这样导入: import msg from ‘..&#x2F;..&#x2F;msg’<br>如果info的文件层级再深一点，这个..&#x2F;会让人不知道翻了几层<br>所以<br><strong>建议大家都使用 @ 符号表示src源代码目录，从外往里查找，不要使用..&#x2F;从里往外查找</strong><br>import msg from ‘@&#x2F;msg.js’</p>
+<h3 id="webpack中-的原理和好处"><a href="#webpack中-的原理和好处" class="headerlink" title="webpack中 @ 的原理和好处"></a>webpack中 @ 的原理和好处</h3><p>这样一个场景：<br>src目录下 有一个info文件 js&#x2F;text&#x2F;info<br>而这个info文件要导入src目录下的msg.js文件<br>就需要这样导入: import msg from ‘..&#x2F;..&#x2F;msg’<br>如果info的文件层级再深一点，这个..&#x2F;会让人不知道翻了几层<br>所以<br><strong>建议大家都使用 @ 符号表示src源代码目录，从外往里查找，不要使用..&#x2F;从里往外查找</strong><br>import msg from ‘@&#x2F;msg.js’</p>
 <p>在webpack里面，@不能直接用，需要先配置一下<br>在webpack.config.js中，module.exports中增加一个resolve属性：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">module.exports = &#123;</span><br><span class="line">    resolve:&#123;</span><br><span class="line">        alias: &#123;</span><br><span class="line">            // 告诉webpack，程序员写的代码中，@符号表示src这一层目录</span><br><span class="line">            &#x27;@&#x27;: path.join(__dirname,&#x27;./src/&#x27;)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="在Chrome浏览器中安装vue-devtools调试工具"><a href="#在Chrome浏览器中安装vue-devtools调试工具" class="headerlink" title="在Chrome浏览器中安装vue-devtools调试工具"></a>在Chrome浏览器中安装vue-devtools调试工具</h3><p>edge扩展中直接搜，有一个vue.js-devtools<br><strong>在详情设置中，有个允许访问文件URL(文件网址)的设置，默认是关闭的状态，需要我们手动打开</strong></p>
+<h3 id="在浏览器安装vue-devtools调试工具"><a href="#在浏览器安装vue-devtools调试工具" class="headerlink" title="在浏览器安装vue-devtools调试工具"></a>在浏览器安装vue-devtools调试工具</h3><p>edge扩展中直接搜，有一个vue.js-devtools<br><strong>在详情设置中，有个允许访问文件URL(文件网址)的设置，默认是关闭的状态，需要我们手动打开</strong></p>
 <h2 id="实际开发中不需要自己配置webpack"><a href="#实际开发中不需要自己配置webpack" class="headerlink" title="实际开发中不需要自己配置webpack"></a><strong>实际开发中不需要自己配置webpack</strong></h2><ul>
 <li>实际开发中会使命令行工具(俗称CLI)一键生成带有webpack的项目</li>
 <li>开箱即用，所有webpack配置项都是现成的!</li>
