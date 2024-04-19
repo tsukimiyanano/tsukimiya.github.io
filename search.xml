@@ -1,80 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Node.js简单实现后端服务器</title>
-    <url>/tsukimiya.github.io/2024/04/15/Node/Node.js%E5%81%9A%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%AF%A6%E8%A7%A3/</url>
-    <content><![CDATA[<blockquote>
-<p>这个示例中，没有用到MySQl数据库，只是简单的创建POST表单路由进行处理数据，以及表单数据的校验</p>
-</blockquote>
-<h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><ol>
-<li>创建后端项目文件夹如serve</li>
-<li>初始化文件夹npm init -y<br> 在空项目的根目录中初始化一个package.json的包管理配置文件</li>
-<li>安装必要的包&#x2F;依赖<br> 安装Express ———— npm i <a href="mailto:&#x65;&#120;&#x70;&#x72;&#101;&#x73;&#115;&#64;&#x34;&#x2e;&#x31;&#55;&#x2e;&#x31;">&#x65;&#120;&#x70;&#x72;&#101;&#x73;&#115;&#64;&#x34;&#x2e;&#x31;&#55;&#x2e;&#x31;</a></li>
-<li>创建服务器文件，命名如app.js</li>
-</ol>
-<h2 id="创建简单的web服务器-及其-模块化"><a href="#创建简单的web服务器-及其-模块化" class="headerlink" title="创建简单的web服务器 及其 模块化"></a>创建简单的web服务器 及其 模块化</h2><ol>
-<li><p>创建基本的express框架 – eser</p>
- <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">//导入express模块</span><br><span class="line">const express = require(&#x27;express&#x27;)</span><br><span class="line">//创建express服务器实例</span><br><span class="line">const app = express()</span><br><span class="line">const port = 8080;</span><br><span class="line"></span><br><span class="line">//调用app.listen方法，指定端口号并启动web服务器</span><br><span class="line">app.listen(port,()=&gt;&#123;</span><br><span class="line">    console.log(`Express server running at http://127.0.0.1:$&#123;port&#125;`)</span><br><span class="line">&#125;)      </span><br></pre></td></tr></table></figure>
-</li>
-<li><p>创建路由<br> 可以先在当前文件尝试是否成功，之后再分离到对应模块</p>
- <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">//创建express路由实例</span><br><span class="line">const router = express.Router()</span><br><span class="line">// 配置路由</span><br><span class="line">app.use(router)</span><br><span class="line">// 提交预约表单</span><br><span class="line">router.post(&#x27;/form&#x27;, (req, res) =&gt; &#123;</span><br><span class="line">    console.log(req.body);</span><br><span class="line">    res.send(&#x27;发送表单数据成功&#x27;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>使用postman测试请求是否成功<br> 向 <a href="http://127.0.0.1:8080/form">http://127.0.0.1:8080/form</a> 发送post请求<br> 响应函数中打印出来的req.body结果是undefined，这是因为我们没有配置解析表单的中间件</p>
-</li>
-<li><p>配置解析表单的中间件<br> &#x2F;&#x2F; 配置解析表单数据的中间件,注意：这个中间件，只能解析applicaton&#x2F;x-www-form-urlencoded格式的表单数据<br> <code>app.use(express.urlencoded(&#123;extended:false&#125;))</code><br> 再次发送请求，我们就得到了表单提交的数据</p>
-</li>
-<li><p>分离到路由模块<br> 创建router文件夹，创建如user.js文件&#x2F;&#x2F;处理用户路由<br> 将路由部分写到这个地方，然后把router暴露出去<br> <code>module.exports = router</code><br> 然后在app.js中导入并使用路由模块</p>
- <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// 导入并使用用户路由模块</span><br><span class="line">const userRouter = require(&#x27;./router/user&#x27;)</span><br><span class="line">// 配置路由</span><br><span class="line">app.use(userRouter)</span><br></pre></td></tr></table></figure>
-<p> 测试成功</p>
-</li>
-<li><p>分离处理函数到路由处理模块，同5操作<br> 创建router_handler文件夹，在该目录下创建对应的用户路由处理文件user.js<br> 把处理函数暴露出去</p>
- <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">exports.formSubmit = (req, res) =&gt; &#123;</span><br><span class="line">    console.log(req.body);</span><br><span class="line">    res.send(&#x27;发送表单数据成功&#x27;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p> 在路由模块导入导入用户路由处理函数对应的模块<br> <code>const user_handler = require(&#39;../router_handler/user&#39;)</code><br> 路由的响应函数换成对应的user_handler.formSubmit</p>
-</li>
-</ol>
-<h2 id="数据校验"><a href="#数据校验" class="headerlink" title="数据校验"></a>数据校验</h2><p>这里使用joi模块来进行数据验证<br>Joi 是 hapijs 自带的数据校验模块，他已经高度封装常用的校验功能。</p>
-<ol>
-<li><p>安装joi包，为表单中携带的每个数据项，定义验证规则</p>
- <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install joi --save</span><br><span class="line">// ES6写法 import Joi from &#x27;joi&#x27;</span><br><span class="line">const joi = require(&#x27;joi&#x27;)</span><br></pre></td></tr></table></figure></li>
-<li><p>安装 @escook&#x2F;express-joi 中间件，来实现自动对表单数据进行验证的功能：<br> <code>npm i @escook/express-joi</code></p>
-</li>
-<li><p>joi验证规则</p>
-<ul>
-<li>string() 值必须是字符串</li>
-<li>number() 值必须是数字</li>
-<li>alphanum() 值只能是包含 a-zA-Z0-9 的字符串</li>
-<li>min(length) 最小长度</li>
-<li>max(length) 最大长度</li>
-<li>required() 值是必填项，不能为 undefined</li>
-<li>pattern(正则表达式) 值必须符合正则表达式的规则</li>
-<li>any() 任意</li>
-<li>date() 日期</li>
-<li>time() 时间</li>
-<li>iso() 要求字符串值采用有效的 ISO 8601 日期格式。</li>
-</ul>
-</li>
-<li><p>新建 &#x2F;schema&#x2F;user.js 用户信息验证规则模块，并初始化代码如下：</p>
- <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// 导入joi模块</span><br><span class="line">const joi = require(&#x27;joi&#x27;)</span><br><span class="line"></span><br><span class="line">// 表单校验规则</span><br><span class="line">const unit = joi.string().required()</span><br><span class="line">const contact = joi.string().required()</span><br><span class="line">const phone = joi.string().pattern(/^[1][\d]&#123;10&#125;$/).required()</span><br><span class="line">const numVisitors = joi.number().min(16).required()</span><br><span class="line">const guide = joi.string().pattern(/yes|no|是|否/).required()</span><br><span class="line">const date = joi.date().min(&#x27;now&#x27;).iso().required()</span><br><span class="line">const time = joi.string().pattern(/^[\d]&#123;2&#125;[\s]*:[\s]*[\d]&#123;2&#125;$/).required()</span><br><span class="line"></span><br><span class="line">// 表单的验证规则对象</span><br><span class="line">exports.form_schema =&#123;</span><br><span class="line">    body:&#123;</span><br><span class="line">        unit,</span><br><span class="line">        contact,</span><br><span class="line">        phone,</span><br><span class="line">        numVisitors,</span><br><span class="line">        guide,</span><br><span class="line">        date,</span><br><span class="line">        time,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>在路由模块添加数据校验</p>
- <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// 导入验证表单数据的中间件</span><br><span class="line">const expressJoi = require(&#x27;@escook/express-joi&#x27;)</span><br><span class="line">// 导入需要验证的规则</span><br><span class="line">const &#123;form_schema&#125; = require(&#x27;../schema/user&#x27;)</span><br></pre></td></tr></table></figure>
-<p> 在表单提交的路由中，声明局部中间件，对当前请求中携带的数据进行验证<br> 数据验证通过后，会把这次请求流转给后面的路由处理函数<br> 数据验证失败后，终止后续代码的执行，并抛出一个全局的 Error 错误，进入全局错误级别中间件中进行处理<br> <code>router.post(&#39;/form&#39;,expressJoi(form_schema), user_handler.formSubmit)</code></p>
-</li>
-<li><p>在 app.js 的全局错误级别中间件中，捕获验证失败的错误，并把验证失败的结果响应给客户端<br> 在路由注册之后声明错误级别中间件，注意这里需要在app.js导入joi</p>
- <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">const joi = require(&#x27;joi&#x27;)</span><br><span class="line">// 错误中间件</span><br><span class="line">app.use(function(err,req,res,next)&#123;</span><br><span class="line">    //数据验证失败</span><br><span class="line">    if(err instanceof joi.ValidationError) return res.send(err.message)</span><br><span class="line">    // 未知错误</span><br><span class="line">    res.send(err.message)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-<p> 测试成功</p>
-</li>
-</ol>
-]]></content>
-      <categories>
-        <category>Node.js</category>
-      </categories>
-      <tags>
-        <tag>Node.js</tag>
-        <tag>前后端分离</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>前端工程化与Webpack</title>
     <url>/tsukimiya.github.io/2024/04/18/Vue/1.%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96%E4%B8%8EWebpack/</url>
     <content><![CDATA[<blockquote>
@@ -318,6 +244,80 @@
       <tags>
         <tag>Webpack</tag>
         <tag>前端工程化</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Node.js简单实现后端服务器</title>
+    <url>/tsukimiya.github.io/2024/04/15/Node/Node.js%E5%81%9A%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%AF%A6%E8%A7%A3/</url>
+    <content><![CDATA[<blockquote>
+<p>这个示例中，没有用到MySQl数据库，只是简单的创建POST表单路由进行处理数据，以及表单数据的校验</p>
+</blockquote>
+<h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><ol>
+<li>创建后端项目文件夹如serve</li>
+<li>初始化文件夹npm init -y<br> 在空项目的根目录中初始化一个package.json的包管理配置文件</li>
+<li>安装必要的包&#x2F;依赖<br> 安装Express ———— npm i <a href="mailto:&#x65;&#x78;&#x70;&#114;&#101;&#x73;&#115;&#x40;&#x34;&#46;&#49;&#x37;&#x2e;&#49;">&#x65;&#x78;&#x70;&#114;&#101;&#x73;&#115;&#x40;&#x34;&#46;&#49;&#x37;&#x2e;&#49;</a></li>
+<li>创建服务器文件，命名如app.js</li>
+</ol>
+<h2 id="创建简单的web服务器-及其-模块化"><a href="#创建简单的web服务器-及其-模块化" class="headerlink" title="创建简单的web服务器 及其 模块化"></a>创建简单的web服务器 及其 模块化</h2><ol>
+<li><p>创建基本的express框架 – eser</p>
+ <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">//导入express模块</span><br><span class="line">const express = require(&#x27;express&#x27;)</span><br><span class="line">//创建express服务器实例</span><br><span class="line">const app = express()</span><br><span class="line">const port = 8080;</span><br><span class="line"></span><br><span class="line">//调用app.listen方法，指定端口号并启动web服务器</span><br><span class="line">app.listen(port,()=&gt;&#123;</span><br><span class="line">    console.log(`Express server running at http://127.0.0.1:$&#123;port&#125;`)</span><br><span class="line">&#125;)      </span><br></pre></td></tr></table></figure>
+</li>
+<li><p>创建路由<br> 可以先在当前文件尝试是否成功，之后再分离到对应模块</p>
+ <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">//创建express路由实例</span><br><span class="line">const router = express.Router()</span><br><span class="line">// 配置路由</span><br><span class="line">app.use(router)</span><br><span class="line">// 提交预约表单</span><br><span class="line">router.post(&#x27;/form&#x27;, (req, res) =&gt; &#123;</span><br><span class="line">    console.log(req.body);</span><br><span class="line">    res.send(&#x27;发送表单数据成功&#x27;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用postman测试请求是否成功<br> 向 <a href="http://127.0.0.1:8080/form">http://127.0.0.1:8080/form</a> 发送post请求<br> 响应函数中打印出来的req.body结果是undefined，这是因为我们没有配置解析表单的中间件</p>
+</li>
+<li><p>配置解析表单的中间件<br> &#x2F;&#x2F; 配置解析表单数据的中间件,注意：这个中间件，只能解析applicaton&#x2F;x-www-form-urlencoded格式的表单数据<br> <code>app.use(express.urlencoded(&#123;extended:false&#125;))</code><br> 再次发送请求，我们就得到了表单提交的数据</p>
+</li>
+<li><p>分离到路由模块<br> 创建router文件夹，创建如user.js文件&#x2F;&#x2F;处理用户路由<br> 将路由部分写到这个地方，然后把router暴露出去<br> <code>module.exports = router</code><br> 然后在app.js中导入并使用路由模块</p>
+ <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// 导入并使用用户路由模块</span><br><span class="line">const userRouter = require(&#x27;./router/user&#x27;)</span><br><span class="line">// 配置路由</span><br><span class="line">app.use(userRouter)</span><br></pre></td></tr></table></figure>
+<p> 测试成功</p>
+</li>
+<li><p>分离处理函数到路由处理模块，同5操作<br> 创建router_handler文件夹，在该目录下创建对应的用户路由处理文件user.js<br> 把处理函数暴露出去</p>
+ <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">exports.formSubmit = (req, res) =&gt; &#123;</span><br><span class="line">    console.log(req.body);</span><br><span class="line">    res.send(&#x27;发送表单数据成功&#x27;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p> 在路由模块导入导入用户路由处理函数对应的模块<br> <code>const user_handler = require(&#39;../router_handler/user&#39;)</code><br> 路由的响应函数换成对应的user_handler.formSubmit</p>
+</li>
+</ol>
+<h2 id="数据校验"><a href="#数据校验" class="headerlink" title="数据校验"></a>数据校验</h2><p>这里使用joi模块来进行数据验证<br>Joi 是 hapijs 自带的数据校验模块，他已经高度封装常用的校验功能。</p>
+<ol>
+<li><p>安装joi包，为表单中携带的每个数据项，定义验证规则</p>
+ <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install joi --save</span><br><span class="line">// ES6写法 import Joi from &#x27;joi&#x27;</span><br><span class="line">const joi = require(&#x27;joi&#x27;)</span><br></pre></td></tr></table></figure></li>
+<li><p>安装 @escook&#x2F;express-joi 中间件，来实现自动对表单数据进行验证的功能：<br> <code>npm i @escook/express-joi</code></p>
+</li>
+<li><p>joi验证规则</p>
+<ul>
+<li>string() 值必须是字符串</li>
+<li>number() 值必须是数字</li>
+<li>alphanum() 值只能是包含 a-zA-Z0-9 的字符串</li>
+<li>min(length) 最小长度</li>
+<li>max(length) 最大长度</li>
+<li>required() 值是必填项，不能为 undefined</li>
+<li>pattern(正则表达式) 值必须符合正则表达式的规则</li>
+<li>any() 任意</li>
+<li>date() 日期</li>
+<li>time() 时间</li>
+<li>iso() 要求字符串值采用有效的 ISO 8601 日期格式。</li>
+</ul>
+</li>
+<li><p>新建 &#x2F;schema&#x2F;user.js 用户信息验证规则模块，并初始化代码如下：</p>
+ <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// 导入joi模块</span><br><span class="line">const joi = require(&#x27;joi&#x27;)</span><br><span class="line"></span><br><span class="line">// 表单校验规则</span><br><span class="line">const unit = joi.string().required()</span><br><span class="line">const contact = joi.string().required()</span><br><span class="line">const phone = joi.string().pattern(/^[1][\d]&#123;10&#125;$/).required()</span><br><span class="line">const numVisitors = joi.number().min(16).required()</span><br><span class="line">const guide = joi.string().pattern(/yes|no|是|否/).required()</span><br><span class="line">const date = joi.date().min(&#x27;now&#x27;).iso().required()</span><br><span class="line">const time = joi.string().pattern(/^[\d]&#123;2&#125;[\s]*:[\s]*[\d]&#123;2&#125;$/).required()</span><br><span class="line"></span><br><span class="line">// 表单的验证规则对象</span><br><span class="line">exports.form_schema =&#123;</span><br><span class="line">    body:&#123;</span><br><span class="line">        unit,</span><br><span class="line">        contact,</span><br><span class="line">        phone,</span><br><span class="line">        numVisitors,</span><br><span class="line">        guide,</span><br><span class="line">        date,</span><br><span class="line">        time,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在路由模块添加数据校验</p>
+ <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// 导入验证表单数据的中间件</span><br><span class="line">const expressJoi = require(&#x27;@escook/express-joi&#x27;)</span><br><span class="line">// 导入需要验证的规则</span><br><span class="line">const &#123;form_schema&#125; = require(&#x27;../schema/user&#x27;)</span><br></pre></td></tr></table></figure>
+<p> 在表单提交的路由中，声明局部中间件，对当前请求中携带的数据进行验证<br> 数据验证通过后，会把这次请求流转给后面的路由处理函数<br> 数据验证失败后，终止后续代码的执行，并抛出一个全局的 Error 错误，进入全局错误级别中间件中进行处理<br> <code>router.post(&#39;/form&#39;,expressJoi(form_schema), user_handler.formSubmit)</code></p>
+</li>
+<li><p>在 app.js 的全局错误级别中间件中，捕获验证失败的错误，并把验证失败的结果响应给客户端<br> 在路由注册之后声明错误级别中间件，注意这里需要在app.js导入joi</p>
+ <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">const joi = require(&#x27;joi&#x27;)</span><br><span class="line">// 错误中间件</span><br><span class="line">app.use(function(err,req,res,next)&#123;</span><br><span class="line">    //数据验证失败</span><br><span class="line">    if(err instanceof joi.ValidationError) return res.send(err.message)</span><br><span class="line">    // 未知错误</span><br><span class="line">    res.send(err.message)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p> 测试成功</p>
+</li>
+</ol>
+]]></content>
+      <categories>
+        <category>Node.js</category>
+      </categories>
+      <tags>
+        <tag>Node.js</tag>
+        <tag>前后端分离</tag>
       </tags>
   </entry>
 </search>
