@@ -592,7 +592,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-04-18 23:39:13" itemprop="dateModified" datetime="2024-04-18T23:39:13+08:00">2024-04-18</time>
+      <time title="修改时间：2024-04-19 23:08:39" itemprop="dateModified" datetime="2024-04-19T23:08:39+08:00">2024-04-19</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -633,7 +633,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>3.2k</span>
+      <span>3.6k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -652,16 +652,23 @@
     
     <div class="post-body" itemprop="articleBody">
           <blockquote>
-<p>这个示例中，没有用到MySQl数据库，只是简单的创建POST表单路由进行处理数据，以及表单数据的校验</p>
+<p>这个示例中，没有用到MySQl数据库，只是简单的创建POST表单路由进行处理数据，以及表单数据的校验<br>用到的npm包&#x2F;第三方模块：<br>Express：<code>npm i express@4.17.1</code> – Web 开发框架，快速创建 Web 服务器<br>Joi：<code>npm install joi --save</code> – hapijs 自带的数据校验模块<br>@escook&#x2F;express-joi中间件: <code>npm i @escook/express-joi</code> – 实现自动对表单数据进行验证的功能</p>
 </blockquote>
-<h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><ol>
+<blockquote>
+<p>全局安装了nodemon工具，可以监听文件的更改，自动重新执行</p>
+</blockquote>
+<blockquote>
+<p>该示例没有在路由之前配置cors中间件，从而解决接口跨域的问题<br>这个是航空文化馆项目的后端，还没写完<br>没有用到mysql模块：<code>npm i mysql</code><br>也没有用到express-session中间件：<code>npm i express-session</code>（这个干吗用的？）</p>
+</blockquote>
+<h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><ol start="0">
+<li>如果是拿被别人写好的项目，第一步是导入这个项目所用的包，<code>npm i</code>命令</li>
 <li>创建后端项目文件夹如serve</li>
-<li>初始化文件夹npm init -y<br> 在空项目的根目录中初始化一个package.json的包管理配置文件</li>
-<li>安装必要的包&#x2F;依赖<br> 安装Express ———— npm i <a href="mailto:&#x65;&#120;&#x70;&#x72;&#x65;&#x73;&#115;&#x40;&#52;&#46;&#49;&#x37;&#46;&#x31;">&#x65;&#120;&#x70;&#x72;&#x65;&#x73;&#115;&#x40;&#52;&#46;&#49;&#x37;&#46;&#x31;</a></li>
+<li>初始化文件夹<code>npm init -y</code><br> 在空项目的根目录中初始化一个package.json的包管理配置文件</li>
+<li>安装必要的包&#x2F;依赖<br> 安装Express —— <code>npm i express@4.17.1</code></li>
 <li>创建服务器文件，命名如app.js</li>
 </ol>
 <h2 id="创建简单的web服务器-及其-模块化"><a href="#创建简单的web服务器-及其-模块化" class="headerlink" title="创建简单的web服务器 及其 模块化"></a>创建简单的web服务器 及其 模块化</h2><ol>
-<li><p>创建基本的express框架 – eser</p>
+<li><p>创建基本的express框架 – eser(vscode快捷生成代码&#x2F;&#x2F;自己配置 – 文件–首选项–配置用户代码片段)</p>
  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">//导入express模块</span><br><span class="line">const express = require(&#x27;express&#x27;)</span><br><span class="line">//创建express服务器实例</span><br><span class="line">const app = express()</span><br><span class="line">const port = 8080;</span><br><span class="line"></span><br><span class="line">//调用app.listen方法，指定端口号并启动web服务器</span><br><span class="line">app.listen(port,()=&gt;&#123;</span><br><span class="line">    console.log(`Express server running at http://127.0.0.1:$&#123;port&#125;`)</span><br><span class="line">&#125;)      </span><br></pre></td></tr></table></figure>
 </li>
 <li><p>创建路由<br> 可以先在当前文件尝试是否成功，之后再分离到对应模块</p>
@@ -757,7 +764,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">14 分钟</span>
+    <span title="站点阅读时长">15 分钟</span>
   </span>
 </div>
 

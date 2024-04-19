@@ -4,16 +4,23 @@
     <title>Node.js简单实现后端服务器</title>
     <url>/tsukimiya.github.io/2024/04/15/Node/Node.js%E5%81%9A%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%AF%A6%E8%A7%A3/</url>
     <content><![CDATA[<blockquote>
-<p>这个示例中，没有用到MySQl数据库，只是简单的创建POST表单路由进行处理数据，以及表单数据的校验</p>
+<p>这个示例中，没有用到MySQl数据库，只是简单的创建POST表单路由进行处理数据，以及表单数据的校验<br>用到的npm包&#x2F;第三方模块：<br>Express：<code>npm i express@4.17.1</code> – Web 开发框架，快速创建 Web 服务器<br>Joi：<code>npm install joi --save</code> – hapijs 自带的数据校验模块<br>@escook&#x2F;express-joi中间件: <code>npm i @escook/express-joi</code> – 实现自动对表单数据进行验证的功能</p>
 </blockquote>
-<h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><ol>
+<blockquote>
+<p>全局安装了nodemon工具，可以监听文件的更改，自动重新执行</p>
+</blockquote>
+<blockquote>
+<p>该示例没有在路由之前配置cors中间件，从而解决接口跨域的问题<br>这个是航空文化馆项目的后端，还没写完<br>没有用到mysql模块：<code>npm i mysql</code><br>也没有用到express-session中间件：<code>npm i express-session</code>（这个干吗用的？）</p>
+</blockquote>
+<h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><ol start="0">
+<li>如果是拿被别人写好的项目，第一步是导入这个项目所用的包，<code>npm i</code>命令</li>
 <li>创建后端项目文件夹如serve</li>
-<li>初始化文件夹npm init -y<br> 在空项目的根目录中初始化一个package.json的包管理配置文件</li>
-<li>安装必要的包&#x2F;依赖<br> 安装Express ———— npm i <a href="mailto:&#x65;&#120;&#x70;&#x72;&#x65;&#x73;&#115;&#x40;&#52;&#46;&#49;&#x37;&#46;&#x31;">&#x65;&#120;&#x70;&#x72;&#x65;&#x73;&#115;&#x40;&#52;&#46;&#49;&#x37;&#46;&#x31;</a></li>
+<li>初始化文件夹<code>npm init -y</code><br> 在空项目的根目录中初始化一个package.json的包管理配置文件</li>
+<li>安装必要的包&#x2F;依赖<br> 安装Express —— <code>npm i express@4.17.1</code></li>
 <li>创建服务器文件，命名如app.js</li>
 </ol>
 <h2 id="创建简单的web服务器-及其-模块化"><a href="#创建简单的web服务器-及其-模块化" class="headerlink" title="创建简单的web服务器 及其 模块化"></a>创建简单的web服务器 及其 模块化</h2><ol>
-<li><p>创建基本的express框架 – eser</p>
+<li><p>创建基本的express框架 – eser(vscode快捷生成代码&#x2F;&#x2F;自己配置 – 文件–首选项–配置用户代码片段)</p>
  <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">//导入express模块</span><br><span class="line">const express = require(&#x27;express&#x27;)</span><br><span class="line">//创建express服务器实例</span><br><span class="line">const app = express()</span><br><span class="line">const port = 8080;</span><br><span class="line"></span><br><span class="line">//调用app.listen方法，指定端口号并启动web服务器</span><br><span class="line">app.listen(port,()=&gt;&#123;</span><br><span class="line">    console.log(`Express server running at http://127.0.0.1:$&#123;port&#125;`)</span><br><span class="line">&#125;)      </span><br></pre></td></tr></table></figure>
 </li>
 <li><p>创建路由<br> 可以先在当前文件尝试是否成功，之后再分离到对应模块</p>
@@ -319,5 +326,423 @@
         <tag>Webpack</tag>
         <tag>前端工程化</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>Hello World</title>
+    <url>/tsukimiya.github.io/hello%20world.html</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+]]></content>
+  </entry>
+  <entry>
+    <title>Hello Front-end</title>
+    <url>/tsukimiya.github.io/index.html</url>
+    <content><![CDATA[<p>Welcome to my study blog! This is my continuously make up a main post. If you get any problems when using my blog, you can send the email to <a href="mailto:&#x68;&#x61;&#114;&#x69;&#105;&#106;&#105;&#x63;&#111;&#x40;&#111;&#x75;&#x74;&#x6c;&#111;&#x6f;&#107;&#46;&#x63;&#111;&#x6d;">&#x68;&#x61;&#114;&#x69;&#105;&#106;&#105;&#x63;&#111;&#x40;&#111;&#x75;&#x74;&#x6c;&#111;&#x6f;&#107;&#46;&#x63;&#111;&#x6d;</a></p>
+<h2 id="Study-Guide"><a href="#Study-Guide" class="headerlink" title="Study Guide"></a>Study Guide</h2><center>Here provide you some study sources and study route.</center>
+<!-- This is [main tech](#Main-Line) -->
+<center>This is <a href='#Main-Line'>main tech</a></center>
+
+<h3 id="Nice-Tools"><a href="#Nice-Tools" class="headerlink" title="Nice Tools"></a>Nice Tools</h3><ul>
+<li><p><a href="https://jquery.cuishifeng.cn/">JQuery API 中文在线文档</a>(<a href="https://jquery.cuishifeng.cn/">https://jquery.cuishifeng.cn/</a>) </p>
+</li>
+<li><p><a href="https://regexr-cn.com/">正则表达式测试工具</a>(<a href="https://regexr-cn.com/">https://regexr-cn.com/</a>)</p>
+</li>
+</ul>
+<h3 id="Guide-Book"><a href="#Guide-Book" class="headerlink" title="Guide Book"></a>Guide Book</h3><ul>
+<li>ES6<ul>
+<li>《ECMAScript 6 教程》– 阮一峰 <a href="https://es6.ruanyifeng.com/">官方</a> <a href="https://wangdoc.com/es6/">网道镜像</a> <blockquote>
+<p>网道(<a href="https://wangdoc.com/)%E6%98%AF%E4%B8%80%E4%B8%AA%E6%96%87%E6%A1%A3%E7%BD%91%E7%AB%99%EF%BC%8C%E6%8F%90%E4%BE%9B%E4%BA%92%E8%81%94%E7%BD%91%E5%BC%80%E5%8F%91%E6%96%87%E6%A1%A3%E3%80%82PC%E6%98%BE%E7%A4%BA%E6%9B%B4%E4%BD%B3%E3%80%82">https://wangdoc.com/)是一个文档网站，提供互联网开发文档。PC显示更佳。</a><br>  阮一峰博客的移动端显示更佳</p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="Route"><a href="#Route" class="headerlink" title="Route"></a>Route</h3><ol>
+<li><p><a href="https://www.codefather.cn/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0%E8%B7%AF%E7%BA%BF-by-%E7%A8%8B%E5%BA%8F%E5%91%98%E9%B1%BC%E7%9A%AE/">鱼皮前端学习路线</a></p>
+<blockquote>
+<p><a href="https://www.codefather.cn/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0%E8%B7%AF%E7%BA%BF-by-%E7%A8%8B%E5%BA%8F%E5%91%98%E9%B1%BC%E7%9A%AE/">https://www.codefather.cn/前端学习路线-by-程序员鱼皮/</a></p>
+</blockquote>
+</li>
+<li><p><a href="https://developer.aliyun.com/learning/roadmap/frontend">阿里云前端开发学习路线</a></p>
+<blockquote>
+<p><a href="https://developer.aliyun.com/learning/roadmap/frontend">https://developer.aliyun.com/learning/roadmap/frontend</a></p>
+</blockquote>
+</li>
+</ol>
+<h3 id="学习资源"><a href="#学习资源" class="headerlink" title="学习资源"></a>学习资源</h3><ol>
+<li><p><a href="https://www.freecodecamp.org/chinese/learn">freecodecamp编程免费教学慈善组织</a></p>
+<blockquote>
+<p>编程学习课程(可以获得认证，有官方中文) <a href="https://www.freecodecamp.org/chinese/learn">https://www.freecodecamp.org/chinese/learn</a></p>
+</blockquote>
+<blockquote>
+<p>也有程序员英文学习课程——<a href="https://www.freecodecamp.org/chinese/learn/a2-english-for-developers/">学习面向开发者的英语课程</a></p>
+</blockquote>
+<blockquote>
+<p>对应的<a href="https://www.freecodecamp.org/chinese/news/">专栏</a> 可以阅读学习一些技术文章</p>
+</blockquote>
+<blockquote>
+<p>对应的<a href="https://forum.freecodecamp.org/c/chinese/533">学习论坛</a> 也是支持中文的</p>
+</blockquote>
+</li>
+<li><p><a href="https://www.w3cschool.cn/codecamp/">w3c编程入门实战训练</a></p>
+<blockquote>
+<p><a href="https://www.w3cschool.cn/codecamp/">https://www.w3cschool.cn/codecamp/</a></p>
+</blockquote>
+</li>
+<li><p><a href="https://developer.aliyun.com/learning/roadmap/frontend">阿里云前端开发学习</a></p>
+<blockquote>
+<p>同样是阿里云学习路线的网页，两者都在一个界面<br> <a href="https://developer.aliyun.com/learning/roadmap/frontend">https://developer.aliyun.com/learning/roadmap/frontend</a></p>
+</blockquote>
+</li>
+<li><p><a href="https://time.geekbang.org/column/intro/154">极客时间前端基础 ￥59</a></p>
+<blockquote>
+<p>主讲人 程劭非（winter）  前手机淘宝前端负责人<br> 讲解JS、HTML、CSS、浏览器<br> <a href="https://time.geekbang.org/column/intro/154">https://time.geekbang.org/column/intro/154</a></p>
+</blockquote>
+</li>
+</ol>
+<h3 id="Necessary-Tech"><a href="#Necessary-Tech" class="headerlink" title="Necessary Tech"></a>Necessary Tech</h3><p><a href="https://www.bilibili.com/video/BV1eC411p73m/">前端技术的十八年风雨(2006-2024)-bilibili</a></p>
+<h4 id="Main-Line"><a href="#Main-Line" class="headerlink" title="Main Line"></a><font id='Main-Line' color='red'>Main Line</font></h4><ol>
+<li><p>前端三剑客基础 HTML5 – CSS3 – JS5&#x2F;ES5</p>
+<blockquote>
+<p>H5引入了许多新特性和API，如语义化元素、表单控件、图形和多媒体元素，以及各种Web API等等<br>CSS3的新特性：如圆角(border-radius)、阴影(box-shadow、text-shadow)、渐变(gradient)、动画(animation)、过渡(transition)、弹性布局(flex)等</p>
+</blockquote>
+<blockquote>
+<p><a href="https://www.bilibili.com/video/BV1Y84y1L7Nn">黑马JS最新教程</a> (2023.1.31 | 60:10:24)<br> Pink老师最新版JS课程，主要讲解JS核心知识，包含最新ES6语法、API、js高级等<br> <a href="https://www.bilibili.com/video/BV1Y84y1L7Nn">https://www.bilibili.com/video/BV1Y84y1L7Nn</a></p>
+</blockquote>
+</li>
+<li><p>三剑客进阶 移动Web&#x2F;<font color='red'>web API</font> – Less – Sass? – Scss? – <font color='red'>ES6</font></p>
+<blockquote>
+<p>移动web要学习一些web API、布局来更好的适配页面，如Flex 或是em vw vh等</p>
+</blockquote>
+<blockquote>
+<p>Sass是css预处理器，提供了类似编程语言的功能，包括变量、嵌套规则、混合、继承、函数等。帮助开发者更高效的编写和组织样式表<br> Sass并不能直接在浏览器执行，所以好需要配置IDE插件或者专门工具来将Sass文件编译成css文件才能使用</p>
+</blockquote>
+<blockquote>
+<p>Less受Sass的启发，为开发人员提供更加高效便捷的样式表编写方式</p>
+</blockquote>
+<blockquote>
+<p>ES6对JS进行了语法改进，还增加了<strong>类和继承、Promise等特性</strong>，最重要的是<strong>制定了模块化标准</strong>，为开发者提供了更好的开发工具和语言特性，使得JS变的更加现代化、强大灵活<br> <a href="https://www.bilibili.com/video/BV1Kt411w7MP?t=9.0&p=91">黑马ES6教程</a> (19.7.31 | 91-122p)<br> 阮一峰es6教程 – <a href="https://es6.ruanyifeng.com/">官方</a> | <a href="https://wangdoc.com/es6/intro">网道镜像</a></p>
+</blockquote>
+</li>
+<li><p>前端库&#x2F;工具 jQuery – bootStrap – ajax</p>
+<blockquote>
+<p>bootStrap是使用jQuery库来实现的？</p>
+</blockquote>
+</li>
+<li><p>版本管理工具 git</p>
+<blockquote>
+<p>不过一开始应该不会用到，可以在学过node之后再学更好些</p>
+</blockquote>
+<ul>
+<li><p><a href="https://www.bilibili.com/video/BV1zs411h74a?t=8.1&p=75">黑马Git教程</a>(17.1.16 | 75-101p | 4h5min)</p>
+<blockquote>
+<p>很细，可以结合下面的文章补充<br>  建议先看廖雪峰的教程到git安装的地方，再开始学这个，然后廖雪峰教程跟进<br>  <a href="https://www.bilibili.com/video/BV1zs411h74a?t=8.1&p=75">https://www.bilibili.com/video/BV1zs411h74a?t=8.1&amp;p=75</a></p>
+</blockquote>
+</li>
+<li><p><a href="https://www.liaoxuefeng.com/wiki/896043488029600">Git教程</a> – 廖雪峰 </p>
+<blockquote>
+<p><a href="https://www.liaoxuefeng.com/wiki/896043488029600">https://www.liaoxuefeng.com/wiki/896043488029600</a><br>  因为是文章，所以会有地方不如视频直观明了，也有一些没说到的地方，但是也有很多视频中没有的东西</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p>JS运行环境 ———— <font color='red'>Node.js</font></p>
+<blockquote>
+<p>Node.js是一个基于Chrome V8引擎的JS运行时环境，用于构建快速、可扩展的网络应用程序。之后，开发者就可以用JS来写服务端程序。</p>
+<blockquote>
+<p>node主要学习npm包管理器及各种包(工具)的使用<br> 学习node之后会让你更顺利的学习各种框架以及git<br> 学习node也会加深你对前后端交互以及后端的理解<br>Node.js采用非阻塞I&#x2F;O模型，能够高效处理大量并发请求，从响应效率上比同时代PHP更有优势</p>
+</blockquote>
+</blockquote>
+<ul>
+<li><strong>KoaJS</strong>(2013)<blockquote>
+<p>Koa是Express的下一代框架，旨在解决Express中一些设计上的限制和缺陷，使得异步编程更加优雅、代码更加清晰、应用更急啊灵活</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p>目前主流框架 <font color='red'>Vue(2014 尤雨溪) &#x2F; React(2013 Facebook)</font> &#x2F; <font color='#555'>Angular(2009 Google)</font></p>
+<blockquote>
+<ol>
+<li><strong>Angular</strong>（不必要学，很多银行国企在用）(2009)<br>  2009年 由Google发布，引入了许多新概念，如双向数据绑定、依赖注入和模板化，为Web开发带来了革命性的变化，也为后续的SPA框架(单页面应用程序)发展奠定了基础。<br>  然而AngularJS是典型的“精英”框架，用后端思维设计的前端框架，直接沿用了MVC思想，加上很多首创的概念，比较晦涩难懂，因此不怎么流行<br>  angularjs和.net在国内同等命运，先进但无人问津，招人困难所以转vue+java</li>
+</ol>
+</blockquote>
+<blockquote>
+<ol start="2">
+<li><strong>Vue</strong>(2014)<br>  Vue结合了Angular和React的优点，同时提供了更简洁的API和更灵活的设计，Vue的开发方式更像之前的套模版，使得开发者无缝过度，深受喜爱。<br>  Vue极为接地气，组件了活跃的社区，由社区编写了各语种的开发文档，每项说明都配上实例，还提供了各种应用场景的代码 DEMO<blockquote>
+<p>Vue支持Webpack构建工具的使用<br>  原生Vue组件在js文件中的使用、Vue Cli脚手架、Element UI<br>  vue的核心原理（MVVM）、了解vue生命周期、组件传值、路由、vuex</p>
+</blockquote>
+</li>
+</ol>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>2.1 <strong>Nuxt.js</strong>(2016)<br>     在Next.js的启发下，Vue阵营出现了Nuxt，功能和Next几乎一模一样，给Vue提供了开箱即用的丰富功能和工具，使得Vue开发应用更加高效便捷<br>2.2 <strong>Uni-App</strong>(2018)（uni,unique,是统一的意思）<br>     是一款 使用Vue.js开发所有前端应用的 跨平台应用开发框架，开发者编写一套代码 基于Vue开发应用，可发布到iOS、Android、Web（响应式）&#x2F;H5、以及各种小程序、快应用等多个平台。<br>2.3 <strong>Vue3</strong>(2020)<br>     Vue3增加了组合式开发模式、增加了TS支持、引入了全新的Composition API，更加适应现代化前端的开发模式。同时，尤雨溪还推出了现代化前端构建工具Vite。<br>2.4 <strong>Vite</strong>(2020)<br>     Vite利用模块 热更新、按需编译等特性，为开发者提供了一种快速、轻量级、现代化的前端构建工具，填补了Webpack的性能瓶颈。</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<ol start="3">
+<li><strong>React</strong>(2013)<br>  React引入了虚拟DOM的概念、组件化开发、单向数据流、使用JSX语法等等，极大的改变了前端的开发方式，推动了前端开发向组件化、高性能、高效率的方向发展。</li>
+</ol>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>3.1 <strong>React Native</strong>(2015)<br>     基于React开发的框架，使用JS和React的语法来构建原生移动应用。通过它，开发者可以使用相同的代码库构建同时运行在ios和Android平台上的原生应用。<br>3.2 <strong>Next.JS</strong>(2016)<br>     Next.JS是一个基于React的轻量级框架，提供了服务器端渲染、静态导出等功能，简化了React应用的开发和部署，使得React应用更易于优化和扩展，同时提供了更好的性能和SEO支持，成为构建现代Web应用的流行选择。 </p>
+<blockquote>
+<p>3.2.1 <strong>Server Actions</strong>(2023)<br>     2023年，Next.js14版本推出Server Actions，允许开发者直接在组件编写服务端代码,这张图被称作“科技圈最讨厌图片”，不少开发者困惑，这不就是PHP吗，因此Next.js也被戏称为Next.php<br>     <img width='300px' src='./images/Server%20Actions.png' /></p>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<p>3.3 <strong>Taro</strong>（2018）<br>     Taro除了是基于react之外，其他的功能与UniApp一模一样<br>     <code>2019年疫情爆发，人员统计、表单收集、健康码等等都是临时性、紧迫性的业务需求，没有现成的产品使用，过去呢种动辄上月甚至数年的开发周期显然不能满足，此时小程序承载了这一巨任，经常会有数天开发周期的小程序出现供防疫工作使用。在这里头UniApp和Taro充分发挥了它们的作用，尽管小程序是畸形发展的产物、UniApp和Taro开发会出现数不尽的兼容问题，但不可否认，这三年，它们对防疫工作的贡献是巨大的。</code></p>
+</blockquote>
+</blockquote>
+<blockquote>
+<ol start="4">
+<li>React与Vue的对比<ol>
+<li>国内比较推崇vue，而国外则比较偏爱React。目前国内中小公司仍以vue为主，不过部分也开始转向React，大公司则比较倾向React。</li>
+<li>Vue使用模版语法，对元素实行绑定，是传统的HTML、CSS、JS分离式编程</li>
+<li>React将用户界面抽象为组件的集合，强调组件之间的高度重用性，采用了反直觉的将HTML、CSS、JS封装在一起</li>
+</ol>
+</li>
+</ol>
+</blockquote>
+</li>
+</ol>
+<h4 id="PC-or-408-or-ELSE"><a href="#PC-or-408-or-ELSE" class="headerlink" title="PC or 408 or ELSE"></a>PC or 408 or ELSE</h4><ul>
+<li><p>理解 OSI 模型和 TCP&#x2F;IP 协议族</p>
+</li>
+<li><p>学习 SSL&#x2F;TLS 协议和加密通信技术，保障网络通信的安全性。</p>
+</li>
+<li><p>掌握常见的安全协议如 HTTPS、SSH 等的原理和使用方法。</p>
+</li>
+<li><p><font color='red'>XXS 跨站脚本</font></p>
+<blockquote>
+<p>学习 XSS 攻击的基本原理，包括攻击者向网站注入恶意脚本代码，以及受害者浏览网站时执行恶意脚本的过程。</p>
+</blockquote>
+<blockquote>
+<p>学习如何发现网站中的 XSS 漏洞，包括手动审查源代码、使用自动化工具进行漏洞扫描等方法。</p>
+</blockquote>
+<blockquote>
+<p>学习反射型 XSS、存储型 XSS 和 DOM 型 XSS 等不同类型的 XSS 攻击，了解它们的区别和特点。</p>
+</blockquote>
+<blockquote>
+<p>了解攻击者利用 XSS 漏洞进行的一些常见攻击，如窃取用户信息、会话劫持、网站篡改等。</p>
+</blockquote>
+</li>
+<li><p>DDOS 分布式拒绝服务攻击</p>
+<blockquote>
+<p>网络攻击，旨在使目标系统或网络资源不可用，通常是通过使目标系统或网络过载或崩溃来实现的。攻击者利用大量的合法或非法的网络流量向目标系统发送请求，导致目标系统无法处理正常的用户请求，从而使其服务不可用。</p>
+</blockquote>
+</li>
+</ul>
+<h4 id="Else-Tech"><a href="#Else-Tech" class="headerlink" title="Else Tech"></a>Else Tech</h4><p>一些分支以及完全不是前端的技术</p>
+<ul>
+<li><p>构建工具 <strong>Webpack</strong>(2012)、Parcel</p>
+<blockquote>
+<p>在2016年，在ES6&#x2F;ES 2015的一剂强心丸的影响下，Webpack支持ES Module，Webpack开始在前端社区迅速流行。特别是在React和Vue等流行框架的支持下，Webpack的使用逐渐成为前端开发的标配</p>
+</blockquote>
+</li>
+<li><p>包管理器<strong>npm</strong>、Yarn</p>
+</li>
+<li><p><strong>TypeScript</strong>（TS）(2012)</p>
+<blockquote>
+<p>2012年问世，由于JS是动态语言，意味着JS基本与大型项目无缘，或者需要承担巨大的维护代价，而TS的出现，使得JS可以像静态语言一样开发项目，赋予JS无限的可能。</p>
+</blockquote>
+<ul>
+<li><a href="https://www.bilibili.com/video/BV14Z4y1u7pi?t=27.0">黑马TS教程</a>(2020年 时长11:46:00)</li>
+<li><a href="https://ts.xcatliu.com/introduction/what-is-typescript.html">TS入门教程</a> – 个人博客所作(作者xcatliu) <font color='red'>推荐</font><blockquote>
+<p><a href="https://ts.xcatliu.com/introduction/what-is-typescript.html">https://ts.xcatliu.com/introduction/what-is-typescript.html</a><br>  是部署在GitHub Pages上的，很好的教程！</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p>Electron(2013 GitHub)</p>
+<blockquote>
+<p>基于Chromium和Node.js的跨平台桌面应用程序开发框架，允许开发者使用Web技术来构建原生桌面应用</p>
+</blockquote>
+</li>
+<li><p>Svelte(2016)</p>
+<blockquote>
+<p>Svelte 和 Vue、React一样都是现代化前端框架。<br>      不同的是，Svelte没有采用虚拟DOM技术，使得其更加轻巧。近年来，随着开发者对其性能优势和开发体验的认可，Svelte逐渐成为前端开发中备受推崇的框架之一。</p>
+</blockquote>
+<p>  SvelteKit(2021 Svelte官方)</p>
+<blockquote>
+<p>和Next、Nuxt相同功能的框架，极大丰富了Svelte生态系统</p>
+</blockquote>
+</li>
+<li><p><strong>Tailwind CSS</strong>(2017)</p>
+<blockquote>
+<p>在React和Vue等组件化开发框架的发展下，DOM的不用不再是难题，在大型项目下，CSS的复用已经名存实亡，于是Tailwind CSS出现了。<br>  Tailwind CSS的设计理念是提供一组原子类，以快速构建样式，而不需要编写自定义的CSS，这一开发方式深受开发者喜爱，并成为Next框架的默认组件。至此，Sass、Less完成了它们的历史使命。</p>
+</blockquote>
+</li>
+<li><p>Flutter(2017 Google)</p>
+<blockquote>
+<p>Flutter是一种用于构建跨平台移动应用的框架。可以同时在IOS、Android、Web和桌面平台运行。</p>
+</blockquote>
+</li>
+<li><p>NestJS(2017)</p>
+<blockquote>
+<p>NestJS设计灵感来源于 Angular 框架，借鉴了其模块化、依赖注入和装饰器等概念，用于构建高效且可扩展的服务端应用程序，弥补了Node生态中的一些框架空白，加上对TS的支持，为JS开发大型后端应用打下基础</p>
+</blockquote>
+</li>
+<li><p>ArkTS语言(2022 华为)</p>
+<blockquote>
+<p>华为确定改语言用于鸿蒙APP开发。是基于TS扩展的语言，意味着如果会Web前端，也就会鸿蒙应用开发。<br>  华为使用ArkTS语言，意味着瞬间拥有了大量的开发者基础，同时很可能促进所有的终端开发都采用JS，而那时前端技术将迎来大一统</p>
+</blockquote>
+</li>
+<li><p>PHP(后端服务器)</p>
+<blockquote>
+<p>PHP是世界上最好的语言。</p>
+</blockquote>
+</li>
+<li><p>Python(爬虫、脚本、大数据分析)</p>
+</li>
+<li><p>Java – Java框架 –Spring、SpringMVC、MyBatis、SpringBoot、SpringCloud&#x2F;&#x2F;Sprint家族</p>
+</li>
+</ul>
+]]></content>
+  </entry>
+  <entry>
+    <title>Pulled Post</title>
+    <url>/tsukimiya.github.io/PulledPost/index.html</url>
+    <content><![CDATA[<blockquote>
+<p><code>Here are many posts pulling for you, hope you&#39;ll gain something</code></p>
+</blockquote>
+<h2 id="Pulled-Bloger-or-Community"><a href="#Pulled-Bloger-or-Community" class="headerlink" title="Pulled Bloger or Community"></a>Pulled Bloger or Community</h2><ol>
+<li><p>沧沧凉凉 – <a href="https://juejin.cn/user/1380642337065421/posts">掘金</a> | <a href="https://www.zhihu.com/people/hatsune-87/posts">知乎</a></p>
+</li>
+<li><p>freecodecamp编程免费教学慈善组织 – <a href="https://www.freecodecamp.org/chinese/learn">官网</a> | <a href="https://www.freecodecamp.org/chinese/news/">专栏</a> | <a href="https://forum.freecodecamp.org/c/chinese/533">论坛</a></p>
+<blockquote>
+<p>官方支持中文，专栏和论坛有很多优质文章</p>
+</blockquote>
+</li>
+</ol>
+<h2 id="Front-end"><a href="#Front-end" class="headerlink" title="Front-end"></a>Front-end</h2><h2 id="MD"><a href="#MD" class="headerlink" title="MD"></a>MD</h2><ul>
+<li>markdown解析a标签或<code>[]()</code>的地址链接会把参数去掉，所以如果是带参数的连接会失效，最好标注一下连接地址，在浏览器点击未被解析的链接地址</li>
+</ul>
+<h2 id="Blog-Build"><a href="#Blog-Build" class="headerlink" title="Blog Build"></a>Blog Build</h2><ul>
+<li><a href="https://iknowwang.com/">如何架設網站：一個完全免費的教學（Blog推薦 + 網頁製作軟體 ）</a>(Wordpress)<blockquote>
+<p>讲到了很多建设网站的东西</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="WordPress"><a href="#WordPress" class="headerlink" title="WordPress"></a>WordPress</h3><ol>
+<li><a href="https://zhuanlan.zhihu.com/p/37896471">WordPress搭建教程：手把手教你搭建WordPress博客</a>(知乎)<blockquote>
+<p>域名推荐在 <a href="https://www.namesilo.com/?rid=d27fa32do">Namesilo</a> 购买，价格便宜，赠送永久免费的隐私保护。(0.99$&#x2F;第一年)<br>注册账户。注册信息建议如实填写，并勾选 “Keep my information private” 默认使用隐私保护。<br> 设置域名续费规则、注册时长等。在 “Have a Coupon……” 处 输入优惠码 okoff 或者 go2think ，点击 “Submit” 应用，优惠一美元。<br> 完成后点击 “CONTINUE” 付款，支持支付宝和 Paypal 等。</p>
+</blockquote>
+</li>
+</ol>
+<h3 id="Hexo-Next"><a href="#Hexo-Next" class="headerlink" title="Hexo + Next"></a>Hexo + Next</h3><ol>
+<li><a href="https://cloud.tencent.com/developer/article/2065803">Hexo图标样式参考</a>(腾讯云)<blockquote>
+<p>Hexo 支持FontAwesome图标，就是在代码中出现名字以fa fa开头的类名，本文介绍具具体图标来源和使用方法。</p>
+</blockquote>
+</li>
+</ol>
+<h2 id="408"><a href="#408" class="headerlink" title="408"></a>408</h2><h3 id="计算机网络原理"><a href="#计算机网络原理" class="headerlink" title="计算机网络原理"></a>计算机网络原理</h3><ul>
+<li>计算机网络原理 谢希仁（第8版）课后习题答案<ul>
+<li><a href="https://blog.csdn.net/weixin_45773137/article/details/126150861">第一章–分组交换 &#x2F; 时延 &#x2F; 性能指标 &#x2F; OSI七层模型和TCP&#x2F;IP五层模型–网络体系结构</a>(CSDN&#x2F;答案不全)<br>  不全的部分参考这个 <a href="https://cloud.tencent.com/developer/article/2055618">Post</a> (腾讯云&#x2F;Q10开始排版不好)</li>
+<li><a href="https://blog.csdn.net/weixin_62985813/article/details/134105653">第二章–物理层</a>(CSDN)</li>
+<li><a href="https://blog.csdn.net/weixin_45773137/article/details/126276788">第三章–数据链路层</a>(CSDN)</li>
+</ul>
+</li>
+</ul>
+<h2 id="ELSE"><a href="#ELSE" class="headerlink" title="ELSE"></a>ELSE</h2>]]></content>
+  </entry>
+  <entry>
+    <title>留言板</title>
+    <url>/tsukimiya.github.io/guestbook/index.html</url>
+    <content><![CDATA[<h1 id="欢迎来到我的博客！"><a href="#欢迎来到我的博客！" class="headerlink" title="欢迎来到我的博客！"></a>欢迎来到我的博客！</h1><blockquote>
+<p>欢迎在这里留言！任何问题都可以在这里留言，我会及时回复的。目前留言板块尚未配置完全，暂时无法使用，如有问题请邮箱：<br><a href="mailto:&#104;&#97;&#114;&#x69;&#x69;&#106;&#x69;&#99;&#111;&#64;&#x6f;&#x75;&#x74;&#108;&#111;&#111;&#x6b;&#x2e;&#99;&#111;&#x6d;">&#104;&#97;&#114;&#x69;&#x69;&#106;&#x69;&#99;&#111;&#64;&#x6f;&#x75;&#x74;&#108;&#111;&#111;&#x6b;&#x2e;&#99;&#111;&#x6d;</a><br><a href="mailto:&#49;&#56;&#51;&#50;&#x37;&#x31;&#x35;&#56;&#x33;&#56;&#x40;&#113;&#113;&#46;&#99;&#x6f;&#109;">&#49;&#56;&#51;&#50;&#x37;&#x31;&#x35;&#56;&#x33;&#56;&#x40;&#113;&#113;&#46;&#99;&#x6f;&#109;</a><br>欢迎给我发送邮件</p>
+</blockquote>
+]]></content>
+  </entry>
+  <entry>
+    <title>分类</title>
+    <url>/tsukimiya.github.io/categories/index.html</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>日程表</title>
+    <url>/tsukimiya.github.io/schedule/index.html</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>Task</title>
+    <url>/tsukimiya.github.io/schedule/task.html</url>
+    <content><![CDATA[<blockquote>
+<p>快给我滚去学习！给你一拳</p>
+</blockquote>
+<h2 id="Study-Tech"><a href="#Study-Tech" class="headerlink" title="Study Tech"></a>Study Tech</h2><h3 id="NOW"><a href="#NOW" class="headerlink" title="NOW"></a>NOW</h3><ol>
+<li><p>vue框架<br><a href="https://www.bilibili.com/video/BV1zq4y1p7ga?t=3.5&p=32">https://www.bilibili.com/video/BV1zq4y1p7ga?t=3.5&amp;p=32</a></p>
+</li>
+<li><p>pink html + css + 移动端后面这部分看一下<br><a href="https://www.bilibili.com/video/BV14J4114768/?p=389&vd_source=8a77e97d04f83a8e2b569f53a587210a">https://www.bilibili.com/video/BV14J4114768/?p=389&amp;vd_source=8a77e97d04f83a8e2b569f53a587210a</a><br> p357-388为 CSS2D、3D(这里有空也看一下吧，正好做一下笔记)<br> 后面<br> p389-p502大致都是移动端，包括流式布局，Less，响应式相关<br> p503-513为bootStrap</p>
+<ul>
+<li>bootStrap BS 以 Less (Sass), OOCSS 与 SMACSS 为基础</li>
+</ul>
+<p> 最后是项目</p>
+</li>
+<li><p>es6</p>
+<ul>
+<li>黑马视频<br> <a href="https://www.bilibili.com/video/BV1Kt411w7MP?t=9.0&p=91">https://www.bilibili.com/video/BV1Kt411w7MP?t=9.0&amp;p=91</a></li>
+<li>阮一峰es6书(手机进行中)<br> <a href="https://wangdoc.com/es6/intro">https://wangdoc.com/es6/intro</a></li>
+</ul>
+</li>
+<li><p>ajax + git</p>
+</li>
+</ol>
+<h3 id="NEXT"><a href="#NEXT" class="headerlink" title="NEXT"></a>NEXT</h3><ul>
+<li><p>微信小程序 + uni-app<br><a href="https://www.bilibili.com/video/BV1834y1676P?t=75.0">https://www.bilibili.com/video/BV1834y1676P?t=75.0</a></p>
+</li>
+<li><p>react<br><a href="https://www.bilibili.com/video/BV1gh411U7JD?t=50.3">https://www.bilibili.com/video/BV1gh411U7JD?t=50.3</a></p>
+</li>
+<li><p>js面试<br><a href="https://www.bilibili.com/video/BV1mH4y1Q7Z7?t=282.1">https://www.bilibili.com/video/BV1mH4y1Q7Z7?t=282.1</a></p>
+</li>
+</ul>
+<h3 id="TODO"><a href="#TODO" class="headerlink" title="TODO"></a>TODO</h3><ul>
+<li><p>响应式网页设计——怎样让一个网站在手机、平板上好看<br><a href="https://www.freecodecamp.org/chinese/news/responsive-web-design-how-to-make-a-website-look-good-on-phones-and-tablets/">https://www.freecodecamp.org/chinese/news/responsive-web-design-how-to-make-a-website-look-good-on-phones-and-tablets/</a></p>
+</li>
+<li><p>什么是 XSS？如何保护网站免受 DOM 跨站脚本攻击<br><a href="https://www.freecodecamp.org/chinese/news/how-to-protect-against-dom-xss-attacks/">https://www.freecodecamp.org/chinese/news/how-to-protect-against-dom-xss-attacks/</a></p>
+</li>
+<li><p>SEO优化？<br><a href="https://www.bilibili.com/video/BV14J4114768?t=4.5&p=311">https://www.bilibili.com/video/BV14J4114768?t=4.5&amp;p=311</a></p>
+</li>
+<li><p>上传服务器？<br><a href="https://www.bilibili.com/video/BV14J4114768?t=2.5&p=355">https://www.bilibili.com/video/BV14J4114768?t=2.5&amp;p=355</a></p>
+</li>
+<li><p>多栏布局<br>多栏布局是最常见的css布局之一，实现的方式不下10种，它们分别应对各种各样的业务场景，而bs的流式布局堪称撑起一片天，它的响应式看似独霸天下能满足80%的要求，但开发者们仍会保留20%用于追逐更高效的技巧，而且随着前端的发展，原生bs流式布局已然有更优的实现方式了。</p>
+</li>
+<li><p>Layui – 快速实现页面布局效果，</p>
+</li>
+<li><p>防抖 节流<br><a href="https://www.bilibili.com/video/BV1zs411h74a?t=5.0&p=66">https://www.bilibili.com/video/BV1zs411h74a?t=5.0&amp;p=66</a></p>
+</li>
+<li><p>web APIs(页面适配，less，Sass等一些)</p>
+<blockquote>
+<p>Sass是css预处理器，提供了类似编程语言的功能，包括变量、嵌套规则、混合、继承、函数等。帮助开发者更高效的编写和组织样式表<br>  Sass并不能直接在浏览器执行，所以好需要配置IDE插件或者专门工具来将Sass文件编译成css文件才能使用</p>
+</blockquote>
+<blockquote>
+<p>Less受Sass的启发，为开发人员提供更加高效便捷的样式表编写方式</p>
+</blockquote>
+</li>
+<li><p>es6，模块化，组件化，css3，less，scss</p>
+</li>
+<li><p>QQ的卡片是怎么写的？随机给一张图片的那种卡片</p>
+</li>
+</ul>
+]]></content>
+  </entry>
+  <entry>
+    <title>标签</title>
+    <url>/tsukimiya.github.io/tags/index.html</url>
+    <content><![CDATA[]]></content>
   </entry>
 </search>
