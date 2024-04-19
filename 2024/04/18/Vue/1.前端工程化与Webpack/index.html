@@ -28,7 +28,7 @@
 <meta property="og:description" content="目标：了解工程化的前端开发方式知道Webpack在实际开发中所起到的作用  我们只需要了解webpack的工作原理，并不要求我们掌握如何配置，因为工作中我们会使用一些工具如Vue-CLI脚手架，它们已经帮我们配置好了   [toc] 前端工程化相关概念前端工程化指的是:在企业级的前端项目开发中，把前端开发所需的工具、技术、流程、经验等进行规范化、标准化。好处:前端开发自成体系，有一套标准的开发方">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-04-18T15:41:46.733Z">
-<meta property="article:modified_time" content="2024-04-19T03:18:56.981Z">
+<meta property="article:modified_time" content="2024-04-19T09:39:03.966Z">
 <meta property="article:author" content="Ayu">
 <meta property="article:tag" content="Webpack">
 <meta property="article:tag" content="前端工程化">
@@ -236,7 +236,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-04-19 11:18:56" itemprop="dateModified" datetime="2024-04-19T11:18:56+08:00">2024-04-19</time>
+      <time title="修改时间：2024-04-19 17:39:03" itemprop="dateModified" datetime="2024-04-19T17:39:03+08:00">2024-04-19</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -312,8 +312,8 @@
 <h2 id="前端工程化相关概念"><a href="#前端工程化相关概念" class="headerlink" title="前端工程化相关概念"></a>前端工程化相关概念</h2><p>前端工程化指的是:在企业级的前端项目开发中，把前端开发所需的工具、技术、流程、经验等进行规范化、标准化。<br>好处:前端开发自成体系，有一套标准的开发方案和流程。</p>
 <p>实际的前端开发，是四个现代化：</p>
 <ul>
-<li><strong>模块化</strong> (js的模块化、cSs的模块化、资源的模块化) ———— js的复用</li>
-<li><strong>组件化</strong> (复用现有的U结构、样式、行为) ———— UI结构的复用</li>
+<li><strong>模块化</strong> (js的模块化、css的模块化、资源的模块化) ———— js的复用</li>
+<li><strong>组件化</strong> (复用现有的UI结构、样式、行为) ———— UI结构的复用</li>
 <li><strong>规范化</strong> (目录结构的划分、编码规范化、接口规范化、文档规范化、Git分支管理)</li>
 <li><strong>自动化</strong> (自动化构建、自动部署、自动化测试)</li>
 </ul>
@@ -427,7 +427,7 @@
 </ol>
 <ul>
 <li>use数组中指定的loader <strong>顺序是固定的</strong></li>
-<li>多个loader的调用顺序是: <strong>从后往前调用</strong><br>  loader在调用的时候，是从后往前调的 <a href='#loader调用的过程'>loader调用过程</a></li>
+<li>多个loader的调用顺序是: <strong>从后往前调用</strong><br>  loader在调用的时候，是从后往前调的 <a href='#loader-调用过程'>loader调用过程</a></li>
 </ul>
 </li>
 <li><p>打包处理 less文件</p>

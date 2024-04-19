@@ -9,7 +9,7 @@
 <h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><ol>
 <li>创建后端项目文件夹如serve</li>
 <li>初始化文件夹npm init -y<br> 在空项目的根目录中初始化一个package.json的包管理配置文件</li>
-<li>安装必要的包&#x2F;依赖<br> 安装Express ———— npm i <a href="mailto:&#x65;&#x78;&#112;&#x72;&#x65;&#x73;&#115;&#64;&#52;&#46;&#49;&#55;&#46;&#49;">&#x65;&#x78;&#112;&#x72;&#x65;&#x73;&#115;&#64;&#52;&#46;&#49;&#55;&#46;&#49;</a></li>
+<li>安装必要的包&#x2F;依赖<br> 安装Express ———— npm i <a href="mailto:&#101;&#120;&#x70;&#114;&#101;&#115;&#x73;&#x40;&#52;&#x2e;&#x31;&#55;&#46;&#x31;">&#101;&#120;&#x70;&#114;&#101;&#115;&#x73;&#x40;&#52;&#x2e;&#x31;&#55;&#46;&#x31;</a></li>
 <li>创建服务器文件，命名如app.js</li>
 </ol>
 <h2 id="创建简单的web服务器-及其-模块化"><a href="#创建简单的web服务器-及其-模块化" class="headerlink" title="创建简单的web服务器 及其 模块化"></a>创建简单的web服务器 及其 模块化</h2><ol>
@@ -87,8 +87,8 @@
 <h2 id="前端工程化相关概念"><a href="#前端工程化相关概念" class="headerlink" title="前端工程化相关概念"></a>前端工程化相关概念</h2><p>前端工程化指的是:在企业级的前端项目开发中，把前端开发所需的工具、技术、流程、经验等进行规范化、标准化。<br>好处:前端开发自成体系，有一套标准的开发方案和流程。</p>
 <p>实际的前端开发，是四个现代化：</p>
 <ul>
-<li><strong>模块化</strong> (js的模块化、cSs的模块化、资源的模块化) ———— js的复用</li>
-<li><strong>组件化</strong> (复用现有的U结构、样式、行为) ———— UI结构的复用</li>
+<li><strong>模块化</strong> (js的模块化、css的模块化、资源的模块化) ———— js的复用</li>
+<li><strong>组件化</strong> (复用现有的UI结构、样式、行为) ———— UI结构的复用</li>
 <li><strong>规范化</strong> (目录结构的划分、编码规范化、接口规范化、文档规范化、Git分支管理)</li>
 <li><strong>自动化</strong> (自动化构建、自动部署、自动化测试)</li>
 </ul>
@@ -202,7 +202,7 @@
 </ol>
 <ul>
 <li>use数组中指定的loader <strong>顺序是固定的</strong></li>
-<li>多个loader的调用顺序是: <strong>从后往前调用</strong><br>  loader在调用的时候，是从后往前调的 <a href='#loader调用的过程'>loader调用过程</a></li>
+<li>多个loader的调用顺序是: <strong>从后往前调用</strong><br>  loader在调用的时候，是从后往前调的 <a href='#loader-调用过程'>loader调用过程</a></li>
 </ul>
 </li>
 <li><p>打包处理 less文件</p>
