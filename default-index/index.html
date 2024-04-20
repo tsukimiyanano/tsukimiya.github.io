@@ -213,7 +213,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/tsukimiya.github.io/2024/04/20/Vue/2.vue%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8&%E5%B8%B8%E7%94%A8%E6%8C%87%E4%BB%A4/" class="post-title-link" itemprop="url">Vue的基本使用 & 常用指令</a>
+          <a href="/tsukimiya.github.io/2024/04/20/Vue/2.vue%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8&%E5%B8%B8%E7%94%A8%E6%8C%87%E4%BB%A4/" class="post-title-link" itemprop="url">Vue2 基本使用 & 常用指令</a>
         </h2>
 
         <div class="post-meta-container">
@@ -225,7 +225,7 @@
       <span class="post-meta-item-text">发表于</span>
       
 
-      <time title="创建时间：2024-04-20 12:51:08 / 修改时间：19:15:20" itemprop="dateCreated datePublished" datetime="2024-04-20T12:51:08+08:00">2024-04-20</time>
+      <time title="创建时间：2024-04-20 12:51:08 / 修改时间：20:13:31" itemprop="dateCreated datePublished" datetime="2024-04-20T12:51:08+08:00">2024-04-20</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -304,11 +304,9 @@
 </li>
 </ol>
 <h3 id="MVVM-–-vue的底层原理"><a href="#MVVM-–-vue的底层原理" class="headerlink" title="MVVM – vue的底层原理"></a>MVVM – vue的底层原理</h3><p><font color='red'>MVVM是 vue 实现数据驱动视图和双向数据绑定的核心原理。</font><br>MVVM 指的是 <strong>M</strong>odel(数据源)、<strong>V</strong>iew(视图) 和 <strong>V</strong>iew<strong>M</strong>odel(vue实例)，它把每个 HTML 页面都拆分成了这三个部分。</p>
-<p>在MVVM概念中:<br><strong>Model</strong> 表示当前页面渲染时所依赖的<strong>数据源</strong>。<br><strong>View</strong> 表示当前页面所渲染的 DOM 结构。(<strong>页面结构，也即是视图</strong>)<br><strong>ViewModel</strong> 表示 <strong>vue 的实例</strong>，它是<strong>MVVM的核心</strong>。(就是vue)<br><img width='300px' src='@/images/MVVM示意图.png' /></p>
+<p>在MVVM概念中:<br><strong>Model</strong> 表示当前页面渲染时所依赖的<strong>数据源</strong>。<br><strong>View</strong> 表示当前页面所渲染的 DOM 结构。(<strong>页面结构，也即是视图</strong>)<br><strong>ViewModel</strong> 表示 <strong>vue 的实例</strong>，它是<strong>MVVM的核心</strong>。(就是vue)<br><img src="/tsukimiya.github.io/images/vue/MVVM%E7%A4%BA%E6%84%8F%E5%9B%BE.png" alt="img"></p>
 <ul>
-<li>MVVM的工作原理：<br>  ViewModel作为MVVM的核心，是它把当前页面的<font color="green">数据源</font>(Model)和<font color="green">页面的结构</font>(View)连接在了一起。  <img width='500px' src='@/images/MVVM工作原理.png' />
-  **当数据源发生变化时**，会被ViewModel监听到，VM会根据最新的数据源**自动更新**页面的结构
-  **当表单元素的值发生变化时**，也会被VM监听到，VM会把变化过后最新的值**自动同步**到Model数据源中</li>
+<li>MVVM的工作原理：<br>  ViewModel作为MVVM的核心，是它把当前页面的<font color="green">数据源</font>(Model)和<font color="green">页面的结构</font>(View)连接在了一起。<br>  <img src="/tsukimiya.github.io/images/vue/MVVM%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86.png" alt="img"><br>  <strong>当数据源发生变化时</strong>，会被ViewModel监听到，VM会根据最新的数据源<strong>自动更新</strong>页面的结构<br>  <strong>当表单元素的值发生变化时</strong>，也会被VM监听到，VM会把变化过后最新的值<strong>自动同步</strong>到Model数据源中</li>
 </ul>
 <h3 id="vue的版本"><a href="#vue的版本" class="headerlink" title="vue的版本"></a>vue的版本</h3><p>当前，vue共有3个大版本，其中:<br>3.x版本的vue 于2020-09-19发布<br>2.x版本的vue 已于 2023 年 12 月 31 日停止维护<br>1.x版本的vue几乎被淘汰，不再建议学习与使用</p>
 <h2 id="基本使用"><a href="#基本使用" class="headerlink" title="基本使用"></a>基本使用</h2><ol>
