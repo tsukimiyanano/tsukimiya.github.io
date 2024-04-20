@@ -447,7 +447,7 @@
   <entry>
     <title>Hello Front-end</title>
     <url>/tsukimiya.github.io/index.html</url>
-    <content><![CDATA[<p>Welcome to my study blog! This is my continuously make up a main post. If you get any problems when using my blog, you can send the email to <a href="mailto:&#x68;&#x61;&#x72;&#x69;&#105;&#106;&#x69;&#x63;&#111;&#64;&#x6f;&#x75;&#x74;&#108;&#x6f;&#x6f;&#x6b;&#x2e;&#x63;&#111;&#x6d;">&#x68;&#x61;&#x72;&#x69;&#105;&#106;&#x69;&#x63;&#111;&#64;&#x6f;&#x75;&#x74;&#108;&#x6f;&#x6f;&#x6b;&#x2e;&#x63;&#111;&#x6d;</a></p>
+    <content><![CDATA[<p>Welcome to my study blog! This is my continuously make up a main post. If you get any problems when using my blog, you can send the email to <a href="mailto:&#104;&#x61;&#x72;&#105;&#x69;&#x6a;&#105;&#99;&#x6f;&#64;&#111;&#x75;&#x74;&#x6c;&#x6f;&#111;&#107;&#46;&#99;&#111;&#x6d;">&#104;&#x61;&#x72;&#105;&#x69;&#x6a;&#105;&#99;&#x6f;&#64;&#111;&#x75;&#x74;&#x6c;&#x6f;&#111;&#107;&#46;&#99;&#111;&#x6d;</a></p>
 <h2 id="Study-Guide"><a href="#Study-Guide" class="headerlink" title="Study Guide"></a>Study Guide</h2><center>Here provide you some study sources and study route.</center>
 <!-- This is [main tech](#Main-Line) -->
 <center>This is <a href='#Main-Line'>main tech</a></center>
@@ -735,14 +735,12 @@
 </li>
 </ul>
 <h2 id="求职"><a href="#求职" class="headerlink" title="求职"></a>求职</h2><ol>
-<li><a href="https://www.xuanfengge.com/it-job-seekers-resume-how-to-write.html">IT求职者的简历该如何编写</a>(轩枫阁)</li>
+<li><a href="https://www.xuanfengge.com/it-job-seekers-resume-how-to-write.html">IT求职者的简历该如何编写</a>(轩枫阁)<blockquote>
+<p>2014&#x2F;10&#x2F;14的帖子，不过还是有很多值得学习的地方</p>
+</blockquote>
+</li>
 </ol>
 ]]></content>
-  </entry>
-  <entry>
-    <title>分类</title>
-    <url>/tsukimiya.github.io/categories/index.html</url>
-    <content><![CDATA[]]></content>
   </entry>
   <entry>
     <title>Pulled Post</title>
@@ -799,7 +797,7 @@
 <p>hexo + next 似乎并不支持@作为索引根目录或source目录，至少试了不起作用<br> 可以将图片放到source的images文件下，然后用markdown引用<br> <code>![img](/images/xxx.png)</code><br> 在images前面有一个&#x2F;,表示根目录的意思，因为对于hexo来说它的资源文件的根目录就是source,如果想要更改可以修改_config.yml下的source_dir参数</p>
 </blockquote>
 <ul>
-<li><a href="https://blog.csdn.net/Miracle_ps/article/details/114791335">参考文章 – Hexo 添加图片</a>(CSDN)</li>
+<li>参考文章 – <a href="https://blog.csdn.net/Miracle_ps/article/details/114791335">Hexo 添加图片</a>(CSDN)</li>
 </ul>
 </li>
 </ol>
@@ -812,15 +810,23 @@
 </li>
 </ul>
 <h2 id="求职"><a href="#求职" class="headerlink" title="求职"></a>求职</h2><ol>
-<li><a href="https://www.xuanfengge.com/it-job-seekers-resume-how-to-write.html">IT求职者的简历该如何编写</a>(轩枫阁)</li>
+<li><a href="https://www.xuanfengge.com/it-job-seekers-resume-how-to-write.html">IT求职者的简历该如何编写</a>(轩枫阁)<blockquote>
+<p>2014&#x2F;10&#x2F;14的帖子，不过还是有很多值得学习的地方</p>
+</blockquote>
+</li>
 </ol>
 <h2 id="ELSE"><a href="#ELSE" class="headerlink" title="ELSE"></a>ELSE</h2>]]></content>
+  </entry>
+  <entry>
+    <title>分类</title>
+    <url>/tsukimiya.github.io/categories/index.html</url>
+    <content><![CDATA[]]></content>
   </entry>
   <entry>
     <title>留言板</title>
     <url>/tsukimiya.github.io/guestbook/index.html</url>
     <content><![CDATA[<h1 id="欢迎来到我的博客！"><a href="#欢迎来到我的博客！" class="headerlink" title="欢迎来到我的博客！"></a>欢迎来到我的博客！</h1><blockquote>
-<p>欢迎在这里留言！任何问题都可以在这里留言，我会及时回复的。目前留言板块尚未配置完全，暂时无法使用，如有问题请邮箱：<br><a href="mailto:&#104;&#x61;&#x72;&#x69;&#105;&#x6a;&#x69;&#x63;&#111;&#64;&#111;&#117;&#x74;&#108;&#x6f;&#111;&#x6b;&#x2e;&#x63;&#111;&#109;">&#104;&#x61;&#x72;&#x69;&#105;&#x6a;&#x69;&#x63;&#111;&#64;&#111;&#117;&#x74;&#108;&#x6f;&#111;&#x6b;&#x2e;&#x63;&#111;&#109;</a><br><a href="mailto:&#x31;&#x38;&#x33;&#x32;&#x37;&#x31;&#53;&#x38;&#51;&#56;&#64;&#x71;&#x71;&#x2e;&#x63;&#111;&#x6d;">&#x31;&#x38;&#x33;&#x32;&#x37;&#x31;&#53;&#x38;&#51;&#56;&#64;&#x71;&#x71;&#x2e;&#x63;&#111;&#x6d;</a><br>欢迎给我发送邮件</p>
+<p>欢迎在这里留言！任何问题都可以在这里留言，我会及时回复的。目前留言板块尚未配置完全，暂时无法使用，如有问题请邮箱：<br><a href="mailto:&#104;&#97;&#114;&#105;&#x69;&#x6a;&#x69;&#99;&#111;&#x40;&#x6f;&#117;&#x74;&#x6c;&#x6f;&#111;&#x6b;&#x2e;&#99;&#x6f;&#109;">&#104;&#97;&#114;&#105;&#x69;&#x6a;&#x69;&#99;&#111;&#x40;&#x6f;&#117;&#x74;&#x6c;&#x6f;&#111;&#x6b;&#x2e;&#99;&#x6f;&#109;</a><br><a href="mailto:&#x31;&#x38;&#x33;&#x32;&#55;&#49;&#x35;&#56;&#51;&#56;&#x40;&#x71;&#113;&#46;&#99;&#x6f;&#109;">&#x31;&#x38;&#x33;&#x32;&#55;&#49;&#x35;&#56;&#51;&#56;&#x40;&#x71;&#113;&#46;&#99;&#x6f;&#109;</a><br>欢迎给我发送邮件</p>
 </blockquote>
 ]]></content>
   </entry>
