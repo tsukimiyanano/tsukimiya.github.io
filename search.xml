@@ -348,21 +348,33 @@
   <entry>
     <title>Hello Front-end</title>
     <url>/tsukimiya.github.io/index.html</url>
-    <content><![CDATA[<p>Welcome to my study blog! This is my continuously make up a main post. If you get any problems when using my blog, you can send the email to <a href="mailto:&#x68;&#x61;&#114;&#x69;&#105;&#106;&#105;&#x63;&#111;&#x40;&#111;&#x75;&#x74;&#x6c;&#111;&#x6f;&#107;&#46;&#x63;&#111;&#x6d;">&#x68;&#x61;&#114;&#x69;&#105;&#106;&#105;&#x63;&#111;&#x40;&#111;&#x75;&#x74;&#x6c;&#111;&#x6f;&#107;&#46;&#x63;&#111;&#x6d;</a></p>
+    <content><![CDATA[<p>Welcome to my study blog! This is my continuously make up a main post. If you get any problems when using my blog, you can send the email to <a href="mailto:&#x68;&#x61;&#x72;&#105;&#x69;&#106;&#x69;&#x63;&#x6f;&#64;&#x6f;&#x75;&#116;&#x6c;&#111;&#x6f;&#x6b;&#46;&#99;&#x6f;&#109;">&#x68;&#x61;&#x72;&#105;&#x69;&#106;&#x69;&#x63;&#x6f;&#64;&#x6f;&#x75;&#116;&#x6c;&#111;&#x6f;&#x6b;&#46;&#99;&#x6f;&#109;</a></p>
 <h2 id="Study-Guide"><a href="#Study-Guide" class="headerlink" title="Study Guide"></a>Study Guide</h2><center>Here provide you some study sources and study route.</center>
 <!-- This is [main tech](#Main-Line) -->
 <center>This is <a href='#Main-Line'>main tech</a></center>
 
 <h3 id="Nice-Tools"><a href="#Nice-Tools" class="headerlink" title="Nice Tools"></a>Nice Tools</h3><ul>
-<li><p><a href="https://jquery.cuishifeng.cn/">JQuery API 中文在线文档</a>(<a href="https://jquery.cuishifeng.cn/">https://jquery.cuishifeng.cn/</a>) </p>
+<li><p><a href="https://jquery.cuishifeng.cn/">JQuery API 中文在线文档</a>(<a href="https://jquery.cuishifeng.cn/">https://jquery.cuishifeng.cn/</a>)</p>
+<blockquote>
+<p>不过很多API的解释和案例都有点解释不清。。</p>
+</blockquote>
 </li>
 <li><p><a href="https://regexr-cn.com/">正则表达式测试工具</a>(<a href="https://regexr-cn.com/">https://regexr-cn.com/</a>)</p>
+</li>
+<li><p><a href="https://base64.us/">Base64 在线编码解码</a>(<a href="https://base64.us/">https://base64.us/</a>)</p>
+<blockquote>
+<p>也可以选择图片文件来获取它的 Base64 编码的 DataURI 形式</p>
+</blockquote>
+</li>
+<li><p><a href="https://www.iconfont.cn/">阿里巴巴矢量他图标库</a>(<a href="https://www.iconfont.cn/">https://www.iconfont.cn/</a>)</p>
+</li>
+<li><p><a href="https://www.xuanfengge.com/funny/html5/element/">HTML5元素周期表</a>(<a href="https://www.xuanfengge.com/funny/html5/element/">https://www.xuanfengge.com/funny/html5/element/</a>)</p>
 </li>
 </ul>
 <h3 id="Guide-Book"><a href="#Guide-Book" class="headerlink" title="Guide Book"></a>Guide Book</h3><ul>
 <li>ES6<ul>
 <li>《ECMAScript 6 教程》– 阮一峰 <a href="https://es6.ruanyifeng.com/">官方</a> <a href="https://wangdoc.com/es6/">网道镜像</a> <blockquote>
-<p>网道(<a href="https://wangdoc.com/)%E6%98%AF%E4%B8%80%E4%B8%AA%E6%96%87%E6%A1%A3%E7%BD%91%E7%AB%99%EF%BC%8C%E6%8F%90%E4%BE%9B%E4%BA%92%E8%81%94%E7%BD%91%E5%BC%80%E5%8F%91%E6%96%87%E6%A1%A3%E3%80%82PC%E6%98%BE%E7%A4%BA%E6%9B%B4%E4%BD%B3%E3%80%82">https://wangdoc.com/)是一个文档网站，提供互联网开发文档。PC显示更佳。</a><br>  阮一峰博客的移动端显示更佳</p>
+<p>网道(<a href="https://wangdoc.com/">https://wangdoc.com/</a>) 是一个文档网站，提供互联网开发文档。PC显示更佳。<br>  阮一峰博客的移动端显示更佳</p>
 </blockquote>
 </li>
 </ul>
@@ -432,7 +444,7 @@
 <p>Less受Sass的启发，为开发人员提供更加高效便捷的样式表编写方式</p>
 </blockquote>
 <blockquote>
-<p>ES6对JS进行了语法改进，还增加了<strong>类和继承、Promise等特性</strong>，最重要的是<strong>制定了模块化标准</strong>，为开发者提供了更好的开发工具和语言特性，使得JS变的更加现代化、强大灵活<br> <a href="https://www.bilibili.com/video/BV1Kt411w7MP?t=9.0&p=91">黑马ES6教程</a> (19.7.31 | 91-122p)<br> 阮一峰es6教程 – <a href="https://es6.ruanyifeng.com/">官方</a> | <a href="https://wangdoc.com/es6/intro">网道镜像</a></p>
+<p>ES6对JS进行了语法改进，还增加了<strong>类和继承、Promise等特性</strong>，最重要的是<strong>制定了模块化标准</strong>，为开发者提供了更好的开发工具和语言特性，使得JS变的更加现代化、强大灵活<br> <a href="https://www.bilibili.com/video/BV1Kt411w7MP?t=9.0&p=91">黑马ES6教程</a> (19.7.31 | 91-122p)<br> 阮一峰es6教程 – <a href="https://es6.ruanyifeng.com/">官方</a> | <a href="https://wangdoc.com/es6/intro">网道镜像</a> <font color="red">推荐</font></p>
 </blockquote>
 </li>
 <li><p>前端库&#x2F;工具 jQuery – bootStrap – ajax</p>
@@ -615,6 +627,11 @@
 ]]></content>
   </entry>
   <entry>
+    <title>分类</title>
+    <url>/tsukimiya.github.io/categories/index.html</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
     <title>Pulled Post</title>
     <url>/tsukimiya.github.io/PulledPost/index.html</url>
     <content><![CDATA[<blockquote>
@@ -628,11 +645,19 @@
 <p>官方支持中文，专栏和论坛有很多优质文章</p>
 </blockquote>
 </li>
+<li><p><a href="https://www.xuanfengge.com/">轩枫阁</a> <font color="red">墙裂Pull!!</font></p>
+<blockquote>
+<p>前端大神的个人博客！腾讯微信前端工程师！ orz_<br> <a href="https://www.xuanfengge.com/funny/">SOME NB H5&amp;C3&amp;Animation orz_</a>(H5元素周期表就出自这里)<br> look older，but niubility build from 2013</p>
+</blockquote>
+</li>
 </ol>
-<h2 id="Front-end"><a href="#Front-end" class="headerlink" title="Front-end"></a>Front-end</h2><h2 id="MD"><a href="#MD" class="headerlink" title="MD"></a>MD</h2><ul>
-<li>markdown解析a标签或<code>[]()</code>的地址链接会把参数去掉，所以如果是带参数的连接会失效，最好标注一下连接地址，在浏览器点击未被解析的链接地址</li>
-</ul>
-<h2 id="Blog-Build"><a href="#Blog-Build" class="headerlink" title="Blog Build"></a>Blog Build</h2><ul>
+<h2 id="Front-end"><a href="#Front-end" class="headerlink" title="Front-end"></a>Front-end</h2><h3 id="H5"><a href="#H5" class="headerlink" title="H5"></a>H5</h3><ol>
+<li><a href="https://www.xuanfengge.com/funny/html5/spider/">逼真的蜘蛛</a><blockquote>
+<p>有时间仿一下，感觉和之前见到的一个博客磁吸线条成网的背景原理相似</p>
+</blockquote>
+</li>
+</ol>
+<h2 id="MD"><a href="#MD" class="headerlink" title="MD"></a>MD</h2><h2 id="Blog-Build"><a href="#Blog-Build" class="headerlink" title="Blog Build"></a>Blog Build</h2><ul>
 <li><a href="https://iknowwang.com/">如何架設網站：一個完全免費的教學（Blog推薦 + 網頁製作軟體 ）</a>(Wordpress)<blockquote>
 <p>讲到了很多建设网站的东西</p>
 </blockquote>
@@ -640,7 +665,7 @@
 </ul>
 <h3 id="WordPress"><a href="#WordPress" class="headerlink" title="WordPress"></a>WordPress</h3><ol>
 <li><a href="https://zhuanlan.zhihu.com/p/37896471">WordPress搭建教程：手把手教你搭建WordPress博客</a>(知乎)<blockquote>
-<p>域名推荐在 <a href="https://www.namesilo.com/?rid=d27fa32do">Namesilo</a> 购买，价格便宜，赠送永久免费的隐私保护。(0.99$&#x2F;第一年)<br>注册账户。注册信息建议如实填写，并勾选 “Keep my information private” 默认使用隐私保护。<br> 设置域名续费规则、注册时长等。在 “Have a Coupon……” 处 输入优惠码 okoff 或者 go2think ，点击 “Submit” 应用，优惠一美元。<br> 完成后点击 “CONTINUE” 付款，支持支付宝和 Paypal 等。</p>
+<p>域名推荐在 <a href="https://www.namesilo.com/?rid=d27fa32do">Namesilo</a> 购买，价格便宜，赠送永久免费的隐私保护。(0.99$&#x2F;第一年)<br>注册账户。注册信息建议如实填写，并勾选“Keep my information private”默认使用隐私保护。<br> 设置域名续费规则、注册时长等。在“Have a Coupon……”处输入优惠码 okoff 或者 go2think，点击“Submit”应用，优惠一美元。<br> 完成后点击“CONTINUE”付款，支持支付宝和 Paypal 等。</p>
 </blockquote>
 </li>
 </ol>
@@ -664,14 +689,9 @@
     <title>留言板</title>
     <url>/tsukimiya.github.io/guestbook/index.html</url>
     <content><![CDATA[<h1 id="欢迎来到我的博客！"><a href="#欢迎来到我的博客！" class="headerlink" title="欢迎来到我的博客！"></a>欢迎来到我的博客！</h1><blockquote>
-<p>欢迎在这里留言！任何问题都可以在这里留言，我会及时回复的。目前留言板块尚未配置完全，暂时无法使用，如有问题请邮箱：<br><a href="mailto:&#104;&#97;&#114;&#x69;&#x69;&#106;&#x69;&#99;&#111;&#64;&#x6f;&#x75;&#x74;&#108;&#111;&#111;&#x6b;&#x2e;&#99;&#111;&#x6d;">&#104;&#97;&#114;&#x69;&#x69;&#106;&#x69;&#99;&#111;&#64;&#x6f;&#x75;&#x74;&#108;&#111;&#111;&#x6b;&#x2e;&#99;&#111;&#x6d;</a><br><a href="mailto:&#49;&#56;&#51;&#50;&#x37;&#x31;&#x35;&#56;&#x33;&#56;&#x40;&#113;&#113;&#46;&#99;&#x6f;&#109;">&#49;&#56;&#51;&#50;&#x37;&#x31;&#x35;&#56;&#x33;&#56;&#x40;&#113;&#113;&#46;&#99;&#x6f;&#109;</a><br>欢迎给我发送邮件</p>
+<p>欢迎在这里留言！任何问题都可以在这里留言，我会及时回复的。目前留言板块尚未配置完全，暂时无法使用，如有问题请邮箱：<br><a href="mailto:&#x68;&#x61;&#x72;&#105;&#105;&#x6a;&#105;&#99;&#111;&#x40;&#x6f;&#117;&#116;&#x6c;&#x6f;&#x6f;&#x6b;&#x2e;&#x63;&#111;&#x6d;">&#x68;&#x61;&#x72;&#105;&#105;&#x6a;&#105;&#99;&#111;&#x40;&#x6f;&#117;&#116;&#x6c;&#x6f;&#x6f;&#x6b;&#x2e;&#x63;&#111;&#x6d;</a><br><a href="mailto:&#49;&#56;&#x33;&#50;&#55;&#x31;&#x35;&#56;&#51;&#x38;&#x40;&#113;&#113;&#x2e;&#99;&#111;&#109;">&#49;&#56;&#x33;&#50;&#55;&#x31;&#x35;&#56;&#51;&#x38;&#x40;&#113;&#113;&#x2e;&#99;&#111;&#109;</a><br>欢迎给我发送邮件</p>
 </blockquote>
 ]]></content>
-  </entry>
-  <entry>
-    <title>分类</title>
-    <url>/tsukimiya.github.io/categories/index.html</url>
-    <content><![CDATA[]]></content>
   </entry>
   <entry>
     <title>日程表</title>
@@ -684,14 +704,27 @@
     <content><![CDATA[<blockquote>
 <p>快给我滚去学习！给你一拳</p>
 </blockquote>
-<h2 id="Study-Tech"><a href="#Study-Tech" class="headerlink" title="Study Tech"></a>Study Tech</h2><h3 id="NOW"><a href="#NOW" class="headerlink" title="NOW"></a>NOW</h3><ol>
+<h2 id="Study-Tech"><a href="#Study-Tech" class="headerlink" title="Study Tech"></a>Study Tech</h2><h3 id="NOW"><a href="#NOW" class="headerlink" title="NOW"></a>NOW</h3><ul>
+<li><p>如何记录网站每天的访问量及访问IP？</p>
+</li>
+<li><p>在首页和标签页添加 字数统计+阅读时长 以及 打赏 &#x2F;&#x2F; 应该要修改源模版文件代码</p>
+<blockquote>
+<p>要将字数统计和阅读时长设置添加到首页和标签页，你需要在网站的主题或模板文件中进行修改。具体来说，你需要找到首页和标签页的模板文件，并在其中添加相应的代码以显示字数统计和阅读时长。<br>  通常，这些模板文件可以在你的网站主题文件夹中找到。你可以查看主题的文档或者在主题文件夹中搜索包含首页和标签页内容的模板文件。<br>  一旦找到了这些模板文件，你可以根据需要修改它们，添加类似以下的代码来显示字数统计和阅读时长：<br>  <figure class="highlight html"><table><tr><td class="code"><pre><span class="line">&#123;% if page.symbols %&#125;</span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>字数统计: &#123;&#123; page.symbols &#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">&#123;% endif %&#125;</span><br><span class="line"></span><br><span class="line">&#123;% if page.time %&#125;</span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>阅读时长: &#123;&#123; page.time &#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">&#123;% endif %&#125;</span><br></pre></td></tr></table></figure><br>请注意，具体的代码可能会因为你使用的网站平台或主题而有所不同。最好查阅你使用的平台或主题的文档，以确保正确添加字数统计和阅读时长功能。</p>
+</blockquote>
+</li>
+<li><p>markdown解析a标签或<code>[]()</code>的地址链接会把参数去掉，所以如果是带参数的连接会失效，最好标注一下连接地址，在浏览器点击未被解析的链接地址(解决一下这个问题，然后写一篇post)</p>
+<blockquote>
+<p>但是hexo解析之后生成的HTML页面上点击是没有问题的，把参数带上了<br>  hexo生成的HTML页面很多样式也和MD显示有区别，应该是内部处理了？</p>
+</blockquote>
+</li>
+</ul>
+<ol>
 <li><p>vue框架<br><a href="https://www.bilibili.com/video/BV1zq4y1p7ga?t=3.5&p=32">https://www.bilibili.com/video/BV1zq4y1p7ga?t=3.5&amp;p=32</a></p>
 </li>
-<li><p>pink html + css + 移动端后面这部分看一下<br><a href="https://www.bilibili.com/video/BV14J4114768/?p=389&vd_source=8a77e97d04f83a8e2b569f53a587210a">https://www.bilibili.com/video/BV14J4114768/?p=389&amp;vd_source=8a77e97d04f83a8e2b569f53a587210a</a><br> p357-388为 CSS2D、3D(这里有空也看一下吧，正好做一下笔记)<br> 后面<br> p389-p502大致都是移动端，包括流式布局，Less，响应式相关<br> p503-513为bootStrap</p>
-<ul>
-<li>bootStrap BS 以 Less (Sass), OOCSS 与 SMACSS 为基础</li>
-</ul>
-<p> 最后是项目</p>
+<li><p>pink html + css + 移动端后面这部分看一下</p>
+<blockquote>
+<p><a href="https://www.bilibili.com/video/BV14J4114768/?p=389">https://www.bilibili.com/video/BV14J4114768/?p=389</a><br> p357-388为 CSS2D、3D(这里有空也看一下吧，正好做一下笔记)<br> 后面<br> p389-p502大致都是移动端，包括流式布局，Less，响应式相关<br> p503-513为bootStrap<br> bootStrap BS 以 Less (Sass), OOCSS 与 SMACSS 为基础<br> 最后是项目</p>
+</blockquote>
 </li>
 <li><p>es6</p>
 <ul>
@@ -711,6 +744,10 @@
 </li>
 </ul>
 <h3 id="TODO"><a href="#TODO" class="headerlink" title="TODO"></a>TODO</h3><ul>
+<li><p>CSS 布局经典问题大全<br><a href="https://www.html-js.com/article/5889">https://www.html-js.com/article/5889</a></p>
+</li>
+<li><p>网站会DDOS攻击会有哪些反应，如何应对此现象？<br><a href="https://www.html-js.com/article/6657">https://www.html-js.com/article/6657</a></p>
+</li>
 <li><p>响应式网页设计——怎样让一个网站在手机、平板上好看<br><a href="https://www.freecodecamp.org/chinese/news/responsive-web-design-how-to-make-a-website-look-good-on-phones-and-tablets/">https://www.freecodecamp.org/chinese/news/responsive-web-design-how-to-make-a-website-look-good-on-phones-and-tablets/</a></p>
 </li>
 <li><p>什么是 XSS？如何保护网站免受 DOM 跨站脚本攻击<br><a href="https://www.freecodecamp.org/chinese/news/how-to-protect-against-dom-xss-attacks/">https://www.freecodecamp.org/chinese/news/how-to-protect-against-dom-xss-attacks/</a></p>
