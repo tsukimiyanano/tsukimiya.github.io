@@ -334,8 +334,9 @@
 <p>目标：<br>使用Vue指令完成页面结构的渲染<br>使用Vue调试工具辅助Vue的开发</p>
 </blockquote>
 <blockquote>
-<p><strong>掌握Vue的两个特性：数据驱动视图、双向数据绑定<br>    掌握Vue的底层原理 MVVM – model数据源、view视图&#x2F;页面结构、viewmodel vue实例<br>    掌握Vue六大类指令的使用</strong><br>[toc]</p>
+<p><strong>掌握Vue的两个特性：数据驱动视图、双向数据绑定<br>    掌握Vue的底层原理 MVVM – model数据源、view视图&#x2F;页面结构、viewmodel vue实例<br>    掌握Vue六大类指令的使用</strong><br>    新学到的东西 – 事件绑定指令中的：<a href="#param">参数问题</a>、<a href="#event">$event</a>、<a href="#modifier">事件修饰符</a>、<a href="#key">按键修饰符</a></p>
 </blockquote>
+<p>[toc]</p>
 <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p><a href="https://cn.vuejs.org/guide/introduction.html">官方文档</a><br>Vue是一套<strong>用于构建用户界面的前端框架</strong><br>构建用户界面：用vue往html页面填充数据<br>框架：一套现成的解决方案，程序员只能遵守框架的规范去编写业务功能</p>
 <p>学习vue就是学习vue框架中规定的用法<br><strong>vue的指令、组件(是对UI结构的复用)、路由、Vuex、vue组件库</strong></p>
 <h3 id="vue的两个特性："><a href="#vue的两个特性：" class="headerlink" title="vue的两个特性："></a>vue的两个特性：</h3><ol>
@@ -388,7 +389,7 @@
 <p>在调用的地方传参 <code>@click=&quot;add(1)&quot;</code></p>
 </blockquote>
 </li>
-<li><p><font color="red">参数问题</font></p>
+<li><p><font id="param" color="red">参数问题</font></p>
 <blockquote>
 <p>如果定义的函数变量是有参数的</p>
 </blockquote>
@@ -402,12 +403,12 @@
 <li><code>add(a,b)&#123;&#125; -- @click=&quot;add&quot;</code> a&#x2F;&#x2F;事件对象PointerEvent ，b&#x2F;&#x2F;undefined</li>
 </ol>
 </li>
-<li><p><font color="red">事件对象$event</font>(不常用)</p>
+<li><p><font id="event" color="red">事件对象$event</font>(不常用)</p>
 <blockquote>
 <p>vue提供了内置变量<code>$event</code>,它就是原生DOM的事件对象e<br>  在绑定事件的时候，如果不传参 <code>add(e)&#123;&#125; -- @click=&quot;add&quot;</code> , 我们会接受到一个事件对象e<br>  如果传参，<code>@click=&quot;add(1)&quot;</code>,我们就接收不到这个事件对象了<br>  <strong>我们既要传参，又要用到事件对象e</strong>，如想要从事件对象上拿到e.target(触发事件的事件源) ，这个时候就可以用<code>$event</code><br>  <strong><code>$event</code>使用：传<code>$event</code>作参数进去，拿形参接收</strong><br>  <code>add(n,e)&#123;&#125; --  @click=&quot;add(1,$event)&quot;</code><br>  或<code>add(e,n)&#123;&#125; --  @click=&quot;add($event,1)&quot;</code></p>
 </blockquote>
 </li>
-<li><p><font color="red">事件修饰符</font></p>
+<li><p><font id="modifier" color="red">事件修饰符</font></p>
 <blockquote>
 <p>在事件处理函数中，调用<code>event.preventDefault()</code>(阻止默认行为)或<code>event.stopPropagation()</code>(阻止冒泡)是非常常见的需求。<br>  因此，vue提供了<strong>事件修饰符</strong>的概念，辅助程序员更方便的<strong>对事件的触发进行控制</strong>。<br>  如 <code>@click.prevent=&quot;show&quot;</code>绑定了show事件，同时阻止了默认行为<br>  常见的5个事件修饰符如下：</p>
 </blockquote>
@@ -441,6 +442,12 @@
 <td>只有在 event.target 是当前元素自身时 触发事件处理函数</td>
 </tr>
 </tbody></table>
+<ul>
+<li><font id="key" color="red">按键修饰符</font><blockquote>
+<p>在<strong>监听键盘事件</strong>时，经常需要<strong>判断详细的按键</strong>。<br>  此时，可以为键盘的相关事件添加<strong>按键修饰符</strong>，如：<br>  <code>&lt;input @keyup.enter=&quot;submit&quot;&gt;</code> – 只有在<code>key</code>是<code>Enter</code>时，调用<code>vm.submit()</code><br>  <code>&lt;input @keyup.esc=&quot;clearInput&quot;&gt;</code> – 只有在<code>key</code>是<code>Esc</code>时，调用<code>vm.clearInput()</code></p>
+</blockquote>
+</li>
+</ul>
 </li>
 <li><p>双向绑定指令 </p>
 </li>
@@ -480,7 +487,7 @@
   <entry>
     <title>Hello Front-end</title>
     <url>/tsukimiya.github.io/index.html</url>
-    <content><![CDATA[<p>Welcome to my study blog! This is my continuously make up a main post. If you get any problems when using my blog, you can send the email to <a href="mailto:&#x68;&#x61;&#114;&#x69;&#x69;&#x6a;&#105;&#x63;&#111;&#x40;&#x6f;&#x75;&#116;&#108;&#x6f;&#x6f;&#107;&#x2e;&#99;&#111;&#x6d;">&#x68;&#x61;&#114;&#x69;&#x69;&#x6a;&#105;&#x63;&#111;&#x40;&#x6f;&#x75;&#116;&#108;&#x6f;&#x6f;&#107;&#x2e;&#99;&#111;&#x6d;</a></p>
+    <content><![CDATA[<p>Welcome to my study blog! This is my continuously make up a main post. If you get any problems when using my blog, you can send the email to <a href="mailto:&#x68;&#x61;&#x72;&#x69;&#x69;&#106;&#x69;&#99;&#111;&#64;&#111;&#x75;&#x74;&#108;&#x6f;&#111;&#x6b;&#46;&#99;&#x6f;&#109;">&#x68;&#x61;&#x72;&#x69;&#x69;&#106;&#x69;&#99;&#111;&#64;&#111;&#x75;&#x74;&#108;&#x6f;&#111;&#x6b;&#46;&#99;&#x6f;&#109;</a></p>
 <h2 id="Study-Guide"><a href="#Study-Guide" class="headerlink" title="Study Guide"></a>Study Guide</h2><center>Here provide you some study sources and study route.</center>
 <!-- This is [main tech](#Main-Line) -->
 <center>This is <a href='#Main-Line'>main tech</a></center>
@@ -868,18 +875,13 @@
     <title>留言板</title>
     <url>/tsukimiya.github.io/guestbook/index.html</url>
     <content><![CDATA[<h1 id="欢迎来到我的博客！"><a href="#欢迎来到我的博客！" class="headerlink" title="欢迎来到我的博客！"></a>欢迎来到我的博客！</h1><blockquote>
-<p>欢迎在这里留言！任何问题都可以在这里留言，我会及时回复的。目前留言板块尚未配置完全，暂时无法使用，如有问题请邮箱：<br><a href="mailto:&#x68;&#97;&#114;&#x69;&#x69;&#x6a;&#105;&#x63;&#x6f;&#64;&#x6f;&#x75;&#x74;&#108;&#111;&#111;&#107;&#46;&#x63;&#111;&#x6d;">&#x68;&#97;&#114;&#x69;&#x69;&#x6a;&#105;&#x63;&#x6f;&#64;&#x6f;&#x75;&#x74;&#108;&#111;&#111;&#107;&#46;&#x63;&#111;&#x6d;</a><br><a href="mailto:&#x31;&#56;&#51;&#x32;&#55;&#x31;&#53;&#x38;&#51;&#56;&#64;&#113;&#113;&#x2e;&#99;&#x6f;&#x6d;">&#x31;&#56;&#51;&#x32;&#55;&#x31;&#53;&#x38;&#51;&#56;&#64;&#113;&#113;&#x2e;&#99;&#x6f;&#x6d;</a><br>欢迎给我发送邮件</p>
+<p>欢迎在这里留言！任何问题都可以在这里留言，我会及时回复的。目前留言板块尚未配置完全，暂时无法使用，如有问题请邮箱：<br><a href="mailto:&#104;&#97;&#x72;&#105;&#105;&#106;&#x69;&#99;&#x6f;&#64;&#x6f;&#x75;&#x74;&#108;&#111;&#111;&#107;&#46;&#99;&#x6f;&#x6d;">&#104;&#97;&#x72;&#105;&#105;&#106;&#x69;&#99;&#x6f;&#64;&#x6f;&#x75;&#x74;&#108;&#111;&#111;&#107;&#46;&#99;&#x6f;&#x6d;</a><br><a href="mailto:&#49;&#x38;&#x33;&#50;&#55;&#49;&#53;&#56;&#x33;&#x38;&#x40;&#113;&#113;&#x2e;&#99;&#111;&#109;">&#49;&#x38;&#x33;&#50;&#55;&#49;&#53;&#56;&#x33;&#x38;&#x40;&#113;&#113;&#x2e;&#99;&#111;&#109;</a><br>欢迎给我发送邮件</p>
 </blockquote>
 ]]></content>
   </entry>
   <entry>
     <title>日程表</title>
     <url>/tsukimiya.github.io/schedule/index.html</url>
-    <content><![CDATA[]]></content>
-  </entry>
-  <entry>
-    <title>标签</title>
-    <url>/tsukimiya.github.io/tags/index.html</url>
     <content><![CDATA[]]></content>
   </entry>
   <entry>
@@ -977,5 +979,10 @@
 </li>
 </ul>
 ]]></content>
+  </entry>
+  <entry>
+    <title>标签</title>
+    <url>/tsukimiya.github.io/tags/index.html</url>
+    <content><![CDATA[]]></content>
   </entry>
 </search>

@@ -20,17 +20,17 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"tsukimiyanano.github.io","root":"/tsukimiya.github.io/","images":"/tsukimiya.github.io/images","scheme":"Pisces","darkmode":true,"version":"8.19.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/tsukimiya.github.io/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/tsukimiya.github.io/js/config.js"></script>
 
-    <meta name="description" content="目标：使用Vue指令完成页面结构的渲染使用Vue调试工具辅助Vue的开发   掌握Vue的两个特性：数据驱动视图、双向数据绑定    掌握Vue的底层原理 MVVM – model数据源、view视图&#x2F;页面结构、viewmodel vue实例    掌握Vue六大类指令的使用[toc]  简介官方文档Vue是一套用于构建用户界面的前端框架构建用户界面：用vue往html页面填充数据框架">
+    <meta name="description" content="目标：使用Vue指令完成页面结构的渲染使用Vue调试工具辅助Vue的开发   掌握Vue的两个特性：数据驱动视图、双向数据绑定    掌握Vue的底层原理 MVVM – model数据源、view视图&#x2F;页面结构、viewmodel vue实例    掌握Vue六大类指令的使用    新学到的东西 – 事件绑定指令中的：参数问题、$event、事件修饰符、按键修饰符  [toc] 简介官">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Vue2 基本使用 &amp; 常用指令">
 <meta property="og:url" content="https://tsukimiyanano.github.io/tsukimiya.github.io/2024/04/20/Vue/2.vue%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8&%E5%B8%B8%E7%94%A8%E6%8C%87%E4%BB%A4/index.html">
 <meta property="og:site_name" content="Ayu&#39;s Study Blog">
-<meta property="og:description" content="目标：使用Vue指令完成页面结构的渲染使用Vue调试工具辅助Vue的开发   掌握Vue的两个特性：数据驱动视图、双向数据绑定    掌握Vue的底层原理 MVVM – model数据源、view视图&#x2F;页面结构、viewmodel vue实例    掌握Vue六大类指令的使用[toc]  简介官方文档Vue是一套用于构建用户界面的前端框架构建用户界面：用vue往html页面填充数据框架">
+<meta property="og:description" content="目标：使用Vue指令完成页面结构的渲染使用Vue调试工具辅助Vue的开发   掌握Vue的两个特性：数据驱动视图、双向数据绑定    掌握Vue的底层原理 MVVM – model数据源、view视图&#x2F;页面结构、viewmodel vue实例    掌握Vue六大类指令的使用    新学到的东西 – 事件绑定指令中的：参数问题、$event、事件修饰符、按键修饰符  [toc] 简介官">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://tsukimiyanano.github.io/tsukimiya.github.io/images/vue/MVVM%E7%A4%BA%E6%84%8F%E5%9B%BE.png">
 <meta property="og:image" content="https://tsukimiyanano.github.io/tsukimiya.github.io/images/vue/MVVM%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86.png">
 <meta property="article:published_time" content="2024-04-20T04:51:08.735Z">
-<meta property="article:modified_time" content="2024-04-20T15:28:27.845Z">
+<meta property="article:modified_time" content="2024-04-20T15:48:16.071Z">
 <meta property="article:author" content="Ayu">
 <meta property="article:tag" content="Vue">
 <meta property="article:tag" content="Vue2">
@@ -233,7 +233,7 @@
       <span class="post-meta-item-text">发表于</span>
       
 
-      <time title="创建时间：2024-04-20 12:51:08 / 修改时间：23:28:27" itemprop="dateCreated datePublished" datetime="2024-04-20T12:51:08+08:00">2024-04-20</time>
+      <time title="创建时间：2024-04-20 12:51:08 / 修改时间：23:48:16" itemprop="dateCreated datePublished" datetime="2024-04-20T12:51:08+08:00">2024-04-20</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -278,7 +278,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>3.2k</span>
+      <span>3.4k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -299,8 +299,9 @@
 <p>目标：<br>使用Vue指令完成页面结构的渲染<br>使用Vue调试工具辅助Vue的开发</p>
 </blockquote>
 <blockquote>
-<p><strong>掌握Vue的两个特性：数据驱动视图、双向数据绑定<br>    掌握Vue的底层原理 MVVM – model数据源、view视图&#x2F;页面结构、viewmodel vue实例<br>    掌握Vue六大类指令的使用</strong><br>[toc]</p>
+<p><strong>掌握Vue的两个特性：数据驱动视图、双向数据绑定<br>    掌握Vue的底层原理 MVVM – model数据源、view视图&#x2F;页面结构、viewmodel vue实例<br>    掌握Vue六大类指令的使用</strong><br>    新学到的东西 – 事件绑定指令中的：<a href="#param">参数问题</a>、<a href="#event">$event</a>、<a href="#modifier">事件修饰符</a>、<a href="#key">按键修饰符</a></p>
 </blockquote>
+<p>[toc]</p>
 <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p><a target="_blank" rel="noopener" href="https://cn.vuejs.org/guide/introduction.html">官方文档</a><br>Vue是一套<strong>用于构建用户界面的前端框架</strong><br>构建用户界面：用vue往html页面填充数据<br>框架：一套现成的解决方案，程序员只能遵守框架的规范去编写业务功能</p>
 <p>学习vue就是学习vue框架中规定的用法<br><strong>vue的指令、组件(是对UI结构的复用)、路由、Vuex、vue组件库</strong></p>
 <h3 id="vue的两个特性："><a href="#vue的两个特性：" class="headerlink" title="vue的两个特性："></a>vue的两个特性：</h3><ol>
@@ -353,7 +354,7 @@
 <p>在调用的地方传参 <code>@click=&quot;add(1)&quot;</code></p>
 </blockquote>
 </li>
-<li><p><font color="red">参数问题</font></p>
+<li><p><font id="param" color="red">参数问题</font></p>
 <blockquote>
 <p>如果定义的函数变量是有参数的</p>
 </blockquote>
@@ -367,12 +368,12 @@
 <li><code>add(a,b)&#123;&#125; -- @click=&quot;add&quot;</code> a&#x2F;&#x2F;事件对象PointerEvent ，b&#x2F;&#x2F;undefined</li>
 </ol>
 </li>
-<li><p><font color="red">事件对象$event</font>(不常用)</p>
+<li><p><font id="event" color="red">事件对象$event</font>(不常用)</p>
 <blockquote>
 <p>vue提供了内置变量<code>$event</code>,它就是原生DOM的事件对象e<br>  在绑定事件的时候，如果不传参 <code>add(e)&#123;&#125; -- @click=&quot;add&quot;</code> , 我们会接受到一个事件对象e<br>  如果传参，<code>@click=&quot;add(1)&quot;</code>,我们就接收不到这个事件对象了<br>  <strong>我们既要传参，又要用到事件对象e</strong>，如想要从事件对象上拿到e.target(触发事件的事件源) ，这个时候就可以用<code>$event</code><br>  <strong><code>$event</code>使用：传<code>$event</code>作参数进去，拿形参接收</strong><br>  <code>add(n,e)&#123;&#125; --  @click=&quot;add(1,$event)&quot;</code><br>  或<code>add(e,n)&#123;&#125; --  @click=&quot;add($event,1)&quot;</code></p>
 </blockquote>
 </li>
-<li><p><font color="red">事件修饰符</font></p>
+<li><p><font id="modifier" color="red">事件修饰符</font></p>
 <blockquote>
 <p>在事件处理函数中，调用<code>event.preventDefault()</code>(阻止默认行为)或<code>event.stopPropagation()</code>(阻止冒泡)是非常常见的需求。<br>  因此，vue提供了<strong>事件修饰符</strong>的概念，辅助程序员更方便的<strong>对事件的触发进行控制</strong>。<br>  如 <code>@click.prevent=&quot;show&quot;</code>绑定了show事件，同时阻止了默认行为<br>  常见的5个事件修饰符如下：</p>
 </blockquote>
@@ -406,6 +407,12 @@
 <td>只有在 event.target 是当前元素自身时 触发事件处理函数</td>
 </tr>
 </tbody></table>
+<ul>
+<li><font id="key" color="red">按键修饰符</font><blockquote>
+<p>在<strong>监听键盘事件</strong>时，经常需要<strong>判断详细的按键</strong>。<br>  此时，可以为键盘的相关事件添加<strong>按键修饰符</strong>，如：<br>  <code>&lt;input @keyup.enter=&quot;submit&quot;&gt;</code> – 只有在<code>key</code>是<code>Enter</code>时，调用<code>vm.submit()</code><br>  <code>&lt;input @keyup.esc=&quot;clearInput&quot;&gt;</code> – 只有在<code>key</code>是<code>Esc</code>时，调用<code>vm.clearInput()</code></p>
+</blockquote>
+</li>
+</ul>
 </li>
 <li><p>双向绑定指令 </p>
 </li>
@@ -485,7 +492,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">19k</span>
+    <span title="站点总字数">20k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
