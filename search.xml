@@ -334,7 +334,7 @@
 <p>目标：<br>使用Vue指令完成页面结构的渲染<br>使用Vue调试工具辅助Vue的开发</p>
 </blockquote>
 <blockquote>
-<p><strong>了解Vue的两个特性：数据驱动视图、双向数据绑定<br>    了解Vue的底层原理 MVVM – model数据源、view视图&#x2F;页面结构、viewmodel vue实例</strong><br>[toc]</p>
+<p><strong>掌握Vue的两个特性：数据驱动视图、双向数据绑定<br>    掌握Vue的底层原理 MVVM – model数据源、view视图&#x2F;页面结构、viewmodel vue实例<br>    掌握Vue六大类指令的使用</strong><br>[toc]</p>
 </blockquote>
 <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p><a href="https://cn.vuejs.org/guide/introduction.html">官方文档</a><br>Vue是一套<strong>用于构建用户界面的前端框架</strong><br>构建用户界面：用vue往html页面填充数据<br>框架：一套现成的解决方案，程序员只能遵守框架的规范去编写业务功能</p>
 <p>学习vue就是学习vue框架中规定的用法<br><strong>vue的指令、组件(是对UI结构的复用)、路由、Vuex、vue组件库</strong></p>
@@ -346,22 +346,79 @@
 </li>
 </ol>
 <h3 id="MVVM-–-vue的底层原理"><a href="#MVVM-–-vue的底层原理" class="headerlink" title="MVVM – vue的底层原理"></a>MVVM – vue的底层原理</h3><p><font color='red'>MVVM是 vue 实现数据驱动视图和双向数据绑定的核心原理。</font><br>MVVM 指的是 <strong>M</strong>odel(数据源)、<strong>V</strong>iew(视图) 和 <strong>V</strong>iew<strong>M</strong>odel(vue实例)，它把每个 HTML 页面都拆分成了这三个部分。</p>
-<p>在MVVM概念中:<br><strong>Model</strong> 表示当前页面渲染时所依赖的<strong>数据源</strong>。<br><strong>View</strong> 表示当前页面所渲染的 DOM 结构。(<strong>页面结构，也即是视图</strong>)<br><strong>ViewModel</strong> 表示 <strong>vue 的实例</strong>，它是<strong>MVVM的核心</strong>。(就是vue)<br><img width='300px' src='../../images/MVVM示意图.png' /></p>
+<p>在MVVM概念中:<br><strong>Model</strong> 表示当前页面渲染时所依赖的<strong>数据源</strong>。<br><strong>View</strong> 表示当前页面所渲染的 DOM 结构。(<strong>页面结构，也即是视图</strong>)<br><strong>ViewModel</strong> 表示 <strong>vue 的实例</strong>，它是<strong>MVVM的核心</strong>。(就是vue)<br><img width='300px' src='@/images/MVVM示意图.png' /></p>
 <ul>
-<li>MVVM的工作原理：<br>  ViewModel作为MVVM的核心，是它把当前页面的<font color="green">数据源</font>(Model)和<font color="green">页面的结构</font>(View)连接在了一起。  <img width='500px' src='../../images/MVVM工作原理.png' />
+<li>MVVM的工作原理：<br>  ViewModel作为MVVM的核心，是它把当前页面的<font color="green">数据源</font>(Model)和<font color="green">页面的结构</font>(View)连接在了一起。  <img width='500px' src='@/images/MVVM工作原理.png' />
   **当数据源发生变化时**，会被ViewModel监听到，VM会根据最新的数据源**自动更新**页面的结构
   **当表单元素的值发生变化时**，也会被VM监听到，VM会把变化过后最新的值**自动同步**到Model数据源中</li>
 </ul>
 <h3 id="vue的版本"><a href="#vue的版本" class="headerlink" title="vue的版本"></a>vue的版本</h3><p>当前，vue共有3个大版本，其中:<br>3.x版本的vue 于2020-09-19发布<br>2.x版本的vue 已于 2023 年 12 月 31 日停止维护<br>1.x版本的vue几乎被淘汰，不再建议学习与使用</p>
 <h2 id="基本使用"><a href="#基本使用" class="headerlink" title="基本使用"></a>基本使用</h2><ol>
-<li>基本使用步骤<ol>
-<li>导入VUE.js脚本文件</li>
-<li>在页面声明一个要被vue所控制的区域</li>
-<li>创建vm实例对象(vue实例对象) <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure></li>
+<li><p>基本使用步骤</p>
+<ol>
+<li>导入VUE.js脚本文件<br> 可以借助 script 标签直接通过 CDN(提供 npm 包服务) 来使用 Vue：<br> <code>&lt;script src=&quot;https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js&quot;&gt;&lt;/script&gt;</code></li>
+<li>在页面声明一个将要被vue所控制的区域</li>
+<li>创建vm实例对象(vue实例对象)</li>
 </ol>
 </li>
+<li><p>基本代码与MVVM的对应关系<br> model：data指向的对象<br> view：el指向的选择器<br> ViewModel：new Vue()构造函数得到的实例对象</p>
+</li>
 </ol>
-<h2 id="vue-devtools调试工具"><a href="#vue-devtools调试工具" class="headerlink" title="vue-devtools调试工具"></a>vue-devtools调试工具</h2><h2 id="指令与过滤器"><a href="#指令与过滤器" class="headerlink" title="指令与过滤器"></a>指令与过滤器</h2><h2 id="品牌列表案例"><a href="#品牌列表案例" class="headerlink" title="品牌列表案例"></a>品牌列表案例</h2>]]></content>
+<h2 id="指令"><a href="#指令" class="headerlink" title="指令"></a>指令</h2><p>指令(Directives)是vue为开发者提供的模板语法，用于辅助开发者渲染页面的基本结构。<br>指令是vue开发中最基础、最常用、最简单的知识点</p>
+<p>vue的指令 <strong>按照不同用途</strong> 可以分为如下6大类：</p>
+<ol>
+<li><p>内容渲染指令：<code>v-text</code> 、<code>&#123;&#123;&#125;&#125;</code>  、 <code>v-html</code></p>
+<blockquote>
+<p>v-test 会覆盖默认文本内容，一般使用<code>&#123;&#123;&#125;&#125;</code>插值表达式<br> v-text和差值表达式只能渲染纯文本内容<br> v-html可以把带标签的字符串渲染成HTML内容</p>
+</blockquote>
+</li>
+<li><p>属性绑定指令: <code>v-bind</code> &#x2F; <code>:xxx=</code> </p>
+<blockquote>
+<p>差值表达式只能用在元素的内容节点中，不能用在属性节点中<br> v-bind用法：<code>&lt;input type=&quot;text&quot; v-bind:placeholder=&quot;tips&quot;&gt;</code><br> <strong>vue规定 v-bind: 指令可以简写为：</strong></p>
+</blockquote>
+<blockquote>
+<p>在vue提供的模版渲染语法中，除了支持<strong>绑定简单的数据值之外，还支持JS表达式的运算</strong>如：<br> <code>&#123;&#123;number + 1&#125;&#125;</code>、<code>&#123;&#123;ok?'YES':'NO'&#125;&#125;</code>、<code>&#123;&#123;msg.split('').reserve().join('')&#125;&#125;</code>(反转字符串)、字符串拼接 等等</p>
+</blockquote>
+</li>
+<li><p>事件绑定指令：<code>v-on</code> &#x2F; <code>@</code></p>
+<blockquote>
+<p>语法如 <code>v-on:clock=&quot;add&quot;</code> 简写<code>@click=&quot;add&quot;</code><br> methods下的函数变量也支持简写：<code>add:function()&#123;&#125; --&gt; add()&#123;&#125;</code><br> 在处理函数中<strong>修改数据的值</strong>可以通过vm(接受vue实例的变量名)来修改：vm.count,但是不推荐，<strong>推荐用this</strong></p>
+</blockquote>
+<ul>
+<li><p>绑定事件并传参</p>
+<blockquote>
+<p>在调用的地方传参 <code>@click=&quot;add(1)&quot;</code></p>
+</blockquote>
+</li>
+<li><p><font color="red">参数问题</font></p>
+<blockquote>
+<p>如果定义的函数变量是有参数的</p>
+</blockquote>
+<ol>
+<li><code>add(n)&#123;&#125; -- @click=&quot;add(1)&quot;</code> 正常传参 n&#x2F;&#x2F;1</li>
+<li><code>add(n)&#123;&#125; -- @click=&quot;add()&quot;</code> n&#x2F;&#x2F;undefined</li>
+<li><code>add(n)&#123;&#125; -- @click=&quot;add&quot;</code> n被认定为事件对象PointerEvent，通常我们会定义为e&#x2F;event<br> 如果是多个参数，如</li>
+<li><code>add(a,b)&#123;&#125; -- @click=&quot;add(1,2)&quot;</code> 正常传参 a&#x2F;&#x2F;1 b&#x2F;&#x2F;2</li>
+<li><code>add(a,b)&#123;&#125; -- @click=&quot;add(1)&quot;</code> a&#x2F;&#x2F;1 b&#x2F;&#x2F;undefined</li>
+<li><code>add(a,b)&#123;&#125; -- @click=&quot;add()&quot;</code> a&#x2F;un b&#x2F;&#x2F;un</li>
+<li><code>add(a,b)&#123;&#125; -- @click=&quot;add&quot;</code> a&#x2F;&#x2F;事件对象PointerEvent ，b&#x2F;&#x2F;undefined</li>
+</ol>
+</li>
+<li><p><font color="red">事件对象$event</font></p>
+<blockquote>
+<p>vue提供了内置变量<code>$event</code>,它就是原生DOM的事件对象e<br>  在绑定事件的时候，如果不传参 <code>add(e)&#123;&#125; -- @click=&quot;add&quot;</code> , 我们会接受到一个事件对象e<br>  如果传参，<code>@click=&quot;add(1)&quot;</code>,我们就接收不到这个事件对象了<br>  有时候，我们既要传参，又想要从事件对象上拿到e.target(触发事件的事件源) ，这个时候就可以用<code>$event</code></p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p>双向绑定指令 </p>
+</li>
+<li><p>条件渲染指令</p>
+</li>
+<li><p>列表渲染指令</p>
+</li>
+</ol>
+]]></content>
       <categories>
         <category>Vue</category>
         <category>Vue2</category>
@@ -390,63 +447,9 @@
 ]]></content>
   </entry>
   <entry>
-    <title>Pulled Post</title>
-    <url>/tsukimiya.github.io/PulledPost/index.html</url>
-    <content><![CDATA[<blockquote>
-<p><code>Here are many posts pulling for you, hope you&#39;ll gain something</code></p>
-</blockquote>
-<h2 id="Pulled-Bloger-or-Community"><a href="#Pulled-Bloger-or-Community" class="headerlink" title="Pulled Bloger or Community"></a>Pulled Bloger or Community</h2><ol>
-<li><p>沧沧凉凉 – <a href="https://juejin.cn/user/1380642337065421/posts">掘金</a> | <a href="https://www.zhihu.com/people/hatsune-87/posts">知乎</a></p>
-</li>
-<li><p>freecodecamp编程免费教学慈善组织 – <a href="https://www.freecodecamp.org/chinese/learn">官网</a> | <a href="https://www.freecodecamp.org/chinese/news/">专栏</a> | <a href="https://forum.freecodecamp.org/c/chinese/533">论坛</a></p>
-<blockquote>
-<p>官方支持中文，专栏和论坛有很多优质文章</p>
-</blockquote>
-</li>
-<li><p><a href="https://www.xuanfengge.com/">轩枫阁</a> <font color="red">墙裂Pull!!</font></p>
-<blockquote>
-<p>前端大神的个人博客！腾讯微信前端工程师！ orz_<br> <a href="https://www.xuanfengge.com/funny/">SOME NB H5&amp;C3&amp;Animation orz_</a>(H5元素周期表就出自这里)<br> look older，but niubility build from 2013</p>
-</blockquote>
-</li>
-</ol>
-<h2 id="Front-end"><a href="#Front-end" class="headerlink" title="Front-end"></a>Front-end</h2><h3 id="H5"><a href="#H5" class="headerlink" title="H5"></a>H5</h3><ol>
-<li><a href="https://www.xuanfengge.com/funny/html5/spider/">逼真的蜘蛛</a><blockquote>
-<p>有时间仿一下，感觉和之前见到的一个博客磁吸线条成网的背景原理相似</p>
-</blockquote>
-</li>
-</ol>
-<h2 id="MD"><a href="#MD" class="headerlink" title="MD"></a>MD</h2><h2 id="Blog-Build"><a href="#Blog-Build" class="headerlink" title="Blog Build"></a>Blog Build</h2><ul>
-<li><a href="https://iknowwang.com/">如何架設網站：一個完全免費的教學（Blog推薦 + 網頁製作軟體 ）</a>(Wordpress)<blockquote>
-<p>讲到了很多建设网站的东西</p>
-</blockquote>
-</li>
-</ul>
-<h3 id="WordPress"><a href="#WordPress" class="headerlink" title="WordPress"></a>WordPress</h3><ol>
-<li><a href="https://zhuanlan.zhihu.com/p/37896471">WordPress搭建教程：手把手教你搭建WordPress博客</a>(知乎)<blockquote>
-<p>域名推荐在 <a href="https://www.namesilo.com/?rid=d27fa32do">Namesilo</a> 购买，价格便宜，赠送永久免费的隐私保护。(0.99$&#x2F;第一年)<br>注册账户。注册信息建议如实填写，并勾选“Keep my information private”默认使用隐私保护。<br> 设置域名续费规则、注册时长等。在“Have a Coupon……”处输入优惠码 okoff 或者 go2think，点击“Submit”应用，优惠一美元。<br> 完成后点击“CONTINUE”付款，支持支付宝和 Paypal 等。</p>
-</blockquote>
-</li>
-</ol>
-<h3 id="Hexo-Next"><a href="#Hexo-Next" class="headerlink" title="Hexo + Next"></a>Hexo + Next</h3><ol>
-<li><a href="https://cloud.tencent.com/developer/article/2065803">Hexo图标样式参考</a>(腾讯云)<blockquote>
-<p>Hexo 支持FontAwesome图标，就是在代码中出现名字以fa fa开头的类名，本文介绍具具体图标来源和使用方法。</p>
-</blockquote>
-</li>
-</ol>
-<h2 id="408"><a href="#408" class="headerlink" title="408"></a>408</h2><h3 id="计算机网络原理"><a href="#计算机网络原理" class="headerlink" title="计算机网络原理"></a>计算机网络原理</h3><ul>
-<li>计算机网络原理 谢希仁（第8版）课后习题答案<ul>
-<li><a href="https://blog.csdn.net/weixin_45773137/article/details/126150861">第一章–分组交换 &#x2F; 时延 &#x2F; 性能指标 &#x2F; OSI七层模型和TCP&#x2F;IP五层模型–网络体系结构</a>(CSDN&#x2F;答案不全)<br>  不全的部分参考这个 <a href="https://cloud.tencent.com/developer/article/2055618">Post</a> (腾讯云&#x2F;Q10开始排版不好)</li>
-<li><a href="https://blog.csdn.net/weixin_62985813/article/details/134105653">第二章–物理层</a>(CSDN)</li>
-<li><a href="https://blog.csdn.net/weixin_45773137/article/details/126276788">第三章–数据链路层</a>(CSDN)</li>
-</ul>
-</li>
-</ul>
-<h2 id="ELSE"><a href="#ELSE" class="headerlink" title="ELSE"></a>ELSE</h2>]]></content>
-  </entry>
-  <entry>
     <title>Hello Front-end</title>
     <url>/tsukimiya.github.io/index.html</url>
-    <content><![CDATA[<p>Welcome to my study blog! This is my continuously make up a main post. If you get any problems when using my blog, you can send the email to <a href="mailto:&#x68;&#97;&#114;&#x69;&#105;&#x6a;&#105;&#99;&#x6f;&#x40;&#x6f;&#117;&#x74;&#x6c;&#111;&#111;&#x6b;&#x2e;&#x63;&#x6f;&#x6d;">&#x68;&#97;&#114;&#x69;&#105;&#x6a;&#105;&#99;&#x6f;&#x40;&#x6f;&#117;&#x74;&#x6c;&#111;&#111;&#x6b;&#x2e;&#x63;&#x6f;&#x6d;</a></p>
+    <content><![CDATA[<p>Welcome to my study blog! This is my continuously make up a main post. If you get any problems when using my blog, you can send the email to <a href="mailto:&#104;&#x61;&#x72;&#105;&#105;&#106;&#105;&#x63;&#x6f;&#64;&#111;&#117;&#x74;&#108;&#111;&#111;&#107;&#x2e;&#99;&#x6f;&#109;">&#104;&#x61;&#x72;&#105;&#105;&#106;&#105;&#x63;&#x6f;&#64;&#111;&#117;&#x74;&#108;&#111;&#111;&#107;&#x2e;&#99;&#x6f;&#109;</a></p>
 <h2 id="Study-Guide"><a href="#Study-Guide" class="headerlink" title="Study Guide"></a>Study Guide</h2><center>Here provide you some study sources and study route.</center>
 <!-- This is [main tech](#Main-Line) -->
 <center>This is <a href='#Main-Line'>main tech</a></center>
@@ -741,10 +744,64 @@
     <content><![CDATA[]]></content>
   </entry>
   <entry>
+    <title>Pulled Post</title>
+    <url>/tsukimiya.github.io/PulledPost/index.html</url>
+    <content><![CDATA[<blockquote>
+<p><code>Here are many posts pulling for you, hope you&#39;ll gain something</code></p>
+</blockquote>
+<h2 id="Pulled-Bloger-or-Community"><a href="#Pulled-Bloger-or-Community" class="headerlink" title="Pulled Bloger or Community"></a>Pulled Bloger or Community</h2><ol>
+<li><p>沧沧凉凉 – <a href="https://juejin.cn/user/1380642337065421/posts">掘金</a> | <a href="https://www.zhihu.com/people/hatsune-87/posts">知乎</a></p>
+</li>
+<li><p>freecodecamp编程免费教学慈善组织 – <a href="https://www.freecodecamp.org/chinese/learn">官网</a> | <a href="https://www.freecodecamp.org/chinese/news/">专栏</a> | <a href="https://forum.freecodecamp.org/c/chinese/533">论坛</a></p>
+<blockquote>
+<p>官方支持中文，专栏和论坛有很多优质文章</p>
+</blockquote>
+</li>
+<li><p><a href="https://www.xuanfengge.com/">轩枫阁</a> <font color="red">墙裂Pull!!</font></p>
+<blockquote>
+<p>前端大神的个人博客！腾讯微信前端工程师！ orz_<br> <a href="https://www.xuanfengge.com/funny/">SOME NB H5&amp;C3&amp;Animation orz_</a>(H5元素周期表就出自这里)<br> look older，but niubility build from 2013</p>
+</blockquote>
+</li>
+</ol>
+<h2 id="Front-end"><a href="#Front-end" class="headerlink" title="Front-end"></a>Front-end</h2><h3 id="H5"><a href="#H5" class="headerlink" title="H5"></a>H5</h3><ol>
+<li><a href="https://www.xuanfengge.com/funny/html5/spider/">逼真的蜘蛛</a><blockquote>
+<p>有时间仿一下，感觉和之前见到的一个博客磁吸线条成网的背景原理相似</p>
+</blockquote>
+</li>
+</ol>
+<h2 id="MD"><a href="#MD" class="headerlink" title="MD"></a>MD</h2><h2 id="Blog-Build"><a href="#Blog-Build" class="headerlink" title="Blog Build"></a>Blog Build</h2><ul>
+<li><a href="https://iknowwang.com/">如何架設網站：一個完全免費的教學（Blog推薦 + 網頁製作軟體 ）</a>(Wordpress)<blockquote>
+<p>讲到了很多建设网站的东西</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="WordPress"><a href="#WordPress" class="headerlink" title="WordPress"></a>WordPress</h3><ol>
+<li><a href="https://zhuanlan.zhihu.com/p/37896471">WordPress搭建教程：手把手教你搭建WordPress博客</a>(知乎)<blockquote>
+<p>域名推荐在 <a href="https://www.namesilo.com/?rid=d27fa32do">Namesilo</a> 购买，价格便宜，赠送永久免费的隐私保护。(0.99$&#x2F;第一年)<br>注册账户。注册信息建议如实填写，并勾选“Keep my information private”默认使用隐私保护。<br> 设置域名续费规则、注册时长等。在“Have a Coupon……”处输入优惠码 okoff 或者 go2think，点击“Submit”应用，优惠一美元。<br> 完成后点击“CONTINUE”付款，支持支付宝和 Paypal 等。</p>
+</blockquote>
+</li>
+</ol>
+<h3 id="Hexo-Next"><a href="#Hexo-Next" class="headerlink" title="Hexo + Next"></a>Hexo + Next</h3><ol>
+<li><a href="https://cloud.tencent.com/developer/article/2065803">Hexo图标样式参考</a>(腾讯云)<blockquote>
+<p>Hexo 支持FontAwesome图标，就是在代码中出现名字以fa fa开头的类名，本文介绍具具体图标来源和使用方法。</p>
+</blockquote>
+</li>
+</ol>
+<h2 id="408"><a href="#408" class="headerlink" title="408"></a>408</h2><h3 id="计算机网络原理"><a href="#计算机网络原理" class="headerlink" title="计算机网络原理"></a>计算机网络原理</h3><ul>
+<li>计算机网络原理 谢希仁（第8版）课后习题答案<ul>
+<li><a href="https://blog.csdn.net/weixin_45773137/article/details/126150861">第一章–分组交换 &#x2F; 时延 &#x2F; 性能指标 &#x2F; OSI七层模型和TCP&#x2F;IP五层模型–网络体系结构</a>(CSDN&#x2F;答案不全)<br>  不全的部分参考这个 <a href="https://cloud.tencent.com/developer/article/2055618">Post</a> (腾讯云&#x2F;Q10开始排版不好)</li>
+<li><a href="https://blog.csdn.net/weixin_62985813/article/details/134105653">第二章–物理层</a>(CSDN)</li>
+<li><a href="https://blog.csdn.net/weixin_45773137/article/details/126276788">第三章–数据链路层</a>(CSDN)</li>
+</ul>
+</li>
+</ul>
+<h2 id="ELSE"><a href="#ELSE" class="headerlink" title="ELSE"></a>ELSE</h2>]]></content>
+  </entry>
+  <entry>
     <title>留言板</title>
     <url>/tsukimiya.github.io/guestbook/index.html</url>
     <content><![CDATA[<h1 id="欢迎来到我的博客！"><a href="#欢迎来到我的博客！" class="headerlink" title="欢迎来到我的博客！"></a>欢迎来到我的博客！</h1><blockquote>
-<p>欢迎在这里留言！任何问题都可以在这里留言，我会及时回复的。目前留言板块尚未配置完全，暂时无法使用，如有问题请邮箱：<br><a href="mailto:&#104;&#x61;&#114;&#x69;&#x69;&#x6a;&#105;&#99;&#x6f;&#x40;&#111;&#x75;&#x74;&#108;&#x6f;&#111;&#107;&#46;&#x63;&#x6f;&#x6d;">&#104;&#x61;&#114;&#x69;&#x69;&#x6a;&#105;&#99;&#x6f;&#x40;&#111;&#x75;&#x74;&#108;&#x6f;&#111;&#107;&#46;&#x63;&#x6f;&#x6d;</a><br><a href="mailto:&#x31;&#56;&#51;&#50;&#55;&#49;&#53;&#56;&#51;&#x38;&#x40;&#x71;&#113;&#46;&#x63;&#x6f;&#109;">&#x31;&#56;&#51;&#50;&#55;&#49;&#53;&#56;&#51;&#x38;&#x40;&#x71;&#113;&#46;&#x63;&#x6f;&#109;</a><br>欢迎给我发送邮件</p>
+<p>欢迎在这里留言！任何问题都可以在这里留言，我会及时回复的。目前留言板块尚未配置完全，暂时无法使用，如有问题请邮箱：<br><a href="mailto:&#104;&#97;&#x72;&#x69;&#105;&#x6a;&#x69;&#99;&#111;&#x40;&#x6f;&#x75;&#x74;&#108;&#111;&#111;&#107;&#x2e;&#99;&#x6f;&#109;">&#104;&#97;&#x72;&#x69;&#105;&#x6a;&#x69;&#99;&#111;&#x40;&#x6f;&#x75;&#x74;&#108;&#111;&#111;&#107;&#x2e;&#99;&#x6f;&#109;</a><br><a href="mailto:&#49;&#x38;&#x33;&#50;&#x37;&#x31;&#53;&#x38;&#51;&#56;&#x40;&#x71;&#x71;&#46;&#99;&#x6f;&#109;">&#49;&#x38;&#x33;&#50;&#x37;&#x31;&#53;&#x38;&#51;&#56;&#x40;&#x71;&#x71;&#46;&#99;&#x6f;&#109;</a><br>欢迎给我发送邮件</p>
 </blockquote>
 ]]></content>
   </entry>
