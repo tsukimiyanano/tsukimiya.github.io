@@ -490,7 +490,7 @@
 </li>
 <li><p>条件渲染指令 <code>v-if</code>、<code>v-show</code></p>
 <blockquote>
-<p>辅助开发者<strong>按需控制DOM的显示与隐藏</strong><br> v-if动态的把元素DOM从页面添加和移除<br> v-show是通过css动态添加display：none样式来显示和隐藏<br> <strong>如果要频繁切换元素的显示状态，show的性能更好</strong><br> <strong>如果刚进入页面，某些元素默认不需要被展示，而且后期这个元素很可能也不需要被展示出来，此时v-if性能更好</strong><br> 这个只是说给面试官听的，<font color="green">在实际开发中，绝大多数情况不用考虑性能问题，直接使用v-if就好了！</font></p>
+<p>辅助开发者<strong>按需控制DOM的显示与隐藏</strong><br> v-if动态的把元素DOM从页面添加和移除<br> v-show是通过css动态添加display：none样式来显示和隐藏<br> <strong>如果要频繁切换元素的显示状态，show的性能更好</strong><br> <strong>如果刚进入页面，某些元素默认不需要被展示，而且后期这个元素很可能也不需要被展示出来，此时v-if性能更好</strong><br> 这个只是说给面试官听的，<font color="green">在实际开发中，绝大多数情况不用考虑性能问题，直接使用v-if就好了！</font><br> 因为在大多数情况下，这种性能差异是微不足道的，除非在处理大量组件或频繁切换时才会产生明显影响。</p>
 </blockquote>
 <ul>
 <li><p><font color="green">页面的执行(一个v-if的好问题)</font></p>
@@ -582,7 +582,7 @@
   <entry>
     <title>Hello Front-end</title>
     <url>/tsukimiya.github.io/index.html</url>
-    <content><![CDATA[<p>Welcome to my study blog! This is my continuously make up a main post. If you get any problems when using my blog, you can send the email to <a href="mailto:&#104;&#x61;&#114;&#x69;&#x69;&#106;&#105;&#99;&#x6f;&#x40;&#x6f;&#117;&#x74;&#108;&#x6f;&#111;&#x6b;&#x2e;&#x63;&#111;&#x6d;">&#104;&#x61;&#114;&#x69;&#x69;&#106;&#105;&#99;&#x6f;&#x40;&#x6f;&#117;&#x74;&#108;&#x6f;&#111;&#x6b;&#x2e;&#x63;&#111;&#x6d;</a></p>
+    <content><![CDATA[<p>Welcome to my study blog! This is my continuously make up a main post. If you get any problems when using my blog, you can send the email to <a href="mailto:&#104;&#x61;&#114;&#x69;&#105;&#106;&#105;&#99;&#x6f;&#x40;&#x6f;&#x75;&#116;&#x6c;&#x6f;&#111;&#107;&#x2e;&#x63;&#x6f;&#109;">&#104;&#x61;&#114;&#x69;&#105;&#106;&#105;&#99;&#x6f;&#x40;&#x6f;&#x75;&#116;&#x6c;&#x6f;&#111;&#107;&#x2e;&#x63;&#x6f;&#109;</a></p>
 <h2 id="Study-Guide"><a href="#Study-Guide" class="headerlink" title="Study Guide"></a>Study Guide</h2><center>Here provide you some study sources and study route.</center>
 <!-- This is [main tech](#Main-Line) -->
 <center>This is <a href='#Main-Line'>main tech</a></center>
@@ -965,17 +965,17 @@
 <h2 id="ELSE"><a href="#ELSE" class="headerlink" title="ELSE"></a>ELSE</h2>]]></content>
   </entry>
   <entry>
-    <title>留言板</title>
-    <url>/tsukimiya.github.io/guestbook/index.html</url>
-    <content><![CDATA[<h1 id="欢迎来到我的博客！"><a href="#欢迎来到我的博客！" class="headerlink" title="欢迎来到我的博客！"></a>欢迎来到我的博客！</h1><blockquote>
-<p>欢迎在这里留言！任何问题都可以在这里留言，我会及时回复的。目前留言板块尚未配置完全，暂时无法使用，如有问题请邮箱：<br><a href="mailto:&#x68;&#x61;&#x72;&#105;&#105;&#x6a;&#105;&#99;&#111;&#64;&#x6f;&#x75;&#116;&#108;&#111;&#x6f;&#x6b;&#46;&#99;&#x6f;&#109;">&#x68;&#x61;&#x72;&#105;&#105;&#x6a;&#105;&#99;&#111;&#64;&#x6f;&#x75;&#116;&#108;&#111;&#x6f;&#x6b;&#46;&#99;&#x6f;&#109;</a><br><a href="mailto:&#x31;&#x38;&#51;&#50;&#55;&#49;&#53;&#56;&#51;&#x38;&#64;&#x71;&#x71;&#x2e;&#99;&#111;&#x6d;">&#x31;&#x38;&#51;&#50;&#55;&#49;&#53;&#56;&#51;&#x38;&#64;&#x71;&#x71;&#x2e;&#99;&#111;&#x6d;</a><br>欢迎给我发送邮件</p>
-</blockquote>
-]]></content>
-  </entry>
-  <entry>
     <title>分类</title>
     <url>/tsukimiya.github.io/categories/index.html</url>
     <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>留言板</title>
+    <url>/tsukimiya.github.io/guestbook/index.html</url>
+    <content><![CDATA[<h1 id="欢迎来到我的博客！"><a href="#欢迎来到我的博客！" class="headerlink" title="欢迎来到我的博客！"></a>欢迎来到我的博客！</h1><blockquote>
+<p>欢迎在这里留言！任何问题都可以在这里留言，我会及时回复的。目前留言板块尚未配置完全，暂时无法使用，如有问题请邮箱：<br><a href="mailto:&#x68;&#x61;&#x72;&#x69;&#105;&#106;&#105;&#x63;&#x6f;&#x40;&#x6f;&#117;&#x74;&#108;&#111;&#x6f;&#x6b;&#x2e;&#99;&#x6f;&#109;">&#x68;&#x61;&#x72;&#x69;&#105;&#106;&#105;&#x63;&#x6f;&#x40;&#x6f;&#117;&#x74;&#108;&#111;&#x6f;&#x6b;&#x2e;&#99;&#x6f;&#109;</a><br><a href="mailto:&#49;&#x38;&#x33;&#50;&#x37;&#49;&#53;&#x38;&#x33;&#x38;&#64;&#x71;&#113;&#46;&#x63;&#111;&#x6d;">&#49;&#x38;&#x33;&#50;&#x37;&#49;&#53;&#x38;&#x33;&#x38;&#64;&#x71;&#113;&#46;&#x63;&#111;&#x6d;</a><br>欢迎给我发送邮件</p>
+</blockquote>
+]]></content>
   </entry>
   <entry>
     <title>日程表</title>
