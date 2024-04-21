@@ -1,87 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Node.js简单实现后端服务器</title>
-    <url>/tsukimiya.github.io/2024/04/15/Node/Node.js%E5%81%9A%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%AF%A6%E8%A7%A3/</url>
-    <content><![CDATA[<blockquote>
-<p>这个示例中，没有用到MySQl数据库，只是简单的创建POST表单路由进行处理数据，以及表单数据的校验<br>用到的npm包&#x2F;第三方模块：<br>Express：<code>npm i express@4.17.1</code> – Web 开发框架，快速创建 Web 服务器<br>Joi：<code>npm install joi --save</code> – hapijs 自带的数据校验模块<br>@escook&#x2F;express-joi中间件: <code>npm i @escook/express-joi</code> – 实现自动对表单数据进行验证的功能</p>
-</blockquote>
-<blockquote>
-<p>全局安装了nodemon工具，可以监听文件的更改，自动重新执行</p>
-</blockquote>
-<blockquote>
-<p>该示例没有在路由之前配置cors中间件，从而解决接口跨域的问题<br>这个是航空文化馆项目的后端，还没写完<br>没有用到mysql模块：<code>npm i mysql</code><br>也没有用到express-session中间件：<code>npm i express-session</code>（这个干吗用的？）</p>
-</blockquote>
-<h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><ol start="0">
-<li>如果是拿被别人写好的项目，第一步是导入这个项目所用的包，<code>npm i</code>命令</li>
-<li>创建后端项目文件夹如serve</li>
-<li>初始化文件夹<code>npm init -y</code><br> 在空项目的根目录中初始化一个package.json的包管理配置文件</li>
-<li>安装必要的包&#x2F;依赖<br> 安装Express —— <code>npm i express@4.17.1</code></li>
-<li>创建服务器文件，命名如app.js</li>
-</ol>
-<h2 id="创建简单的web服务器-及其-模块化"><a href="#创建简单的web服务器-及其-模块化" class="headerlink" title="创建简单的web服务器 及其 模块化"></a>创建简单的web服务器 及其 模块化</h2><ol>
-<li><p>创建基本的express框架 – eser(vscode快捷生成代码&#x2F;&#x2F;自己配置 – 文件–首选项–配置用户代码片段)</p>
- <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">//导入express模块</span><br><span class="line">const express = require(&#x27;express&#x27;)</span><br><span class="line">//创建express服务器实例</span><br><span class="line">const app = express()</span><br><span class="line">const port = 8080;</span><br><span class="line"></span><br><span class="line">//调用app.listen方法，指定端口号并启动web服务器</span><br><span class="line">app.listen(port,()=&gt;&#123;</span><br><span class="line">    console.log(`Express server running at http://127.0.0.1:$&#123;port&#125;`)</span><br><span class="line">&#125;)      </span><br></pre></td></tr></table></figure>
-</li>
-<li><p>创建路由<br> 可以先在当前文件尝试是否成功，之后再分离到对应模块</p>
- <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">//创建express路由实例</span><br><span class="line">const router = express.Router()</span><br><span class="line">// 配置路由</span><br><span class="line">app.use(router)</span><br><span class="line">// 提交预约表单</span><br><span class="line">router.post(&#x27;/form&#x27;, (req, res) =&gt; &#123;</span><br><span class="line">    console.log(req.body);</span><br><span class="line">    res.send(&#x27;发送表单数据成功&#x27;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>使用postman测试请求是否成功<br> 向 <a href="http://127.0.0.1:8080/form">http://127.0.0.1:8080/form</a> 发送post请求<br> 响应函数中打印出来的req.body结果是undefined，这是因为我们没有配置解析表单的中间件</p>
-</li>
-<li><p>配置解析表单的中间件<br> &#x2F;&#x2F; 配置解析表单数据的中间件,注意：这个中间件，只能解析applicaton&#x2F;x-www-form-urlencoded格式的表单数据<br> <code>app.use(express.urlencoded(&#123;extended:false&#125;))</code><br> 再次发送请求，我们就得到了表单提交的数据</p>
-</li>
-<li><p>分离到路由模块<br> 创建router文件夹，创建如user.js文件&#x2F;&#x2F;处理用户路由<br> 将路由部分写到这个地方，然后把router暴露出去<br> <code>module.exports = router</code><br> 然后在app.js中导入并使用路由模块</p>
- <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// 导入并使用用户路由模块</span><br><span class="line">const userRouter = require(&#x27;./router/user&#x27;)</span><br><span class="line">// 配置路由</span><br><span class="line">app.use(userRouter)</span><br></pre></td></tr></table></figure>
-<p> 测试成功</p>
-</li>
-<li><p>分离处理函数到路由处理模块，同5操作<br> 创建router_handler文件夹，在该目录下创建对应的用户路由处理文件user.js<br> 把处理函数暴露出去</p>
- <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">exports.formSubmit = (req, res) =&gt; &#123;</span><br><span class="line">    console.log(req.body);</span><br><span class="line">    res.send(&#x27;发送表单数据成功&#x27;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p> 在路由模块导入导入用户路由处理函数对应的模块<br> <code>const user_handler = require(&#39;../router_handler/user&#39;)</code><br> 路由的响应函数换成对应的user_handler.formSubmit</p>
-</li>
-</ol>
-<h2 id="数据校验"><a href="#数据校验" class="headerlink" title="数据校验"></a>数据校验</h2><p>这里使用joi模块来进行数据验证<br>Joi 是 hapijs 自带的数据校验模块，他已经高度封装常用的校验功能。</p>
-<ol>
-<li><p>安装joi包，为表单中携带的每个数据项，定义验证规则</p>
- <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install joi --save</span><br><span class="line">// ES6写法 import Joi from &#x27;joi&#x27;</span><br><span class="line">const joi = require(&#x27;joi&#x27;)</span><br></pre></td></tr></table></figure></li>
-<li><p>安装 @escook&#x2F;express-joi 中间件，来实现自动对表单数据进行验证的功能：<br> <code>npm i @escook/express-joi</code></p>
-</li>
-<li><p>joi验证规则</p>
-<ul>
-<li>string() 值必须是字符串</li>
-<li>number() 值必须是数字</li>
-<li>alphanum() 值只能是包含 a-zA-Z0-9 的字符串</li>
-<li>min(length) 最小长度</li>
-<li>max(length) 最大长度</li>
-<li>required() 值是必填项，不能为 undefined</li>
-<li>pattern(正则表达式) 值必须符合正则表达式的规则</li>
-<li>any() 任意</li>
-<li>date() 日期</li>
-<li>time() 时间</li>
-<li>iso() 要求字符串值采用有效的 ISO 8601 日期格式。</li>
-</ul>
-</li>
-<li><p>新建 &#x2F;schema&#x2F;user.js 用户信息验证规则模块，并初始化代码如下：</p>
- <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// 导入joi模块</span><br><span class="line">const joi = require(&#x27;joi&#x27;)</span><br><span class="line"></span><br><span class="line">// 表单校验规则</span><br><span class="line">const unit = joi.string().required()</span><br><span class="line">const contact = joi.string().required()</span><br><span class="line">const phone = joi.string().pattern(/^[1][\d]&#123;10&#125;$/).required()</span><br><span class="line">const numVisitors = joi.number().min(16).required()</span><br><span class="line">const guide = joi.string().pattern(/yes|no|是|否/).required()</span><br><span class="line">const date = joi.date().min(&#x27;now&#x27;).iso().required()</span><br><span class="line">const time = joi.string().pattern(/^[\d]&#123;2&#125;[\s]*:[\s]*[\d]&#123;2&#125;$/).required()</span><br><span class="line"></span><br><span class="line">// 表单的验证规则对象</span><br><span class="line">exports.form_schema =&#123;</span><br><span class="line">    body:&#123;</span><br><span class="line">        unit,</span><br><span class="line">        contact,</span><br><span class="line">        phone,</span><br><span class="line">        numVisitors,</span><br><span class="line">        guide,</span><br><span class="line">        date,</span><br><span class="line">        time,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>在路由模块添加数据校验</p>
- <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// 导入验证表单数据的中间件</span><br><span class="line">const expressJoi = require(&#x27;@escook/express-joi&#x27;)</span><br><span class="line">// 导入需要验证的规则</span><br><span class="line">const &#123;form_schema&#125; = require(&#x27;../schema/user&#x27;)</span><br></pre></td></tr></table></figure>
-<p> 在表单提交的路由中，声明局部中间件，对当前请求中携带的数据进行验证<br> 数据验证通过后，会把这次请求流转给后面的路由处理函数<br> 数据验证失败后，终止后续代码的执行，并抛出一个全局的 Error 错误，进入全局错误级别中间件中进行处理<br> <code>router.post(&#39;/form&#39;,expressJoi(form_schema), user_handler.formSubmit)</code></p>
-</li>
-<li><p>在 app.js 的全局错误级别中间件中，捕获验证失败的错误，并把验证失败的结果响应给客户端<br> 在路由注册之后声明错误级别中间件，注意这里需要在app.js导入joi</p>
- <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">const joi = require(&#x27;joi&#x27;)</span><br><span class="line">// 错误中间件</span><br><span class="line">app.use(function(err,req,res,next)&#123;</span><br><span class="line">    //数据验证失败</span><br><span class="line">    if(err instanceof joi.ValidationError) return res.send(err.message)</span><br><span class="line">    // 未知错误</span><br><span class="line">    res.send(err.message)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-<p> 测试成功</p>
-</li>
-</ol>
-]]></content>
-      <categories>
-        <category>Node.js</category>
-      </categories>
-      <tags>
-        <tag>Node.js</tag>
-        <tag>前后端分离</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>前端工程化与Webpack</title>
     <url>/tsukimiya.github.io/2024/04/18/Vue/1.%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96%E4%B8%8EWebpack/</url>
     <content><![CDATA[<blockquote>
@@ -329,12 +248,15 @@
   </entry>
   <entry>
     <title>Vue2 基本使用 &amp; 常用指令</title>
-    <url>/tsukimiya.github.io/2024/04/20/Vue/2.vue%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8&amp;%E5%B8%B8%E7%94%A8%E6%8C%87%E4%BB%A4/</url>
+    <url>/tsukimiya.github.io/2024/04/20/Vue/2.vue2%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8&amp;%E5%B8%B8%E7%94%A8%E6%8C%87%E4%BB%A4/</url>
     <content><![CDATA[<blockquote>
 <p>目标：<br>使用Vue指令完成页面结构的渲染<br>使用Vue调试工具辅助Vue的开发</p>
 </blockquote>
 <blockquote>
-<p><strong>掌握Vue的两个特性：数据驱动视图、双向数据绑定<br>    掌握Vue的底层原理 MVVM – model数据源、view视图&#x2F;页面结构、viewmodel vue实例<br>    掌握Vue六大类指令的使用</strong><br>    新学到的东西 – 事件绑定指令中的：<a href="#param">参数问题</a>、<a href="#event">$event</a>、<a href="#modifier">事件修饰符</a>、<a href="#key">按键修饰符</a></p>
+<p><strong>掌握Vue的两个特性：数据驱动视图、双向数据绑定<br>    掌握Vue的底层原理 MVVM – model数据源、view视图&#x2F;页面结构、viewmodel vue实例<br>    掌握Vue六大类指令的使用</strong><br>    vue2指令新学到的东西：<br>    事件绑定指令中的：<a href="#param">参数问题</a>、<a href="#event">$event</a>、<a href="#modifier">事件修饰符</a>、<a href="#keyModifier">按键修饰符</a><br>    双向绑定指令中的：<a href="#v-model">v-model修饰符</a><br>    条件渲染指令中的：<a href="#if">v-if配套的v-else指令</a><br>    列表渲染指令中的：<a href="#key">key属性绑定</a></p>
+</blockquote>
+<blockquote>
+<p>vscode插件推荐：Volar、Vue VSCode Snippets。 <a href="https://blog.csdn.net/weixin_40808668/article/details/134277604">简单说明</a></p>
 </blockquote>
 <p>[toc]</p>
 <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p><a href="https://cn.vuejs.org/guide/introduction.html">官方文档</a><br>Vue是一套<strong>用于构建用户界面的前端框架</strong><br>构建用户界面：用vue往html页面填充数据<br>框架：一套现成的解决方案，程序员只能遵守框架的规范去编写业务功能</p>
@@ -376,86 +298,35 @@
 <p>差值表达式只能用在元素的内容节点中，不能用在属性节点中<br> v-bind用法：<code>&lt;input type=&quot;text&quot; v-bind:placeholder=&quot;tips&quot;&gt;</code><br> <strong>vue规定 <code>v-bind:</code> 指令可以简写为<code>:</code></strong></p>
 </blockquote>
 <blockquote>
-<p>在vue提供的模版渲染语法中，除了支持<strong>绑定简单的数据值之外，还支持JS表达式的运算</strong>如：<br> <code>&#123;&#123;number + 1&#125;&#125;</code>、<code>&#123;&#123;ok?'YES':'NO'&#125;&#125;</code>、<code>&#123;&#123;msg.split('').reserve().join('')&#125;&#125;</code>(反转字符串)、<code>字符串拼接</code> 等等</p>
+<p>在vue提供的<strong>模版渲染语法中</strong>，除了支持绑定简单的数据值之外，还<font color="green">支持JS表达式的运算</font>如：<br> <figure class="highlight plaintext"><figcaption><span>+ 1&#125;&#125;```、```&#123;&#123;ok?'YES':'NO'&#125;&#125;```、```&#123;&#123;msg.split('').reserve().join('')&#125;&#125;```(反转字符串)、`字符串拼接` 等等</span></figcaption><table><tr><td class="code"><pre><span class="line">    但是&lt;font color=&quot;green&quot;&gt;只能写简单的JS表达式，不能写if等复杂的JS语句&lt;/font&gt;</span><br><span class="line"></span><br><span class="line">3. 事件绑定指令：`v-on` / `@`</span><br><span class="line">    &gt; 语法如 `v-on:clock=&quot;add&quot;` 简写`@click=&quot;add&quot;`</span><br><span class="line">    methods下的函数变量也支持简写：`add:function()&#123;&#125; --&gt; add()&#123;&#125;`</span><br><span class="line">    在处理函数中**修改数据的值**可以通过vm(接受vue实例的变量名)来修改：vm.count,但是不推荐，**推荐用this**</span><br><span class="line">    - 绑定事件并传参</span><br><span class="line">    &gt; 在调用的地方传参 `@click=&quot;add(1)&quot;`</span><br><span class="line">    - &lt;font id=&quot;param&quot; color=&quot;red&quot;&gt;参数问题&lt;/font&gt;</span><br><span class="line">    &gt; 如果定义的函数变量是有参数的</span><br><span class="line">        1. `add(n)&#123;&#125; -- @click=&quot;add(1)&quot;` 正常传参 n//1</span><br><span class="line">        2. `add(n)&#123;&#125; -- @click=&quot;add()&quot;` n//undefined</span><br><span class="line">        3. `add(n)&#123;&#125; -- @click=&quot;add&quot;` n被认定为事件对象PointerEvent，通常我们会定义为e/event</span><br><span class="line">    如果是多个参数，如</span><br><span class="line">        1. `add(a,b)&#123;&#125; -- @click=&quot;add(1,2)&quot;` 正常传参 a//1 b//2</span><br><span class="line">        2. `add(a,b)&#123;&#125; -- @click=&quot;add(1)&quot;` a//1 b//undefined</span><br><span class="line">        3. `add(a,b)&#123;&#125; -- @click=&quot;add()&quot;` a/un b//un</span><br><span class="line">        4. `add(a,b)&#123;&#125; -- @click=&quot;add&quot;` a//事件对象PointerEvent ，b//undefined</span><br><span class="line">    </span><br><span class="line">    - &lt;font id=&quot;event&quot; color=&quot;red&quot;&gt;事件对象$event&lt;/font&gt;(不常用)</span><br><span class="line">    &gt; vue提供了内置变量`$event`,它就是原生DOM的事件对象e</span><br><span class="line">        在绑定事件的时候，如果不传参 `add(e)&#123;&#125; -- @click=&quot;add&quot;` , 我们会接受到一个事件对象e</span><br><span class="line">        如果传参，`@click=&quot;add(1)&quot;`,我们就接收不到这个事件对象了</span><br><span class="line">        **我们既要传参，又要用到事件对象e**，如想要从事件对象上拿到e.target(触发事件的事件源) ，这个时候就可以用`$event`</span><br><span class="line">        **`$event`使用：传`$event`作参数进去，拿形参接收**</span><br><span class="line">        `add(n,e)&#123;&#125; --  @click=&quot;add(1,$event)&quot;`</span><br><span class="line">        或`add(e,n)&#123;&#125; --  @click=&quot;add($event,1)&quot;`</span><br><span class="line"></span><br><span class="line">    - &lt;font id=&quot;modifier&quot; color=&quot;red&quot;&gt;事件修饰符&lt;/font&gt;</span><br><span class="line">    &gt; 在事件处理函数中，调用`event.preventDefault()`(阻止默认行为)或`event.stopPropagation()`(阻止冒泡)是非常常见的需求。</span><br><span class="line">        因此，vue提供了**事件修饰符**的概念，辅助程序员更方便的**对事件的触发进行控制**。</span><br><span class="line">        如 `@click.prevent=&quot;show&quot;`绑定了show事件，同时阻止了默认行为</span><br><span class="line">        常见的5个事件修饰符如下：</span><br><span class="line"></span><br><span class="line">    |事件修饰符|说明|</span><br><span class="line">    |:----:|----|</span><br><span class="line">    |**.prevent**|**阻止默认行为**(例如：阻止a链接的跳转、表单的提交等)|</span><br><span class="line">    |**.stop**|**阻止事件冒泡**|</span><br><span class="line">    |.capture|以 捕获模式 触发当前的 事件处理函数|</span><br><span class="line">    |.once|绑定的事件只触发1次|</span><br><span class="line">    |.self|只有在 event.target 是当前元素自身时 触发事件处理函数|</span><br><span class="line"></span><br><span class="line">    - &lt;font id=&quot;keyModifier&quot; color=&quot;red&quot;&gt;按键修饰符&lt;/font&gt;(用的不是很多)</span><br><span class="line">    &gt; 在**监听键盘事件**时，经常需要**判断详细的按键**。</span><br><span class="line">        此时，可以为键盘的相关事件添加**按键修饰符**，如：</span><br><span class="line">        `&lt;input @keyup.enter=&quot;submit&quot;&gt;` -- 只有在`key`是`Enter`时，调用`vm.submit()`</span><br><span class="line">        `&lt;input @keyup.esc=&quot;clearInput&quot;&gt;` -- 只有在`key`是`Esc`时，调用`vm.clearInput()`</span><br><span class="line"></span><br><span class="line">4. 双向绑定指令 `v-model`</span><br><span class="line">    &gt; 用来辅助程序员在**不操作DOM**的前提下，**快速获取表单的数据**。</span><br><span class="line">        能够产生数据交互的只有表单元素，所以只有表单元素才能使用`v-model`,才有意义</span><br><span class="line">        表单元素 input、textarea、select</span><br><span class="line">        v-model内部会判断绑定元素的类型，根据元素类型来决定将绑定的值给哪个属性。如复选框checkbox就是给checked属性，如果是text框就是value属性</span><br><span class="line">    - &lt;font id=&quot;v-model&quot; color=&quot;red&quot;&gt;v-model修饰符&lt;/font&gt;</span><br><span class="line">    &gt; 为了方便对用户输入的内容进行处理，vue为v-model指令提供了3个修饰符：</span><br><span class="line">    </span><br><span class="line">    |修饰符|作用|示例|</span><br><span class="line">    |:----:|----|----|</span><br><span class="line">    |.number|自动将用户的输入值转为数值类型|`&lt;input v-model.number=&quot;age&quot;/&gt;`|</span><br><span class="line">    |.trim|自动过滤用户输入的首尾空白字符|`&lt;input v-model.trim=&quot;msg&quot;/&gt;`|</span><br><span class="line">    |.lazy|在&quot;change&quot;时而非&quot;input&quot;时更新|`&lt;input v-model.lazy=&quot;msg&quot;/&gt;`|</span><br><span class="line">    &gt;lazy的作用是input事件(表单处于焦点时候)不更新，失去焦点触发change事件才更新</span><br><span class="line"></span><br><span class="line">5. 条件渲染指令 `v-if`、`v-show`</span><br><span class="line">    &gt; 辅助开发者**按需控制DOM的显示与隐藏**</span><br><span class="line">    v-if动态的把元素DOM从页面添加和移除</span><br><span class="line">    v-show是通过css动态添加display：none样式来显示和隐藏</span><br><span class="line">    **如果要频繁切换元素的显示状态，show的性能更好**</span><br><span class="line">    **如果刚进入页面，某些元素默认不需要被展示，而且后期这个元素很可能也不需要被展示出来，此时v-if性能更好**</span><br><span class="line">    这个只是说给面试官听的，&lt;font color=&quot;green&quot;&gt;在实际开发中，绝大多数情况不用考虑性能问题，直接使用v-if就好了！&lt;/font&gt;</span><br><span class="line"></span><br><span class="line">    - &lt;font color=&quot;green&quot;&gt;页面的执行(一个v-if的好问题)&lt;/font&gt;</span><br><span class="line">    &gt; Q：如果我们页面有一个`&lt;p v-if=&quot;flag&quot;&gt;&lt;/p&gt; -- flag=false`，因为页面是从上往下执行的，那么页面是先创建p标签再移除呢，还是一开始就不创建呢？</span><br><span class="line">        A：**当我们用了vue-cli以后，用到单文件组件(.vue文件)的时候，它是先编译，然后再去运行。**</span><br><span class="line">        先把整个网页编译成js，然后完整的去执行。标签也是被当做js去运行的，去加载的，这个问题就不存在了</span><br><span class="line"></span><br><span class="line">    - &lt;font id=&quot;if&quot; color=&quot;green&quot;&gt;v-if配套的指令 -- `v-else`&lt;/font&gt;</span><br><span class="line">    &gt; 多个元素按需展示</span><br><span class="line">        注意：v-else指令**必须配合v-if指令一起使用**，否则不会被识别：</span><br><span class="line"></span><br><span class="line">    ```HTML</span><br><span class="line">    &lt;div v-if=&quot;type === &#x27;A&#x27;&quot;&gt;优秀&lt;/div&gt;</span><br><span class="line">    &lt;div v-else-if=&quot;type === &#x27;B&#x27;&quot;&gt;良好&lt;/div&gt;</span><br><span class="line">    &lt;div v-else-if=&quot;type === &#x27;C&#x27;&quot;&gt;一般&lt;/div&gt;</span><br><span class="line">    &lt;div v-else&gt;差&lt;/div&gt;</span><br></pre></td></tr></table></figure></p>
 </blockquote>
 </li>
-<li><p>事件绑定指令：<code>v-on</code> &#x2F; <code>@</code></p>
+<li><p>列表渲染指令 <code>v-for</code> 和 <code>:key</code> <font color="red">重要</font></p>
 <blockquote>
-<p>语法如 <code>v-on:clock=&quot;add&quot;</code> 简写<code>@click=&quot;add&quot;</code><br> methods下的函数变量也支持简写：<code>add:function()&#123;&#125; --&gt; add()&#123;&#125;</code><br> 在处理函数中<strong>修改数据的值</strong>可以通过vm(接受vue实例的变量名)来修改：vm.count,但是不推荐，<strong>推荐用this</strong></p>
+<p>辅助开发者<strong>基于一个数组来循环渲染一个列表结构</strong>。<br>     v-for指令需要使用<code>item in items</code>形式的特殊语法<br>     v-for支持一个可选的第二个参数，即当前项的索引<code>(item,index) in items</code><br>     注意：v-for指令中的 item项 和 index索引 都是形参，可以根据需要命名</p>
 </blockquote>
 <ul>
-<li><p>绑定事件并传参</p>
-<blockquote>
-<p>在调用的地方传参 <code>@click=&quot;add(1)&quot;</code></p>
-</blockquote>
-</li>
-<li><p><font id="param" color="red">参数问题</font></p>
-<blockquote>
-<p>如果定义的函数变量是有参数的</p>
-</blockquote>
-<ol>
-<li><code>add(n)&#123;&#125; -- @click=&quot;add(1)&quot;</code> 正常传参 n&#x2F;&#x2F;1</li>
-<li><code>add(n)&#123;&#125; -- @click=&quot;add()&quot;</code> n&#x2F;&#x2F;undefined</li>
-<li><code>add(n)&#123;&#125; -- @click=&quot;add&quot;</code> n被认定为事件对象PointerEvent，通常我们会定义为e&#x2F;event<br> 如果是多个参数，如</li>
-<li><code>add(a,b)&#123;&#125; -- @click=&quot;add(1,2)&quot;</code> 正常传参 a&#x2F;&#x2F;1 b&#x2F;&#x2F;2</li>
-<li><code>add(a,b)&#123;&#125; -- @click=&quot;add(1)&quot;</code> a&#x2F;&#x2F;1 b&#x2F;&#x2F;undefined</li>
-<li><code>add(a,b)&#123;&#125; -- @click=&quot;add()&quot;</code> a&#x2F;un b&#x2F;&#x2F;un</li>
-<li><code>add(a,b)&#123;&#125; -- @click=&quot;add&quot;</code> a&#x2F;&#x2F;事件对象PointerEvent ，b&#x2F;&#x2F;undefined</li>
-</ol>
-</li>
-<li><p><font id="event" color="red">事件对象$event</font>(不常用)</p>
-<blockquote>
-<p>vue提供了内置变量<code>$event</code>,它就是原生DOM的事件对象e<br>  在绑定事件的时候，如果不传参 <code>add(e)&#123;&#125; -- @click=&quot;add&quot;</code> , 我们会接受到一个事件对象e<br>  如果传参，<code>@click=&quot;add(1)&quot;</code>,我们就接收不到这个事件对象了<br>  <strong>我们既要传参，又要用到事件对象e</strong>，如想要从事件对象上拿到e.target(触发事件的事件源) ，这个时候就可以用<code>$event</code><br>  <strong><code>$event</code>使用：传<code>$event</code>作参数进去，拿形参接收</strong><br>  <code>add(n,e)&#123;&#125; --  @click=&quot;add(1,$event)&quot;</code><br>  或<code>add(e,n)&#123;&#125; --  @click=&quot;add($event,1)&quot;</code></p>
-</blockquote>
-</li>
-<li><p><font id="modifier" color="red">事件修饰符</font></p>
-<blockquote>
-<p>在事件处理函数中，调用<code>event.preventDefault()</code>(阻止默认行为)或<code>event.stopPropagation()</code>(阻止冒泡)是非常常见的需求。<br>  因此，vue提供了<strong>事件修饰符</strong>的概念，辅助程序员更方便的<strong>对事件的触发进行控制</strong>。<br>  如 <code>@click.prevent=&quot;show&quot;</code>绑定了show事件，同时阻止了默认行为<br>  常见的5个事件修饰符如下：</p>
-</blockquote>
-</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th align="center">事件修饰符</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center"><strong>.prevent</strong></td>
-<td><strong>阻止默认行为</strong>(例如：阻止a链接的跳转、表单的提交等)</td>
-</tr>
-<tr>
-<td align="center"><strong>.stop</strong></td>
-<td><strong>阻止事件冒泡</strong></td>
-</tr>
-<tr>
-<td align="center">.capture</td>
-<td>以 捕获模式 触发当前的 事件处理函数</td>
-</tr>
-<tr>
-<td align="center">.once</td>
-<td>绑定的事件只触发1次</td>
-</tr>
-<tr>
-<td align="center">.self</td>
-<td>只有在 event.target 是当前元素自身时 触发事件处理函数</td>
-</tr>
-</tbody></table>
-<ul>
-<li><font id="key" color="red">按键修饰符</font><blockquote>
-<p>在<strong>监听键盘事件</strong>时，经常需要<strong>判断详细的按键</strong>。<br>  此时，可以为键盘的相关事件添加<strong>按键修饰符</strong>，如：<br>  <code>&lt;input @keyup.enter=&quot;submit&quot;&gt;</code> – 只有在<code>key</code>是<code>Enter</code>时，调用<code>vm.submit()</code><br>  <code>&lt;input @keyup.esc=&quot;clearInput&quot;&gt;</code> – 只有在<code>key</code>是<code>Esc</code>时，调用<code>vm.clearInput()</code></p>
+<li><font id="key" color="red">强调v-for循环中key值的绑定</font><blockquote>
+<p>官方推荐在用v-for的时候一定要绑定一个key属性，既提升性能、又防止列表状态紊乱。而且尽量把id作为key的值(id唯一)<br>  <font color="#000">官方对key的值类型有要求，只能是字符串或数字类型，并且key的值必须唯一，不能重复(相当于id)</font><br>  也不能以index为值，如果key以索引为值，会数据紊乱，<strong>key必须唯一且稳定，不唯一就会终端报错，唯一又不稳定就会数据紊乱。</strong><br>  <code>&lt;div v-for=&quot;(item,index) in items&quot; :key=&quot;item.id&quot;&gt;&lt;/div&gt;</code><br>  在vue单组件中，如果用到for循环，但是没有绑key的话，会直接在终端里报错<br>  <font color="green">不懂key到底有什么用的可以去了解下diff算法和虚拟dom？</font></p>
 </blockquote>
 </li>
 </ul>
 </li>
-<li><p>双向绑定指令 </p>
-</li>
-<li><p>条件渲染指令</p>
-</li>
-<li><p>列表渲染指令</p>
-</li>
 </ol>
+<h2 id="扩展知识"><a href="#扩展知识" class="headerlink" title="扩展知识"></a>扩展知识</h2><h3 id="lable复选框的for属性"><a href="#lable复选框的for属性" class="headerlink" title="lable复选框的for属性"></a>lable复选框的for属性</h3><p>下面这个示例中,如果要选中男，应该点击对应的复选框，点击男不行，这样用户的体验很不好，可操作区域非常窄。<br>应该把它的可操作区域给放大，点击复选框还是男都可以选中，此时就用到了for属性</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;input type=&quot;checkbox&quot;&gt;</span><br><span class="line">&lt;label for=&quot;&quot;&gt;男&lt;/label&gt;</span><br><span class="line">&lt;hr&gt;</span><br><span class="line">&lt;input type=&quot;checkbox&quot;&gt;</span><br><span class="line">&lt;label for=&quot;&quot;&gt;女&lt;/label&gt;</span><br></pre></td></tr></table></figure>
+<p><strong>for指向id，希望点这个lable让谁被选中，就for那个元素的id</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;input type=&quot;checkbox&quot; id=&quot;cb1&quot;&gt;</span><br><span class="line">&lt;label for=&quot;cb1&quot;&gt;男&lt;/label&gt;</span><br><span class="line">&lt;hr&gt;</span><br><span class="line">&lt;input type=&quot;checkbox&quot; id=&quot;cb2&quot;&gt;</span><br><span class="line">&lt;label for=&quot;cb2&quot;&gt;女&lt;/label&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="a元素的JavaScript-伪协议"><a href="#a元素的JavaScript-伪协议" class="headerlink" title="a元素的JavaScript 伪协议"></a>a元素的JavaScript 伪协议</h3><p><code>&lt;a href=&quot;javascript:;&quot; @click=&quot;remove&quot;&gt;删除&lt;/a&gt;</code><br>这段代码是一个 HTML 锚点元素 <code>&lt;a&gt;</code> 的写法，其中<code>javascript:;</code> 是一个 JavaScript 伪协议，用于在点击链接时执行 JavaScript 代码或阻止默认行为。</p>
+<p>通常情况下，当用户点击这个链接时，浏览器会执行 <code>JavaScript:;</code> 这里的 JavaScript 代码是空的，所以实际上不会发生任何操作。<br>这种写法通常用于创建一个占位符链接，或者作为一个“空链接”，<strong>用于在不跳转页面的情况下执行一些 JavaScript 操作，比如触发事件或者执行某些函数</strong>。</p>
+<h3 id="JS-filter-方法-–-Array-prototype-filter"><a href="#JS-filter-方法-–-Array-prototype-filter" class="headerlink" title="JS - filter() 方法 – Array.prototype.filter()"></a>JS - filter() 方法 – Array.prototype.filter()</h3><p><code>filter()</code> 方法是 JavaScript 中数组的一个内置方法，用于过滤数组中的元素，并返回一个符合条件的新数组。<br>如：<br><code>let arr = [1,2,3].filter(item=&gt;item&gt;1) //[1,2]</code><br><code>let arr = [&#123;id:1,name:&quot;zs&quot;&#125;,&#123;id:2..&#125;].filter(item =&gt; item.id !=2) // [&#123;id:1,name:&quot;zs&quot;&#125;]</code></p>
+<p>但是，除了数组外，<code>filter()</code> 方法还可以应用于类数组对象和可迭代对象。例如，字符串也可以通过 <code>filter()</code> 方法进行过滤操作。</p>
+<p>下面是一个例子，演示如何在字符串中使用 <code>filter()</code> 方法来过滤出特定的字符：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> str = <span class="string">&#x27;Hello World!&#x27;</span>;</span><br><span class="line"><span class="keyword">const</span> filteredStr = <span class="title class_">Array</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">filter</span>.<span class="title function_">call</span>(str, <span class="function"><span class="params">char</span> =&gt;</span> char !== <span class="string">&#x27;l&#x27;</span>);</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(filteredStr.<span class="title function_">join</span>(<span class="string">&#x27;&#x27;</span>)); <span class="comment">// 输出：Heo Word!</span></span><br></pre></td></tr></table></figure>
+
+<p>在这个例子中，我们首先使用 <code>Array.prototype.filter.call()</code> 来调用 <code>filter()</code> 方法，并将字符串 <code>str</code> 当作第一个参数传入。然后，我们定义了一个过滤条件，即过滤掉所有的 ‘l’ 字符。最后，我们将过滤后的字符数组通过 <code>join()</code> 方法连接成一个新的字符串，并输出结果。</p>
+<p>总之，虽然 <code>filter()</code> 方法通常用于数组，但通过一些技巧，我们也可以在其他类型的对象上使用它。</p>
 ]]></content>
       <categories>
         <category>Vue</category>
@@ -464,6 +335,107 @@
       <tags>
         <tag>Vue</tag>
         <tag>Vue2</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Vue2 过滤器、侦听器、计算属性、axios &amp; vue-cli</title>
+    <url>/tsukimiya.github.io/2024/04/21/Vue/3.%E8%BF%87%E6%BB%A4%E5%99%A8%20%E4%BE%A6%E5%90%AC%E5%99%A8%20%E8%AE%A1%E7%AE%97%E5%B1%9E%E6%80%A7%20axios&amp;vue-cli/</url>
+    <content><![CDATA[<blockquote>
+<p>目标：<br>在实际开发中合理运用过滤器、侦听器、计算属性解决问题<br>使用axios发起Ajax请求<br>使用vue-cli工具生成工程化的Vue项目</p>
+</blockquote>
+<p>[toc]</p>
+<h2 id="过滤器"><a href="#过滤器" class="headerlink" title="过滤器"></a>过滤器</h2><blockquote>
+<p>2020年9月 vue3发布。增加了很多新功能，但是也删掉了一些功能。 比如删掉了vue2中的过滤器filter功能。<br>与此同时，官方建议： <strong>用方法调用或计算属性替换过滤器</strong>。<br>filter过滤器能加工数据，computed计算属性和methods方法也都可以加工数据，这样的话，就功能重复了…(于是filter被开除了XDD)</p>
+</blockquote>
+<h2 id="侦听器"><a href="#侦听器" class="headerlink" title="侦听器"></a>侦听器</h2><h2 id="计算属性的方法"><a href="#计算属性的方法" class="headerlink" title="计算属性的方法"></a>计算属性的方法</h2><h2 id="axios的基本用法"><a href="#axios的基本用法" class="headerlink" title="axios的基本用法"></a>axios的基本用法</h2><h2 id="vue-cli的安装和使用"><a href="#vue-cli的安装和使用" class="headerlink" title="vue-cli的安装和使用"></a>vue-cli的安装和使用</h2>]]></content>
+      <categories>
+        <category>Vue</category>
+        <category>Vue2</category>
+      </categories>
+      <tags>
+        <tag>Vue</tag>
+        <tag>Vue2</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Node.js简单实现后端服务器</title>
+    <url>/tsukimiya.github.io/2024/04/15/Node/Node.js%E5%81%9A%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%AF%A6%E8%A7%A3/</url>
+    <content><![CDATA[<blockquote>
+<p>这个示例中，没有用到MySQl数据库，只是简单的创建POST表单路由进行处理数据，以及表单数据的校验<br>用到的npm包&#x2F;第三方模块：<br>Express：<code>npm i express@4.17.1</code> – Web 开发框架，快速创建 Web 服务器<br>Joi：<code>npm install joi --save</code> – hapijs 自带的数据校验模块<br>@escook&#x2F;express-joi中间件: <code>npm i @escook/express-joi</code> – 实现自动对表单数据进行验证的功能</p>
+</blockquote>
+<blockquote>
+<p>全局安装了nodemon工具，可以监听文件的更改，自动重新执行</p>
+</blockquote>
+<blockquote>
+<p>该示例没有在路由之前配置cors中间件，从而解决接口跨域的问题<br>这个是航空文化馆项目的后端，还没写完<br>没有用到mysql模块：<code>npm i mysql</code><br>也没有用到express-session中间件：<code>npm i express-session</code>（这个干吗用的？）</p>
+</blockquote>
+<h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><ol start="0">
+<li>如果是拿被别人写好的项目，第一步是导入这个项目所用的包，<code>npm i</code>命令</li>
+<li>创建后端项目文件夹如serve</li>
+<li>初始化文件夹<code>npm init -y</code><br> 在空项目的根目录中初始化一个package.json的包管理配置文件</li>
+<li>安装必要的包&#x2F;依赖<br> 安装Express —— <code>npm i express@4.17.1</code></li>
+<li>创建服务器文件，命名如app.js</li>
+</ol>
+<h2 id="创建简单的web服务器-及其-模块化"><a href="#创建简单的web服务器-及其-模块化" class="headerlink" title="创建简单的web服务器 及其 模块化"></a>创建简单的web服务器 及其 模块化</h2><ol>
+<li><p>创建基本的express框架 – eser(vscode快捷生成代码&#x2F;&#x2F;自己配置 – 文件–首选项–配置用户代码片段)</p>
+ <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">//导入express模块</span><br><span class="line">const express = require(&#x27;express&#x27;)</span><br><span class="line">//创建express服务器实例</span><br><span class="line">const app = express()</span><br><span class="line">const port = 8080;</span><br><span class="line"></span><br><span class="line">//调用app.listen方法，指定端口号并启动web服务器</span><br><span class="line">app.listen(port,()=&gt;&#123;</span><br><span class="line">    console.log(`Express server running at http://127.0.0.1:$&#123;port&#125;`)</span><br><span class="line">&#125;)      </span><br></pre></td></tr></table></figure>
+</li>
+<li><p>创建路由<br> 可以先在当前文件尝试是否成功，之后再分离到对应模块</p>
+ <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">//创建express路由实例</span><br><span class="line">const router = express.Router()</span><br><span class="line">// 配置路由</span><br><span class="line">app.use(router)</span><br><span class="line">// 提交预约表单</span><br><span class="line">router.post(&#x27;/form&#x27;, (req, res) =&gt; &#123;</span><br><span class="line">    console.log(req.body);</span><br><span class="line">    res.send(&#x27;发送表单数据成功&#x27;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用postman测试请求是否成功<br> 向 <a href="http://127.0.0.1:8080/form">http://127.0.0.1:8080/form</a> 发送post请求<br> 响应函数中打印出来的req.body结果是undefined，这是因为我们没有配置解析表单的中间件</p>
+</li>
+<li><p>配置解析表单的中间件<br> &#x2F;&#x2F; 配置解析表单数据的中间件,注意：这个中间件，只能解析applicaton&#x2F;x-www-form-urlencoded格式的表单数据<br> <code>app.use(express.urlencoded(&#123;extended:false&#125;))</code><br> 再次发送请求，我们就得到了表单提交的数据</p>
+</li>
+<li><p>分离到路由模块<br> 创建router文件夹，创建如user.js文件&#x2F;&#x2F;处理用户路由<br> 将路由部分写到这个地方，然后把router暴露出去<br> <code>module.exports = router</code><br> 然后在app.js中导入并使用路由模块</p>
+ <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// 导入并使用用户路由模块</span><br><span class="line">const userRouter = require(&#x27;./router/user&#x27;)</span><br><span class="line">// 配置路由</span><br><span class="line">app.use(userRouter)</span><br></pre></td></tr></table></figure>
+<p> 测试成功</p>
+</li>
+<li><p>分离处理函数到路由处理模块，同5操作<br> 创建router_handler文件夹，在该目录下创建对应的用户路由处理文件user.js<br> 把处理函数暴露出去</p>
+ <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">exports.formSubmit = (req, res) =&gt; &#123;</span><br><span class="line">    console.log(req.body);</span><br><span class="line">    res.send(&#x27;发送表单数据成功&#x27;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p> 在路由模块导入导入用户路由处理函数对应的模块<br> <code>const user_handler = require(&#39;../router_handler/user&#39;)</code><br> 路由的响应函数换成对应的user_handler.formSubmit</p>
+</li>
+</ol>
+<h2 id="数据校验"><a href="#数据校验" class="headerlink" title="数据校验"></a>数据校验</h2><p>这里使用joi模块来进行数据验证<br>Joi 是 hapijs 自带的数据校验模块，他已经高度封装常用的校验功能。</p>
+<ol>
+<li><p>安装joi包，为表单中携带的每个数据项，定义验证规则</p>
+ <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install joi --save</span><br><span class="line">// ES6写法 import Joi from &#x27;joi&#x27;</span><br><span class="line">const joi = require(&#x27;joi&#x27;)</span><br></pre></td></tr></table></figure></li>
+<li><p>安装 @escook&#x2F;express-joi 中间件，来实现自动对表单数据进行验证的功能：<br> <code>npm i @escook/express-joi</code></p>
+</li>
+<li><p>joi验证规则</p>
+<ul>
+<li>string() 值必须是字符串</li>
+<li>number() 值必须是数字</li>
+<li>alphanum() 值只能是包含 a-zA-Z0-9 的字符串</li>
+<li>min(length) 最小长度</li>
+<li>max(length) 最大长度</li>
+<li>required() 值是必填项，不能为 undefined</li>
+<li>pattern(正则表达式) 值必须符合正则表达式的规则</li>
+<li>any() 任意</li>
+<li>date() 日期</li>
+<li>time() 时间</li>
+<li>iso() 要求字符串值采用有效的 ISO 8601 日期格式。</li>
+</ul>
+</li>
+<li><p>新建 &#x2F;schema&#x2F;user.js 用户信息验证规则模块，并初始化代码如下：</p>
+ <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// 导入joi模块</span><br><span class="line">const joi = require(&#x27;joi&#x27;)</span><br><span class="line"></span><br><span class="line">// 表单校验规则</span><br><span class="line">const unit = joi.string().required()</span><br><span class="line">const contact = joi.string().required()</span><br><span class="line">const phone = joi.string().pattern(/^[1][\d]&#123;10&#125;$/).required()</span><br><span class="line">const numVisitors = joi.number().min(16).required()</span><br><span class="line">const guide = joi.string().pattern(/yes|no|是|否/).required()</span><br><span class="line">const date = joi.date().min(&#x27;now&#x27;).iso().required()</span><br><span class="line">const time = joi.string().pattern(/^[\d]&#123;2&#125;[\s]*:[\s]*[\d]&#123;2&#125;$/).required()</span><br><span class="line"></span><br><span class="line">// 表单的验证规则对象</span><br><span class="line">exports.form_schema =&#123;</span><br><span class="line">    body:&#123;</span><br><span class="line">        unit,</span><br><span class="line">        contact,</span><br><span class="line">        phone,</span><br><span class="line">        numVisitors,</span><br><span class="line">        guide,</span><br><span class="line">        date,</span><br><span class="line">        time,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在路由模块添加数据校验</p>
+ <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// 导入验证表单数据的中间件</span><br><span class="line">const expressJoi = require(&#x27;@escook/express-joi&#x27;)</span><br><span class="line">// 导入需要验证的规则</span><br><span class="line">const &#123;form_schema&#125; = require(&#x27;../schema/user&#x27;)</span><br></pre></td></tr></table></figure>
+<p> 在表单提交的路由中，声明局部中间件，对当前请求中携带的数据进行验证<br> 数据验证通过后，会把这次请求流转给后面的路由处理函数<br> 数据验证失败后，终止后续代码的执行，并抛出一个全局的 Error 错误，进入全局错误级别中间件中进行处理<br> <code>router.post(&#39;/form&#39;,expressJoi(form_schema), user_handler.formSubmit)</code></p>
+</li>
+<li><p>在 app.js 的全局错误级别中间件中，捕获验证失败的错误，并把验证失败的结果响应给客户端<br> 在路由注册之后声明错误级别中间件，注意这里需要在app.js导入joi</p>
+ <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">const joi = require(&#x27;joi&#x27;)</span><br><span class="line">// 错误中间件</span><br><span class="line">app.use(function(err,req,res,next)&#123;</span><br><span class="line">    //数据验证失败</span><br><span class="line">    if(err instanceof joi.ValidationError) return res.send(err.message)</span><br><span class="line">    // 未知错误</span><br><span class="line">    res.send(err.message)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p> 测试成功</p>
+</li>
+</ol>
+]]></content>
+      <categories>
+        <category>Node.js</category>
+      </categories>
+      <tags>
+        <tag>Node.js</tag>
+        <tag>前后端分离</tag>
       </tags>
   </entry>
   <entry>
@@ -487,7 +459,7 @@
   <entry>
     <title>Hello Front-end</title>
     <url>/tsukimiya.github.io/index.html</url>
-    <content><![CDATA[<p>Welcome to my study blog! This is my continuously make up a main post. If you get any problems when using my blog, you can send the email to <a href="mailto:&#x68;&#x61;&#x72;&#x69;&#x69;&#106;&#x69;&#99;&#111;&#64;&#111;&#x75;&#x74;&#108;&#x6f;&#111;&#x6b;&#46;&#99;&#x6f;&#109;">&#x68;&#x61;&#x72;&#x69;&#x69;&#106;&#x69;&#99;&#111;&#64;&#111;&#x75;&#x74;&#108;&#x6f;&#111;&#x6b;&#46;&#99;&#x6f;&#109;</a></p>
+    <content><![CDATA[<p>Welcome to my study blog! This is my continuously make up a main post. If you get any problems when using my blog, you can send the email to <a href="mailto:&#104;&#x61;&#x72;&#105;&#105;&#106;&#105;&#x63;&#x6f;&#x40;&#111;&#x75;&#116;&#108;&#111;&#111;&#x6b;&#x2e;&#x63;&#x6f;&#x6d;">&#104;&#x61;&#x72;&#105;&#105;&#106;&#105;&#x63;&#x6f;&#x40;&#111;&#x75;&#116;&#108;&#111;&#111;&#x6b;&#x2e;&#x63;&#x6f;&#x6d;</a></p>
 <h2 id="Study-Guide"><a href="#Study-Guide" class="headerlink" title="Study Guide"></a>Study Guide</h2><center>Here provide you some study sources and study route.</center>
 <!-- This is [main tech](#Main-Line) -->
 <center>This is <a href='#Main-Line'>main tech</a></center>
@@ -821,7 +793,10 @@
 </li>
 </ol>
 <h2 id="MD"><a href="#MD" class="headerlink" title="MD"></a>MD</h2><ul>
-<li><a href="https://www.runoob.com/markdown/md-table.html">markdown表格语法</a>(菜鸟教程)</li>
+<li><p><a href="https://blog.csdn.net/qq_40896997/article/details/106551767">markdown表情大全</a> <font color="red">Very Pull!!</font></p>
+</li>
+<li><p><a href="https://www.runoob.com/markdown/md-table.html">markdown表格语法</a>(菜鸟教程)</p>
+</li>
 </ul>
 <h2 id="Blog-Build"><a href="#Blog-Build" class="headerlink" title="Blog Build"></a>Blog Build</h2><ul>
 <li><a href="https://iknowwang.com/">如何架設網站：一個完全免費的教學（Blog推薦 + 網頁製作軟體 ）</a>(Wordpress)<blockquote>
@@ -872,23 +847,28 @@
     <content><![CDATA[]]></content>
   </entry>
   <entry>
+    <title>日程表</title>
+    <url>/tsukimiya.github.io/schedule/index.html</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
     <title>留言板</title>
     <url>/tsukimiya.github.io/guestbook/index.html</url>
     <content><![CDATA[<h1 id="欢迎来到我的博客！"><a href="#欢迎来到我的博客！" class="headerlink" title="欢迎来到我的博客！"></a>欢迎来到我的博客！</h1><blockquote>
-<p>欢迎在这里留言！任何问题都可以在这里留言，我会及时回复的。目前留言板块尚未配置完全，暂时无法使用，如有问题请邮箱：<br><a href="mailto:&#104;&#97;&#x72;&#105;&#105;&#106;&#x69;&#99;&#x6f;&#64;&#x6f;&#x75;&#x74;&#108;&#111;&#111;&#107;&#46;&#99;&#x6f;&#x6d;">&#104;&#97;&#x72;&#105;&#105;&#106;&#x69;&#99;&#x6f;&#64;&#x6f;&#x75;&#x74;&#108;&#111;&#111;&#107;&#46;&#99;&#x6f;&#x6d;</a><br><a href="mailto:&#49;&#x38;&#x33;&#50;&#55;&#49;&#53;&#56;&#x33;&#x38;&#x40;&#113;&#113;&#x2e;&#99;&#111;&#109;">&#49;&#x38;&#x33;&#50;&#55;&#49;&#53;&#56;&#x33;&#x38;&#x40;&#113;&#113;&#x2e;&#99;&#111;&#109;</a><br>欢迎给我发送邮件</p>
+<p>欢迎在这里留言！任何问题都可以在这里留言，我会及时回复的。目前留言板块尚未配置完全，暂时无法使用，如有问题请邮箱：<br><a href="mailto:&#x68;&#97;&#x72;&#x69;&#105;&#106;&#105;&#99;&#x6f;&#x40;&#111;&#117;&#116;&#x6c;&#111;&#111;&#107;&#46;&#x63;&#x6f;&#109;">&#x68;&#97;&#x72;&#x69;&#105;&#106;&#105;&#99;&#x6f;&#x40;&#111;&#117;&#116;&#x6c;&#111;&#111;&#107;&#46;&#x63;&#x6f;&#109;</a><br><a href="mailto:&#49;&#x38;&#x33;&#50;&#55;&#x31;&#53;&#56;&#x33;&#x38;&#x40;&#113;&#113;&#x2e;&#x63;&#111;&#109;">&#49;&#x38;&#x33;&#50;&#55;&#x31;&#53;&#56;&#x33;&#x38;&#x40;&#113;&#113;&#x2e;&#x63;&#111;&#109;</a><br>欢迎给我发送邮件</p>
 </blockquote>
 ]]></content>
   </entry>
   <entry>
-    <title>日程表</title>
-    <url>/tsukimiya.github.io/schedule/index.html</url>
+    <title>标签</title>
+    <url>/tsukimiya.github.io/tags/index.html</url>
     <content><![CDATA[]]></content>
   </entry>
   <entry>
     <title>Task</title>
     <url>/tsukimiya.github.io/schedule/task.html</url>
     <content><![CDATA[<blockquote>
-<p>快给我滚去学习！给你一拳</p>
+<p>快给我滚去学习！给你一拳:punch::punch::facepunch:</p>
 </blockquote>
 <h2 id="Study-Tech"><a href="#Study-Tech" class="headerlink" title="Study Tech"></a>Study Tech</h2><h3 id="NOW"><a href="#NOW" class="headerlink" title="NOW"></a>NOW</h3><ol>
 <li>vue框架<ul>
@@ -979,10 +959,5 @@
 </li>
 </ul>
 ]]></content>
-  </entry>
-  <entry>
-    <title>标签</title>
-    <url>/tsukimiya.github.io/tags/index.html</url>
-    <content><![CDATA[]]></content>
   </entry>
 </search>
