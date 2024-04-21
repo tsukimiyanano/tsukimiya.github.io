@@ -82,6 +82,59 @@
       </tags>
   </entry>
   <entry>
+    <title>Vue2 过滤器、侦听器、计算属性、axios &amp; vue-cli</title>
+    <url>/tsukimiya.github.io/2024/04/21/Vue/3.%E8%BF%87%E6%BB%A4%E5%99%A8%20%E4%BE%A6%E5%90%AC%E5%99%A8%20%E8%AE%A1%E7%AE%97%E5%B1%9E%E6%80%A7%20axios&amp;vue-cli/</url>
+    <content><![CDATA[<blockquote>
+<p>目标：<br>在实际开发中合理运用过滤器、侦听器、计算属性解决问题<br>使用axios发起Ajax请求<br>使用vue-cli工具生成工程化的Vue项目</p>
+</blockquote>
+<p>[toc]</p>
+<h2 id="过滤器-Filters"><a href="#过滤器-Filters" class="headerlink" title="过滤器(Filters)"></a>过滤器(Filters)</h2><blockquote>
+<p>2020年9月 vue3发布。增加了很多新功能，但是也删掉了一些功能。 比如删掉了vue2中的过滤器filter功能。<br>与此同时，官方建议： <strong>用方法调用或计算属性替换过滤器</strong>。<br>filter过滤器能加工数据，computed计算属性和methods方法也都可以加工数据，这样的话，就功能重复了…(于是filter被开除了XDD)</p>
+</blockquote>
+<p>vue3已经把过滤器删掉了，只能在vue2中使用，会基础语法就行了。</p>
+<ul>
+<li><font color="green">过滤器要点</font><ol>
+<li>必须被定义到 <code>filters节点</code> 之下，本质是一个函数</li>
+<li>强调：过滤器中一定要有一个返回值</li>
+<li>过滤器函数中的 形参<code>val</code>(随意命名)，永远都是管道符前面的那个值。(多个形参，则第一个外都是undefined)</li>
+<li>过滤器函数 由 管道符 <code>|</code> 掉用</li>
+<li>过滤器只能在 <code>差值表达式</code> 或 <code>属性绑定指令v-bind</code> 中调用</li>
+<li>最终得到的结果是过滤器的返回值</li>
+</ol>
+</li>
+</ul>
+<p><strong>过滤器常用于文本的格式化</strong>,应该被添加在JavaScript表达式的尾部，由“<strong>管道符</strong>”进行调用。示例:</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 在花括号中通过管道符调用capitalize过滤器，对message的值进行格式化 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>&#123;&#123;message | capitalize&#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 在v-bind中通过管道符调用formatId过滤器，对rawId的值进行格式化 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">v-bind:id</span>=<span class="string">&quot;rawId | formatId&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="私有过滤器-和-全局过滤器"><a href="#私有过滤器-和-全局过滤器" class="headerlink" title="私有过滤器 和 全局过滤器"></a>私有过滤器 和 全局过滤器</h3><p><strong>在 <code>filters节点</code> 下定义的过滤器</strong>，称为“<strong>私有过滤器</strong>”，因为它只能在当前vm实例所控制的el区域内使用。如果希望在多个vue实例之间共享过滤器，则可以按照如下的格式<strong>定义全局过滤器</strong>:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 全局过滤器–独立于每个vm实例之外 </span></span><br><span class="line"><span class="comment">// Vue.filter()方法接收两个参数:</span></span><br><span class="line"><span class="comment">// 第1个参数，是全局过滤器的&quot;名字”</span></span><br><span class="line"><span class="comment">// 第2个参数，是全局过滤器的&quot;处理函数&quot;</span></span><br><span class="line"><span class="title class_">Vue</span>.<span class="title function_">filter</span>( <span class="string">&#x27;capitalize&#x27;</span>, <span class="function">(<span class="params">str</span>) =&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> str.<span class="title function_">charAt</span>(<span class="number">0</span>).<span class="title function_">toUpperCase</span>() + str.<span class="title function_">slice</span>(<span class="number">1</span>) + <span class="string">&#x27;~~&#x27;</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p><font color="green">注意：如果私有过滤器和全局过滤器名字一致，此时按就近原则</font></p>
+<h3 id="其他用法-–-连续调用、传参"><a href="#其他用法-–-连续调用、传参" class="headerlink" title="其他用法 – 连续调用、传参"></a>其他用法 – 连续调用、传参</h3><ol>
+<li><p>连续调用多个过滤器 – 串联地调用<br>如：<code>&#123;&#123;message | filterA | filterB&#125;&#125;</code></p>
+</li>
+<li><p>过滤器传参</p>
+ <figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>&#123;&#123;message | filterA(arg1,arg2)&#125;&#125;<span class="tag">&lt;<span class="name">p</span>&gt;</span></span><br></pre></td></tr></table></figure>
+ <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="title class_">Vue</span>.<span class="title function_">filter</span>(<span class="string">&#x27;filterA&#x27;</span>,<span class="function">(<span class="params">msg,arg1,arg2</span>)=&gt;</span>&#123;...&#125;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>过滤器的兼容性<br>仅在vue 2.x 和 1.x中受支持<br>3.x建议使用 <strong>计算属性</strong> 或 <strong>方法</strong> 代替<br>具体的迁移指南参考官方文档给出的<a href="https://v3.vuejs.org/guide/migration/filters.html#migration-strategy">说明</a></p>
+</li>
+</ol>
+<h2 id="Watch侦听器"><a href="#Watch侦听器" class="headerlink" title="Watch侦听器"></a>Watch侦听器</h2><p>Watch侦听器 <strong>监视数据的变化，做出特定操作</strong>，语法格式：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> vm = <span class="keyword">new</span> <span class="title class_">Vue</span>(&#123;</span><br><span class="line">    <span class="attr">el</span>:<span class="string">&#x27;#app&#x27;</span>,</span><br><span class="line">    <span class="attr">data</span>:&#123; <span class="attr">username</span>: <span class="string">&#x27;&#x27;</span>&#125;,</span><br><span class="line">    <span class="attr">watch</span>:&#123;</span><br><span class="line">        <span class="comment">// 监视username变化</span></span><br><span class="line">        <span class="comment">// newVal - 变化后的新值，oldVal - 旧值</span></span><br><span class="line">        <span class="title function_">username</span>(<span class="params">newVal,oldVal</span>)&#123;</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(newVal,oldVal)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p><font color="green">应用场景如：侦听用户输入的用户名，每次变化就去查找是否被占用</font></p>
+<h2 id="计算属性的方法"><a href="#计算属性的方法" class="headerlink" title="计算属性的方法"></a>计算属性的方法</h2><h2 id="axios的基本用法"><a href="#axios的基本用法" class="headerlink" title="axios的基本用法"></a>axios的基本用法</h2><h2 id="vue-cli的安装和使用"><a href="#vue-cli的安装和使用" class="headerlink" title="vue-cli的安装和使用"></a>vue-cli的安装和使用</h2><h2 id="扩展知识"><a href="#扩展知识" class="headerlink" title="扩展知识"></a>扩展知识</h2><h3 id="字符串函数charAt"><a href="#字符串函数charAt" class="headerlink" title="字符串函数charAt()"></a>字符串函数charAt()</h3><p>接收索引值，从字符串中获取对应字符，如：<br><code>&#39;hello&#39;.charAt(4) //&#39;o&#39;</code></p>
+<h3 id="将字符串第一个字符变为大写"><a href="#将字符串第一个字符变为大写" class="headerlink" title="将字符串第一个字符变为大写"></a>将字符串第一个字符变为大写</h3><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> str = <span class="string">&#x27;hello&#x27;</span></span><br><span class="line"><span class="keyword">const</span> first = str.<span class="title function_">charAt</span>(<span class="number">0</span>).<span class="title function_">toUpperCase</span>()</span><br><span class="line"><span class="keyword">const</span> other = str.<span class="title function_">slice</span>(<span class="number">1</span>)<span class="comment">//从指定索引往后截取字符串，返回得到的结果</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(str)</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(first+other)</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>Vue</category>
+        <category>Vue2</category>
+      </categories>
+      <tags>
+        <tag>Vue</tag>
+        <tag>Vue2</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>前端工程化与Webpack</title>
     <url>/tsukimiya.github.io/2024/04/18/Vue/1.%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96%E4%B8%8EWebpack/</url>
     <content><![CDATA[<blockquote>
@@ -325,26 +378,6 @@
       <tags>
         <tag>Webpack</tag>
         <tag>前端工程化</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Vue2 过滤器、侦听器、计算属性、axios &amp; vue-cli</title>
-    <url>/tsukimiya.github.io/2024/04/21/Vue/3.%E8%BF%87%E6%BB%A4%E5%99%A8%20%E4%BE%A6%E5%90%AC%E5%99%A8%20%E8%AE%A1%E7%AE%97%E5%B1%9E%E6%80%A7%20axios&amp;vue-cli/</url>
-    <content><![CDATA[<blockquote>
-<p>目标：<br>在实际开发中合理运用过滤器、侦听器、计算属性解决问题<br>使用axios发起Ajax请求<br>使用vue-cli工具生成工程化的Vue项目</p>
-</blockquote>
-<p>[toc]</p>
-<h2 id="过滤器"><a href="#过滤器" class="headerlink" title="过滤器"></a>过滤器</h2><blockquote>
-<p>2020年9月 vue3发布。增加了很多新功能，但是也删掉了一些功能。 比如删掉了vue2中的过滤器filter功能。<br>与此同时，官方建议： <strong>用方法调用或计算属性替换过滤器</strong>。<br>filter过滤器能加工数据，computed计算属性和methods方法也都可以加工数据，这样的话，就功能重复了…(于是filter被开除了XDD)</p>
-</blockquote>
-<h2 id="侦听器"><a href="#侦听器" class="headerlink" title="侦听器"></a>侦听器</h2><h2 id="计算属性的方法"><a href="#计算属性的方法" class="headerlink" title="计算属性的方法"></a>计算属性的方法</h2><h2 id="axios的基本用法"><a href="#axios的基本用法" class="headerlink" title="axios的基本用法"></a>axios的基本用法</h2><h2 id="vue-cli的安装和使用"><a href="#vue-cli的安装和使用" class="headerlink" title="vue-cli的安装和使用"></a>vue-cli的安装和使用</h2>]]></content>
-      <categories>
-        <category>Vue</category>
-        <category>Vue2</category>
-      </categories>
-      <tags>
-        <tag>Vue</tag>
-        <tag>Vue2</tag>
       </tags>
   </entry>
   <entry>
@@ -674,7 +707,7 @@
   <entry>
     <title>Hello Front-end</title>
     <url>/tsukimiya.github.io/index.html</url>
-    <content><![CDATA[<p>Welcome to my study blog! This is my continuously make up a main post. If you get any problems when using my blog, you can send the email to <a href="mailto:&#x68;&#97;&#x72;&#105;&#x69;&#106;&#105;&#x63;&#x6f;&#x40;&#x6f;&#x75;&#116;&#x6c;&#x6f;&#x6f;&#x6b;&#46;&#x63;&#x6f;&#109;">&#x68;&#97;&#x72;&#105;&#x69;&#106;&#105;&#x63;&#x6f;&#x40;&#x6f;&#x75;&#116;&#x6c;&#x6f;&#x6f;&#x6b;&#46;&#x63;&#x6f;&#109;</a></p>
+    <content><![CDATA[<p>Welcome to my study blog! This is my continuously make up a main post. If you get any problems when using my blog, you can send the email to <a href="mailto:&#x68;&#97;&#114;&#105;&#x69;&#x6a;&#105;&#99;&#x6f;&#x40;&#111;&#x75;&#116;&#108;&#111;&#x6f;&#x6b;&#x2e;&#x63;&#x6f;&#109;">&#x68;&#97;&#114;&#105;&#x69;&#x6a;&#105;&#99;&#x6f;&#x40;&#111;&#x75;&#116;&#108;&#111;&#x6f;&#x6b;&#x2e;&#x63;&#x6f;&#109;</a></p>
 <h2 id="Study-Guide"><a href="#Study-Guide" class="headerlink" title="Study Guide"></a>Study Guide</h2><center>Here provide you some study sources and study route.</center>
 <!-- This is [main tech](#Main-Line) -->
 <center>This is <a href='#Main-Line'>main tech</a></center>
@@ -983,7 +1016,7 @@
     <title>留言板</title>
     <url>/tsukimiya.github.io/guestbook/index.html</url>
     <content><![CDATA[<h1 id="欢迎来到我的博客！"><a href="#欢迎来到我的博客！" class="headerlink" title="欢迎来到我的博客！"></a>欢迎来到我的博客！</h1><blockquote>
-<p>欢迎在这里留言！任何问题都可以在这里留言，我会及时回复的。目前留言板块尚未配置完全，暂时无法使用，如有问题请邮箱：<br><a href="mailto:&#x68;&#x61;&#114;&#x69;&#105;&#106;&#x69;&#99;&#111;&#64;&#x6f;&#117;&#x74;&#108;&#111;&#111;&#107;&#46;&#99;&#x6f;&#x6d;">&#x68;&#x61;&#114;&#x69;&#105;&#106;&#x69;&#99;&#111;&#64;&#x6f;&#117;&#x74;&#108;&#111;&#111;&#107;&#46;&#99;&#x6f;&#x6d;</a><br><a href="mailto:&#x31;&#x38;&#x33;&#50;&#x37;&#x31;&#x35;&#x38;&#x33;&#x38;&#64;&#113;&#x71;&#46;&#x63;&#111;&#x6d;">&#x31;&#x38;&#x33;&#50;&#x37;&#x31;&#x35;&#x38;&#x33;&#x38;&#64;&#113;&#x71;&#46;&#x63;&#111;&#x6d;</a><br>欢迎给我发送邮件</p>
+<p>欢迎在这里留言！任何问题都可以在这里留言，我会及时回复的。目前留言板块尚未配置完全，暂时无法使用，如有问题请邮箱：<br><a href="mailto:&#104;&#97;&#x72;&#x69;&#x69;&#x6a;&#x69;&#x63;&#111;&#64;&#x6f;&#117;&#116;&#x6c;&#x6f;&#x6f;&#x6b;&#x2e;&#99;&#111;&#x6d;">&#104;&#97;&#x72;&#x69;&#x69;&#x6a;&#x69;&#x63;&#111;&#64;&#x6f;&#117;&#116;&#x6c;&#x6f;&#x6f;&#x6b;&#x2e;&#99;&#111;&#x6d;</a><br><a href="mailto:&#x31;&#56;&#51;&#x32;&#55;&#x31;&#x35;&#56;&#51;&#56;&#64;&#113;&#x71;&#x2e;&#x63;&#111;&#109;">&#x31;&#56;&#51;&#x32;&#55;&#x31;&#x35;&#56;&#51;&#56;&#64;&#113;&#x71;&#x2e;&#x63;&#111;&#109;</a><br>欢迎给我发送邮件</p>
 </blockquote>
 ]]></content>
   </entry>
