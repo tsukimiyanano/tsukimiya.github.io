@@ -1,6 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Node.js简单实现后端服务器</title>
+    <url>/tsukimiya.github.io/2024/04/15/Node/Node.js%E5%81%9A%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%AF%A6%E8%A7%A3/</url>
+    <content><![CDATA[<blockquote>
+<p>这个示例中，没有用到MySQl数据库，只是简单的创建POST表单路由进行处理数据，以及表单数据的校验<br>用到的npm包&#x2F;第三方模块：<br>Express：<code>npm i express@4.17.1</code> – Web 开发框架，快速创建 Web 服务器<br>Joi：<code>npm install joi --save</code> – hapijs 自带的数据校验模块<br>@escook&#x2F;express-joi中间件: <code>npm i @escook/express-joi</code> – 实现自动对表单数据进行验证的功能</p>
+</blockquote>
+<blockquote>
+<p>全局安装了nodemon工具，可以监听文件的更改，自动重新执行</p>
+</blockquote>
+<blockquote>
+<p>该示例没有在路由之前配置cors中间件，从而解决接口跨域的问题<br>这个是航空文化馆项目的后端，还没写完<br>没有用到mysql模块：<code>npm i mysql</code><br>也没有用到express-session中间件：<code>npm i express-session</code>（这个干吗用的？）</p>
+</blockquote>
+<h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><ol start="0">
+<li>如果是拿被别人写好的项目，第一步是导入这个项目所用的包，<code>npm i</code>命令</li>
+<li>创建后端项目文件夹如serve</li>
+<li>初始化文件夹<code>npm init -y</code><br> 在空项目的根目录中初始化一个package.json的包管理配置文件</li>
+<li>安装必要的包&#x2F;依赖<br> 安装Express —— <code>npm i express@4.17.1</code></li>
+<li>创建服务器文件，命名如app.js</li>
+</ol>
+<h2 id="创建简单的web服务器-及其-模块化"><a href="#创建简单的web服务器-及其-模块化" class="headerlink" title="创建简单的web服务器 及其 模块化"></a>创建简单的web服务器 及其 模块化</h2><ol>
+<li><p>创建基本的express框架 – eser(vscode快捷生成代码&#x2F;&#x2F;自己配置 – 文件–首选项–配置用户代码片段)</p>
+ <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">//导入express模块</span></span><br><span class="line"><span class="keyword">const</span> express = <span class="built_in">require</span>(<span class="string">&#x27;express&#x27;</span>)</span><br><span class="line"><span class="comment">//创建express服务器实例</span></span><br><span class="line"><span class="keyword">const</span> app = <span class="title function_">express</span>()</span><br><span class="line"><span class="keyword">const</span> port = <span class="number">8080</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//调用app.listen方法，指定端口号并启动web服务器</span></span><br><span class="line">app.<span class="title function_">listen</span>(port,<span class="function">()=&gt;</span>&#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">`Express server running at http://127.0.0.1:<span class="subst">$&#123;port&#125;</span>`</span>)</span><br><span class="line">&#125;)      </span><br></pre></td></tr></table></figure>
+</li>
+<li><p>创建路由<br> 可以先在当前文件尝试是否成功，之后再分离到对应模块</p>
+ <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">//创建express路由实例</span></span><br><span class="line"><span class="keyword">const</span> router = express.<span class="title class_">Router</span>()</span><br><span class="line"><span class="comment">// 配置路由</span></span><br><span class="line">app.<span class="title function_">use</span>(router)</span><br><span class="line"><span class="comment">// 提交预约表单</span></span><br><span class="line">router.<span class="title function_">post</span>(<span class="string">&#x27;/form&#x27;</span>, <span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(req.<span class="property">body</span>);</span><br><span class="line">    res.<span class="title function_">send</span>(<span class="string">&#x27;发送表单数据成功&#x27;</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用postman测试请求是否成功<br> 向 <a href="http://127.0.0.1:8080/form">http://127.0.0.1:8080/form</a> 发送post请求<br> 响应函数中打印出来的req.body结果是undefined，这是因为我们没有配置解析表单的中间件</p>
+</li>
+<li><p>配置解析表单的中间件<br> &#x2F;&#x2F; 配置解析表单数据的中间件,注意：这个中间件，只能解析applicaton&#x2F;x-www-form-urlencoded格式的表单数据<br> <code>app.use(express.urlencoded(&#123;extended:false&#125;))</code><br> 再次发送请求，我们就得到了表单提交的数据</p>
+</li>
+<li><p>分离到路由模块<br> 创建router文件夹，创建如user.js文件&#x2F;&#x2F;处理用户路由<br> 将路由部分写到这个地方，然后把router暴露出去<br> <code>module.exports = router</code><br> 然后在app.js中导入并使用路由模块</p>
+ <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 导入并使用用户路由模块</span></span><br><span class="line"><span class="keyword">const</span> userRouter = <span class="built_in">require</span>(<span class="string">&#x27;./router/user&#x27;</span>)</span><br><span class="line"><span class="comment">// 配置路由</span></span><br><span class="line">app.<span class="title function_">use</span>(userRouter)</span><br></pre></td></tr></table></figure>
+<p> 测试成功</p>
+</li>
+<li><p>分离处理函数到路由处理模块，同5操作<br> 创建router_handler文件夹，在该目录下创建对应的用户路由处理文件user.js<br> 把处理函数暴露出去</p>
+ <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="built_in">exports</span>.<span class="property">formSubmit</span> = <span class="function">(<span class="params">req, res</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(req.<span class="property">body</span>);</span><br><span class="line">    res.<span class="title function_">send</span>(<span class="string">&#x27;发送表单数据成功&#x27;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p> 在路由模块导入导入用户路由处理函数对应的模块<br> <code>const user_handler = require(&#39;../router_handler/user&#39;)</code><br> 路由的响应函数换成对应的user_handler.formSubmit</p>
+</li>
+</ol>
+<h2 id="数据校验"><a href="#数据校验" class="headerlink" title="数据校验"></a>数据校验</h2><p>这里使用joi模块来进行数据验证<br>Joi 是 hapijs 自带的数据校验模块，他已经高度封装常用的校验功能。</p>
+<ol>
+<li><p>安装joi包，为表单中携带的每个数据项，定义验证规则</p>
+ <figure class="highlight js"><table><tr><td class="code"><pre><span class="line">npm install joi --save</span><br><span class="line"><span class="comment">// ES6写法 import Joi from &#x27;joi&#x27;</span></span><br><span class="line"><span class="keyword">const</span> joi = <span class="built_in">require</span>(<span class="string">&#x27;joi&#x27;</span>)</span><br></pre></td></tr></table></figure></li>
+<li><p>安装 @escook&#x2F;express-joi 中间件，来实现自动对表单数据进行验证的功能：<br> <code>npm i @escook/express-joi</code></p>
+</li>
+<li><p>joi验证规则</p>
+<ul>
+<li>string() 值必须是字符串</li>
+<li>number() 值必须是数字</li>
+<li>alphanum() 值只能是包含 a-zA-Z0-9 的字符串</li>
+<li>min(length) 最小长度</li>
+<li>max(length) 最大长度</li>
+<li>required() 值是必填项，不能为 undefined</li>
+<li>pattern(正则表达式) 值必须符合正则表达式的规则</li>
+<li>any() 任意</li>
+<li>date() 日期</li>
+<li>time() 时间</li>
+<li>iso() 要求字符串值采用有效的 ISO 8601 日期格式。</li>
+</ul>
+</li>
+<li><p>新建 &#x2F;schema&#x2F;user.js 用户信息验证规则模块，并初始化代码如下：</p>
+ <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 导入joi模块</span></span><br><span class="line"><span class="keyword">const</span> joi = <span class="built_in">require</span>(<span class="string">&#x27;joi&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 表单校验规则</span></span><br><span class="line"><span class="keyword">const</span> unit = joi.<span class="title function_">string</span>().required()</span><br><span class="line"><span class="keyword">const</span> contact = joi.<span class="title function_">string</span>().required()</span><br><span class="line"><span class="keyword">const</span> phone = joi.<span class="title function_">string</span>().<span class="title function_">pattern</span>(<span class="regexp">/^[1][\d]&#123;10&#125;$/</span>).required()</span><br><span class="line"><span class="keyword">const</span> numVisitors = joi.<span class="title function_">number</span>().<span class="title function_">min</span>(<span class="number">16</span>).required()</span><br><span class="line"><span class="keyword">const</span> guide = joi.<span class="title function_">string</span>().<span class="title function_">pattern</span>(<span class="regexp">/yes|no|是|否/</span>).required()</span><br><span class="line"><span class="keyword">const</span> date = joi.<span class="title function_">date</span>().<span class="title function_">min</span>(<span class="string">&#x27;now&#x27;</span>).<span class="title function_">iso</span>().required()</span><br><span class="line"><span class="keyword">const</span> time = joi.<span class="title function_">string</span>().<span class="title function_">pattern</span>(<span class="regexp">/^[\d]&#123;2&#125;[\s]*:[\s]*[\d]&#123;2&#125;$/</span>).required()</span><br><span class="line"></span><br><span class="line"><span class="comment">// 表单的验证规则对象</span></span><br><span class="line"><span class="built_in">exports</span>.<span class="property">form_schema</span> =&#123;</span><br><span class="line">    <span class="attr">body</span>:&#123;</span><br><span class="line">        unit,</span><br><span class="line">        contact,</span><br><span class="line">        phone,</span><br><span class="line">        numVisitors,</span><br><span class="line">        guide,</span><br><span class="line">        date,</span><br><span class="line">        time,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在路由模块添加数据校验</p>
+ <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 导入验证表单数据的中间件</span></span><br><span class="line"><span class="keyword">const</span> expressJoi = <span class="built_in">require</span>(<span class="string">&#x27;@escook/express-joi&#x27;</span>)</span><br><span class="line"><span class="comment">// 导入需要验证的规则</span></span><br><span class="line"><span class="keyword">const</span> &#123;form_schema&#125; = <span class="built_in">require</span>(<span class="string">&#x27;../schema/user&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<p> 在表单提交的路由中，声明局部中间件，对当前请求中携带的数据进行验证<br> 数据验证通过后，会把这次请求流转给后面的路由处理函数<br> 数据验证失败后，终止后续代码的执行，并抛出一个全局的 Error 错误，进入全局错误级别中间件中进行处理<br> <code>router.post(&#39;/form&#39;,expressJoi(form_schema), user_handler.formSubmit)</code></p>
+</li>
+<li><p>在 app.js 的全局错误级别中间件中，捕获验证失败的错误，并把验证失败的结果响应给客户端<br> 在路由注册之后声明错误级别中间件，注意这里需要在app.js导入joi</p>
+ <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> joi = <span class="built_in">require</span>(<span class="string">&#x27;joi&#x27;</span>)</span><br><span class="line"><span class="comment">// 错误中间件</span></span><br><span class="line">app.<span class="title function_">use</span>(<span class="keyword">function</span>(<span class="params">err,req,res,next</span>)&#123;</span><br><span class="line">    <span class="comment">//数据验证失败</span></span><br><span class="line">    <span class="keyword">if</span>(err <span class="keyword">instanceof</span> joi.<span class="property">ValidationError</span>) <span class="keyword">return</span> res.<span class="title function_">send</span>(err.<span class="property">message</span>)</span><br><span class="line">    <span class="comment">// 未知错误</span></span><br><span class="line">    res.<span class="title function_">send</span>(err.<span class="property">message</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p> 测试成功</p>
+</li>
+</ol>
+]]></content>
+      <categories>
+        <category>Node.js</category>
+      </categories>
+      <tags>
+        <tag>Node.js</tag>
+        <tag>前后端分离</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>前端工程化与Webpack</title>
     <url>/tsukimiya.github.io/2024/04/18/Vue/1.%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96%E4%B8%8EWebpack/</url>
     <content><![CDATA[<blockquote>
@@ -48,9 +129,9 @@
 <li><p>在项目中配置webpack</p>
 <ol>
 <li><p>在项目根目录中，创建名为<strong>webpack.config.js</strong>的webpack配置文件，并初始化如下的基本配置:</p>
- <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">module.exports = &#123;</span><br><span class="line">    // mode 用来指定构建模式。可选值有 development和 production</span><br><span class="line">    // 开发阶段选develement，上线改成production</span><br><span class="line">    mode: &#x27;development&#x27; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+ <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = &#123;</span><br><span class="line">    <span class="comment">// mode 用来指定构建模式。可选值有 development和 production</span></span><br><span class="line">    <span class="comment">// 开发阶段选develement，上线改成production</span></span><br><span class="line">    <span class="attr">mode</span>: <span class="string">&#x27;development&#x27;</span> </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
 <li><p>在package.json的 scripts节点下，新增<strong>dev脚本</strong>如下:<br> 这个dev是可以随意命名的，后面的webpack是必须写webpack<br> scripts节点下有个默认的test脚本，删掉就行</p>
- <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&quot;scripts&quot;: &#123;</span><br><span class="line">    // script 节点下的脚本，可以通过 npm run 执行。例如 npm run dev</span><br><span class="line">    &quot;dev&quot;: &quot;webpack&quot; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+ <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="string">&quot;scripts&quot;</span>: &#123;</span><br><span class="line">    <span class="comment">// script 节点下的脚本，可以通过 npm run 执行。例如 npm run dev</span></span><br><span class="line">    <span class="string">&quot;dev&quot;</span>: <span class="string">&quot;webpack&quot;</span> </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
 <li><p>在终端中运行npm run dev命令，启动 webpack进行项目的打包构建<br> 运行成功后，项目会多一个dist文件夹，里面的main.js就是webpack根据index.js帮我们自动生成的，做一下兼容性处理<br> 处理完以后，index.js还有兼容性问题，而main.js没有兼容性问题<br> 所以网页应该引入的是main.js文件<br> .<br> 由nodejs升级引起的构建错误：0308010C:digital envelope routines::unsupported<br> <a href="https://juejin.cn/post/7202639428132044858">https://juejin.cn/post/7202639428132044858</a><br> 报错原因可以看这篇文章<br> 解决设置（似乎还没有一个100%完全的解决方法，都会存在一些问题）:<br> <code>&quot;dev&quot;: &quot;set NODE_OPTIONS=--openssl-legacy-provider &amp;&amp; webpack&quot;</code><br> .<br> 这个main.js是webpack帮我们把jquery.js和index.js文件进行了合并，但是并没有压缩，main.js中还有注释和代码缩进，如果要压缩，需要把webpack.config.js的mode设置为production，然后重新运行，整个文件的体积就被压缩的更小了，但是打包的时间更长了<br> .<br> 所以开发的时候，mode都设置成develement，只有上线的时候才会设置为production</p>
 </li>
 <li><p>webpack的默认约定 ———— 如何打包<br> 在webpack 4.x和5.的版本中，有如下的默认约定:</p>
@@ -61,7 +142,7 @@
 <p> 注意:可以在webpack.config.js中修改打包的默认约定<br> 如果找不到要处理的文件，就会报错</p>
 </li>
 <li><p>自定义打包的入口和出口<br> 在webpack.config.js 配置文件中，通过entry节点指定打包的入口。通过output节点指定打包的出口。示例代码如下:</p>
- <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">const path = require( &#x27;path&#x27;) //导入 node.js中专门操作路径的模块</span><br><span class="line">module.exports = &#123;</span><br><span class="line">    //打包入口文件的路径</span><br><span class="line">    entry: path.join(__dirname,&#x27;./src/index.js&#x27;),</span><br><span class="line">    output: &#123;</span><br><span class="line">        //输出文件的存放路径 </span><br><span class="line">        path: path.join(__dirname,&#x27;./dist&#x27;),</span><br><span class="line">        //输出文件的名称</span><br><span class="line">        filename: &#x27;bundle.js&#x27;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+ <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>( <span class="string">&#x27;path&#x27;</span>) <span class="comment">//导入 node.js中专门操作路径的模块</span></span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = &#123;</span><br><span class="line">    <span class="comment">//打包入口文件的路径</span></span><br><span class="line">    <span class="attr">entry</span>: path.<span class="title function_">join</span>(__dirname,<span class="string">&#x27;./src/index.js&#x27;</span>),</span><br><span class="line">    <span class="attr">output</span>: &#123;</span><br><span class="line">        <span class="comment">//输出文件的存放路径 </span></span><br><span class="line">        <span class="attr">path</span>: path.<span class="title function_">join</span>(__dirname,<span class="string">&#x27;./dist&#x27;</span>),</span><br><span class="line">        <span class="comment">//输出文件的名称</span></span><br><span class="line">        <span class="attr">filename</span>: <span class="string">&#x27;bundle.js&#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
 </ol>
 </li>
 </ol>
@@ -84,7 +165,7 @@
 </li>
 <li><p>配置webpack-dev-server</p>
 <ol>
-<li>修改package.json -&gt; scripts中的dev命令如下: <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&quot;scripts&quot;: &#123;</span><br><span class="line">    // script节点下的脚本，可以通过npm run 执行</span><br><span class="line">    &quot;dev&quot; : &quot;webpack serve&quot;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>修改package.json -&gt; scripts中的dev命令如下: <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="string">&quot;scripts&quot;</span>: &#123;</span><br><span class="line">    <span class="comment">// script节点下的脚本，可以通过npm run 执行</span></span><br><span class="line">    <span class="string">&quot;dev&quot;</span> : <span class="string">&quot;webpack serve&quot;</span>,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
 <li>再次运行npm run dev命令，重新进行项目的打包<br> 在浏览器中访问 <a href="http://localhost:8080/">http://localhost:8080</a> 地址，查看自动打包效果</li>
 </ol>
 <p> 注意:webpack-dev-server 会启动一个实时打包的http服务器</p>
@@ -94,12 +175,12 @@
 <p>我们执行npm run dev 命令，它执行的其实是webpack serve命令<br>这个命令执行成功后，第一行返回的是，<br><code>i ｢wds｣: Project is running at http://localhost:8080/</code><br>是整个项目运行在8080端口<br>所以，要看更新后的效果，要打开这个网址来查看，不能和以前一样的方法查看，因为之前查看的是file协议，不是当前的http协议</p>
 <p>我们打开 <a href="http://localhost:8080/">http://localhost:8080/</a> 网址，进入src，浏览器就会自动打开这个目录下的index文件，但是还是页面没有更改，我们再看第二行<br><code>i ｢wds｣: webpack output is served from /</code><br>告诉我们，输出在根目录，但是根目录并看不到bundle.js，但是其实它是有的，我们打开<a href="http://localhost:8080/bundle.js">http://localhost:8080/bundle.js</a> 可以访问到该文件</p>
 <p><strong>webpack-dev-server这个插件，它把生成的bundle没有放到实际的物理磁盘上，而是放到了内存里面</strong><br>这是因为，如果频繁的修改文件，ctrl s，如果是把文件放到物理磁盘上，就会频繁的读写磁盘，对磁盘寿命性能都会有很大影响，所以要访问最新的bundle要访问内存里的bundle，所以应该<strong>在页面加载和引用内存里的bundle.js</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;script src=&quot;http://localhost:8080/bundle.js&quot;&gt;&lt;/script&gt;</span><br><span class="line">也可以直接这样引用，看不见，但是可以引用的</span><br><span class="line">&lt;script src=&quot;/bundle.js&quot;&gt;&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">&lt;script src=<span class="string">&quot;http://localhost:8080/bundle.js&quot;</span>&gt;&lt;/script&gt;</span><br><span class="line"><span class="comment">// 也可以直接这样引用，看不见，但是可以引用的</span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;/bundle.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
 <p>但是由于我的vscode默认的使用5500端口，所以第二种引用会引用到5500端口，但是5500端口并不存在bundle.js，所以会报错,只能使用第一种引用</p>
 <h3 id="html-webpack-plugin"><a href="#html-webpack-plugin" class="headerlink" title="html-webpack-plugin"></a>html-webpack-plugin</h3><p>有一点不方便的是，打开 <a href="http://localhost:8080/">http://localhost:8080/</a> 之后，我们还要点击一次src进入目录中，才能打开首页<br>我们希望一进入8080就能看到首页<br>html-webpack-plugin，这个插件可以把src里面的首页复制一份，放到根目录中<br>安装插件：<code>npm i html-webpack-plugin@5.3.2 -D</code></p>
 <ul>
-<li><p>配置<br>  把new出来的插件htmlPlugin 挂载&#x2F;添加到plugins插件的数组里面，这样webpack在运行的时候就会调用这个插件的实例，把src(template)里的页面复制一份放到根目录(filename)中<br>  不过也是复制出来的一个内存里的页面</p>
-  <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// 1. 导入HTML插件，得到一个构造函数</span><br><span class="line">const HtmlPlugin = require(&#x27;html-webpack-plugin&#x27;)</span><br><span class="line">// 2．创建HTML插件的实例对象</span><br><span class="line">const htmlPlugin = new HtmlPlugin(&#123;</span><br><span class="line">    template: &#x27;./src/index.html&#x27;,//指定原文件的存放路径</span><br><span class="line">    filename: &#x27;./index.html&#x27;,//指定生成的文件的存放路径</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">module.exports = &#123;</span><br><span class="line">    mode: &#x27;development&#x27; ,</span><br><span class="line">    // 3．通过 plugins节点，使 htmlPlugin插件生效</span><br><span class="line">    plugins: [htmlPlugin], </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<li><p>配置 – 在webpack.config.js中配置<br>  把new出来的插件htmlPlugin 挂载&#x2F;添加到plugins插件的数组里面，这样webpack在运行的时候就会调用这个插件的实例，把src(template)里的页面复制一份放到根目录(filename)中<br>  不过也是复制出来的一个内存里的页面</p>
+  <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 1. 导入HTML插件，得到一个构造函数</span></span><br><span class="line"><span class="keyword">const</span> <span class="title class_">HtmlPlugin</span> = <span class="built_in">require</span>(<span class="string">&#x27;html-webpack-plugin&#x27;</span>)</span><br><span class="line"><span class="comment">// 2．创建HTML插件的实例对象</span></span><br><span class="line"><span class="keyword">const</span> htmlPlugin = <span class="keyword">new</span> <span class="title class_">HtmlPlugin</span>(&#123;</span><br><span class="line">    <span class="attr">template</span>: <span class="string">&#x27;./src/index.html&#x27;</span>,<span class="comment">//指定原文件的存放路径</span></span><br><span class="line">    <span class="attr">filename</span>: <span class="string">&#x27;./index.html&#x27;</span>,<span class="comment">//指定生成的文件的存放路径</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = &#123;</span><br><span class="line">    <span class="attr">mode</span>: <span class="string">&#x27;development&#x27;</span> ,</span><br><span class="line">    <span class="comment">// 3．通过 plugins节点，使 htmlPlugin插件生效</span></span><br><span class="line">    <span class="attr">plugins</span>: [htmlPlugin], </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>另一个作用<br>  html-webpack-plugin插件除了帮我们复制页面，还会在复制出来的页面，自动注入一个脚本(js引用)，去引用内存里的bundle.js<br>  .<br>  我们npm run dev运行之后，如果把html页面的js引入注释掉，内存中页面样式是还在的，并没有消失。<br>  我们查看源码，可以发现它是有js引用的，而且是没有加.&#x2F;的同级目录引用，因为内存中的html和hundle.js在同一级目录</p>
 </li>
@@ -107,7 +188,7 @@
 <p>配置完webpack之后，我们的开发体验会变的很好，但是配置过程又非常繁琐。<br>我不想自己配置，又想体验配置后的好处 ———— Vue-cli<br>这个工具已经帮我们配置好了webpack</p>
 <h2 id="devServer-节点"><a href="#devServer-节点" class="headerlink" title="devServer 节点"></a>devServer 节点</h2><p>还有一个不爽的点(程序员的很多不爽XDD)，每次重新运行项目，都要手动打开8080页面，我们懒就要懒到底<br><strong>在npm run dev运行成功之后，自动打开浏览器展示网页</strong></p>
 <ul>
-<li>配置<br>  在webpack.config.js配置文件中，可以通过devServer节点对webpack-dev-server插件进行更多的配置,示例代码如下:  <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">devServer: &#123;</span><br><span class="line">    // 初次打包完成后，自动打开浏览器</span><br><span class="line">    open: true,</span><br><span class="line">    // 实时打包所使用的主机地址</span><br><span class="line">    host: &#x27;127.0.0.1&#x27;,</span><br><span class="line">    //实时打包所使用的端口号</span><br><span class="line">    port: 80, </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>配置<br>  在webpack.config.js配置文件中，可以通过devServer节点对webpack-dev-server插件进行更多的配置,示例代码如下:  <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="attr">devServer</span>: &#123;</span><br><span class="line">    <span class="comment">// 初次打包完成后，自动打开浏览器</span></span><br><span class="line">    <span class="attr">open</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="comment">// 实时打包所使用的主机地址</span></span><br><span class="line">    <span class="attr">host</span>: <span class="string">&#x27;127.0.0.1&#x27;</span>,</span><br><span class="line">    <span class="comment">//实时打包所使用的端口号</span></span><br><span class="line">    <span class="attr">port</span>: <span class="number">80</span>, </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
 </ul>
 <h2 id="webpack中的loader（加载器）"><a href="#webpack中的loader（加载器）" class="headerlink" title="webpack中的loader（加载器）"></a>webpack中的loader（加载器）</h2><ol>
 <li><p>loader概述<br> 在实际开发过程中，webpack默认只能打包处理以.js 后缀名结尾的模块。其他<strong>非.js后缀名结尾的模块，webpack默认处理不了，需要调用loader加载器才可以正常打包</strong>，否则会报错!</p>
@@ -123,7 +204,7 @@
 <li><p>打包处理 css 文件</p>
 <ol>
 <li>运行<code>npm i style-loader@3.0.0 css-loader@5.2.6 -D</code>命令，安装处理css文件的loader</li>
-<li>在webpack.config.js 的 module -&gt; rules 数组中，添加loader规则如下: <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">module: &#123; </span><br><span class="line">    //所有第三方文件模块的匹配规则</span><br><span class="line">    rules: [ //文件后缀名的匹配规则</span><br><span class="line">        &#123; test: /\.css$/, use: [&#x27;style-loader&#x27;, &#x27;css-loader&#x27;]&#125;</span><br><span class="line">    ]</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+<li>在webpack.config.js 的 module -&gt; rules 数组中，添加loader规则如下: <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="attr">module</span>: &#123; </span><br><span class="line">    <span class="comment">//所有第三方文件模块的匹配规则</span></span><br><span class="line">    <span class="attr">rules</span>: [ <span class="comment">//文件后缀名的匹配规则</span></span><br><span class="line">        &#123; <span class="attr">test</span>: <span class="regexp">/\.css$/</span>, <span class="attr">use</span>: [<span class="string">&#x27;style-loader&#x27;</span>, <span class="string">&#x27;css-loader&#x27;</span>]&#125;</span><br><span class="line">    ]</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
  其中，<strong>test</strong>表示匹配的<strong>文件类型</strong>, <strong>use</strong>表示对应<strong>要调用的loader</strong><br> 注意:</li>
 </ol>
 <ul>
@@ -134,14 +215,14 @@
 <li><p>打包处理 less文件</p>
 <ol>
 <li>运行<code>npm i less-loader@10.0.1 less@4.1.1 -D</code>命令</li>
-<li>在webpack.config.js 的module -&gt; rules数组中，添加loader规则如下: <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">module: &#123; //所有第三方文件模块的匹配规则</span><br><span class="line">    rules: [ //文件后缀名的匹配规则</span><br><span class="line">        &#123; test: /\.less$/, use: [&#x27;style-loader&#x27;, &#x27;css-loader&#x27;, &#x27;less-loader&#x27;]&#125;,</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<li>在webpack.config.js 的module -&gt; rules数组中，添加loader规则如下: <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="attr">module</span>: &#123; <span class="comment">//所有第三方文件模块的匹配规则</span></span><br><span class="line">    <span class="attr">rules</span>: [ <span class="comment">//文件后缀名的匹配规则</span></span><br><span class="line">        &#123; <span class="attr">test</span>: <span class="regexp">/\.less$/</span>, <span class="attr">use</span>: [<span class="string">&#x27;style-loader&#x27;</span>, <span class="string">&#x27;css-loader&#x27;</span>, <span class="string">&#x27;less-loader&#x27;</span>]&#125;,</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
  这个less是内部依赖项，就是less-loader内部依赖于less，但是不需要手动的去声明less</li>
 </ol>
 </li>
 <li><p>打包处理样式表中与url路径相关的文件</p>
 <ol>
 <li>运行<code>npm i url-loader@4.1.1 file-loader@6.2.0 -D</code>命令</li>
-<li>在 webpack.config.js 的 module -&gt; rules 数组中，添加 loader 规则如下: <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">module: &#123; //所有第三方文件模块的匹配规则</span><br><span class="line">    rules:[//文件后缀名的匹配规则</span><br><span class="line">        //如果需要调用的loader只有一个(use)，则只传递一个字符串也行，如果有多个loader，则必须指定数组</span><br><span class="line">        &#123; test: /\.jpg|png|gif$/,use: &#x27;url-loader?limit=22229&#x27;&#125;,</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<li>在 webpack.config.js 的 module -&gt; rules 数组中，添加 loader 规则如下: <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="attr">module</span>: &#123; <span class="comment">//所有第三方文件模块的匹配规则</span></span><br><span class="line">    <span class="attr">rules</span>:[<span class="comment">//文件后缀名的匹配规则</span></span><br><span class="line">        <span class="comment">//如果需要调用的loader只有一个(use)，则只传递一个字符串也行，如果有多个loader，则必须指定数组</span></span><br><span class="line">        &#123; <span class="attr">test</span>: <span class="regexp">/\.jpg|png|gif$/</span>,<span class="attr">use</span>: <span class="string">&#x27;url-loader?limit=22229&#x27;</span>&#125;,</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
  其中?之后的是 loader的参数项:</li>
 </ol>
 <ul>
@@ -150,15 +231,15 @@
 </ul>
 </li>
 <li><p>打包处理js文件中的高级语法<br> webpack只能打包处理一部分高级的JavaScript语法。对于那些webpack无法处理的高级js语法，需要借助于babel-loader进行打包处理。例如webpack无法处理下面的JavaScript代码:</p>
- <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// 1．定义了名为info的装饰器</span><br><span class="line">function info(target) &#123;</span><br><span class="line">    //2．为目标添加静态属性info</span><br><span class="line">    target.info = &#x27;Person info&#x27;</span><br><span class="line">&#125;</span><br><span class="line">// 3．为Person类应用info装饰器</span><br><span class="line">@info</span><br><span class="line">class Person &#123;&#125;</span><br><span class="line"></span><br><span class="line">// 4．打印 Person 的静态属性info</span><br><span class="line">console.log(Person.info)</span><br></pre></td></tr></table></figure></li>
+ <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 1．定义了名为info的装饰器</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">info</span>(<span class="params">target</span>) &#123;</span><br><span class="line">    <span class="comment">//2．为目标添加静态属性info</span></span><br><span class="line">    target.<span class="property">info</span> = <span class="string">&#x27;Person info&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 3．为Person类应用info装饰器</span></span><br><span class="line">@info</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Person</span> &#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 4．打印 Person 的静态属性info</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title class_">Person</span>.<span class="property">info</span>)</span><br></pre></td></tr></table></figure></li>
 </ol>
 <p>5.1 运行如下的命令安装对应的依赖包:</p>
 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm i babel-loader@8.2.2 @babel/core@7.14.6 @babel/plugin-proposal-decorators@7.14.5 -D</span><br></pre></td></tr></table></figure>
 <p>在webpack.config.js的 module -&gt; rules数组中，添加loader规则如下:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">//注意:必须使用 exclude 指定排除项;因为 node_modules 目录下的第三方包不需要被打包</span><br><span class="line">&#123; test: /\.js$/, use: &#x27;babel-loader&#x27; , exclude: /node_modules/ &#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">//注意:必须使用 exclude 指定排除项;因为 node_modules 目录下的第三方包不需要被打包</span></span><br><span class="line">&#123; <span class="attr">test</span>: <span class="regexp">/\.js$/</span>, <span class="attr">use</span>: <span class="string">&#x27;babel-loader&#x27;</span> , <span class="attr">exclude</span>: <span class="regexp">/node_modules/</span> &#125;</span><br></pre></td></tr></table></figure>
 <p>exclude排除了node_modules文件夹，因为只需要处理我们自己写的代码就可以了，第三方的包没有兼容性问题，本身已经解决了，不需要处理(如果不排除也会对其进行处理影响性能)</p>
 <p>5.2 配置babel-loader<br>打包处理js文件中的高级语法，比处理其他文件要多这么一步<br>在项目根目录下，创建名为 babel.config.js 的配置文件，定义Babel的配置项如下:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">//这些配置从官方文档找到对应项直接粘过来就行了</span><br><span class="line">module.exports = &#123;</span><br><span class="line">    //声明babel 可用的插件</span><br><span class="line">    plugins: [[&#x27;@babel/plugin-proposal-decorators&#x27;, &#123; legacy: true &#125;]]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">//这些配置从官方文档找到对应项直接粘过来就行了</span></span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = &#123;</span><br><span class="line">    <span class="comment">//声明babel 可用的插件</span></span><br><span class="line">    <span class="attr">plugins</span>: [[<span class="string">&#x27;@babel/plugin-proposal-decorators&#x27;</span>, &#123; <span class="attr">legacy</span>: <span class="literal">true</span> &#125;]]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>详情请参考Babel的官网<a href="https://babeljs.io/docs/en/babel-plugin-proposal-decorators">https://babeljs.io/docs/en/babel-plugin-proposal-decorators</a></p>
 <h3 id="loader-调用过程"><a href="#loader-调用过程" class="headerlink" title="loader 调用过程"></a>loader 调用过程</h3><ol>
 <li>webpack默认只能打包处理.js结尾的文件，处理不了其它后缀的文件</li>
@@ -182,13 +263,13 @@
 <p>这里的dev命令是webpack serve，就是我们装的插件，是把文件生成到内存中，可以监听文件的更改自动执行npm run dev<br>而这里build就是要执行webpack命令把文件生成到磁盘上，这里注意要改成<br>    <code>set NODE_OPTIONS=--openssl-legacy-provider &amp;&amp; webpack --mode production</code></p>
 <h3 id="优化图片和js文件存放路径"><a href="#优化图片和js文件存放路径" class="headerlink" title="优化图片和js文件存放路径"></a>优化图片和js文件存放路径</h3><ol>
 <li>js文件<br>在webpack.js的output对象属性中，把filename前面加上个文件夹<br> <code>filename:&#39;js/bundle.js&#39;</code></li>
-<li>图片<br>修改webpack.config.js 中的url-loader配置项，新增outputPath选项即可指定图片文件的输出路径: <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    test: /.jpg|png|gif$/ ,</span><br><span class="line">    use: &#123;</span><br><span class="line">        loader: &#x27;url-loader&#x27;,</span><br><span class="line">        options: &#123;</span><br><span class="line">            limit: 22228,</span><br><span class="line">            //明确指定把打包生成的图片文件，存储到dist目录下的 image 文件夹中</span><br><span class="line">            outputPath: &#x27;image&#x27;,</span><br><span class="line">        &#125;,</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
- 或者直接用?xx&#x3D;xx&amp;xx&#x3D;xx的方式在loader后面携带参数 <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&#123; test: /\.jpg|png|gif$/, use: &#x27;url-loader?limit=22229&amp;outputPath=images&#x27; &#125;</span><br></pre></td></tr></table></figure></li>
+<li>图片<br>修改webpack.config.js 中的url-loader配置项，新增outputPath选项即可指定图片文件的输出路径: <figure class="highlight js"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">test</span>: <span class="regexp">/.jpg|png|gif$/</span> ,</span><br><span class="line">    <span class="attr">use</span>: &#123;</span><br><span class="line">        <span class="attr">loader</span>: <span class="string">&#x27;url-loader&#x27;</span>,</span><br><span class="line">        <span class="attr">options</span>: &#123;</span><br><span class="line">            <span class="attr">limit</span>: <span class="number">22228</span>,</span><br><span class="line">            <span class="comment">//明确指定把打包生成的图片文件，存储到dist目录下的 image 文件夹中</span></span><br><span class="line">            <span class="attr">outputPath</span>: <span class="string">&#x27;image&#x27;</span>,</span><br><span class="line">        &#125;,</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+ 或者直接用?xx&#x3D;xx&amp;xx&#x3D;xx的方式在loader后面携带参数 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line">&#123; <span class="attr">test</span>: <span class="regexp">/\.jpg|png|gif$/</span>, <span class="attr">use</span>: <span class="string">&#x27;url-loader?limit=22229&amp;outputPath=images&#x27;</span> &#125;</span><br></pre></td></tr></table></figure></li>
 </ol>
 <h3 id="配置和使用clean-webpack-plugin插件自动删除dist目录"><a href="#配置和使用clean-webpack-plugin插件自动删除dist目录" class="headerlink" title="配置和使用clean-webpack-plugin插件自动删除dist目录"></a>配置和使用clean-webpack-plugin插件自动删除dist目录</h3><p><strong>webpack5已经默认封装(内置)了该插件，直接在配置文件里output设置属性clean:true即可</strong></p>
 <hr>
 <p>为了防止旧文件干扰我们的事件，在每次重新发布的时候会把生成的打包好的dist文件夹删掉。<br>为了在每次打包发布时自动清理掉dist目录中的旧文件，可以安装并配置dlean-webpack-plugin插件:</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// 1．安装清理dist目录的 webpack 插件</span><br><span class="line">npm install clean-webpack-plugin@3.0.0 -D</span><br><span class="line">// 2．按需导入插件、得到插件的构造函数之后，创建插件的实例对象</span><br><span class="line">const &#123; CleanwebpackPlugin &#125; = require(&#x27;clean-webpack-plugin&#x27;)</span><br><span class="line">const cleanPlugin = new CleanwebpackPlugin()</span><br><span class="line">// 3．把创建的 cleanPlugin 插件实例对象，挂载到plugins节点中</span><br><span class="line">plugins: [htmlPlugin,cleanPlugin],//挂载插件 </span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 1．安装清理dist目录的 webpack 插件</span></span><br><span class="line">npm install clean-webpack-plugin@<span class="number">3.0</span><span class="number">.0</span> -D</span><br><span class="line"><span class="comment">// 2．按需导入插件、得到插件的构造函数之后，创建插件的实例对象</span></span><br><span class="line"><span class="keyword">const</span> &#123; <span class="title class_">CleanwebpackPlugin</span> &#125; = <span class="built_in">require</span>(<span class="string">&#x27;clean-webpack-plugin&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> cleanPlugin = <span class="keyword">new</span> <span class="title class_">CleanwebpackPlugin</span>()</span><br><span class="line"><span class="comment">// 3．把创建的 cleanPlugin 插件实例对象，挂载到plugins节点中</span></span><br><span class="line"><span class="attr">plugins</span>: [htmlPlugin,cleanPlugin],<span class="comment">//挂载插件 </span></span><br></pre></td></tr></table></figure>
 
 <ul>
 <li><strong>检验是否是删除之后重新生产的方法</strong>：<br>可以在dist文件夹下新建如1.txt文件，重新打包，如果文件还在，说明是没有删除直接打包的，如果不再了，那就是删除之后重新打包。</li>
@@ -202,7 +283,7 @@
 <li><p>webpack <strong>开发环境下的</strong> Source Map<br> <strong>在开发环境下</strong>，webpack<strong>默认启用了</strong>Source Map功能。当程序运行出错时，可以直接在控制台提示错误行的位置，并定位到具体的源代码。<br> 但是，开发环境下默认生成的Source Map，记录的是生成后的代码的位置。会导致运行时报错的行数与源代码的行数不一致的问题。</p>
 </li>
 <li><p>解决默认的Source Map的问题<br> 开发环境下，推荐在 webpack.config.js 中添加如下的配置，即可保证运行时报错的行数与源代码的行数保持一致:</p>
- <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">module.exports = &#123;</span><br><span class="line">    mode: &#x27;development&#x27;,</span><br><span class="line">    // eval-source-map 仅限在&quot;开发模式&quot;下使用，不建议在&quot;生产模式&quot;下使用。</span><br><span class="line">    //此选项生成的 Source Map 能够保证&quot;运行时报错的行数&quot;与&quot;源代码的行数&quot;保持一致</span><br><span class="line">    // 在开发调试阶段，建议大家都把devtool的值设置为eval-source-map</span><br><span class="line">    devtool: &#x27;eval-source-map&#x27;,</span><br><span class="line">    //省略其它配置项...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+ <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = &#123;</span><br><span class="line">    <span class="attr">mode</span>: <span class="string">&#x27;development&#x27;</span>,</span><br><span class="line">    <span class="comment">// eval-source-map 仅限在&quot;开发模式&quot;下使用，不建议在&quot;生产模式&quot;下使用。</span></span><br><span class="line">    <span class="comment">//此选项生成的 Source Map 能够保证&quot;运行时报错的行数&quot;与&quot;源代码的行数&quot;保持一致</span></span><br><span class="line">    <span class="comment">// 在开发调试阶段，建议大家都把devtool的值设置为eval-source-map</span></span><br><span class="line">    <span class="attr">devtool</span>: <span class="string">&#x27;eval-source-map&#x27;</span>,</span><br><span class="line">    <span class="comment">//省略其它配置项...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>webpack <strong>生产环境下的</strong> Source Map<br>在生产环境下，如果省略了devtool选项，则最终生成的文件中不包含Source Map。这能够防止原始代码通过Source Map的形式暴露给别有所图之人</p>
 </li>
@@ -228,7 +309,7 @@
 </ul>
 <h3 id="webpack中-的原理和好处"><a href="#webpack中-的原理和好处" class="headerlink" title="webpack中 @ 的原理和好处"></a>webpack中 @ 的原理和好处</h3><p>这样一个场景：<br>src目录下 有一个info文件 js&#x2F;text&#x2F;info<br>而这个info文件要导入src目录下的msg.js文件<br>就需要这样导入: import msg from ‘..&#x2F;..&#x2F;msg’<br>如果info的文件层级再深一点，这个..&#x2F;会让人不知道翻了几层<br>所以<br><strong>建议大家都使用 @ 符号表示src源代码目录，从外往里查找，不要使用..&#x2F;从里往外查找</strong><br>import msg from ‘@&#x2F;msg.js’</p>
 <p>在webpack里面，@不能直接用，需要先配置一下<br>在webpack.config.js中，module.exports中增加一个resolve属性：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">module.exports = &#123;</span><br><span class="line">    resolve:&#123;</span><br><span class="line">        alias: &#123;</span><br><span class="line">            // 告诉webpack，程序员写的代码中，@符号表示src这一层目录</span><br><span class="line">            &#x27;@&#x27;: path.join(__dirname,&#x27;./src/&#x27;)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = &#123;</span><br><span class="line">    <span class="attr">resolve</span>:&#123;</span><br><span class="line">        <span class="attr">alias</span>: &#123;</span><br><span class="line">            <span class="comment">// 告诉webpack，程序员写的代码中，@符号表示src这一层目录</span></span><br><span class="line">            <span class="string">&#x27;@&#x27;</span>: path.<span class="title function_">join</span>(__dirname,<span class="string">&#x27;./src/&#x27;</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="在浏览器安装vue-devtools调试工具"><a href="#在浏览器安装vue-devtools调试工具" class="headerlink" title="在浏览器安装vue-devtools调试工具"></a>在浏览器安装vue-devtools调试工具</h3><p>edge扩展中直接搜，有一个vue.js-devtools<br><strong>在详情设置中，有个允许访问文件URL(文件网址)的设置，默认是关闭的状态，需要我们手动打开</strong></p>
 <h2 id="实际开发中不需要自己配置webpack"><a href="#实际开发中不需要自己配置webpack" class="headerlink" title="实际开发中不需要自己配置webpack"></a><strong>实际开发中不需要自己配置webpack</strong></h2><ul>
 <li>实际开发中会使命令行工具(俗称CLI)一键生成带有webpack的项目</li>
@@ -256,10 +337,10 @@
 <p><strong>掌握Vue的两个特性：数据驱动视图、双向数据绑定<br>    掌握Vue的底层原理 MVVM – model数据源、view视图&#x2F;页面结构、viewmodel vue实例<br>    掌握Vue六大类指令的使用</strong><br>    vue2指令新学到的东西：<br>    事件绑定指令中的：<a href="#param">参数问题</a>、<a href="#event">$event</a>、<a href="#modifier">事件修饰符</a>、<a href="#keyModifier">按键修饰符</a><br>    双向绑定指令中的：<a href="#v-model">v-model修饰符</a><br>    条件渲染指令中的：<a href="#if">v-if配套的v-else指令</a><br>    列表渲染指令中的：<a href="#key">key属性绑定</a></p>
 </blockquote>
 <blockquote>
-<p>vscode插件推荐：Volar、Vue VSCode Snippets。 <a href="https://blog.csdn.net/weixin_40808668/article/details/134277604">简单说明</a></p>
+<p>vscode插件推荐：Volar、Vue VSCode Snippets。 <a href="https://blog.csdn.net/weixin_40808668/article/details/134277604">简单说明</a>(CSDN)</p>
 </blockquote>
 <p>[toc]</p>
-<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p><a href="https://cn.vuejs.org/guide/introduction.html">官方文档</a><br>Vue是一套<strong>用于构建用户界面的前端框架</strong><br>构建用户界面：用vue往html页面填充数据<br>框架：一套现成的解决方案，程序员只能遵守框架的规范去编写业务功能</p>
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p><a href="https://v2.cn.vuejs.org/v2/guide/">Vue 2.x 官方文档</a>(已不再维护)<br>Vue是一套<strong>用于构建用户界面的前端框架</strong><br>构建用户界面：用vue往html页面填充数据<br>框架：一套现成的解决方案，程序员只能遵守框架的规范去编写业务功能</p>
 <p>学习vue就是学习vue框架中规定的用法<br><strong>vue的指令、组件(是对UI结构的复用)、路由、Vuex、vue组件库</strong></p>
 <h3 id="vue的两个特性："><a href="#vue的两个特性：" class="headerlink" title="vue的两个特性："></a>vue的两个特性：</h3><ol>
 <li><strong>数据驱动视图</strong><br> vue会监听数据的变化，自动重新渲染页面的结构<br> 注意：<span style="color:red;" >数据驱动视图是单向的数据绑定<span></li>
@@ -269,7 +350,7 @@
 </li>
 </ol>
 <h3 id="MVVM-–-vue的底层原理"><a href="#MVVM-–-vue的底层原理" class="headerlink" title="MVVM – vue的底层原理"></a>MVVM – vue的底层原理</h3><p><font color='red'>MVVM是 vue 实现数据驱动视图和双向数据绑定的核心原理。</font><br>MVVM 指的是 <strong>M</strong>odel(数据源)、<strong>V</strong>iew(视图) 和 <strong>V</strong>iew<strong>M</strong>odel(vue实例)，它把每个 HTML 页面都拆分成了这三个部分。</p>
-<p>在MVVM概念中:<br><strong>Model</strong> 表示当前页面渲染时所依赖的<strong>数据源</strong>。<br><strong>View</strong> 表示当前页面所渲染的 DOM 结构。(<strong>页面结构，也即是视图</strong>)<br><strong>ViewModel</strong> 表示 <strong>vue 的实例</strong>，它是<strong>MVVM的核心</strong>。(就是vue)<br><img src="/tsukimiya.github.io/images/vue/MVVM%E7%A4%BA%E6%84%8F%E5%9B%BE.png" alt="img"></p>
+<p>在MVVM概念中:<br><strong>Model</strong> 表示当前页面渲染时所依赖的<strong>数据源</strong>。<br><strong>View</strong> 表示当前页面所渲染的 DOM 结构。(<strong>页面结构，也即是视图</strong>)<br><strong>ViewModel</strong> 表示 <strong>vue 的实例</strong>，它是<strong>MVVM的核心</strong>。(也就是vue)<br><img src="/tsukimiya.github.io/images/vue/MVVM%E7%A4%BA%E6%84%8F%E5%9B%BE.png" alt="img"></p>
 <ul>
 <li>MVVM的工作原理：<br>  ViewModel作为MVVM的核心，是它把当前页面的<font color="green">数据源</font>(Model)和<font color="green">页面的结构</font>(View)连接在了一起。<br>  <img src="/tsukimiya.github.io/images/vue/MVVM%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86.png" alt="img"><br>  <strong>当数据源发生变化时</strong>，会被ViewModel监听到，VM会根据最新的数据源<strong>自动更新</strong>页面的结构<br>  <strong>当表单元素的值发生变化时</strong>，也会被VM监听到，VM会把变化过后最新的值<strong>自动同步</strong>到Model数据源中</li>
 </ul>
@@ -298,8 +379,131 @@
 <p>差值表达式只能用在元素的内容节点中，不能用在属性节点中<br> v-bind用法：<code>&lt;input type=&quot;text&quot; v-bind:placeholder=&quot;tips&quot;&gt;</code><br> <strong>vue规定 <code>v-bind:</code> 指令可以简写为<code>:</code></strong></p>
 </blockquote>
 <blockquote>
-<p>在vue提供的<strong>模版渲染语法中</strong>，除了支持绑定简单的数据值之外，还<font color="green">支持JS表达式的运算</font>如：<br> <figure class="highlight plaintext"><figcaption><span>+ 1&#125;&#125;```、```&#123;&#123;ok?'YES':'NO'&#125;&#125;```、```&#123;&#123;msg.split('').reserve().join('')&#125;&#125;```(反转字符串)、`字符串拼接` 等等</span></figcaption><table><tr><td class="code"><pre><span class="line">    但是&lt;font color=&quot;green&quot;&gt;只能写简单的JS表达式，不能写if等复杂的JS语句&lt;/font&gt;</span><br><span class="line"></span><br><span class="line">3. 事件绑定指令：`v-on` / `@`</span><br><span class="line">    &gt; 语法如 `v-on:clock=&quot;add&quot;` 简写`@click=&quot;add&quot;`</span><br><span class="line">    methods下的函数变量也支持简写：`add:function()&#123;&#125; --&gt; add()&#123;&#125;`</span><br><span class="line">    在处理函数中**修改数据的值**可以通过vm(接受vue实例的变量名)来修改：vm.count,但是不推荐，**推荐用this**</span><br><span class="line">    - 绑定事件并传参</span><br><span class="line">    &gt; 在调用的地方传参 `@click=&quot;add(1)&quot;`</span><br><span class="line">    - &lt;font id=&quot;param&quot; color=&quot;red&quot;&gt;参数问题&lt;/font&gt;</span><br><span class="line">    &gt; 如果定义的函数变量是有参数的</span><br><span class="line">        1. `add(n)&#123;&#125; -- @click=&quot;add(1)&quot;` 正常传参 n//1</span><br><span class="line">        2. `add(n)&#123;&#125; -- @click=&quot;add()&quot;` n//undefined</span><br><span class="line">        3. `add(n)&#123;&#125; -- @click=&quot;add&quot;` n被认定为事件对象PointerEvent，通常我们会定义为e/event</span><br><span class="line">    如果是多个参数，如</span><br><span class="line">        1. `add(a,b)&#123;&#125; -- @click=&quot;add(1,2)&quot;` 正常传参 a//1 b//2</span><br><span class="line">        2. `add(a,b)&#123;&#125; -- @click=&quot;add(1)&quot;` a//1 b//undefined</span><br><span class="line">        3. `add(a,b)&#123;&#125; -- @click=&quot;add()&quot;` a/un b//un</span><br><span class="line">        4. `add(a,b)&#123;&#125; -- @click=&quot;add&quot;` a//事件对象PointerEvent ，b//undefined</span><br><span class="line">    </span><br><span class="line">    - &lt;font id=&quot;event&quot; color=&quot;red&quot;&gt;事件对象$event&lt;/font&gt;(不常用)</span><br><span class="line">    &gt; vue提供了内置变量`$event`,它就是原生DOM的事件对象e</span><br><span class="line">        在绑定事件的时候，如果不传参 `add(e)&#123;&#125; -- @click=&quot;add&quot;` , 我们会接受到一个事件对象e</span><br><span class="line">        如果传参，`@click=&quot;add(1)&quot;`,我们就接收不到这个事件对象了</span><br><span class="line">        **我们既要传参，又要用到事件对象e**，如想要从事件对象上拿到e.target(触发事件的事件源) ，这个时候就可以用`$event`</span><br><span class="line">        **`$event`使用：传`$event`作参数进去，拿形参接收**</span><br><span class="line">        `add(n,e)&#123;&#125; --  @click=&quot;add(1,$event)&quot;`</span><br><span class="line">        或`add(e,n)&#123;&#125; --  @click=&quot;add($event,1)&quot;`</span><br><span class="line"></span><br><span class="line">    - &lt;font id=&quot;modifier&quot; color=&quot;red&quot;&gt;事件修饰符&lt;/font&gt;</span><br><span class="line">    &gt; 在事件处理函数中，调用`event.preventDefault()`(阻止默认行为)或`event.stopPropagation()`(阻止冒泡)是非常常见的需求。</span><br><span class="line">        因此，vue提供了**事件修饰符**的概念，辅助程序员更方便的**对事件的触发进行控制**。</span><br><span class="line">        如 `@click.prevent=&quot;show&quot;`绑定了show事件，同时阻止了默认行为</span><br><span class="line">        常见的5个事件修饰符如下：</span><br><span class="line"></span><br><span class="line">    |事件修饰符|说明|</span><br><span class="line">    |:----:|----|</span><br><span class="line">    |**.prevent**|**阻止默认行为**(例如：阻止a链接的跳转、表单的提交等)|</span><br><span class="line">    |**.stop**|**阻止事件冒泡**|</span><br><span class="line">    |.capture|以 捕获模式 触发当前的 事件处理函数|</span><br><span class="line">    |.once|绑定的事件只触发1次|</span><br><span class="line">    |.self|只有在 event.target 是当前元素自身时 触发事件处理函数|</span><br><span class="line"></span><br><span class="line">    - &lt;font id=&quot;keyModifier&quot; color=&quot;red&quot;&gt;按键修饰符&lt;/font&gt;(用的不是很多)</span><br><span class="line">    &gt; 在**监听键盘事件**时，经常需要**判断详细的按键**。</span><br><span class="line">        此时，可以为键盘的相关事件添加**按键修饰符**，如：</span><br><span class="line">        `&lt;input @keyup.enter=&quot;submit&quot;&gt;` -- 只有在`key`是`Enter`时，调用`vm.submit()`</span><br><span class="line">        `&lt;input @keyup.esc=&quot;clearInput&quot;&gt;` -- 只有在`key`是`Esc`时，调用`vm.clearInput()`</span><br><span class="line"></span><br><span class="line">4. 双向绑定指令 `v-model`</span><br><span class="line">    &gt; 用来辅助程序员在**不操作DOM**的前提下，**快速获取表单的数据**。</span><br><span class="line">        能够产生数据交互的只有表单元素，所以只有表单元素才能使用`v-model`,才有意义</span><br><span class="line">        表单元素 input、textarea、select</span><br><span class="line">        v-model内部会判断绑定元素的类型，根据元素类型来决定将绑定的值给哪个属性。如复选框checkbox就是给checked属性，如果是text框就是value属性</span><br><span class="line">    - &lt;font id=&quot;v-model&quot; color=&quot;red&quot;&gt;v-model修饰符&lt;/font&gt;</span><br><span class="line">    &gt; 为了方便对用户输入的内容进行处理，vue为v-model指令提供了3个修饰符：</span><br><span class="line">    </span><br><span class="line">    |修饰符|作用|示例|</span><br><span class="line">    |:----:|----|----|</span><br><span class="line">    |.number|自动将用户的输入值转为数值类型|`&lt;input v-model.number=&quot;age&quot;/&gt;`|</span><br><span class="line">    |.trim|自动过滤用户输入的首尾空白字符|`&lt;input v-model.trim=&quot;msg&quot;/&gt;`|</span><br><span class="line">    |.lazy|在&quot;change&quot;时而非&quot;input&quot;时更新|`&lt;input v-model.lazy=&quot;msg&quot;/&gt;`|</span><br><span class="line">    &gt;lazy的作用是input事件(表单处于焦点时候)不更新，失去焦点触发change事件才更新</span><br><span class="line"></span><br><span class="line">5. 条件渲染指令 `v-if`、`v-show`</span><br><span class="line">    &gt; 辅助开发者**按需控制DOM的显示与隐藏**</span><br><span class="line">    v-if动态的把元素DOM从页面添加和移除</span><br><span class="line">    v-show是通过css动态添加display：none样式来显示和隐藏</span><br><span class="line">    **如果要频繁切换元素的显示状态，show的性能更好**</span><br><span class="line">    **如果刚进入页面，某些元素默认不需要被展示，而且后期这个元素很可能也不需要被展示出来，此时v-if性能更好**</span><br><span class="line">    这个只是说给面试官听的，&lt;font color=&quot;green&quot;&gt;在实际开发中，绝大多数情况不用考虑性能问题，直接使用v-if就好了！&lt;/font&gt;</span><br><span class="line"></span><br><span class="line">    - &lt;font color=&quot;green&quot;&gt;页面的执行(一个v-if的好问题)&lt;/font&gt;</span><br><span class="line">    &gt; Q：如果我们页面有一个`&lt;p v-if=&quot;flag&quot;&gt;&lt;/p&gt; -- flag=false`，因为页面是从上往下执行的，那么页面是先创建p标签再移除呢，还是一开始就不创建呢？</span><br><span class="line">        A：**当我们用了vue-cli以后，用到单文件组件(.vue文件)的时候，它是先编译，然后再去运行。**</span><br><span class="line">        先把整个网页编译成js，然后完整的去执行。标签也是被当做js去运行的，去加载的，这个问题就不存在了</span><br><span class="line"></span><br><span class="line">    - &lt;font id=&quot;if&quot; color=&quot;green&quot;&gt;v-if配套的指令 -- `v-else`&lt;/font&gt;</span><br><span class="line">    &gt; 多个元素按需展示</span><br><span class="line">        注意：v-else指令**必须配合v-if指令一起使用**，否则不会被识别：</span><br><span class="line"></span><br><span class="line">    ```HTML</span><br><span class="line">    &lt;div v-if=&quot;type === &#x27;A&#x27;&quot;&gt;优秀&lt;/div&gt;</span><br><span class="line">    &lt;div v-else-if=&quot;type === &#x27;B&#x27;&quot;&gt;良好&lt;/div&gt;</span><br><span class="line">    &lt;div v-else-if=&quot;type === &#x27;C&#x27;&quot;&gt;一般&lt;/div&gt;</span><br><span class="line">    &lt;div v-else&gt;差&lt;/div&gt;</span><br></pre></td></tr></table></figure></p>
+<p>在vue提供的<strong>模版渲染语法中</strong>，除了支持绑定简单的数据值之外，还<font color="green">支持JS表达式的运算</font><br> 但是<font color="green">只能写简单的JS表达式，不能写if等复杂的JS语句</font>，如字符串拼接等：<br> <figure class="highlight js"><table><tr><td class="code"><pre><span class="line">&#123;&#123;number + <span class="number">1</span>&#125;&#125;、&#123;&#123;ok?<span class="string">&#x27;YES&#x27;</span>:<span class="string">&#x27;NO&#x27;</span>&#125;&#125;、&#123;&#123;msg.<span class="title function_">split</span>(<span class="string">&#x27;&#x27;</span>).<span class="title function_">reserve</span>().<span class="title function_">join</span>(<span class="string">&#x27;&#x27;</span>)&#125;&#125;<span class="comment">//反转字符串</span></span><br></pre></td></tr></table></figure></p>
 </blockquote>
+</li>
+<li><p>事件绑定指令：<code>v-on</code> &#x2F; <code>@</code></p>
+<blockquote>
+<p>语法如 <code>v-on:clock=&quot;add&quot;</code> 简写<code>@click=&quot;add&quot;</code><br> methods下的函数变量也支持简写：<code>add:function()&#123;&#125; --&gt; add()&#123;&#125;</code><br> 在处理函数中<strong>修改数据的值</strong>可以通过vm(接受vue实例的变量名)来修改：vm.count,但是不推荐，<strong>推荐用this</strong></p>
+</blockquote>
+<ul>
+<li><p>绑定事件并传参</p>
+<blockquote>
+<p>在调用的地方传参 <code>@click=&quot;add(1)&quot;</code></p>
+</blockquote>
+</li>
+<li><p><font id="param" color="red">参数问题</font></p>
+<blockquote>
+<ul>
+<li>如果定义的函数变量是有参数的<br>1. <code>add(n)&#123;&#125; -- @click=&quot;add(1)&quot;</code> 正常传参 n&#x2F;&#x2F;1<br>2. <code>add(n)&#123;&#125; -- @click=&quot;add()&quot;</code> n&#x2F;&#x2F;undefined<br>3. <code>add(n)&#123;&#125; -- @click=&quot;add&quot;</code> n被认定为事件对象PointerEvent，通常我们会定义为e&#x2F;event</li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li>如果是多个参数，如<br>1. <code>add(a,b)&#123;&#125; -- @click=&quot;add(1,2)&quot;</code> 正常传参 a&#x2F;&#x2F;1 b&#x2F;&#x2F;2<br>2. <code>add(a,b)&#123;&#125; -- @click=&quot;add(1)&quot;</code> a&#x2F;&#x2F;1 b&#x2F;&#x2F;undefined<br>3. <code>add(a,b)&#123;&#125; -- @click=&quot;add()&quot;</code> a&#x2F;un b&#x2F;&#x2F;un<br>4. <code>add(a,b)&#123;&#125; -- @click=&quot;add&quot;</code> a&#x2F;&#x2F;事件对象PointerEvent ，b&#x2F;&#x2F;undefined</li>
+</ul>
+</blockquote>
+</li>
+<li><p><font id="event" color="red">事件对象$event</font>(不常用)</p>
+<blockquote>
+<p>vue提供了内置变量<code>$event</code>,它就是原生DOM的事件对象e<br>  在绑定事件的时候，如果不传参 <code>add(e)&#123;&#125; -- @click=&quot;add&quot;</code> , 我们会接受到一个事件对象e<br>  如果传参，<code>@click=&quot;add(1)&quot;</code>,我们就接收不到这个事件对象了<br>  <strong>我们既要传参，又要用到事件对象e</strong>，如想要从事件对象上拿到e.target(触发事件的事件源) ，这个时候就可以用<code>$event</code><br>  <strong><code>$event</code>使用：传<code>$event</code>作参数进去，拿形参接收</strong><br>  <code>add(n,e)&#123;&#125; --  @click=&quot;add(1,$event)&quot;</code><br>  或<code>add(e,n)&#123;&#125; --  @click=&quot;add($event,1)&quot;</code></p>
+</blockquote>
+</li>
+<li><p><font id="modifier" color="red">事件修饰符</font></p>
+<blockquote>
+<p>在事件处理函数中，调用<code>event.preventDefault()</code>(阻止默认行为)或<code>event.stopPropagation()</code>(阻止冒泡)是非常常见的需求。<br>  因此，vue提供了<strong>事件修饰符</strong>的概念，辅助程序员更方便的<strong>对事件的触发进行控制</strong>。<br>  如 <code>@click.prevent=&quot;show&quot;</code>绑定了show事件，同时阻止了默认行为<br>  常见的5个事件修饰符如下：</p>
+</blockquote>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th align="center">事件修饰符</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><strong>.prevent</strong></td>
+<td><strong>阻止默认行为</strong>(例如：阻止a链接的跳转、表单的提交等)</td>
+</tr>
+<tr>
+<td align="center"><strong>.stop</strong></td>
+<td><strong>阻止事件冒泡</strong></td>
+</tr>
+<tr>
+<td align="center">.capture</td>
+<td>以 捕获模式 触发当前的 事件处理函数</td>
+</tr>
+<tr>
+<td align="center">.once</td>
+<td>绑定的事件只触发1次</td>
+</tr>
+<tr>
+<td align="center">.self</td>
+<td>只有在 event.target 是当前元素自身时 触发事件处理函数</td>
+</tr>
+</tbody></table>
+<ul>
+<li><font id="keyModifier" color="red">按键修饰符</font>(用的不是很多)<blockquote>
+<p>在<strong>监听键盘事件</strong>时，经常需要<strong>判断详细的按键</strong>。<br>  此时，可以为键盘的相关事件添加<strong>按键修饰符</strong>，如：<br>  <code>&lt;input @keyup.enter=&quot;submit&quot;&gt;</code> – 只有在<code>key</code>是<code>Enter</code>时，调用<code>vm.submit()</code><br>  <code>&lt;input @keyup.esc=&quot;clearInput&quot;&gt;</code> – 只有在<code>key</code>是<code>Esc</code>时，调用<code>vm.clearInput()</code></p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p>双向绑定指令 <code>v-model</code></p>
+<blockquote>
+<p>用来辅助程序员在<strong>不操作DOM</strong>的前提下，<strong>快速获取表单的数据</strong>。<br>     能够产生数据交互的只有表单元素，所以只有表单元素才能使用<code>v-model</code>,才有意义<br>     表单元素 input、textarea、select<br>     v-model内部会判断绑定元素的类型，根据元素类型来决定将绑定的值给哪个属性。如复选框checkbox就是给checked属性，如果是text框就是value属性</p>
+</blockquote>
+<ul>
+<li><font id="v-model" color="red">v-model修饰符</font><blockquote>
+<p>为了方便对用户输入的内容进行处理，vue为v-model指令提供了3个修饰符：</p>
+</blockquote>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th align="center">修饰符</th>
+<th>作用</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">.number</td>
+<td>自动将用户的输入值转为数值类型</td>
+<td><code>&lt;input v-model.number=&quot;age&quot;/&gt;</code></td>
+</tr>
+<tr>
+<td align="center">.trim</td>
+<td>自动过滤用户输入的首尾空白字符</td>
+<td><code>&lt;input v-model.trim=&quot;msg&quot;/&gt;</code></td>
+</tr>
+<tr>
+<td align="center">.lazy</td>
+<td>在”change”时而非”input”时更新</td>
+<td><code>&lt;input v-model.lazy=&quot;msg&quot;/&gt;</code></td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>lazy的作用是input事件(表单处于焦点时候)不更新，失去焦点触发change事件才更新</p>
+</blockquote>
+</li>
+<li><p>条件渲染指令 <code>v-if</code>、<code>v-show</code></p>
+<blockquote>
+<p>辅助开发者<strong>按需控制DOM的显示与隐藏</strong><br> v-if动态的把元素DOM从页面添加和移除<br> v-show是通过css动态添加display：none样式来显示和隐藏<br> <strong>如果要频繁切换元素的显示状态，show的性能更好</strong><br> <strong>如果刚进入页面，某些元素默认不需要被展示，而且后期这个元素很可能也不需要被展示出来，此时v-if性能更好</strong><br> 这个只是说给面试官听的，<font color="green">在实际开发中，绝大多数情况不用考虑性能问题，直接使用v-if就好了！</font></p>
+</blockquote>
+<ul>
+<li><p><font color="green">页面的执行(一个v-if的好问题)</font></p>
+<blockquote>
+<p>Q：如果我们页面有一个<code>&lt;p v-if=&quot;flag&quot;&gt;&lt;/p&gt; -- flag=false</code>，因为页面是从上往下执行的，那么页面是先创建p标签再移除呢，还是一开始就不创建呢？<br>  A：<strong>当我们用了vue-cli以后，用到单文件组件(.vue文件)的时候，它是先编译，然后再去运行。</strong><br>  先把整个网页编译成js，然后完整的去执行。标签也是被当做js去运行的，去加载的，这个问题就不存在了</p>
+</blockquote>
+</li>
+<li><p><font id="if" color="green">v-if配套的指令 – <code>v-else</code></font></p>
+<blockquote>
+<p>多个元素按需展示<br>  注意：v-else指令<strong>必须配合v-if指令一起使用</strong>，否则不会被识别：<br> <figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">v-if</span>=<span class="string">&quot;type === &#x27;A&#x27;&quot;</span>&gt;</span>优秀<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">v-else-if</span>=<span class="string">&quot;type === &#x27;B&#x27;&quot;</span>&gt;</span>良好<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">v-else-if</span>=<span class="string">&quot;type === &#x27;C&#x27;&quot;</span>&gt;</span>一般<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">v-else</span>&gt;</span>差<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+</blockquote>
+</li>
+</ul>
 </li>
 <li><p>列表渲染指令 <code>v-for</code> 和 <code>:key</code> <font color="red">重要</font></p>
 <blockquote>
@@ -314,16 +518,16 @@
 </li>
 </ol>
 <h2 id="扩展知识"><a href="#扩展知识" class="headerlink" title="扩展知识"></a>扩展知识</h2><h3 id="lable复选框的for属性"><a href="#lable复选框的for属性" class="headerlink" title="lable复选框的for属性"></a>lable复选框的for属性</h3><p>下面这个示例中,如果要选中男，应该点击对应的复选框，点击男不行，这样用户的体验很不好，可操作区域非常窄。<br>应该把它的可操作区域给放大，点击复选框还是男都可以选中，此时就用到了for属性</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;input type=&quot;checkbox&quot;&gt;</span><br><span class="line">&lt;label for=&quot;&quot;&gt;男&lt;/label&gt;</span><br><span class="line">&lt;hr&gt;</span><br><span class="line">&lt;input type=&quot;checkbox&quot;&gt;</span><br><span class="line">&lt;label for=&quot;&quot;&gt;女&lt;/label&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;checkbox&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">&quot;&quot;</span>&gt;</span>男<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">hr</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;checkbox&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">&quot;&quot;</span>&gt;</span>女<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <p><strong>for指向id，希望点这个lable让谁被选中，就for那个元素的id</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;input type=&quot;checkbox&quot; id=&quot;cb1&quot;&gt;</span><br><span class="line">&lt;label for=&quot;cb1&quot;&gt;男&lt;/label&gt;</span><br><span class="line">&lt;hr&gt;</span><br><span class="line">&lt;input type=&quot;checkbox&quot; id=&quot;cb2&quot;&gt;</span><br><span class="line">&lt;label for=&quot;cb2&quot;&gt;女&lt;/label&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;checkbox&quot;</span> <span class="attr">id</span>=<span class="string">&quot;cb1&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">&quot;cb1&quot;</span>&gt;</span>男<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">hr</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;checkbox&quot;</span> <span class="attr">id</span>=<span class="string">&quot;cb2&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">&quot;cb2&quot;</span>&gt;</span>女<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
 <h3 id="a元素的JavaScript-伪协议"><a href="#a元素的JavaScript-伪协议" class="headerlink" title="a元素的JavaScript 伪协议"></a>a元素的JavaScript 伪协议</h3><p><code>&lt;a href=&quot;javascript:;&quot; @click=&quot;remove&quot;&gt;删除&lt;/a&gt;</code><br>这段代码是一个 HTML 锚点元素 <code>&lt;a&gt;</code> 的写法，其中<code>javascript:;</code> 是一个 JavaScript 伪协议，用于在点击链接时执行 JavaScript 代码或阻止默认行为。</p>
 <p>通常情况下，当用户点击这个链接时，浏览器会执行 <code>JavaScript:;</code> 这里的 JavaScript 代码是空的，所以实际上不会发生任何操作。<br>这种写法通常用于创建一个占位符链接，或者作为一个“空链接”，<strong>用于在不跳转页面的情况下执行一些 JavaScript 操作，比如触发事件或者执行某些函数</strong>。</p>
 <h3 id="JS-filter-方法-–-Array-prototype-filter"><a href="#JS-filter-方法-–-Array-prototype-filter" class="headerlink" title="JS - filter() 方法 – Array.prototype.filter()"></a>JS - filter() 方法 – Array.prototype.filter()</h3><p><code>filter()</code> 方法是 JavaScript 中数组的一个内置方法，用于过滤数组中的元素，并返回一个符合条件的新数组。<br>如：<br><code>let arr = [1,2,3].filter(item=&gt;item&gt;1) //[1,2]</code><br><code>let arr = [&#123;id:1,name:&quot;zs&quot;&#125;,&#123;id:2..&#125;].filter(item =&gt; item.id !=2) // [&#123;id:1,name:&quot;zs&quot;&#125;]</code></p>
 <p>但是，除了数组外，<code>filter()</code> 方法还可以应用于类数组对象和可迭代对象。例如，字符串也可以通过 <code>filter()</code> 方法进行过滤操作。</p>
 <p>下面是一个例子，演示如何在字符串中使用 <code>filter()</code> 方法来过滤出特定的字符：</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> str = <span class="string">&#x27;Hello World!&#x27;</span>;</span><br><span class="line"><span class="keyword">const</span> filteredStr = <span class="title class_">Array</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">filter</span>.<span class="title function_">call</span>(str, <span class="function"><span class="params">char</span> =&gt;</span> char !== <span class="string">&#x27;l&#x27;</span>);</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(filteredStr.<span class="title function_">join</span>(<span class="string">&#x27;&#x27;</span>)); <span class="comment">// 输出：Heo Word!</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> str = <span class="string">&#x27;Hello World!&#x27;</span>;</span><br><span class="line"><span class="keyword">const</span> filteredStr = <span class="title class_">Array</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">filter</span>.<span class="title function_">call</span>(str, <span class="function"><span class="params">char</span> =&gt;</span> char !== <span class="string">&#x27;l&#x27;</span>);</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(filteredStr.<span class="title function_">join</span>(<span class="string">&#x27;&#x27;</span>)); <span class="comment">// 输出：Heo Word!</span></span><br></pre></td></tr></table></figure>
 
 <p>在这个例子中，我们首先使用 <code>Array.prototype.filter.call()</code> 来调用 <code>filter()</code> 方法，并将字符串 <code>str</code> 当作第一个参数传入。然后，我们定义了一个过滤条件，即过滤掉所有的 ‘l’ 字符。最后，我们将过滤后的字符数组通过 <code>join()</code> 方法连接成一个新的字符串，并输出结果。</p>
 <p>总之，虽然 <code>filter()</code> 方法通常用于数组，但通过一些技巧，我们也可以在其他类型的对象上使用它。</p>
@@ -358,87 +562,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Node.js简单实现后端服务器</title>
-    <url>/tsukimiya.github.io/2024/04/15/Node/Node.js%E5%81%9A%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%AF%A6%E8%A7%A3/</url>
-    <content><![CDATA[<blockquote>
-<p>这个示例中，没有用到MySQl数据库，只是简单的创建POST表单路由进行处理数据，以及表单数据的校验<br>用到的npm包&#x2F;第三方模块：<br>Express：<code>npm i express@4.17.1</code> – Web 开发框架，快速创建 Web 服务器<br>Joi：<code>npm install joi --save</code> – hapijs 自带的数据校验模块<br>@escook&#x2F;express-joi中间件: <code>npm i @escook/express-joi</code> – 实现自动对表单数据进行验证的功能</p>
-</blockquote>
-<blockquote>
-<p>全局安装了nodemon工具，可以监听文件的更改，自动重新执行</p>
-</blockquote>
-<blockquote>
-<p>该示例没有在路由之前配置cors中间件，从而解决接口跨域的问题<br>这个是航空文化馆项目的后端，还没写完<br>没有用到mysql模块：<code>npm i mysql</code><br>也没有用到express-session中间件：<code>npm i express-session</code>（这个干吗用的？）</p>
-</blockquote>
-<h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><ol start="0">
-<li>如果是拿被别人写好的项目，第一步是导入这个项目所用的包，<code>npm i</code>命令</li>
-<li>创建后端项目文件夹如serve</li>
-<li>初始化文件夹<code>npm init -y</code><br> 在空项目的根目录中初始化一个package.json的包管理配置文件</li>
-<li>安装必要的包&#x2F;依赖<br> 安装Express —— <code>npm i express@4.17.1</code></li>
-<li>创建服务器文件，命名如app.js</li>
-</ol>
-<h2 id="创建简单的web服务器-及其-模块化"><a href="#创建简单的web服务器-及其-模块化" class="headerlink" title="创建简单的web服务器 及其 模块化"></a>创建简单的web服务器 及其 模块化</h2><ol>
-<li><p>创建基本的express框架 – eser(vscode快捷生成代码&#x2F;&#x2F;自己配置 – 文件–首选项–配置用户代码片段)</p>
- <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">//导入express模块</span><br><span class="line">const express = require(&#x27;express&#x27;)</span><br><span class="line">//创建express服务器实例</span><br><span class="line">const app = express()</span><br><span class="line">const port = 8080;</span><br><span class="line"></span><br><span class="line">//调用app.listen方法，指定端口号并启动web服务器</span><br><span class="line">app.listen(port,()=&gt;&#123;</span><br><span class="line">    console.log(`Express server running at http://127.0.0.1:$&#123;port&#125;`)</span><br><span class="line">&#125;)      </span><br></pre></td></tr></table></figure>
-</li>
-<li><p>创建路由<br> 可以先在当前文件尝试是否成功，之后再分离到对应模块</p>
- <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">//创建express路由实例</span><br><span class="line">const router = express.Router()</span><br><span class="line">// 配置路由</span><br><span class="line">app.use(router)</span><br><span class="line">// 提交预约表单</span><br><span class="line">router.post(&#x27;/form&#x27;, (req, res) =&gt; &#123;</span><br><span class="line">    console.log(req.body);</span><br><span class="line">    res.send(&#x27;发送表单数据成功&#x27;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>使用postman测试请求是否成功<br> 向 <a href="http://127.0.0.1:8080/form">http://127.0.0.1:8080/form</a> 发送post请求<br> 响应函数中打印出来的req.body结果是undefined，这是因为我们没有配置解析表单的中间件</p>
-</li>
-<li><p>配置解析表单的中间件<br> &#x2F;&#x2F; 配置解析表单数据的中间件,注意：这个中间件，只能解析applicaton&#x2F;x-www-form-urlencoded格式的表单数据<br> <code>app.use(express.urlencoded(&#123;extended:false&#125;))</code><br> 再次发送请求，我们就得到了表单提交的数据</p>
-</li>
-<li><p>分离到路由模块<br> 创建router文件夹，创建如user.js文件&#x2F;&#x2F;处理用户路由<br> 将路由部分写到这个地方，然后把router暴露出去<br> <code>module.exports = router</code><br> 然后在app.js中导入并使用路由模块</p>
- <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// 导入并使用用户路由模块</span><br><span class="line">const userRouter = require(&#x27;./router/user&#x27;)</span><br><span class="line">// 配置路由</span><br><span class="line">app.use(userRouter)</span><br></pre></td></tr></table></figure>
-<p> 测试成功</p>
-</li>
-<li><p>分离处理函数到路由处理模块，同5操作<br> 创建router_handler文件夹，在该目录下创建对应的用户路由处理文件user.js<br> 把处理函数暴露出去</p>
- <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">exports.formSubmit = (req, res) =&gt; &#123;</span><br><span class="line">    console.log(req.body);</span><br><span class="line">    res.send(&#x27;发送表单数据成功&#x27;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p> 在路由模块导入导入用户路由处理函数对应的模块<br> <code>const user_handler = require(&#39;../router_handler/user&#39;)</code><br> 路由的响应函数换成对应的user_handler.formSubmit</p>
-</li>
-</ol>
-<h2 id="数据校验"><a href="#数据校验" class="headerlink" title="数据校验"></a>数据校验</h2><p>这里使用joi模块来进行数据验证<br>Joi 是 hapijs 自带的数据校验模块，他已经高度封装常用的校验功能。</p>
-<ol>
-<li><p>安装joi包，为表单中携带的每个数据项，定义验证规则</p>
- <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">npm install joi --save</span><br><span class="line">// ES6写法 import Joi from &#x27;joi&#x27;</span><br><span class="line">const joi = require(&#x27;joi&#x27;)</span><br></pre></td></tr></table></figure></li>
-<li><p>安装 @escook&#x2F;express-joi 中间件，来实现自动对表单数据进行验证的功能：<br> <code>npm i @escook/express-joi</code></p>
-</li>
-<li><p>joi验证规则</p>
-<ul>
-<li>string() 值必须是字符串</li>
-<li>number() 值必须是数字</li>
-<li>alphanum() 值只能是包含 a-zA-Z0-9 的字符串</li>
-<li>min(length) 最小长度</li>
-<li>max(length) 最大长度</li>
-<li>required() 值是必填项，不能为 undefined</li>
-<li>pattern(正则表达式) 值必须符合正则表达式的规则</li>
-<li>any() 任意</li>
-<li>date() 日期</li>
-<li>time() 时间</li>
-<li>iso() 要求字符串值采用有效的 ISO 8601 日期格式。</li>
-</ul>
-</li>
-<li><p>新建 &#x2F;schema&#x2F;user.js 用户信息验证规则模块，并初始化代码如下：</p>
- <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// 导入joi模块</span><br><span class="line">const joi = require(&#x27;joi&#x27;)</span><br><span class="line"></span><br><span class="line">// 表单校验规则</span><br><span class="line">const unit = joi.string().required()</span><br><span class="line">const contact = joi.string().required()</span><br><span class="line">const phone = joi.string().pattern(/^[1][\d]&#123;10&#125;$/).required()</span><br><span class="line">const numVisitors = joi.number().min(16).required()</span><br><span class="line">const guide = joi.string().pattern(/yes|no|是|否/).required()</span><br><span class="line">const date = joi.date().min(&#x27;now&#x27;).iso().required()</span><br><span class="line">const time = joi.string().pattern(/^[\d]&#123;2&#125;[\s]*:[\s]*[\d]&#123;2&#125;$/).required()</span><br><span class="line"></span><br><span class="line">// 表单的验证规则对象</span><br><span class="line">exports.form_schema =&#123;</span><br><span class="line">    body:&#123;</span><br><span class="line">        unit,</span><br><span class="line">        contact,</span><br><span class="line">        phone,</span><br><span class="line">        numVisitors,</span><br><span class="line">        guide,</span><br><span class="line">        date,</span><br><span class="line">        time,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>在路由模块添加数据校验</p>
- <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// 导入验证表单数据的中间件</span><br><span class="line">const expressJoi = require(&#x27;@escook/express-joi&#x27;)</span><br><span class="line">// 导入需要验证的规则</span><br><span class="line">const &#123;form_schema&#125; = require(&#x27;../schema/user&#x27;)</span><br></pre></td></tr></table></figure>
-<p> 在表单提交的路由中，声明局部中间件，对当前请求中携带的数据进行验证<br> 数据验证通过后，会把这次请求流转给后面的路由处理函数<br> 数据验证失败后，终止后续代码的执行，并抛出一个全局的 Error 错误，进入全局错误级别中间件中进行处理<br> <code>router.post(&#39;/form&#39;,expressJoi(form_schema), user_handler.formSubmit)</code></p>
-</li>
-<li><p>在 app.js 的全局错误级别中间件中，捕获验证失败的错误，并把验证失败的结果响应给客户端<br> 在路由注册之后声明错误级别中间件，注意这里需要在app.js导入joi</p>
- <figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">const joi = require(&#x27;joi&#x27;)</span><br><span class="line">// 错误中间件</span><br><span class="line">app.use(function(err,req,res,next)&#123;</span><br><span class="line">    //数据验证失败</span><br><span class="line">    if(err instanceof joi.ValidationError) return res.send(err.message)</span><br><span class="line">    // 未知错误</span><br><span class="line">    res.send(err.message)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-<p> 测试成功</p>
-</li>
-</ol>
-]]></content>
-      <categories>
-        <category>Node.js</category>
-      </categories>
-      <tags>
-        <tag>Node.js</tag>
-        <tag>前后端分离</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Hello World</title>
     <url>/tsukimiya.github.io/hello%20world.html</url>
     <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
@@ -459,7 +582,7 @@
   <entry>
     <title>Hello Front-end</title>
     <url>/tsukimiya.github.io/index.html</url>
-    <content><![CDATA[<p>Welcome to my study blog! This is my continuously make up a main post. If you get any problems when using my blog, you can send the email to <a href="mailto:&#104;&#x61;&#x72;&#105;&#105;&#106;&#105;&#x63;&#x6f;&#x40;&#111;&#x75;&#116;&#108;&#111;&#111;&#x6b;&#x2e;&#x63;&#x6f;&#x6d;">&#104;&#x61;&#x72;&#105;&#105;&#106;&#105;&#x63;&#x6f;&#x40;&#111;&#x75;&#116;&#108;&#111;&#111;&#x6b;&#x2e;&#x63;&#x6f;&#x6d;</a></p>
+    <content><![CDATA[<p>Welcome to my study blog! This is my continuously make up a main post. If you get any problems when using my blog, you can send the email to <a href="mailto:&#104;&#x61;&#114;&#x69;&#x69;&#106;&#105;&#99;&#x6f;&#x40;&#x6f;&#117;&#x74;&#108;&#x6f;&#111;&#x6b;&#x2e;&#x63;&#111;&#x6d;">&#104;&#x61;&#114;&#x69;&#x69;&#106;&#105;&#99;&#x6f;&#x40;&#x6f;&#117;&#x74;&#108;&#x6f;&#111;&#x6b;&#x2e;&#x63;&#111;&#x6d;</a></p>
 <h2 id="Study-Guide"><a href="#Study-Guide" class="headerlink" title="Study Guide"></a>Study Guide</h2><center>Here provide you some study sources and study route.</center>
 <!-- This is [main tech](#Main-Line) -->
 <center>This is <a href='#Main-Line'>main tech</a></center>
@@ -842,6 +965,14 @@
 <h2 id="ELSE"><a href="#ELSE" class="headerlink" title="ELSE"></a>ELSE</h2>]]></content>
   </entry>
   <entry>
+    <title>留言板</title>
+    <url>/tsukimiya.github.io/guestbook/index.html</url>
+    <content><![CDATA[<h1 id="欢迎来到我的博客！"><a href="#欢迎来到我的博客！" class="headerlink" title="欢迎来到我的博客！"></a>欢迎来到我的博客！</h1><blockquote>
+<p>欢迎在这里留言！任何问题都可以在这里留言，我会及时回复的。目前留言板块尚未配置完全，暂时无法使用，如有问题请邮箱：<br><a href="mailto:&#x68;&#x61;&#x72;&#105;&#105;&#x6a;&#105;&#99;&#111;&#64;&#x6f;&#x75;&#116;&#108;&#111;&#x6f;&#x6b;&#46;&#99;&#x6f;&#109;">&#x68;&#x61;&#x72;&#105;&#105;&#x6a;&#105;&#99;&#111;&#64;&#x6f;&#x75;&#116;&#108;&#111;&#x6f;&#x6b;&#46;&#99;&#x6f;&#109;</a><br><a href="mailto:&#x31;&#x38;&#51;&#50;&#55;&#49;&#53;&#56;&#51;&#x38;&#64;&#x71;&#x71;&#x2e;&#99;&#111;&#x6d;">&#x31;&#x38;&#51;&#50;&#55;&#49;&#53;&#56;&#51;&#x38;&#64;&#x71;&#x71;&#x2e;&#99;&#111;&#x6d;</a><br>欢迎给我发送邮件</p>
+</blockquote>
+]]></content>
+  </entry>
+  <entry>
     <title>分类</title>
     <url>/tsukimiya.github.io/categories/index.html</url>
     <content><![CDATA[]]></content>
@@ -852,23 +983,10 @@
     <content><![CDATA[]]></content>
   </entry>
   <entry>
-    <title>留言板</title>
-    <url>/tsukimiya.github.io/guestbook/index.html</url>
-    <content><![CDATA[<h1 id="欢迎来到我的博客！"><a href="#欢迎来到我的博客！" class="headerlink" title="欢迎来到我的博客！"></a>欢迎来到我的博客！</h1><blockquote>
-<p>欢迎在这里留言！任何问题都可以在这里留言，我会及时回复的。目前留言板块尚未配置完全，暂时无法使用，如有问题请邮箱：<br><a href="mailto:&#x68;&#97;&#x72;&#x69;&#105;&#106;&#105;&#99;&#x6f;&#x40;&#111;&#117;&#116;&#x6c;&#111;&#111;&#107;&#46;&#x63;&#x6f;&#109;">&#x68;&#97;&#x72;&#x69;&#105;&#106;&#105;&#99;&#x6f;&#x40;&#111;&#117;&#116;&#x6c;&#111;&#111;&#107;&#46;&#x63;&#x6f;&#109;</a><br><a href="mailto:&#49;&#x38;&#x33;&#50;&#55;&#x31;&#53;&#56;&#x33;&#x38;&#x40;&#113;&#113;&#x2e;&#x63;&#111;&#109;">&#49;&#x38;&#x33;&#50;&#55;&#x31;&#53;&#56;&#x33;&#x38;&#x40;&#113;&#113;&#x2e;&#x63;&#111;&#109;</a><br>欢迎给我发送邮件</p>
-</blockquote>
-]]></content>
-  </entry>
-  <entry>
-    <title>标签</title>
-    <url>/tsukimiya.github.io/tags/index.html</url>
-    <content><![CDATA[]]></content>
-  </entry>
-  <entry>
     <title>Task</title>
     <url>/tsukimiya.github.io/schedule/task.html</url>
     <content><![CDATA[<blockquote>
-<p>快给我滚去学习！给你一拳:punch::punch::facepunch:</p>
+<p>快给我滚去学习！给你一拳 :punch: :punch: :facepunch:<br>:smile:</p>
 </blockquote>
 <h2 id="Study-Tech"><a href="#Study-Tech" class="headerlink" title="Study Tech"></a>Study Tech</h2><h3 id="NOW"><a href="#NOW" class="headerlink" title="NOW"></a>NOW</h3><ol>
 <li>vue框架<ul>
@@ -959,5 +1077,10 @@
 </li>
 </ul>
 ]]></content>
+  </entry>
+  <entry>
+    <title>标签</title>
+    <url>/tsukimiya.github.io/tags/index.html</url>
+    <content><![CDATA[]]></content>
   </entry>
 </search>
