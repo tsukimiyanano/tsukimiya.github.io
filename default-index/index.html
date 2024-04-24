@@ -164,7 +164,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tsukimiya.github.io/tags/">
-        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-count">7</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -223,9 +223,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2024-04-21 14:09:30 / 修改时间：23:20:55" itemprop="dateCreated datePublished" datetime="2024-04-21T14:09:30+08:00">2024-04-21</time>
+      <time title="创建时间：2024-04-21 14:09:30" itemprop="dateCreated datePublished" datetime="2024-04-21T14:09:30+08:00">2024-04-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-04-24 13:41:31" itemprop="dateModified" datetime="2024-04-24T13:41:31+08:00">2024-04-24</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -270,14 +276,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>1.9k</span>
+      <span>7k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>2 分钟</span>
+      <span>6 分钟</span>
     </span>
 </div>
 
@@ -301,7 +307,7 @@
 <li>必须被定义到 <code>filters节点</code> 之下，本质是一个函数</li>
 <li>强调：过滤器中一定要有一个返回值</li>
 <li>过滤器函数中的 形参<code>val</code>(随意命名)，永远都是管道符前面的那个值。(多个形参，则第一个外都是undefined)</li>
-<li>过滤器函数 由 管道符 <code>|</code> 掉用</li>
+<li>过滤器函数 由 管道符 <code>|</code> 调用</li>
 <li>过滤器只能在 <code>差值表达式</code> 或 <code>属性绑定指令v-bind</code> 中调用</li>
 <li>最终得到的结果是过滤器的返回值</li>
 </ol>
@@ -311,7 +317,7 @@
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 在花括号中通过管道符调用capitalize过滤器，对message的值进行格式化 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>&#123;&#123;message | capitalize&#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 在v-bind中通过管道符调用formatId过滤器，对rawId的值进行格式化 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">v-bind:id</span>=<span class="string">&quot;rawId | formatId&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
 <h3 id="私有过滤器-和-全局过滤器"><a href="#私有过滤器-和-全局过滤器" class="headerlink" title="私有过滤器 和 全局过滤器"></a>私有过滤器 和 全局过滤器</h3><p><strong>在 <code>filters节点</code> 下定义的过滤器</strong>，称为“<strong>私有过滤器</strong>”，因为它只能在当前vm实例所控制的el区域内使用。如果希望在多个vue实例之间共享过滤器，则可以按照如下的格式<strong>定义全局过滤器</strong>:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 全局过滤器–独立于每个vm实例之外 </span></span><br><span class="line"><span class="comment">// Vue.filter()方法接收两个参数:</span></span><br><span class="line"><span class="comment">// 第1个参数，是全局过滤器的&quot;名字”</span></span><br><span class="line"><span class="comment">// 第2个参数，是全局过滤器的&quot;处理函数&quot;</span></span><br><span class="line"><span class="title class_">Vue</span>.<span class="title function_">filter</span>( <span class="string">&#x27;capitalize&#x27;</span>, <span class="function">(<span class="params">str</span>) =&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> str.<span class="title function_">charAt</span>(<span class="number">0</span>).<span class="title function_">toUpperCase</span>() + str.<span class="title function_">slice</span>(<span class="number">1</span>) + <span class="string">&#x27;~~&#x27;</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 全局过滤器–独立于每个vm实例之外 </span></span><br><span class="line"><span class="comment">// Vue.filter()方法接收两个参数:</span></span><br><span class="line"><span class="comment">// 第1个参数，是全局过滤器的&quot;名字”</span></span><br><span class="line"><span class="comment">// 第2个参数，是全局过滤器的&quot;处理函数&quot;</span></span><br><span class="line"><span class="title class_">Vue</span>.<span class="title function_">filter</span>( <span class="string">&#x27;capitalize&#x27;</span>, <span class="function">(<span class="params">str</span>) =&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> str.<span class="title function_">charAt</span>(<span class="number">0</span>).<span class="title function_">toUpperCase</span>() + str.<span class="title function_">slice</span>(<span class="number">1</span>) + <span class="string">&#x27;~~&#x27;</span></span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment">// 如果想要定义多个全局过滤器就再写一个</span></span><br><span class="line"><span class="title class_">Vue</span>.<span class="title function_">filter</span>(<span class="string">&#x27;capi2&#x27;</span>,<span class="function">(<span class="params">str</span>)=&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> str + <span class="string">&#x27;--全局2&#x27;</span>;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
 <p><font color="green">注意：如果私有过滤器和全局过滤器名字一致，此时按就近原则</font></p>
 <h3 id="其他用法-–-连续调用、传参"><a href="#其他用法-–-连续调用、传参" class="headerlink" title="其他用法 – 连续调用、传参"></a>其他用法 – 连续调用、传参</h3><ol>
 <li><p>连续调用多个过滤器 – 串联地调用<br>如：<code>&#123;&#123;message | filterA | filterB&#125;&#125;</code></p>
@@ -323,10 +329,116 @@
 <li><p>过滤器的兼容性<br>仅在vue 2.x 和 1.x中受支持<br>3.x建议使用 <strong>计算属性</strong> 或 <strong>方法</strong> 代替<br>具体的迁移指南参考官方文档给出的<a target="_blank" rel="noopener" href="https://v3.vuejs.org/guide/migration/filters.html#migration-strategy">说明</a></p>
 </li>
 </ol>
-<h2 id="Watch侦听器"><a href="#Watch侦听器" class="headerlink" title="Watch侦听器"></a>Watch侦听器</h2><p>Watch侦听器 <strong>监视数据的变化，做出特定操作</strong>，语法格式：</p>
+<h2 id="Watch侦听器"><a href="#Watch侦听器" class="headerlink" title="Watch侦听器"></a>Watch侦听器</h2><p>Watch侦听器 <strong>监视数据的变化，做出特定操作</strong>，变量名与监听的值对应。语法格式：</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> vm = <span class="keyword">new</span> <span class="title class_">Vue</span>(&#123;</span><br><span class="line">    <span class="attr">el</span>:<span class="string">&#x27;#app&#x27;</span>,</span><br><span class="line">    <span class="attr">data</span>:&#123; <span class="attr">username</span>: <span class="string">&#x27;&#x27;</span>&#125;,</span><br><span class="line">    <span class="attr">watch</span>:&#123;</span><br><span class="line">        <span class="comment">// 监视username变化</span></span><br><span class="line">        <span class="comment">// newVal - 变化后的新值，oldVal - 旧值</span></span><br><span class="line">        <span class="title function_">username</span>(<span class="params">newVal,oldVal</span>)&#123;</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(newVal,oldVal)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
 <p><font color="green">应用场景如：侦听用户输入的用户名，每次变化就去查找是否被占用</font></p>
-<h2 id="计算属性的方法"><a href="#计算属性的方法" class="headerlink" title="计算属性的方法"></a>计算属性的方法</h2><h2 id="axios的基本用法"><a href="#axios的基本用法" class="headerlink" title="axios的基本用法"></a>axios的基本用法</h2><h2 id="vue-cli的安装和使用"><a href="#vue-cli的安装和使用" class="headerlink" title="vue-cli的安装和使用"></a>vue-cli的安装和使用</h2><h2 id="扩展知识"><a href="#扩展知识" class="headerlink" title="扩展知识"></a>扩展知识</h2><h3 id="字符串函数charAt"><a href="#字符串函数charAt" class="headerlink" title="字符串函数charAt()"></a>字符串函数charAt()</h3><p>接收索引值，从字符串中获取对应字符，如：<br><code>&#39;hello&#39;.charAt(4) //&#39;o&#39;</code></p>
+<h3 id="侦听器的格式"><a href="#侦听器的格式" class="headerlink" title="侦听器的格式"></a>侦听器的格式</h3><ol>
+<li>方法格式的侦听器<ul>
+<li>缺点1: 无法在刚进入页面的时候，自动触发！！</li>
+<li>缺点2: 如果侦听的是一个对象，对象中的属性发生了变化，不会触发侦听器！！</li>
+</ul>
+</li>
+<li><strong>对象格式的侦听器</strong><ul>
+<li>好处1: 可以通过<strong>immediate选项</strong>，让侦听器自动触发！！</li>
+<li>好处2：可以通过<strong>deep选项</strong>，让侦听器深度监听对象中每个属性的变化！！</li>
+</ul>
+</li>
+</ol>
+<ul>
+<li><font color="green">推荐：为了写起来方便，建议定义成方法格式，如果确实需要，再改成对象格式。</font></li>
+</ul>
+<h3 id="immediate选项"><a href="#immediate选项" class="headerlink" title="immediate选项"></a>immediate选项</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> vm = <span class="keyword">new</span> <span class="title class_">Vue</span>(&#123;</span><br><span class="line">    <span class="attr">el</span>:<span class="string">&#x27;#app&#x27;</span>,</span><br><span class="line">    <span class="attr">data</span>:&#123; <span class="attr">username</span>: <span class="string">&#x27;admin&#x27;</span>&#125;,</span><br><span class="line">    <span class="attr">watch</span>:&#123;</span><br><span class="line">        <span class="attr">username</span>:&#123;</span><br><span class="line">            <span class="title function_">handler</span>(<span class="params">newVal,oldVal</span>)&#123;<span class="comment">// 侦听器的处理函数</span></span><br><span class="line">                <span class="variable language_">console</span>.<span class="title function_">log</span>(newVal,oldVal)</span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="attr">immediate</span>: <span class="literal">true</span> <span class="comment">// true表示一进入页面就触发，false是默认值，不写这个参数也是false</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="深度侦听-–-deep选项"><a href="#深度侦听-–-deep选项" class="headerlink" title="深度侦听 – deep选项"></a>深度侦听 – deep选项</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> vm = <span class="keyword">new</span> <span class="title class_">Vue</span>(&#123;</span><br><span class="line">    <span class="attr">el</span>:<span class="string">&#x27;#app&#x27;</span>,</span><br><span class="line">    <span class="attr">data</span>:&#123; <span class="attr">info</span>:&#123;</span><br><span class="line">        <span class="attr">username</span>: <span class="string">&#x27;admin&#x27;</span></span><br><span class="line">    &#125; &#125;,</span><br><span class="line">    <span class="attr">watch</span>:&#123;</span><br><span class="line">        <span class="attr">info</span>:&#123;</span><br><span class="line">            <span class="title function_">handler</span>(<span class="params">newVal,oldVal</span>)&#123;<span class="comment">// 侦听器的处理函数</span></span><br><span class="line">                <span class="variable language_">console</span>.<span class="title function_">log</span>(newVal,oldVal)</span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="attr">deep</span>: <span class="literal">true</span> <span class="comment">// 对象里任意属性变化了，都会触发侦听器</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>如果要侦听的是对象的子属性的变化，则必须包裹一层单引号</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">watch</span>:&#123;</span><br><span class="line">    <span class="string">&#x27;info.username&#x27;</span>(newVal)&#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(newVal,oldVal)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="计算属性"><a href="#计算属性" class="headerlink" title="计算属性"></a>计算属性</h2><ol>
+<li>什么是计算属性<br>计算属性指的是通过一系列运算之后，最终得到一个属性值。<br>这个动态计算出来的属性值可以被模板结构或 methods 方法使用。</li>
+<li>应用场景：<font color='red'>实现代码复用</font></li>
+</ol>
+<ul>
+<li>计算属性的使用<ol>
+<li>计算属性要定义到computed节点下，定义成方法格式</li>
+<li>虽然声明的方法格式，但是要当做普通的属性来用<blockquote>
+<p>打印出vue实例，可以发现定义的计算属性是被挂到属性上面的，和data节点上的属性一样</p>
+</blockquote>
+</li>
+</ol>
+</li>
+</ul>
+<p>示例代码如下︰</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> vm = <span class="keyword">new</span> <span class="title class_">Vue</span>(&#123;</span><br><span class="line">    <span class="attr">el</span>: <span class="string">&#x27;#app&#x27;</span>,</span><br><span class="line">    <span class="attr">data</span>: &#123;</span><br><span class="line">        <span class="attr">r</span>:<span class="number">0</span>,<span class="attr">g</span>:<span class="number">0</span>,<span class="attr">b</span>:<span class="number">0</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">computed</span>: &#123;</span><br><span class="line">        <span class="comment">// 计算属性要定义到computed节点下，定义成方法格式</span></span><br><span class="line">        <span class="title function_">rgb</span>(<span class="params"></span>)&#123;<span class="keyword">return</span> <span class="string">`rgb(<span class="subst">$&#123;<span class="variable language_">this</span>.r&#125;</span>,<span class="subst">$&#123;<span class="variable language_">this</span>.g&#125;</span>,<span class="subst">$&#123;<span class="variable language_">this</span>.b&#125;</span>)`</span>&#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">methods</span>: &#123;</span><br><span class="line">        <span class="title function_">show</span>(<span class="params"></span>) &#123;</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">this</span>.<span class="property">rgb</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; </span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="axios的基本用法"><a href="#axios的基本用法" class="headerlink" title="axios的基本用法"></a>axios的基本用法</h2><blockquote>
+<p>axios是一个<strong>专注于网络请求</strong>的库！它只负责发请求和拿数据<br>    中文官网地址：<a target="_blank" rel="noopener" href="http://www.axios-js.com/">http://www.axios-js.com/</a></p>
+</blockquote>
+<ul>
+<li><p>基本语法：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">axios</span>(&#123;</span><br><span class="line">    <span class="attr">method</span>: <span class="string">&#x27;请求的类型&#x27;</span>,</span><br><span class="line">    <span class="attr">url</span>: <span class="string">&#x27;请求的 URL 地址&#x27;</span>,</span><br><span class="line">    <span class="comment">// 如果要携带请求体：</span></span><br><span class="line">    <span class="comment">// url中的查询参数，get请求体传参，可选</span></span><br><span class="line">    <span class="attr">params</span>:&#123;&#125;,</span><br><span class="line">    <span class="comment">// 请求体参数，post请求体传参，可选</span></span><br><span class="line">    <span class="attr">data</span>:&#123;&#125;</span><br><span class="line">&#125;).<span class="title function_">then</span>(<span class="function">(<span class="params">result</span>)=&gt;</span>&#123;</span><br><span class="line">    <span class="comment">// .then 用来指定请求成功之后的回调函数</span></span><br><span class="line">    <span class="comment">// 形参中的 result 是请求成功之后的结果</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>调用axios得到的返回值是一个 Promise 对象<br>axios在请求到数据之后，在真正的数据之外，套了一层壳,result得到的就是套完壳之后的结果。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">config</span>: &#123;&#125;,</span><br><span class="line">    <span class="attr">data</span>: &#123; 真实的数据 &#125;,</span><br><span class="line">    <span class="attr">headers</span>: &#123;&#125;,</span><br><span class="line">    <span class="attr">request</span>: &#123;&#125;,</span><br><span class="line">    <span class="attr">status</span>: xxx,</span><br><span class="line">    <span class="attr">statusText</span>: <span class="string">&#x27;&#x27;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong><font color='red'>结合async和await调用axios</font></strong><br>这个<code>.then</code>用起来有点麻烦，我们可以使用await来进行简化<br><font color='green'>如果调用某个方法的返回值是 Promise 实例，则前面可以添加await！（这样得到的就直接是result）</font><br><font color='red'>await 只能用在被 async 修饰 的方法中</font></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">ele.<span class="title function_">addEventLister</span>(<span class="string">&#x27;click&#x27;</span>, <span class="keyword">async</span> <span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="keyword">const</span> result =  <span class="keyword">await</span> <span class="title function_">axios</span>(&#123;</span><br><span class="line">        <span class="attr">method</span>: <span class="string">&#x27;请求的类型&#x27;</span>,</span><br><span class="line">        <span class="attr">url</span>: <span class="string">&#x27;请求的 URL 地址&#x27;</span>,</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(result.<span class="property">data</span>);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>使用解构赋值来获取data</strong></p>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">ele.<span class="title function_">addEventLister</span>(<span class="string">&#x27;click&#x27;</span>, <span class="keyword">async</span> <span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="keyword">const</span> &#123; data &#125; =  <span class="keyword">await</span> <span class="title function_">axios</span>(&#123;</span><br><span class="line">        <span class="attr">method</span>: <span class="string">&#x27;请求的类型&#x27;</span>,</span><br><span class="line">        <span class="attr">url</span>: <span class="string">&#x27;请求的 URL 地址&#x27;</span>,</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(data);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="基于axios-get和axios-post发起请求"><a href="#基于axios-get和axios-post发起请求" class="headerlink" title="基于axios.get和axios.post发起请求"></a>基于axios.get和axios.post发起请求</h3><ol>
+<li>axois.get<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123;data&#125; = <span class="keyword">await</span> axios.<span class="title function_">get</span>(<span class="string">&#x27;url地址&#x27;</span>,&#123;</span><br><span class="line">    <span class="comment">//GET参数</span></span><br><span class="line">    <span class="attr">params</span>: &#123;&#125;</span><br><span class="line">&#125;)</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(data)</span><br></pre></td></tr></table></figure></li>
+<li>axios.post<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//注意await要在async修饰的函数中使用</span></span><br><span class="line"><span class="keyword">const</span> &#123; data &#125; = <span class="keyword">await</span> axios.<span class="title function_">post</span>(<span class="string">&#x27;http://127.0.0.1:8080/form&#x27;</span>,&#123;</span><br><span class="line">    <span class="attr">unit</span>: <span class="string">&quot;00&quot;</span>,</span><br><span class="line">    <span class="attr">contact</span>: <span class="string">&quot;朱宇楼&quot;</span>,</span><br><span class="line">    <span class="attr">phone</span>: <span class="string">&#x27;15639038667&#x27;</span>,</span><br><span class="line">    <span class="attr">numVisitors</span>: <span class="number">25</span>,</span><br><span class="line">    <span class="attr">guide</span>: <span class="string">&#x27;yes&#x27;</span>,</span><br><span class="line">    <span class="attr">date</span>: <span class="string">&#x27;2025-05-15&#x27;</span>,</span><br><span class="line">    <span class="attr">time</span>: <span class="string">&#x27;14:30&#x27;</span></span><br><span class="line">&#125;)</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(data);</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="vue-cli的安装和使用"><a href="#vue-cli的安装和使用" class="headerlink" title="vue-cli的安装和使用"></a>vue-cli的安装和使用</h2><p>中文官网：<a target="_blank" rel="noopener" href="https://cli.vuejs.org/zh/">https://cli.vuejs.org/zh/</a></p>
+<ol>
+<li><p>什么是单页面应用程序？<br><strong>单页面应用程序</strong>（英文名: Single Page Application）简称SPA，顾名思义，<strong>指的是一个Web 网站中只有唯一的一个HTML页面</strong>，所有的功能与交互都在这唯一的一个页面内完成。</p>
+</li>
+<li><p>什么是vue-cli<br><strong>vue-cli是Vue.js开发的标准工具</strong>。它简化了程序员基于webpack创建工程化的Vue项目的过程。</p>
+</li>
+<li><p>安装<br>vue-cli是npm上的一个全局包，使用<code>npm i</code>命令，即可方便的把它安装到自己电脑上：<code>npm i -g @vue/cli</code></p>
+<ul>
+<li><code>vue -V</code>查看安装的版本号</li>
+</ul>
+</li>
+<li><p>使用<br>基于vue-cli快速生成工程化的Vue项目：<code>vue create 项目名称</code>(建议名称用不带空格的英文)</p>
+<ul>
+<li>选择预设(用方向键)<br>  <strong>初学者建议选择最后一项 – 手动选择要安装哪些功能</strong><br>  按空格选中要安装的预设<br>  一开始建议选择：<br>  Choose Vue version(新版没有这个)、Babel、CSS Pre-processors<br>  其他的不要选</li>
+</ul>
+</li>
+<li><p>vue项目中src目录的构成：</p>
+<ol>
+<li>assets 文件夹：存放项目中用到的静态资源文件，例如：css样式表、图片资源</li>
+<li>components 文件夹：程序员封装的、可复用的组件，都要放到components目录下。<br> 里面有一个默认组件HelloWorld.vue，给它删除</li>
+<li>main.js 是项目的入口文件。整个项目的运行，要先执行main.js</li>
+<li>app.Vue 是项目的根组件。我们创建项目之后，看到的页面就是app.Vue，如果想重新换一个页面出来，只需要把它给清空掉。里面的template是一个模版结构。</li>
+</ol>
+</li>
+<li><p>vue项目的运行流程<br> 在工程化的项目中，vue要做的事情很单纯: <strong>通过main.js把 App.vue渲染到index.html的指定区域中</strong>。<br> 其中：</p>
+<ul>
+<li><strong>App.vue</strong>用来编写待渲染的<strong>模板结构</strong></li>
+<li><strong>index.html</strong>中需要预留一个<strong>el区域</strong></li>
+<li><strong>main.js</strong> 把 App.vue渲染到了index.html所预留的区域中  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 导入 vue 这个包，得到Vue构造函数</span></span><br><span class="line"><span class="keyword">import</span> <span class="title class_">Vue</span> <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span></span><br><span class="line"><span class="comment">// 导入App.vue根组件，将来要把App.vue中的模板结构，渲染到HTML页面中</span></span><br><span class="line"><span class="keyword">import</span> <span class="title class_">App</span> <span class="keyword">from</span> <span class="string">&#x27;./App.vue&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="title class_">Vue</span>.<span class="property">config</span>.<span class="property">productionTip</span> = <span class="literal">false</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建Vue的实例对象</span></span><br><span class="line"><span class="keyword">new</span> <span class="title class_">Vue</span>(&#123;</span><br><span class="line">    <span class="comment">// 把 render 函数指定的组件渲染到HTML页面中，这里指定了App</span></span><br><span class="line">    <span class="comment">// 我们最终的结果是，把这个指定的组件，放到id为app的所在的这个位置，把它给替换掉了</span></span><br><span class="line">    <span class="attr">render</span>: <span class="function"><span class="params">h</span> =&gt;</span> <span class="title function_">h</span>(<span class="title class_">App</span>),</span><br><span class="line">&#125;).$mount(<span class="string">&#x27;#app&#x27;</span>)</span><br><span class="line"><span class="comment">// vue实例的$mount()方法，作用和el属性完全一样</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ol>
+<h2 id="vue组件"><a href="#vue组件" class="headerlink" title="vue组件"></a>vue组件</h2><ol>
+<li><p>什么是组件化开发<br><strong>组件化开发</strong>指的是∶根据<strong>封装</strong>的思想，<strong>把页面上可重用的UI结构封装为组件</strong>，从而方便项目的开发和维护。</p>
+</li>
+<li><p>vue中的组件化开发<br>vue是一个<strong>支持组件化开发</strong>的前端框架。<br>vue中规定：<strong>组件的后缀名是.vue</strong></p>
+</li>
+<li><p>vue组件的三个组成部分</p>
+<ul>
+<li>template -&gt;组件的模板结构</li>
+<li>script -&gt;组件的JavaScript行为</li>
+<li>style -&gt;组件的样式<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">    &lt;!-- 组件的模版结构中，应该包含一个根元素，这个最外层的div不能有兄弟元素 --&gt;</span><br><span class="line">    &lt;div class=&quot;text-box&quot;&gt;</span><br><span class="line">        &lt;h3 &gt;这是用户自定义的Test.vue -- &#123;&#123; username &#125;&#125;&lt;/h3&gt;</span><br><span class="line">        &lt;button @click=&quot;changeName&quot;&gt;修改用户名&lt;/button&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">    // 默认导出，固定写法！</span><br><span class="line">    export default &#123;</span><br><span class="line">        // data数据源</span><br><span class="line">        // 注意：.vue组件中的data不能像之前一样，不能指向对象</span><br><span class="line">        // 注意：组件中的data必须是一个函数</span><br><span class="line">        data()&#123;</span><br><span class="line">            // 这个return出去的对象中，可以定义数据</span><br><span class="line">            return&#123;</span><br><span class="line">                username: &#x27;admin&#x27;,</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,</span><br><span class="line">        methods:&#123;</span><br><span class="line">            changeName()&#123;</span><br><span class="line">                // 在组件中，this就表示当前组件的实例对象</span><br><span class="line">                console.log(this);</span><br><span class="line">                this.username = &#x27;aaa&#x27;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;style lang=&quot;less&quot;&gt;</span><br><span class="line">.text-box&#123;</span><br><span class="line">    background-color: pink;</span><br><span class="line">    h3 &#123;</span><br><span class="line">        color: red;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/style&gt;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ol>
+<h2 id="扩展知识"><a href="#扩展知识" class="headerlink" title="扩展知识"></a>扩展知识</h2><h3 id="字符串函数charAt"><a href="#字符串函数charAt" class="headerlink" title="字符串函数charAt()"></a>字符串函数charAt()</h3><p>接收索引值，从字符串中获取对应字符，如：<br><code>&#39;hello&#39;.charAt(4) //&#39;o&#39;</code></p>
 <h3 id="将字符串第一个字符变为大写"><a href="#将字符串第一个字符变为大写" class="headerlink" title="将字符串第一个字符变为大写"></a>将字符串第一个字符变为大写</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> str = <span class="string">&#x27;hello&#x27;</span></span><br><span class="line"><span class="keyword">const</span> first = str.<span class="title function_">charAt</span>(<span class="number">0</span>).<span class="title function_">toUpperCase</span>()</span><br><span class="line"><span class="keyword">const</span> other = str.<span class="title function_">slice</span>(<span class="number">1</span>)<span class="comment">//从指定索引往后截取字符串，返回得到的结果</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(str)</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(first+other)</span><br></pre></td></tr></table></figure>
 
       
@@ -1077,7 +1189,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-04-21 15:30:03" itemprop="dateModified" datetime="2024-04-21T15:30:03+08:00">2024-04-21</time>
+      <time title="修改时间：2024-04-24 10:31:21" itemprop="dateModified" datetime="2024-04-24T10:31:21+08:00">2024-04-24</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1118,14 +1230,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>3.6k</span>
+      <span>4.4k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>3 分钟</span>
+      <span>4 分钟</span>
     </span>
 </div>
 
@@ -1137,13 +1249,13 @@
     
     <div class="post-body" itemprop="articleBody">
           <blockquote>
-<p>这个示例中，没有用到MySQl数据库，只是简单的创建POST表单路由进行处理数据，以及表单数据的校验<br>用到的npm包&#x2F;第三方模块：<br>Express：<code>npm i express@4.17.1</code> – Web 开发框架，快速创建 Web 服务器<br>Joi：<code>npm install joi --save</code> – hapijs 自带的数据校验模块<br>@escook&#x2F;express-joi中间件: <code>npm i @escook/express-joi</code> – 实现自动对表单数据进行验证的功能</p>
+<p>这个示例中，没有用到MySQl数据库，只是简单的创建POST表单路由进行处理数据，以及表单数据的校验<br>用到的npm包&#x2F;第三方模块：<br>Express：<code>npm i express@4.17.1</code> – Web 开发框架，快速创建 Web 服务器<br>Joi：<code>npm install joi --save</code> – hapijs 自带的数据校验模块<br>@escook&#x2F;express-joi中间件: <code>npm i @escook/express-joi</code> – 实现自动对表单数据进行验证的功能<br>cors： <code>npm i cors</code> – 配置cors跨域</p>
 </blockquote>
 <blockquote>
 <p>全局安装了nodemon工具，可以监听文件的更改，自动重新执行</p>
 </blockquote>
 <blockquote>
-<p>该示例没有在路由之前配置cors中间件，从而解决接口跨域的问题<br>这个是航空文化馆项目的后端，还没写完<br>没有用到mysql模块：<code>npm i mysql</code><br>也没有用到express-session中间件：<code>npm i express-session</code>（这个干吗用的？）</p>
+<p>这个是航空文化馆项目的后端，还没写完<br>没有用到mysql模块：<code>npm i mysql</code><br>也没有用到express-session中间件：<code>npm i express-session</code>（这个干吗用的？）</p>
 </blockquote>
 <h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><ol start="0">
 <li>如果是拿被别人写好的项目，第一步是导入这个项目所用的包，<code>npm i</code>命令</li>
@@ -1202,9 +1314,17 @@
 </li>
 <li><p>在 app.js 的全局错误级别中间件中，捕获验证失败的错误，并把验证失败的结果响应给客户端<br> 在路由注册之后声明错误级别中间件，注意这里需要在app.js导入joi</p>
  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> joi = <span class="built_in">require</span>(<span class="string">&#x27;joi&#x27;</span>)</span><br><span class="line"><span class="comment">// 错误中间件</span></span><br><span class="line">app.<span class="title function_">use</span>(<span class="keyword">function</span>(<span class="params">err,req,res,next</span>)&#123;</span><br><span class="line">    <span class="comment">//数据验证失败</span></span><br><span class="line">    <span class="keyword">if</span>(err <span class="keyword">instanceof</span> joi.<span class="property">ValidationError</span>) <span class="keyword">return</span> res.<span class="title function_">send</span>(err.<span class="property">message</span>)</span><br><span class="line">    <span class="comment">// 未知错误</span></span><br><span class="line">    res.<span class="title function_">send</span>(err.<span class="property">message</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-<p> 测试成功</p>
+<p> postman测试成功</p>
 </li>
 </ol>
+<h2 id="配置cors-跨域"><a href="#配置cors-跨域" class="headerlink" title="配置cors 跨域"></a>配置cors 跨域</h2><p>之前我们都是在postman发送请求测试，如果我们在自己写的页面发送请求会发现报错<br>这是因为我们的页面打开的是file协议，而服务器则是http协议，</p>
+<p>使用<strong>cors中间件</strong>解决跨域问题<br>cors 是Express的一个第三方中间件。通过安装和配置cors 中间件，可以很方便地解决跨域问题。<br>使用步骤分为如下3步:<br>    1. 运行<code>npm install cors</code>安装中间件<br>    2. 使用<code>const cors = require(&#39;cors&#39;)</code>导入中间件<br>    3. 在路由之前调用<code>app.use(cors())</code>配置中间件</p>
+<p>注意：<strong>一定要在路由之前配置cors中间件，从而解决接口跨域的问题</strong></p>
+<ul>
+<li>前端发送axios请求：<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">axios</span>(&#123;</span><br><span class="line">    <span class="attr">method</span>: <span class="string">&#x27;POST&#x27;</span>,</span><br><span class="line">    <span class="attr">url</span>: <span class="string">&#x27;http://127.0.0.1:8080/form&#x27;</span>,</span><br><span class="line">    <span class="comment">// 如果要携带请求体：</span></span><br><span class="line">    <span class="comment">// 请求体参数，post请求体传参，可选</span></span><br><span class="line">    <span class="attr">data</span>: &#123;</span><br><span class="line">        unit : <span class="string">&quot;00&quot;</span>,</span><br><span class="line">        contact : <span class="string">&quot;朱宇楼&quot;</span>,</span><br><span class="line">        <span class="attr">phone</span>: <span class="string">&#x27;15639038667&#x27;</span>,</span><br><span class="line">        <span class="attr">numVisitors</span>: <span class="number">25</span>,</span><br><span class="line">        <span class="attr">guide</span>: <span class="string">&#x27;yes&#x27;</span>,</span><br><span class="line">        <span class="attr">date</span>: <span class="string">&#x27;2025-05-15&#x27;</span>,</span><br><span class="line">        <span class="attr">time</span>: <span class="string">&#x27;14:30&#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;).<span class="title function_">then</span>(<span class="function">(<span class="params">result</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// .then 用来指定请求成功之后的回调函数</span></span><br><span class="line">    <span class="comment">// 形参中的 result 是请求成功之后的结果</span></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(result.<span class="property">data</span>);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+注意：axios 使用 post 发送数据时，默认是直接把 json 放到请求体中提交到后端的，然而我们没有配置解析JSON表单数据的中间件，所以后端能够接收到请求，但是拿不到参数</li>
+</ul>
+<p>配置解析JSON格式表单数据的中间件：<code>app.use(express.json())</code><br>再次在页面发送axois请求，测试成功</p>
 
       
     </div>
@@ -1243,13 +1363,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">25k</span>
+    <span title="站点总字数">31k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">23 分钟</span>
+    <span title="站点阅读时长">28 分钟</span>
   </span>
 </div>
 
