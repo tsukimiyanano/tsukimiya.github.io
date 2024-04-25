@@ -231,7 +231,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-04-25 10:23:52" itemprop="dateModified" datetime="2024-04-25T10:23:52+08:00">2024-04-25</time>
+      <time title="修改时间：2024-04-25 11:06:36" itemprop="dateModified" datetime="2024-04-25T11:06:36+08:00">2024-04-25</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -276,14 +276,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>3.8k</span>
+      <span>4.6k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>3 分钟</span>
+      <span>4 分钟</span>
     </span>
 </div>
 
@@ -328,7 +328,7 @@
 <p>  <strong>注意：在自己的组件中，不能使用自己！</strong></p>
 </li>
 </ul>
-<h2 id="组件的props"><a href="#组件的props" class="headerlink" title="组件的props"></a>组件的props</h2><p>props是组件的<strong>自定义属性</strong>，<strong>在封装通用组件的时候</strong>，合理地使用 props 可以极大的<font color='red' size='4'>提高组件的复用性！</font><br>它的语法格式如下:</p>
+<h2 id="组件的props"><a href="#组件的props" class="headerlink" title="组件的props"></a>组件的props</h2><p>props是组件的<strong>自定义属性</strong>，<strong>在封装通用组件的时候</strong>，合理地使用 props 可以极大的<font color='red' size='5'>提高组件的复用性！</font><br>它的语法格式如下:</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    <span class="comment">//组件的自定义属性,允许使用者指定初始值</span></span><br><span class="line">    <span class="attr">props</span>:[<span class="string">&#x27;自定义属性A&#x27;</span>,<span class="string">&#x27;自定义属性B&#x27;</span>,<span class="string">&#x27;其它自定义属性...&#x27;</span>],</span><br><span class="line">    <span class="comment">//组件的私有数据</span></span><br><span class="line">    <span class="title function_">data</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> &#123; &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <ul>
 <li><p><font fcolor='green'>props中的数据，可以直接在模板结构中被使用</font>。使用示例：</p>
@@ -349,7 +349,23 @@
 
 <h3 id="props的-required-必填项"><a href="#props的-required-必填项" class="headerlink" title="props的 required 必填项"></a>props的 required 必填项</h3><p>加上required必填项之后，哪怕有默认值，不传也会报错</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    <span class="attr">props</span>: &#123;</span><br><span class="line">        <span class="attr">init</span>: &#123;</span><br><span class="line">            <span class="attr">default</span>: <span class="number">0</span>,</span><br><span class="line">            <span class="attr">type</span>:<span class="title class_">Number</span>,</span><br><span class="line">            <span class="attr">require</span>: <span class="literal">true</span>,<span class="comment">//必填项校验</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<h3 id="组件之间的样式冲突问题"><a href="#组件之间的样式冲突问题" class="headerlink" title="组件之间的样式冲突问题"></a>组件之间的样式冲突问题</h3><p>默认情况下，<strong>写在.vue组件中的样式会全局生效</strong>，因此很容易造成<strong>多个组件之间的样式冲突问题</strong>。<br>导致组件之间样式冲突的<strong>根本原因</strong>是:<br>    <font color='purple'>1. 单页面应用程序中，所有组件的DOM结构，都是基于唯一的index.html页面进行呈现的</font><br>    <font color='purple'>2. 每个组件中的样式，都会影响整个index.html页面中的DOM元素</font></p>
+<p>注意：单页面应用程序中，HTML页面是只有一个的，我们的所有组件都是在这个HTML中生效的</p>
+<ul>
+<li><p>解决方案 – <font color='red'>核心原理：css属性选择器</font><br>给当前页面标签都加一个固定的自定义属性，不同的组件之间的自定义属性不一样</p>
+</li>
+<li><p>vue简化：<strong>scoped属性</strong><br>只要给当前组件的style加上scoped的属性，vue底层在生成组件的时候，会自动给每个标签自动生成一个data-v-xxx</p>
+</li>
+</ul>
+<h4 id="deep-样式穿透"><a href="#deep-样式穿透" class="headerlink" title="&#x2F;deep&#x2F;样式穿透"></a>&#x2F;deep&#x2F;样式穿透</h4><p><font color='#00a86b'>作用：在父组件中改造子组件里的样式</font><br><font color='violet'>应用场景：当使用第三方组件库的时候，如果有修改组件默认样式的需求，需要用到&#x2F;deep&#x2F;</font></p>
+<ul>
+<li><p>scoped有一个缺陷，场景：<br>Left 和 Right 都注册使用了 Count组件<br>Left加了scoped属性，而Right没加<br>如果想在Left中的style里修改Count里面的样式，会发现不起作用，而如果在Right中修改，会发现Left和Right里面的Count组件样式都变了。</p>
+</li>
+<li><p>原因：<br>在Left中修改，比如h5{..},因为加了scoped，所以会变成h5[data-v-xx]{..}，而count中的标签并没有data-v-xx属性，所以不会生效。<br>而在没有scoped属性的Right中修改，则产生的就是样式冲突</p>
+</li>
+<li><p>解决方案：&#x2F;deep&#x2F;样式穿透<br>&#x2F;deep&#x2F; h5{ … }<br>在选择器前面加个前缀+空格，在浏览器可以查看到，这个h5标签被加上了一个[data-v-xx] 的前缀</p>
+</li>
+</ul>
 <h2 id="组件的生命周期"><a href="#组件的生命周期" class="headerlink" title="组件的生命周期"></a>组件的生命周期</h2><h2 id="组件之间的通讯-数据共享"><a href="#组件之间的通讯-数据共享" class="headerlink" title="组件之间的通讯(数据共享)"></a>组件之间的通讯(数据共享)</h2><h2 id="拓展"><a href="#拓展" class="headerlink" title="拓展"></a>拓展</h2><h3 id="vscode插件-Path-Autocomplete-路径提示"><a href="#vscode插件-Path-Autocomplete-路径提示" class="headerlink" title="vscode插件 Path Autocomplete - @路径提示"></a>vscode插件 Path Autocomplete - @路径提示</h3><p>下载插件之后，要在自己配置项里面添加如下配置,添加在头部就行<br>设置 – setting.json</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">// 导入文件时是否携带文件的扩展名</span><br><span class="line">&quot;path-autocomplete.extensionOnImport&quot;:true,</span><br><span class="line">// 配置 @ 的路径提示</span><br><span class="line">&quot;path-autocomplete.pathMappings&quot;:&#123;</span><br><span class="line">    &quot;@&quot;:&quot;$&#123;folder&#125;/src&quot;</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
 <p><font color="red">注意：只有vscode打开的文件夹根目录是项目根目录时才起作用！！</font></p>
@@ -1545,7 +1561,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">34k</span>
+    <span title="站点总字数">35k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
