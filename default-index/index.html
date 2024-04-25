@@ -153,7 +153,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/tsukimiya.github.io/archives/">
-          <span class="site-state-item-count">4</span>
+          <span class="site-state-item-count">5</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -164,7 +164,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tsukimiya.github.io/tags/">
-        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-count">15</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -186,6 +186,203 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://tsukimiyanano.github.io/tsukimiya.github.io/2024/04/24/Vue/4.Vue%E7%BB%84%E4%BB%B6%E4%B8%8E%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/tsukimiya.github.io/images/avatar.jpg">
+      <meta itemprop="name" content="Ayu">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ayu's Study Blog">
+      <meta itemprop="description" content="你们怎么能这么卷！！">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Ayu's Study Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/tsukimiya.github.io/2024/04/24/Vue/4.Vue%E7%BB%84%E4%BB%B6%E4%B8%8E%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/" class="post-title-link" itemprop="url">Vue组件与生命周期</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-04-24 20:35:44" itemprop="dateCreated datePublished" datetime="2024-04-24T20:35:44+08:00">2024-04-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-04-25 10:23:52" itemprop="dateModified" datetime="2024-04-25T10:23:52+08:00">2024-04-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/tsukimiya.github.io/categories/Vue/" itemprop="url" rel="index"><span itemprop="name">Vue</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/tsukimiya.github.io/categories/Vue/Vue2/" itemprop="url" rel="index"><span itemprop="name">Vue2</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="far fa-comment"></i>
+    </span>
+    <span class="post-meta-item-text">Waline：</span>
+  
+    <a title="waline" href="/tsukimiya.github.io/2024/04/24/Vue/4.Vue%E7%BB%84%E4%BB%B6%E4%B8%8E%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/#waline" itemprop="discussionUrl">
+      <span class="post-comments-count waline-comment-count" data-path="/tsukimiya.github.io/2024/04/24/Vue/4.Vue%E7%BB%84%E4%BB%B6%E4%B8%8E%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <span class="post-meta-item" title="阅读次数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span class="waline-pageview-count" data-path="/tsukimiya.github.io/2024/04/24/Vue/4.Vue%E7%BB%84%E4%BB%B6%E4%B8%8E%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/"></span>
+    </span>
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>3.8k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>3 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <blockquote>
+<p>目标：<br>能够掌握.vue单文件组件的基本用法<br>能够掌握组件通讯的三种方式<br>掌握组件生命周期的执行顺序和应用场景</p>
+</blockquote>
+<p>[toc]</p>
+<h2 id="vue组件"><a href="#vue组件" class="headerlink" title="vue组件"></a>vue组件</h2><ol>
+<li><p>什么是组件化开发<br><strong>组件化开发</strong>指的是∶根据<strong>封装</strong>的思想，<strong>把页面上可重用的UI结构封装为组件</strong>，从而方便项目的开发和维护。</p>
+</li>
+<li><p>vue中的组件化开发<br>vue是一个<strong>支持组件化开发</strong>的前端框架。<br>vue中规定：<strong>组件的后缀名是.vue</strong><br>vue中，root就是根，而这个根就是el所控制的那个区域。在main.js文件里，vue实例中通过 render 函数指定组件渲染到HTML页面中，替换了el区域。即：<strong>render函数中，渲染的是哪个.vue组件，那么这个组件就叫做“根组件”</strong></p>
+</li>
+<li><p><font color='green'>vue组件的三个组成部分</font></p>
+<ul>
+<li><font color='green'>template -&gt; 组件的模板结构</font></li>
+<li><font color='green'>script -&gt; 组件的JavaScript行为</font></li>
+<li><font color='green'>style -&gt; 组件的样式</font></li>
+</ul>
+<p> 注意：<font color='red'>每个组件中必须包含template模板结构，而script行为和style样式是可选的组成部分</font></p>
+</li>
+</ol>
+<p>简单示例：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">    &lt;!-- 组件的模版结构中，应该包含一个根元素，这个最外层的div不能有兄弟元素 --&gt;</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;text-box&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">h3</span> &gt;</span>这是用户自定义的Test.vue -- &#123;&#123; username &#125;&#125;<span class="tag">&lt;/<span class="name">h3</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">button</span> @<span class="attr">click</span>=<span class="string">&quot;changeName&quot;</span>&gt;</span>修改用户名<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    <span class="keyword">export</span> <span class="keyword">default</span> &#123;<span class="comment">// 默认导出，固定写法！</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        <span class="comment">// 注意：.vue组件中的data不能像之前一样，不能指向对象,必须是一个函数</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        <span class="title function_">data</span>(<span class="params"></span>)&#123;<span class="comment">// data数据源</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">            <span class="keyword">return</span>&#123;<span class="comment">// 这个return出去的对象中，可以定义数据</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">                <span class="attr">username</span>: <span class="string">&#x27;admin&#x27;</span>,</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">            &#125;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        &#125;,</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        <span class="attr">methods</span>:&#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">            <span class="title function_">changeName</span>(<span class="params"></span>)&#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">                <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">this</span>);<span class="comment">// 在组件中，this就表示当前组件的实例对象</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">                <span class="variable language_">this</span>.<span class="property">username</span> = <span class="string">&#x27;aaa&#x27;</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">            &#125;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        &#125;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    &#125;;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">style</span> <span class="attr">lang</span>=<span class="string">&quot;less&quot;</span>&gt;</span><span class="language-css"></span></span></span><br><span class="line"><span class="language-css"><span class="language-xml"><span class="selector-class">.text-box</span>&#123;</span></span></span><br><span class="line"><span class="language-css"><span class="language-xml">    <span class="attribute">background-color</span>: pink;</span></span></span><br><span class="line"><span class="language-css"><span class="language-xml">    <span class="selector-tag">h3</span> &#123;</span></span></span><br><span class="line"><span class="language-css"><span class="language-xml">        <span class="attribute">color</span>: red;</span></span></span><br><span class="line"><span class="language-css"><span class="language-xml">    &#125;</span></span></span><br><span class="line"><span class="language-css"><span class="language-xml">&#125;</span></span></span><br><span class="line"><span class="language-css"><span class="language-xml"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>组件之间的<font color='red'>父子关系</font><br>组件之间的父子关系、兄弟关系，<strong>是在使用时候才会产生的</strong><br><img src="/tsukimiya.github.io/images/vue/%E7%BB%84%E4%BB%B6%E4%B9%8B%E9%97%B4%E7%9A%84%E7%88%B6%E5%AD%90%E5%85%B3%E7%B3%BB.png" alt="img"></li>
+</ol>
+<h3 id="使用组件的三个步骤"><a href="#使用组件的三个步骤" class="headerlink" title="使用组件的三个步骤"></a>使用组件的<strong>三个步骤</strong></h3><p><img src="/tsukimiya.github.io/images/vue/%E4%BD%BF%E7%94%A8%E7%BB%84%E4%BB%B6%E7%9A%84%E4%B8%89%E4%B8%AA%E6%AD%A5%E9%AA%A4.png" alt="img"><br><font color="green">注意：在components节点中，注册组件是一个对象的写法，前面是定义的名称，后面是要注册的组件。在对象里面，键名和值如果一样，可以省略值只写键名。如’Left’:Left可以简写成Left</font></p>
+<ul>
+<li><p>通过components注册的是<font color='red'>私有子组件</font><br>例如：<br>在组件A的components节点下，注册了组件F。<br>则组件F只能用在组件A中;不能被用在组件C中。</p>
+</li>
+<li><p>注册<font color='red'>全局组件</font><br>如果某个组件，使用非常频繁，好多组件中都要用到它，那么每次都要导入注册并使用，就很麻烦。所以可以注册全局组件</p>
+<p>  <font color='green'>在vue项目的 main.js入口文件中，通过Vue.component()方法，可以注册全局组件。</font>示例代码如下:</p>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 导入需要全局注册的组件</span></span><br><span class="line"><span class="keyword">import</span> <span class="title class_">Count</span> <span class="keyword">from</span> <span class="string">&#x27;@/components/Count.vue&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 参数1：字符串格式，表示组件的“注册名称”</span></span><br><span class="line"><span class="comment">// 参数2：需要被全局注册的那个组件</span></span><br><span class="line"><span class="title class_">Vue</span>.<span class="title function_">component</span>(<span class="string">&#x27;MyCount&#x27;</span>,<span class="title class_">Count</span>)</span><br></pre></td></tr></table></figure>
+<p>  <strong>注意：在自己的组件中，不能使用自己！</strong></p>
+</li>
+</ul>
+<h2 id="组件的props"><a href="#组件的props" class="headerlink" title="组件的props"></a>组件的props</h2><p>props是组件的<strong>自定义属性</strong>，<strong>在封装通用组件的时候</strong>，合理地使用 props 可以极大的<font color='red' size='4'>提高组件的复用性！</font><br>它的语法格式如下:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    <span class="comment">//组件的自定义属性,允许使用者指定初始值</span></span><br><span class="line">    <span class="attr">props</span>:[<span class="string">&#x27;自定义属性A&#x27;</span>,<span class="string">&#x27;自定义属性B&#x27;</span>,<span class="string">&#x27;其它自定义属性...&#x27;</span>],</span><br><span class="line">    <span class="comment">//组件的私有数据</span></span><br><span class="line">    <span class="title function_">data</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> &#123; &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p><font fcolor='green'>props中的数据，可以直接在模板结构中被使用</font>。使用示例：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Count.vue组件中</span></span><br><span class="line"><span class="comment">//...</span></span><br><span class="line">&lt;p&gt;&#123;&#123;init&#125;&#125;&lt;/p&gt;</span><br><span class="line"><span class="comment">//...</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;<span class="attr">props</span>:[<span class="string">&#x27;init&#x27;</span>],..&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Left.vue组件中，使用注册了的Count组件</span></span><br><span class="line"><span class="comment">// 指定初始值，但是这里传入的是一个字符串，并不是一个真正的数值</span></span><br><span class="line">&lt;<span class="title class_">Count</span> init=<span class="string">&quot;6&quot;</span>&gt;&lt;/<span class="title class_">Count</span>&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><font color='red'>结合v-bind使用自定义属性</font></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// 这样就传入的是数值6了</span><br><span class="line"><span class="tag">&lt;<span class="name">Count</span> <span class="attr">:init</span>=<span class="string">&quot;6&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">Count</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><font color='green'>官网文档-&gt;即便 <code>9</code> 是静态的，我们仍然需要 <code>v-bind</code> 来告诉 Vue，这是一个 JavaScript 表达式而不是一个字符串</font></p>
+</li>
+<li><p><font color='red'>props是只读的</font><br>Vue规定:组件中封装的自定义属性是只读的，程序员不能直接修改props的值。否则会直接报错。<br><font color='green'>props是被作为初始值使用的，把它传给data的属性进行初始赋值使用：</font></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Count.vue组件中</span></span><br><span class="line"><span class="comment">//...</span></span><br><span class="line">&lt;p&gt;&#123;&#123;count&#125;&#125;&lt;/p&gt;</span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">button</span> @<span class="attr">click</span>=<span class="string">&quot;count+=1&quot;</span>&gt;</span>+1<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="comment">//...</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    <span class="attr">props</span>:[<span class="string">&#x27;init&#x27;</span>],</span><br><span class="line">    <span class="attr">data</span>:&#123; <span class="attr">count</span>:<span class="variable language_">this</span>.<span class="property">init</span>, &#125;    </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&lt;<span class="title class_">Count</span> :init=<span class="string">&quot;6&quot;</span>&gt;&lt;/<span class="title class_">Count</span>&gt;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="props的default默认值"><a href="#props的default默认值" class="headerlink" title="props的default默认值"></a>props的default默认值</h3><p>在声明自定义属性时，可以通过default来定义属性的默认值。示例代码如下:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    <span class="attr">props</span>: &#123;</span><br><span class="line">        <span class="comment">// 自定义属性：&#123; /* 配置选项 */ &#125;</span></span><br><span class="line">        <span class="attr">init</span>: &#123;</span><br><span class="line">            <span class="comment">//用default属性定义属性的默认值</span></span><br><span class="line">            <span class="comment">// 如果外界使用Count组件，没有传递默认值，则默认值生效</span></span><br><span class="line">            <span class="attr">default</span>: <span class="number">0</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="props的-type-值类型"><a href="#props的-type-值类型" class="headerlink" title="props的 type 值类型"></a>props的 type 值类型</h3><p>在声明自定义属性时，<font color='red'>可以通过type来定义属性的值类型。</font>示例代码如下:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    <span class="attr">props</span>: &#123;</span><br><span class="line">        <span class="attr">init</span>: &#123;</span><br><span class="line">            <span class="attr">default</span>: <span class="number">0</span>,</span><br><span class="line">            <span class="comment">// 用type属性定义属性的值类型</span></span><br><span class="line">            <span class="comment">// init的值类型必须是Number数字</span></span><br><span class="line">            <span class="attr">type</span>:<span class="title class_">Number</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="props的-required-必填项"><a href="#props的-required-必填项" class="headerlink" title="props的 required 必填项"></a>props的 required 必填项</h3><p>加上required必填项之后，哪怕有默认值，不传也会报错</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    <span class="attr">props</span>: &#123;</span><br><span class="line">        <span class="attr">init</span>: &#123;</span><br><span class="line">            <span class="attr">default</span>: <span class="number">0</span>,</span><br><span class="line">            <span class="attr">type</span>:<span class="title class_">Number</span>,</span><br><span class="line">            <span class="attr">require</span>: <span class="literal">true</span>,<span class="comment">//必填项校验</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="组件的生命周期"><a href="#组件的生命周期" class="headerlink" title="组件的生命周期"></a>组件的生命周期</h2><h2 id="组件之间的通讯-数据共享"><a href="#组件之间的通讯-数据共享" class="headerlink" title="组件之间的通讯(数据共享)"></a>组件之间的通讯(数据共享)</h2><h2 id="拓展"><a href="#拓展" class="headerlink" title="拓展"></a>拓展</h2><h3 id="vscode插件-Path-Autocomplete-路径提示"><a href="#vscode插件-Path-Autocomplete-路径提示" class="headerlink" title="vscode插件 Path Autocomplete - @路径提示"></a>vscode插件 Path Autocomplete - @路径提示</h3><p>下载插件之后，要在自己配置项里面添加如下配置,添加在头部就行<br>设置 – setting.json</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">// 导入文件时是否携带文件的扩展名</span><br><span class="line">&quot;path-autocomplete.extensionOnImport&quot;:true,</span><br><span class="line">// 配置 @ 的路径提示</span><br><span class="line">&quot;path-autocomplete.pathMappings&quot;:&#123;</span><br><span class="line">    &quot;@&quot;:&quot;$&#123;folder&#125;/src&quot;</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+<p><font color="red">注意：只有vscode打开的文件夹根目录是项目根目录时才起作用！！</font></p>
+<blockquote>
+<p>总觉得这个功能vscode也集成进去了？一开始没装的时候，好像就触发了，也懒得验证了hh</p>
+</blockquote>
+<h3 id="Auto-Close-Tag插件"><a href="#Auto-Close-Tag插件" class="headerlink" title="Auto Close Tag插件"></a>Auto Close Tag插件</h3><p>输入<code>&lt;xx&gt;</code>标签前半部分，会自动补全后半部分<br>不过新版vscode好像已经集成了这个功能，没有安装也是这样，装了没啥变化</p>
+<h3 id="方法简写形式"><a href="#方法简写形式" class="headerlink" title="方法简写形式"></a>方法简写形式</h3><p><strong>如果方法只有一行，可以简写到行内</strong>：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;p&gt;count的值是：&#123;&#123;count&#125;&#125;&lt;/p&gt;</span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">button</span> @<span class="attr">click</span>=<span class="string">&quot;count += 1&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -231,7 +428,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-04-24 13:49:22" itemprop="dateModified" datetime="2024-04-24T13:49:22+08:00">2024-04-24</time>
+      <time title="修改时间：2024-04-24 20:38:22" itemprop="dateModified" datetime="2024-04-24T20:38:22+08:00">2024-04-24</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -276,14 +473,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>7k</span>
+      <span>6k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>6 分钟</span>
+      <span>5 分钟</span>
     </span>
 </div>
 
@@ -423,22 +620,6 @@
 </ul>
 </li>
 </ol>
-<h2 id="vue组件"><a href="#vue组件" class="headerlink" title="vue组件"></a>vue组件</h2><ol>
-<li><p>什么是组件化开发<br><strong>组件化开发</strong>指的是∶根据<strong>封装</strong>的思想，<strong>把页面上可重用的UI结构封装为组件</strong>，从而方便项目的开发和维护。</p>
-</li>
-<li><p>vue中的组件化开发<br>vue是一个<strong>支持组件化开发</strong>的前端框架。<br>vue中规定：<strong>组件的后缀名是.vue</strong></p>
-</li>
-<li><p>vue组件的三个组成部分</p>
-<ul>
-<li>template -&gt;组件的模板结构</li>
-<li>script -&gt;组件的JavaScript行为</li>
-<li>style -&gt;组件的样式</li>
-</ul>
-</li>
-</ol>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">    &lt;!-- 组件的模版结构中，应该包含一个根元素，这个最外层的div不能有兄弟元素 --&gt;</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;text-box&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">h3</span> &gt;</span>这是用户自定义的Test.vue -- &#123;&#123; username &#125;&#125;<span class="tag">&lt;/<span class="name">h3</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">button</span> @<span class="attr">click</span>=<span class="string">&quot;changeName&quot;</span>&gt;</span>修改用户名<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    <span class="comment">// 默认导出，固定写法！</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    <span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        <span class="comment">// data数据源</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        <span class="comment">// 注意：.vue组件中的data不能像之前一样，不能指向对象</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        <span class="comment">// 注意：组件中的data必须是一个函数</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        <span class="title function_">data</span>(<span class="params"></span>)&#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">            <span class="comment">// 这个return出去的对象中，可以定义数据</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">            <span class="keyword">return</span>&#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">                <span class="attr">username</span>: <span class="string">&#x27;admin&#x27;</span>,</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">            &#125;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        &#125;,</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        <span class="attr">methods</span>:&#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">            <span class="title function_">changeName</span>(<span class="params"></span>)&#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">                <span class="comment">// 在组件中，this就表示当前组件的实例对象</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">                <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">this</span>);</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">                <span class="variable language_">this</span>.<span class="property">username</span> = <span class="string">&#x27;aaa&#x27;</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">            &#125;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        &#125;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    &#125;;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">style</span> <span class="attr">lang</span>=<span class="string">&quot;less&quot;</span>&gt;</span><span class="language-css"></span></span></span><br><span class="line"><span class="language-css"><span class="language-xml"><span class="selector-class">.text-box</span>&#123;</span></span></span><br><span class="line"><span class="language-css"><span class="language-xml">    <span class="attribute">background-color</span>: pink;</span></span></span><br><span class="line"><span class="language-css"><span class="language-xml">    <span class="selector-tag">h3</span> &#123;</span></span></span><br><span class="line"><span class="language-css"><span class="language-xml">        <span class="attribute">color</span>: red;</span></span></span><br><span class="line"><span class="language-css"><span class="language-xml">    &#125;</span></span></span><br><span class="line"><span class="language-css"><span class="language-xml">&#125;</span></span></span><br><span class="line"><span class="language-css"><span class="language-xml"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
-
-
 <h2 id="扩展知识"><a href="#扩展知识" class="headerlink" title="扩展知识"></a>扩展知识</h2><h3 id="字符串函数charAt"><a href="#字符串函数charAt" class="headerlink" title="字符串函数charAt()"></a>字符串函数charAt()</h3><p>接收索引值，从字符串中获取对应字符，如：<br><code>&#39;hello&#39;.charAt(4) //&#39;o&#39;</code></p>
 <h3 id="将字符串第一个字符变为大写"><a href="#将字符串第一个字符变为大写" class="headerlink" title="将字符串第一个字符变为大写"></a>将字符串第一个字符变为大写</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> str = <span class="string">&#x27;hello&#x27;</span></span><br><span class="line"><span class="keyword">const</span> first = str.<span class="title function_">charAt</span>(<span class="number">0</span>).<span class="title function_">toUpperCase</span>()</span><br><span class="line"><span class="keyword">const</span> other = str.<span class="title function_">slice</span>(<span class="number">1</span>)<span class="comment">//从指定索引往后截取字符串，返回得到的结果</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(str)</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(first+other)</span><br></pre></td></tr></table></figure>
 
@@ -1364,13 +1545,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">31k</span>
+    <span title="站点总字数">34k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">28 分钟</span>
+    <span title="站点阅读时长">31 分钟</span>
   </span>
 </div>
 
