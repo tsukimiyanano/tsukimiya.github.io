@@ -748,58 +748,6 @@
       </tags>
   </entry>
   <entry>
-    <title>ref引用DOM元素和组件实例</title>
-    <url>/tsukimiya.github.io/2024/04/30/Vue/5.ref%E5%BC%95%E7%94%A8DOM%E5%85%83%E7%B4%A0%E5%92%8C%E7%BB%84%E4%BB%B6%E5%AE%9E%E4%BE%8B/</url>
-    <content><![CDATA[<blockquote>
-<p>目标:<br>能够使用<code>ref</code>获取页面上DOM或组件的引用<br>能够知道<code>$nextTick</code>的应用场景并合理地使用<br>通过<a href="https://www.bilibili.com/video/BV1zq4y1p7ga?p=127">“购物车案例”</a>巩固前4天所有学知识</p>
-</blockquote>
-<h2 id="ref引用-引用DOM元素-组件实例"><a href="#ref引用-引用DOM元素-组件实例" class="headerlink" title="ref引用 - 引用DOM元素 &#x2F; 组件实例"></a>ref引用 - 引用DOM元素 &#x2F; 组件实例</h2><blockquote>
-<p><font color='red'>Vue的优势：MVVM的数据驱动视图 – 在vue中，程序员不需要操作DOM，只需要把数据维护好即可。</font><br>因此，在vue项目中，墙裂不建议安装和使用jQuery，因为没有操作DOM的需求，如果有也是极少的。</p>
-</blockquote>
-<ol>
-<li><p>什么是ref 引用<br> ref用来辅助开发者在<strong>不依赖于jQuery的情况下</strong>且<strong>在不调用DOM API的前提下</strong>，<strong>获取页面上DOM元素或组件的引用</strong>。</p>
-<p> 每个vue的组件实例上，都包含一个<code>$refs</code>对象，里面存储着对应的DOM元素或组件的引用。<strong>默认情况下，组件的<code>$refs</code> 指向一个空对象</strong>。</p>
-<blockquote>
-<p>打印出vue实例对象this，可以看到，凡是$开头的，都是vue内置的一些成员。</p>
-</blockquote>
-</li>
-<li><p>使用ref引用 DOM元素<br> 在标签上通过ref属性来指定一个名字，这个名字就指向这个标签，并添加到<code>$ref</code>对象中。如：</p>
- <figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">h1</span> <span class="attr">ref</span>=<span class="string">&quot;myh1&quot;</span>&gt;</span>APP根组件<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br></pre></td></tr></table></figure>
- <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="attr">$refs</span>:&#123;<span class="comment">//vue实例上的$refs属性值</span></span><br><span class="line">    <span class="attr">myh1</span>: h1</span><br><span class="line">&#125;</span><br><span class="line"><span class="variable language_">this</span>.<span class="property">$refs</span>.<span class="property">myh1</span>.<span class="property">style</span>.<span class="property">color</span> = <span class="string">&#x27;red&#x27;</span><span class="comment">//操作DOM</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>使用ref引用 组件实例<br> 只要<strong>在引用的子组件的标签上，加一个ref</strong>，这个名字就指向了这个子组件的vue实例，就可以通过它来调用这个子组件的属性和方法。</p>
-</li>
-</ol>
-<p><font color='red'>建议：只要是ref的引用，尽量都以Ref后缀结尾，这样一看名字就知道是个引用</font></p>
-<h2 id="this-nextTick的应用场景"><a href="#this-nextTick的应用场景" class="headerlink" title="this.$nextTick的应用场景"></a><code>this.$nextTick</code>的应用场景</h2><ul>
-<li><strong>问题</strong></li>
-</ul>
-<p>在app组件中，控制组件内按钮和输入框元素的切换</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">v-if</span>=<span class="string">&quot;inputVisible&quot;</span> @<span class="attr">blur</span>=<span class="string">&quot;showButton&quot;</span> <span class="attr">ref</span>=<span class="string">&quot;iptRef&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">v-else</span> @<span class="attr">click</span>=<span class="string">&quot;showinput&quot;</span>&gt;</span>显示输入框<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>当我们想要在切换到输入框的时候，直接进入输入框焦点</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="title function_">showinput</span>(<span class="params"></span>)&#123;</span><br><span class="line"><span class="variable language_">this</span>.<span class="property">inputVisible</span> = <span class="literal">true</span>;</span><br><span class="line"><span class="variable language_">this</span>.<span class="property">$refs</span>.<span class="property">iptRef</span>.<span class="title function_">focus</span>()</span><br><span class="line">&#125;,</span><br><span class="line"><span class="title function_">showButton</span>(<span class="params"></span>)&#123;</span><br><span class="line"><span class="variable language_">this</span>.<span class="property">inputVisible</span> = <span class="literal">false</span>;</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
-<p>但是<code>this.$refs.iptRef.focus()</code>这样却报错了<br><code>TypeError: Cannot read properties of undefined (reading &#39;focus&#39;)</code><br>这个错误代表说，我要调用一个focus方法，或我要访问一个focus属性，但是它前面那个东西是undefined<br>当我们打印<code>console.log(this.$refs.iptRef);</code>会发现它是<code>undefined</code>！</p>
-<ul>
-<li><strong>分析原因</strong></li>
-</ul>
-<p>在这个函数中，我们是更改inputVisible的值让文本框显示出来，但是现在页面上文本框还未显示出来，所以拿不到这个元素，因此是undefined<br>在Vue的生命周期中，当data里面的数据变化，会触发DOM元素的更新，根据最新的数据，重新渲染页面的UI结构。<strong>在updated之前，页面还没来得及重新渲染，所以数据是新的，但是页面的结构是旧的。</strong><br>所以<code>this.inputVisible = true;</code>这句执行之后，页面上还是按钮，文本框还未被展示，还需要一个更新的过程，需要一定的时间。如果立马去执行<code>this.$refs.iptRef.focus()</code>是拿不到文本框的</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="title function_">showinput</span>(<span class="params"></span>)&#123;</span><br><span class="line"><span class="variable language_">this</span>.<span class="property">inputVisible</span> = <span class="literal">true</span>;</span><br><span class="line"><span class="variable language_">this</span>.<span class="property">$refs</span>.<span class="property">iptRef</span>.<span class="title function_">focus</span>()</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
-<p><font color='red'>总结：<code>this.inputVisible = true</code>这行代码执行完，只是数据是最新的，页面还没来得及重新渲染，没有文本框，拿不到它的引用，所以是undefined</font><br>要想不报错，<code>this.$refs.iptRef.focus()</code>这一行调用应该放在页面重新渲染完毕之后</p>
-<ul>
-<li><strong>解决</strong> – <code>this.$nextTick(cb)</code>方法<br>里面接收一个回调，cb是callback<br>代表：<strong>把回调函数里面的代码推迟到当DOM重新渲染完毕之后执行</strong><br>保证cb回调函数可以操作到最新的DOM元素</li>
-</ul>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="title function_">showinput</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">inputVisible</span> = <span class="literal">true</span>;</span><br><span class="line">    <span class="variable language_">this</span>.$nextTick(<span class="function">()=&gt;</span>&#123;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">$refs</span>.<span class="property">iptRef</span>.<span class="title function_">focus</span>()</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>Vue</category>
-        <category>Vue2</category>
-      </categories>
-      <tags>
-        <tag>Vue</tag>
-        <tag>Vue2</tag>
-        <tag>ref引用</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Vue2 过滤器、侦听器、计算属性、axios &amp; vue-cli</title>
     <url>/tsukimiya.github.io/2024/04/21/Vue/3.%E8%BF%87%E6%BB%A4%E5%99%A8%20%E4%BE%A6%E5%90%AC%E5%99%A8%20%E8%AE%A1%E7%AE%97%E5%B1%9E%E6%80%A7%20axios&amp;vue-cli/</url>
     <content><![CDATA[<blockquote>
@@ -945,6 +893,58 @@
         <tag>计算属性</tag>
         <tag>axios</tag>
         <tag>vue-cli</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ref引用DOM元素和组件实例</title>
+    <url>/tsukimiya.github.io/2024/04/30/Vue/5.ref%E5%BC%95%E7%94%A8DOM%E5%85%83%E7%B4%A0%E5%92%8C%E7%BB%84%E4%BB%B6%E5%AE%9E%E4%BE%8B/</url>
+    <content><![CDATA[<blockquote>
+<p>目标:<br>能够使用<code>ref</code>获取页面上DOM或组件的引用<br>能够知道<code>$nextTick</code>的应用场景并合理地使用<br>通过<a href="https://www.bilibili.com/video/BV1zq4y1p7ga?p=127">“购物车案例”</a>巩固前4天所有学知识</p>
+</blockquote>
+<h2 id="ref引用-引用DOM元素-组件实例"><a href="#ref引用-引用DOM元素-组件实例" class="headerlink" title="ref引用 - 引用DOM元素 &#x2F; 组件实例"></a>ref引用 - 引用DOM元素 &#x2F; 组件实例</h2><blockquote>
+<p><font color='red'>Vue的优势：MVVM的数据驱动视图 – 在vue中，程序员不需要操作DOM，只需要把数据维护好即可。</font><br>因此，在vue项目中，墙裂不建议安装和使用jQuery，因为没有操作DOM的需求，如果有也是极少的。</p>
+</blockquote>
+<ol>
+<li><p>什么是ref 引用<br> ref用来辅助开发者在<strong>不依赖于jQuery的情况下</strong>且<strong>在不调用DOM API的前提下</strong>，<strong>获取页面上DOM元素或组件的引用</strong>。</p>
+<p> 每个vue的组件实例上，都包含一个<code>$refs</code>对象，里面存储着对应的DOM元素或组件的引用。<strong>默认情况下，组件的<code>$refs</code> 指向一个空对象</strong>。</p>
+<blockquote>
+<p>打印出vue实例对象this，可以看到，凡是$开头的，都是vue内置的一些成员。</p>
+</blockquote>
+</li>
+<li><p>使用ref引用 DOM元素<br> 在标签上通过ref属性来指定一个名字，这个名字就指向这个标签，并添加到<code>$ref</code>对象中。如：</p>
+ <figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">h1</span> <span class="attr">ref</span>=<span class="string">&quot;myh1&quot;</span>&gt;</span>APP根组件<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br></pre></td></tr></table></figure>
+ <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="attr">$refs</span>:&#123;<span class="comment">//vue实例上的$refs属性值</span></span><br><span class="line">    <span class="attr">myh1</span>: h1</span><br><span class="line">&#125;</span><br><span class="line"><span class="variable language_">this</span>.<span class="property">$refs</span>.<span class="property">myh1</span>.<span class="property">style</span>.<span class="property">color</span> = <span class="string">&#x27;red&#x27;</span><span class="comment">//操作DOM</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用ref引用 组件实例<br> 只要<strong>在引用的子组件的标签上，加一个ref</strong>，这个名字就指向了这个子组件的vue实例，就可以通过它来调用这个子组件的属性和方法。</p>
+</li>
+</ol>
+<p><font color='red'>建议：只要是ref的引用，尽量都以Ref后缀结尾，这样一看名字就知道是个引用</font></p>
+<h2 id="this-nextTick的应用场景"><a href="#this-nextTick的应用场景" class="headerlink" title="this.$nextTick的应用场景"></a><code>this.$nextTick</code>的应用场景</h2><ul>
+<li><strong>问题</strong></li>
+</ul>
+<p>在app组件中，控制组件内按钮和输入框元素的切换</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">v-if</span>=<span class="string">&quot;inputVisible&quot;</span> @<span class="attr">blur</span>=<span class="string">&quot;showButton&quot;</span> <span class="attr">ref</span>=<span class="string">&quot;iptRef&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">v-else</span> @<span class="attr">click</span>=<span class="string">&quot;showinput&quot;</span>&gt;</span>显示输入框<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>当我们想要在切换到输入框的时候，直接进入输入框焦点</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="title function_">showinput</span>(<span class="params"></span>)&#123;</span><br><span class="line"><span class="variable language_">this</span>.<span class="property">inputVisible</span> = <span class="literal">true</span>;</span><br><span class="line"><span class="variable language_">this</span>.<span class="property">$refs</span>.<span class="property">iptRef</span>.<span class="title function_">focus</span>()</span><br><span class="line">&#125;,</span><br><span class="line"><span class="title function_">showButton</span>(<span class="params"></span>)&#123;</span><br><span class="line"><span class="variable language_">this</span>.<span class="property">inputVisible</span> = <span class="literal">false</span>;</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+<p>但是<code>this.$refs.iptRef.focus()</code>这样却报错了<br><code>TypeError: Cannot read properties of undefined (reading &#39;focus&#39;)</code><br>这个错误代表说，我要调用一个focus方法，或我要访问一个focus属性，但是它前面那个东西是undefined<br>当我们打印<code>console.log(this.$refs.iptRef);</code>会发现它是<code>undefined</code>！</p>
+<ul>
+<li><strong>分析原因</strong></li>
+</ul>
+<p>在这个函数中，我们是更改inputVisible的值让文本框显示出来，但是现在页面上文本框还未显示出来，所以拿不到这个元素，因此是undefined<br>在Vue的生命周期中，当data里面的数据变化，会触发DOM元素的更新，根据最新的数据，重新渲染页面的UI结构。<strong>在updated之前，页面还没来得及重新渲染，所以数据是新的，但是页面的结构是旧的。</strong><br>所以<code>this.inputVisible = true;</code>这句执行之后，页面上还是按钮，文本框还未被展示，还需要一个更新的过程，需要一定的时间。如果立马去执行<code>this.$refs.iptRef.focus()</code>是拿不到文本框的</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="title function_">showinput</span>(<span class="params"></span>)&#123;</span><br><span class="line"><span class="variable language_">this</span>.<span class="property">inputVisible</span> = <span class="literal">true</span>;</span><br><span class="line"><span class="variable language_">this</span>.<span class="property">$refs</span>.<span class="property">iptRef</span>.<span class="title function_">focus</span>()</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+<p><font color='red'>总结：<code>this.inputVisible = true</code>这行代码执行完，只是数据是最新的，页面还没来得及重新渲染，没有文本框，拿不到它的引用，所以是undefined</font><br>要想不报错，<code>this.$refs.iptRef.focus()</code>这一行调用应该放在页面重新渲染完毕之后</p>
+<ul>
+<li><strong>解决</strong> – <code>this.$nextTick(cb)</code>方法<br>里面接收一个回调，cb是callback<br>代表：<strong>把回调函数里面的代码推迟到当DOM重新渲染完毕之后执行</strong><br>保证cb回调函数可以操作到最新的DOM元素</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="title function_">showinput</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">inputVisible</span> = <span class="literal">true</span>;</span><br><span class="line">    <span class="variable language_">this</span>.$nextTick(<span class="function">()=&gt;</span>&#123;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">$refs</span>.<span class="property">iptRef</span>.<span class="title function_">focus</span>()</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>Vue</category>
+        <category>Vue2</category>
+      </categories>
+      <tags>
+        <tag>Vue</tag>
+        <tag>Vue2</tag>
+        <tag>ref引用</tag>
       </tags>
   </entry>
   <entry>
@@ -1225,7 +1225,7 @@
   <entry>
     <title>Hello Front-end</title>
     <url>/tsukimiya.github.io/index.html</url>
-    <content><![CDATA[<p>Welcome to my study blog! This is my continuously make up a main post. If you get any problems when using my blog, you can send the email to <a href="mailto:&#104;&#x61;&#x72;&#x69;&#x69;&#x6a;&#105;&#99;&#x6f;&#64;&#x6f;&#x75;&#x74;&#x6c;&#x6f;&#111;&#x6b;&#x2e;&#99;&#x6f;&#109;">&#104;&#x61;&#x72;&#x69;&#x69;&#x6a;&#105;&#99;&#x6f;&#64;&#x6f;&#x75;&#x74;&#x6c;&#x6f;&#111;&#x6b;&#x2e;&#99;&#x6f;&#109;</a></p>
+    <content><![CDATA[<p>Welcome to my study blog! This is my continuously make up a main post. If you get any problems when using my blog, you can send the email to <a href="mailto:&#x68;&#97;&#114;&#x69;&#105;&#x6a;&#x69;&#99;&#x6f;&#x40;&#111;&#117;&#x74;&#108;&#x6f;&#111;&#107;&#46;&#99;&#x6f;&#109;">&#x68;&#97;&#114;&#x69;&#105;&#x6a;&#x69;&#99;&#x6f;&#x40;&#111;&#117;&#x74;&#108;&#x6f;&#111;&#107;&#46;&#99;&#x6f;&#109;</a></p>
 <h2 id="Study-Guide"><a href="#Study-Guide" class="headerlink" title="Study Guide"></a>Study Guide</h2><center>Here provide you some study sources and study route.</center>
 <!-- This is [main tech](#Main-Line) -->
 <center>This is <a href='#Main-Line'>main tech</a></center>
@@ -1985,6 +1985,25 @@ forEach(callbackFn(element,index,array), thisArg)`,
 })]]></content>
   </entry>
   <entry>
+    <title>Cuntom Page</title>
+    <url>/tsukimiya.github.io/custom/index.html</url>
+    <content><![CDATA[<blockquote>
+<p>Take a look at some of the pages created by me.</p>
+</blockquote>
+<ol start="0">
+<li><p><a href="api.html">Array API | 数组方法 | 数组函数</a></p>
+</li>
+<li><p><a href="./npmAPI.html">npm - 常用包 | 第三方模块</a></p>
+</li>
+<li><p><a href="pages/MakeCV.html">MakeCV</a></p>
+<blockquote>
+<p>制作简历</p>
+</blockquote>
+</li>
+</ol>
+]]></content>
+  </entry>
+  <entry>
     <title>常用包 | 第三方模块</title>
     <url>/tsukimiya.github.io/custom/npmAPI.html</url>
     <content><![CDATA[<blockquote>
@@ -2024,29 +2043,10 @@ forEach(callbackFn(element,index,array), thisArg)`,
 ]]></content>
   </entry>
   <entry>
-    <title>Cuntom Page</title>
-    <url>/tsukimiya.github.io/custom/index.html</url>
-    <content><![CDATA[<blockquote>
-<p>Take a look at some of the pages created by me.</p>
-</blockquote>
-<ol start="0">
-<li><p><a href="api.html">Array API | 数组方法 | 数组函数</a></p>
-</li>
-<li><p><a href="./npmAPI.html">npm - 常用包 | 第三方模块</a></p>
-</li>
-<li><p><a href="pages/MakeCV.html">MakeCV</a></p>
-<blockquote>
-<p>制作简历</p>
-</blockquote>
-</li>
-</ol>
-]]></content>
-  </entry>
-  <entry>
     <title>留言板</title>
     <url>/tsukimiya.github.io/guestbook/index.html</url>
     <content><![CDATA[<h1 id="欢迎来到我的博客！"><a href="#欢迎来到我的博客！" class="headerlink" title="欢迎来到我的博客！"></a>欢迎来到我的博客！</h1><blockquote>
-<p>欢迎在这里留言！任何问题都可以在这里留言，我会及时回复的。目前留言板块尚未配置完全，暂时无法使用，如有问题请邮箱：<br><a href="mailto:&#104;&#97;&#x72;&#x69;&#105;&#x6a;&#105;&#99;&#x6f;&#x40;&#x6f;&#x75;&#x74;&#108;&#111;&#111;&#x6b;&#46;&#99;&#x6f;&#x6d;">&#104;&#97;&#x72;&#x69;&#105;&#x6a;&#105;&#99;&#x6f;&#x40;&#x6f;&#x75;&#x74;&#108;&#111;&#111;&#x6b;&#46;&#99;&#x6f;&#x6d;</a><br><a href="mailto:&#x31;&#x38;&#51;&#x32;&#55;&#x31;&#53;&#x38;&#x33;&#56;&#64;&#x71;&#x71;&#46;&#x63;&#111;&#x6d;">&#x31;&#x38;&#51;&#x32;&#55;&#x31;&#53;&#x38;&#x33;&#56;&#64;&#x71;&#x71;&#46;&#x63;&#111;&#x6d;</a><br>欢迎给我发送邮件</p>
+<p>欢迎在这里留言！任何问题都可以在这里留言，我会及时回复的。目前留言板块尚未配置完全，暂时无法使用，如有问题请邮箱：<br><a href="mailto:&#x68;&#97;&#x72;&#x69;&#x69;&#x6a;&#x69;&#99;&#x6f;&#64;&#x6f;&#x75;&#x74;&#x6c;&#111;&#x6f;&#x6b;&#x2e;&#99;&#111;&#x6d;">&#x68;&#97;&#x72;&#x69;&#x69;&#x6a;&#x69;&#99;&#x6f;&#64;&#x6f;&#x75;&#x74;&#x6c;&#111;&#x6f;&#x6b;&#x2e;&#99;&#111;&#x6d;</a><br><a href="mailto:&#x31;&#56;&#51;&#50;&#55;&#x31;&#53;&#x38;&#x33;&#x38;&#64;&#113;&#x71;&#x2e;&#99;&#x6f;&#109;">&#x31;&#56;&#51;&#50;&#55;&#x31;&#53;&#x38;&#x33;&#x38;&#64;&#113;&#x71;&#x2e;&#99;&#x6f;&#109;</a><br>欢迎给我发送邮件</p>
 </blockquote>
 ]]></content>
   </entry>
