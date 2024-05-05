@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>ES6模块化</title>
+    <url>/tsukimiya.github.io/2024/05/05/ES6/ES6%E6%A8%A1%E5%9D%97%E5%8C%96/</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>JS</category>
+        <category>ES6</category>
+      </categories>
+      <tags>
+        <tag>ES6</tag>
+        <tag>ES6模块化</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Node.js简单实现后端服务器</title>
     <url>/tsukimiya.github.io/2024/04/15/Node/Node.js%E5%81%9A%E5%90%8E%E7%AB%AF%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%AF%A6%E8%A7%A3/</url>
     <content><![CDATA[<blockquote>
@@ -134,6 +147,9 @@
 <blockquote>
 <p>我们只需要了解webpack的工作原理，并不要求我们掌握如何配置，因为工作中我们会使用一些工具如Vue-CLI脚手架，它们已经帮我们配置好了</p>
 </blockquote>
+</blockquote>
+<blockquote>
+<p><strong>webpack 的基本使用</strong>：安装、webpack.config.js、修改打包入口<br><strong>webpack的两个插件</strong>(常用的plugin的基本使用)：<br>webpack-dev-server – (每次修改后自动进行项目的打包和构建)<br>html-webpack-plugin – (把src里面的首页在内存中复制一份，放到根目录中)<br><strong>常用的loader 的基本使用</strong>：协助webpack打包处理特定的文件模块。<br><strong>Source Map 的作用</strong>：精准定位到错误行并显示对应的源码，方便开发者调试源码中的错误</p>
 </blockquote>
 <p>[toc]</p>
 <h2 id="前端工程化相关概念"><a href="#前端工程化相关概念" class="headerlink" title="前端工程化相关概念"></a>前端工程化相关概念</h2><p>前端工程化指的是:在企业级的前端项目开发中，把前端开发所需的工具、技术、流程、经验等进行规范化、标准化。<br>好处:前端开发自成体系，有一套标准的开发方案和流程。</p>
@@ -349,9 +365,7 @@
 </ul>
 </li>
 </ol>
-<h2 id="拓展"><a href="#拓展" class="headerlink" title="拓展"></a>拓展</h2><ul>
-<li>两次 ctrl + c 可以直接结束 webpack serve？<br>原本需要一次ctrl + c 然后按Y + enter结束</li>
-</ul>
+<h2 id="拓展"><a href="#拓展" class="headerlink" title="拓展"></a>拓展</h2><h3 id="快速终止服务器"><a href="#快速终止服务器" class="headerlink" title="快速终止服务器"></a>快速终止服务器</h3><p><font color="red">两次 ctrl + c 可以直接结束 webpack serve，不需要再去输入y结束</font><br>Vue CLI也一样，因为它是内置了webpack</p>
 <h3 id="webpack中-的原理和好处"><a href="#webpack中-的原理和好处" class="headerlink" title="webpack中 @ 的原理和好处"></a>webpack中 @ 的原理和好处</h3><p>这样一个场景：<br>src目录下 有一个info文件 js&#x2F;text&#x2F;info<br>而这个info文件要导入src目录下的msg.js文件<br>就需要这样导入: import msg from ‘..&#x2F;..&#x2F;msg’<br>如果info的文件层级再深一点，这个..&#x2F;会让人不知道翻了几层<br>所以<br><strong>建议大家都使用 @ 符号表示src源代码目录，从外往里查找，不要使用..&#x2F;从里往外查找</strong><br>import msg from ‘@&#x2F;msg.js’</p>
 <p>在webpack里面，@不能直接用，需要先配置一下<br>在webpack.config.js中，module.exports中增加一个resolve属性：</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = &#123;</span><br><span class="line">    <span class="attr">resolve</span>:&#123;</span><br><span class="line">        <span class="attr">alias</span>: &#123;</span><br><span class="line">            <span class="comment">// 告诉webpack，程序员写的代码中，@符号表示src这一层目录</span></span><br><span class="line">            <span class="string">&#x27;@&#x27;</span>: path.<span class="title function_">join</span>(__dirname,<span class="string">&#x27;./src/&#x27;</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -373,149 +387,139 @@
       </tags>
   </entry>
   <entry>
-    <title>Vue组件与生命周期</title>
-    <url>/tsukimiya.github.io/2024/04/24/Vue/4.Vue%E7%BB%84%E4%BB%B6%E4%B8%8E%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/</url>
+    <title>Vue2 过滤器、侦听器、计算属性、axios &amp; vue-cli</title>
+    <url>/tsukimiya.github.io/2024/04/21/Vue/3.%E8%BF%87%E6%BB%A4%E5%99%A8%20%E4%BE%A6%E5%90%AC%E5%99%A8%20%E8%AE%A1%E7%AE%97%E5%B1%9E%E6%80%A7%20axios&amp;vue-cli/</url>
     <content><![CDATA[<blockquote>
-<p>目标：<br>能够掌握.vue单文件组件的基本用法<br>能够掌握组件通讯的三种方式<br>掌握组件生命周期的执行顺序和应用场景</p>
+<p>目标：<br>在实际开发中合理运用过滤器、侦听器、计算属性解决问题<br>使用axios发起Ajax请求<br>使用vue-cli工具生成工程化的Vue项目</p>
 </blockquote>
 <p>[toc]</p>
-<h2 id="vue组件"><a href="#vue组件" class="headerlink" title="vue组件"></a>vue组件</h2><ol>
-<li><p>什么是组件化开发<br><strong>组件化开发</strong>指的是∶根据<strong>封装</strong>的思想，<strong>把页面上可重用的UI结构封装为组件</strong>，从而方便项目的开发和维护。</p>
-</li>
-<li><p>vue中的组件化开发<br>vue是一个<strong>支持组件化开发</strong>的前端框架。<br>vue中规定：<strong>组件的后缀名是.vue</strong><br>vue中，root就是根，而这个根就是el所控制的那个区域。在main.js文件里，vue实例中通过 render 函数指定组件渲染到HTML页面中，替换了el区域。即：<strong>render函数中，渲染的是哪个.vue组件，那么这个组件就叫做“根组件”</strong></p>
-</li>
-<li><p><font color='green'>vue组件的三个组成部分</font></p>
-<ul>
-<li><font color='green'>template -&gt; 组件的模板结构</font></li>
-<li><font color='green'>script -&gt; 组件的JavaScript行为</font></li>
-<li><font color='green'>style -&gt; 组件的样式</font></li>
-</ul>
-<p> 注意：<font color='red'>每个组件中必须包含template模板结构，而script行为和style样式是可选的组成部分</font></p>
-</li>
-</ol>
-<p>简单示例：</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">    &lt;!-- 组件的模版结构中，应该包含一个根元素，这个最外层的div不能有兄弟元素 --&gt;</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;text-box&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">h3</span> &gt;</span>这是用户自定义的Test.vue -- &#123;&#123; username &#125;&#125;<span class="tag">&lt;/<span class="name">h3</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">button</span> @<span class="attr">click</span>=<span class="string">&quot;changeName&quot;</span>&gt;</span>修改用户名<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    <span class="keyword">export</span> <span class="keyword">default</span> &#123;<span class="comment">// 默认导出，固定写法！</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        <span class="comment">// 注意：.vue组件中的data不能像之前一样，不能指向对象,必须是一个函数</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        <span class="title function_">data</span>(<span class="params"></span>)&#123;<span class="comment">// data数据源</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">            <span class="keyword">return</span>&#123;<span class="comment">// 这个return出去的对象中，可以定义数据</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">                <span class="attr">username</span>: <span class="string">&#x27;admin&#x27;</span>,</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">            &#125;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        &#125;,</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        <span class="attr">methods</span>:&#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">            <span class="title function_">changeName</span>(<span class="params"></span>)&#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">                <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">this</span>);<span class="comment">// 在组件中，this就表示当前组件的实例对象</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">                <span class="variable language_">this</span>.<span class="property">username</span> = <span class="string">&#x27;aaa&#x27;</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">            &#125;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        &#125;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    &#125;;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">style</span> <span class="attr">lang</span>=<span class="string">&quot;less&quot;</span>&gt;</span><span class="language-css"></span></span></span><br><span class="line"><span class="language-css"><span class="language-xml"><span class="selector-class">.text-box</span>&#123;</span></span></span><br><span class="line"><span class="language-css"><span class="language-xml">    <span class="attribute">background-color</span>: pink;</span></span></span><br><span class="line"><span class="language-css"><span class="language-xml">    <span class="selector-tag">h3</span> &#123;</span></span></span><br><span class="line"><span class="language-css"><span class="language-xml">        <span class="attribute">color</span>: red;</span></span></span><br><span class="line"><span class="language-css"><span class="language-xml">    &#125;</span></span></span><br><span class="line"><span class="language-css"><span class="language-xml">&#125;</span></span></span><br><span class="line"><span class="language-css"><span class="language-xml"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
-
-<ol start="4">
-<li>组件之间的<font color='red'>父子关系</font><br>组件之间的父子关系、兄弟关系，<strong>是在使用时候才会产生的</strong><br><img src="/tsukimiya.github.io/images/vue/%E7%BB%84%E4%BB%B6%E4%B9%8B%E9%97%B4%E7%9A%84%E7%88%B6%E5%AD%90%E5%85%B3%E7%B3%BB.png" alt="img"></li>
-</ol>
-<h3 id="使用组件的三个步骤"><a href="#使用组件的三个步骤" class="headerlink" title="使用组件的三个步骤"></a>使用组件的<strong>三个步骤</strong></h3><p><img src="/tsukimiya.github.io/images/vue/%E4%BD%BF%E7%94%A8%E7%BB%84%E4%BB%B6%E7%9A%84%E4%B8%89%E4%B8%AA%E6%AD%A5%E9%AA%A4.png" alt="img"><br><font color="green">注意：在components节点中，注册组件是一个对象的写法，前面是定义的名称，后面是要注册的组件。在对象里面，键名和值如果一样，可以省略值只写键名。如’Left’:Left可以简写成Left</font></p>
-<ul>
-<li><p>通过components注册的是<font color='red'>私有子组件</font><br>例如：<br>在组件A的components节点下，注册了组件F。<br>则组件F只能用在组件A中;不能被用在组件C中。</p>
-</li>
-<li><p>注册<font color='red'>全局组件</font><br>如果某个组件，使用非常频繁，好多组件中都要用到它，那么每次都要导入注册并使用，就很麻烦。所以可以注册全局组件</p>
-<p>  <font color='green'>在vue项目的 main.js入口文件中，通过Vue.component()方法，可以注册全局组件。</font>示例代码如下:</p>
-  <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 导入需要全局注册的组件</span></span><br><span class="line"><span class="keyword">import</span> <span class="title class_">Count</span> <span class="keyword">from</span> <span class="string">&#x27;@/components/Count.vue&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 参数1：字符串格式，表示组件的“注册名称”</span></span><br><span class="line"><span class="comment">// 参数2：需要被全局注册的那个组件</span></span><br><span class="line"><span class="title class_">Vue</span>.<span class="title function_">component</span>(<span class="string">&#x27;MyCount&#x27;</span>,<span class="title class_">Count</span>)</span><br></pre></td></tr></table></figure>
-<p>  <strong>注意：在自己的组件中，不能使用自己！</strong></p>
-</li>
-</ul>
-<h2 id="组件的props"><a href="#组件的props" class="headerlink" title="组件的props"></a>组件的props</h2><p>props是组件的<strong>自定义属性</strong>，<strong>在封装通用组件的时候</strong>，合理地使用 props 可以极大的<font color='red' size='5'>提高组件的复用性！</font><br>它的语法格式如下:</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    <span class="comment">//组件的自定义属性,允许使用者指定初始值</span></span><br><span class="line">    <span class="attr">props</span>:[<span class="string">&#x27;自定义属性A&#x27;</span>,<span class="string">&#x27;自定义属性B&#x27;</span>,<span class="string">&#x27;其它自定义属性...&#x27;</span>],</span><br><span class="line">    <span class="comment">//组件的私有数据</span></span><br><span class="line">    <span class="title function_">data</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> &#123; &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li><p><font fcolor='green'>props中的数据，可以直接在模板结构中被使用</font>。使用示例：</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// Count.vue组件中</span></span><br><span class="line"><span class="comment">//...</span></span><br><span class="line">&lt;p&gt;&#123;&#123;init&#125;&#125;&lt;/p&gt;</span><br><span class="line"><span class="comment">//...</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;<span class="attr">props</span>:[<span class="string">&#x27;init&#x27;</span>],..&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Left.vue组件中，使用注册了的Count组件</span></span><br><span class="line"><span class="comment">// 指定初始值，但是这里传入的是一个字符串，并不是一个真正的数值</span></span><br><span class="line">&lt;<span class="title class_">Count</span> init=<span class="string">&quot;6&quot;</span>&gt;&lt;/<span class="title class_">Count</span>&gt;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p><font color='red'>结合v-bind使用自定义属性</font></p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">// 这样就传入的是数值6了</span><br><span class="line"><span class="tag">&lt;<span class="name">Count</span> <span class="attr">:init</span>=<span class="string">&quot;6&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">Count</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p><font color='green'>官网文档-&gt;即便 <code>9</code> 是静态的，我们仍然需要 <code>v-bind</code> 来告诉 Vue，这是一个 JavaScript 表达式而不是一个字符串</font></p>
-</li>
-<li><p><font color='red'>props对子组件是只读的 (父组件-&gt;子组件 单向数据传递)</font><br>Vue规定:组件中封装的自定义属性是只读的，程序员不能直接修改props的值。否则会直接报错。<br>注意：props是对定义该属性的子组件只读，<font color='red'>在父组件中，你可以通过v-bind绑定props的值，并且这个值是可以更改的。</font><strong>当父组件中的值改变时，Vue会自动将新值传递给子组件，并且子组件会根据新的值重新渲染</strong>。这种方式实际上是通过props属性进行了<strong>单向数据流</strong>，确保数据流动的可预测性和可维护性。<br><font color='red'>如果子组件需要修改传递过来的值，通常应该通过触发事件并将修改传递给父组件来实现。</font><br><font color='green'>props可以被作为初始值使用的，把它传给data的属性进行初始赋值使用：</font></p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// Count.vue组件中</span></span><br><span class="line"><span class="comment">//...</span></span><br><span class="line">&lt;p&gt;&#123;&#123;count&#125;&#125;&lt;/p&gt;</span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">button</span> @<span class="attr">click</span>=<span class="string">&quot;count+=1&quot;</span>&gt;</span>+1<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="comment">//...</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    <span class="attr">props</span>:[<span class="string">&#x27;init&#x27;</span>],</span><br><span class="line">    <span class="attr">data</span>:&#123; <span class="attr">count</span>:<span class="variable language_">this</span>.<span class="property">init</span>, &#125;    </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&lt;<span class="title class_">Count</span> :init=<span class="string">&quot;6&quot;</span>&gt;&lt;/<span class="title class_">Count</span>&gt;</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h3 id="props的default默认值"><a href="#props的default默认值" class="headerlink" title="props的default默认值"></a>props的default默认值</h3><p>在声明自定义属性时，可以通过default来定义属性的默认值。示例代码如下:</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    <span class="attr">props</span>: &#123;</span><br><span class="line">        <span class="comment">// 自定义属性：&#123; /* 配置选项 */ &#125;</span></span><br><span class="line">        <span class="attr">init</span>: &#123;</span><br><span class="line">            <span class="comment">//用default属性定义属性的默认值</span></span><br><span class="line">            <span class="comment">// 如果外界使用Count组件，没有传递默认值，则默认值生效</span></span><br><span class="line">            <span class="attr">default</span>: <span class="number">0</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="props的-type-值类型"><a href="#props的-type-值类型" class="headerlink" title="props的 type 值类型"></a>props的 type 值类型</h3><p>在声明自定义属性时，<font color='red'>可以通过type来定义属性的值类型。</font>示例代码如下:</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    <span class="attr">props</span>: &#123;</span><br><span class="line">        <span class="attr">init</span>: &#123;</span><br><span class="line">            <span class="attr">default</span>: <span class="number">0</span>,</span><br><span class="line">            <span class="comment">// 用type属性定义属性的值类型</span></span><br><span class="line">            <span class="comment">// init的值类型必须是Number数字</span></span><br><span class="line">            <span class="attr">type</span>:<span class="title class_">Number</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="props的-required-必填项"><a href="#props的-required-必填项" class="headerlink" title="props的 required 必填项"></a>props的 required 必填项</h3><p>加上required必填项之后，哪怕有默认值，不传也会报错</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    <span class="attr">props</span>: &#123;</span><br><span class="line">        <span class="attr">init</span>: &#123;</span><br><span class="line">            <span class="attr">default</span>: <span class="number">0</span>,</span><br><span class="line">            <span class="attr">type</span>:<span class="title class_">Number</span>,</span><br><span class="line">            <span class="attr">require</span>: <span class="literal">true</span>,<span class="comment">//必填项校验</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="组件间的样式冲突-scoped"><a href="#组件间的样式冲突-scoped" class="headerlink" title="组件间的样式冲突 - scoped"></a>组件间的样式冲突 - scoped</h3><p>默认情况下，<strong>写在.vue组件中的样式会全局生效</strong>，因此很容易造成<strong>多个组件之间的样式冲突问题</strong>。<br>导致组件之间样式冲突的<strong>根本原因</strong>是:<br>    <font color='purple'>1. 单页面应用程序中，所有组件的DOM结构，都是基于唯一的index.html页面进行呈现的</font><br>    <font color='purple'>2. 每个组件中的样式，都会影响整个index.html页面中的DOM元素</font></p>
-<p>注意：单页面应用程序中，HTML页面是只有一个的，我们的所有组件都是在这个HTML中生效的</p>
-<ul>
-<li><p>解决方案 – <font color='red'>核心原理：css属性选择器</font><br>给当前页面标签都加一个固定的自定义属性，不同的组件之间的自定义属性不一样</p>
-</li>
-<li><p>vue简化：<strong>scoped属性</strong><br>只要给当前组件的style加上scoped的属性，vue底层在生成组件的时候，会自动给每个标签自动生成一个data-v-xxx</p>
-</li>
-</ul>
-<h4 id="deep-样式穿透"><a href="#deep-样式穿透" class="headerlink" title="&#x2F;deep&#x2F;样式穿透"></a>&#x2F;deep&#x2F;样式穿透</h4><p><font color='#00a86b'>作用：在父组件中改造子组件里的样式</font><br><font color='violet'>应用场景：当使用第三方组件库的时候，如果有修改组件默认样式的需求，需要用到&#x2F;deep&#x2F;</font></p>
-<ul>
-<li><p>scoped有一个缺陷，场景：<br>Left 和 Right 都注册使用了 Count组件<br>Left加了scoped属性，而Right没加<br>如果想在Left中的style里修改Count里面的样式，会发现不起作用，而如果在Right中修改，会发现Left和Right里面的Count组件样式都变了。</p>
-</li>
-<li><p>原因：<br>在Left中修改，比如h5{..},因为加了scoped，所以会变成h5[data-v-xx]{..}，而count中的标签并没有data-v-xx属性，所以不会生效。<br>而在没有scoped属性的Right中修改，则产生的就是样式冲突</p>
-</li>
-<li><p>解决方案：&#x2F;deep&#x2F;样式穿透<br>&#x2F;deep&#x2F; h5{ … }<br>在选择器前面加个前缀+空格，在浏览器可以查看到，这个h5标签被加上了一个[data-v-xx] 的前缀</p>
-</li>
-</ul>
-<h2 id="Vue运行原理"><a href="#Vue运行原理" class="headerlink" title="Vue运行原理"></a><strong>Vue运行原理</strong></h2><p>在把app渲染到页面的过程中，不是把页面的模板结构直接丢到页面上，而是有个编译的过程。<br>浏览器能够直接解析HTML页面，但是不识别vue页面。<br>在<code>package.json</code>里面，<code>devDependencies</code>里面有个<code>vue-template-complier</code>包，就是vue模板编译器，作用就是把.vue文件编译成js交给浏览器解析运行。<br>在.vue中写的任何代码，要渲染到浏览器中，都依赖于这个包的解析与转换。</p>
-<p>我们上面在页面上渲染了2次Count.vue组件，我们在页面上看到的两个Count组件，就是两个组件的实例。<br>实例，就是相当于new一个构造函数得到一个实例。我们编写的Count.vue，可以理解为它就是一个构造函数，new这个构造函数就会得到一个Count实例。<br>我们没有直接new，而是通过标签形式去用这个组件，这个用的过程可以理解为一个new的过程<br>所以说，<strong>这个组件，在定义的时候，它只是一个模板结构，当用标签的形式去使用的时候，才是在创建一个它的实例。</strong><br>如果在components下声明一个组件，不去用它不会创建组件实例。</p>
-<blockquote>
-<p><font color='red'>整个项目如何跑起来的：</font><br><font color='#00a86b'>webpack从main.js(入口文件)开始打包，发现main里面用到了app，于是把app创建一个实例出来。然后app里面又用到了Left和Right，然后这两个里面又用到了Count，就这样一直通过一个树的形式，把整个树都解析转换，最后编译成纯js代码。然后把js文件放到首页里面去，浏览器就会解析和执行这里面的代码，把组件都给渲染到页面上</font></p>
+<h2 id="过滤器-Filters"><a href="#过滤器-Filters" class="headerlink" title="过滤器(Filters)"></a>过滤器(Filters)</h2><blockquote>
+<p>2020年9月 vue3发布。增加了很多新功能，但是也删掉了一些功能。 比如删掉了vue2中的过滤器filter功能。<br>与此同时，官方建议： <strong>用方法调用或计算属性替换过滤器</strong>。<br>filter过滤器能加工数据，computed计算属性和methods方法也都可以加工数据，这样的话，就功能重复了…(于是filter被开除了XDD)</p>
 </blockquote>
-<h2 id="组件的生命周期"><a href="#组件的生命周期" class="headerlink" title="组件的生命周期"></a>组件的生命周期</h2><ol>
-<li><p>生命周期 &amp; 生命周期函数<br><font color='red'>生命周期</font>(Life Cycle)是指一个组件从<font color='red'>创建-&gt;运行-&gt;销毁</font>的整个阶段，<font color='red'>强调的是一个时间段</font>。</p>
-<p> <font color='red'>生命周期函数</font>:是由vue框架提供的<font color='red'>内置函数</font>，会伴随着组件的生命周期，<font color='red'>自动按次序执行</font>。<br> 注意:<font color='#00a86b'>生命周期</font>强调的是<font color='#00a86b'>时间段</font>，<font color='#00a86b'>生命周期函数</font>强调的是<font color='#00a86b'>时间点</font>。</p>
+<p>vue3已经把过滤器删掉了，只能在vue2中使用，会基础语法就行了。</p>
+<ul>
+<li><font color="green">过滤器要点</font><ol>
+<li>必须被定义到 <code>filters节点</code> 之下，本质是一个函数</li>
+<li>强调：过滤器中一定要有一个返回值</li>
+<li>过滤器函数中的 形参<code>val</code>(随意命名)，永远都是管道符前面的那个值。(多个形参，则第一个外都是undefined)</li>
+<li>过滤器函数 由 管道符 <code>|</code> 调用</li>
+<li>过滤器只能在 <code>差值表达式</code> 或 <code>属性绑定指令v-bind</code> 中调用</li>
+<li>最终得到的结果是过滤器的返回值</li>
+</ol>
 </li>
-<li><p>组件生命周期函数(<strong>生命周期钩子</strong>)的分类<br>在生命周期里面，它会按顺序依次执行这些函数。<br><img src="/tsukimiya.github.io/images/vue/%E7%BB%84%E4%BB%B6%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F.png" alt="img"></p>
+</ul>
+<p><strong>过滤器常用于文本的格式化</strong>,应该被添加在JavaScript表达式的尾部，由“<strong>管道符</strong>”进行调用。示例:</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 在花括号中通过管道符调用capitalize过滤器，对message的值进行格式化 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>&#123;&#123;message | capitalize&#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 在v-bind中通过管道符调用formatId过滤器，对rawId的值进行格式化 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">v-bind:id</span>=<span class="string">&quot;rawId | formatId&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="私有过滤器-和-全局过滤器"><a href="#私有过滤器-和-全局过滤器" class="headerlink" title="私有过滤器 和 全局过滤器"></a>私有过滤器 和 全局过滤器</h3><p><strong>在 <code>filters节点</code> 下定义的过滤器</strong>，称为“<strong>私有过滤器</strong>”，因为它只能在当前vm实例所控制的el区域内使用。如果希望在多个vue实例之间共享过滤器，则可以按照如下的格式<strong>定义全局过滤器</strong>:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 全局过滤器–独立于每个vm实例之外 </span></span><br><span class="line"><span class="comment">// Vue.filter()方法接收两个参数:</span></span><br><span class="line"><span class="comment">// 第1个参数，是全局过滤器的&quot;名字”</span></span><br><span class="line"><span class="comment">// 第2个参数，是全局过滤器的&quot;处理函数&quot;</span></span><br><span class="line"><span class="title class_">Vue</span>.<span class="title function_">filter</span>( <span class="string">&#x27;capitalize&#x27;</span>, <span class="function">(<span class="params">str</span>) =&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> str.<span class="title function_">charAt</span>(<span class="number">0</span>).<span class="title function_">toUpperCase</span>() + str.<span class="title function_">slice</span>(<span class="number">1</span>) + <span class="string">&#x27;~~&#x27;</span></span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment">// 如果想要定义多个全局过滤器就再写一个</span></span><br><span class="line"><span class="title class_">Vue</span>.<span class="title function_">filter</span>(<span class="string">&#x27;capi2&#x27;</span>,<span class="function">(<span class="params">str</span>)=&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> str + <span class="string">&#x27;--全局2&#x27;</span>;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p><font color="green">注意：如果私有过滤器和全局过滤器名字一致，此时按就近原则</font></p>
+<h3 id="其他用法-–-连续调用、传参"><a href="#其他用法-–-连续调用、传参" class="headerlink" title="其他用法 – 连续调用、传参"></a>其他用法 – 连续调用、传参</h3><ol>
+<li><p>连续调用多个过滤器 – 串联地调用<br>如：<code>&#123;&#123;message | filterA | filterB&#125;&#125;</code></p>
 </li>
-<li><p>生命周期图示<br>可以官方给出的<a href="https://cn.vuejs.org/v2/guide/instance.html#%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E5%9B%BE%E7%A4%BA">“生命周期图示”</a>，<a href="https://www.bilibili.com/video/BV1zq4y1p7ga?p=106">进一步理解组件生命周期执行过程</a>。</p>
+<li><p>过滤器传参</p>
+ <figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>&#123;&#123;message | filterA(arg1,arg2)&#125;&#125;<span class="tag">&lt;<span class="name">p</span>&gt;</span></span><br></pre></td></tr></table></figure>
+ <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="title class_">Vue</span>.<span class="title function_">filter</span>(<span class="string">&#x27;filterA&#x27;</span>,<span class="function">(<span class="params">msg,arg1,arg2</span>)=&gt;</span>&#123;...&#125;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>过滤器的兼容性<br>仅在vue 2.x 和 1.x中受支持<br>3.x建议使用 <strong>计算属性</strong> 或 <strong>方法</strong> 代替<br>具体的迁移指南参考官方文档给出的<a href="https://v3.vuejs.org/guide/migration/filters.html#migration-strategy">说明</a></p>
+</li>
+</ol>
+<h2 id="Watch侦听器"><a href="#Watch侦听器" class="headerlink" title="Watch侦听器"></a>Watch侦听器</h2><p>Watch侦听器 <strong>监视数据的变化，做出特定操作</strong>，变量名与监听的值对应。语法格式：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> vm = <span class="keyword">new</span> <span class="title class_">Vue</span>(&#123;</span><br><span class="line">    <span class="attr">el</span>:<span class="string">&#x27;#app&#x27;</span>,</span><br><span class="line">    <span class="attr">data</span>:&#123; <span class="attr">username</span>: <span class="string">&#x27;&#x27;</span>&#125;,</span><br><span class="line">    <span class="attr">watch</span>:&#123;</span><br><span class="line">        <span class="comment">// 监视username变化</span></span><br><span class="line">        <span class="comment">// newVal - 变化后的新值，oldVal - 旧值</span></span><br><span class="line">        <span class="title function_">username</span>(<span class="params">newVal,oldVal</span>)&#123;</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(newVal,oldVal)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p><font color="green">应用场景如：侦听用户输入的用户名，每次变化就去查找是否被占用</font></p>
+<h3 id="侦听器的格式"><a href="#侦听器的格式" class="headerlink" title="侦听器的格式"></a>侦听器的格式</h3><ol>
+<li>方法格式的侦听器<ul>
+<li>缺点1: 无法在刚进入页面的时候，自动触发！！</li>
+<li>缺点2: 如果侦听的是一个对象，对象中的属性发生了变化，不会触发侦听器！！</li>
+</ul>
+</li>
+<li><strong>对象格式的侦听器</strong><ul>
+<li>好处1: 可以通过<strong>immediate选项</strong>，让侦听器自动触发！！</li>
+<li>好处2：可以通过<strong>deep选项</strong>，让侦听器深度监听对象中每个属性的变化！！</li>
+</ul>
 </li>
 </ol>
 <ul>
-<li><p><font color='green'>执行次数</font><br>创建阶段：1次<br>运行阶段：0-N次<br>销毁阶段：1次</p>
+<li><font color="green">推荐：为了写起来方便，建议定义成方法格式，如果确实需要，再改成对象格式。</font></li>
+</ul>
+<h3 id="immediate选项"><a href="#immediate选项" class="headerlink" title="immediate选项"></a>immediate选项</h3><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> vm = <span class="keyword">new</span> <span class="title class_">Vue</span>(&#123;</span><br><span class="line">    <span class="attr">el</span>:<span class="string">&#x27;#app&#x27;</span>,</span><br><span class="line">    <span class="attr">data</span>:&#123; <span class="attr">username</span>: <span class="string">&#x27;admin&#x27;</span>&#125;,</span><br><span class="line">    <span class="attr">watch</span>:&#123;</span><br><span class="line">        <span class="attr">username</span>:&#123;</span><br><span class="line">            <span class="title function_">handler</span>(<span class="params">newVal,oldVal</span>)&#123;<span class="comment">// 侦听器的处理函数</span></span><br><span class="line">                <span class="variable language_">console</span>.<span class="title function_">log</span>(newVal,oldVal)</span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="attr">immediate</span>: <span class="literal">true</span> <span class="comment">// true表示一进入页面就触发，false是默认值，不写这个参数也是false</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="深度侦听-–-deep选项"><a href="#深度侦听-–-deep选项" class="headerlink" title="深度侦听 – deep选项"></a>深度侦听 – deep选项</h3><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> vm = <span class="keyword">new</span> <span class="title class_">Vue</span>(&#123;</span><br><span class="line">    <span class="attr">el</span>:<span class="string">&#x27;#app&#x27;</span>,</span><br><span class="line">    <span class="attr">data</span>:&#123; <span class="attr">info</span>:&#123;</span><br><span class="line">        <span class="attr">username</span>: <span class="string">&#x27;admin&#x27;</span></span><br><span class="line">    &#125; &#125;,</span><br><span class="line">    <span class="attr">watch</span>:&#123;</span><br><span class="line">        <span class="attr">info</span>:&#123;</span><br><span class="line">            <span class="title function_">handler</span>(<span class="params">newVal,oldVal</span>)&#123;<span class="comment">// 侦听器的处理函数</span></span><br><span class="line">                <span class="variable language_">console</span>.<span class="title function_">log</span>(newVal,oldVal)</span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="attr">deep</span>: <span class="literal">true</span> <span class="comment">// 对象里任意属性变化了，都会触发侦听器</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>如果要侦听的是对象的子属性的变化，则必须包裹一层单引号</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="attr">watch</span>:&#123;</span><br><span class="line">    <span class="string">&#x27;info.username&#x27;</span>(newVal)&#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(newVal,oldVal)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="computed计算属性"><a href="#computed计算属性" class="headerlink" title="computed计算属性"></a>computed计算属性</h2><ol>
+<li>什么是计算属性<br>计算属性指的是通过一系列运算之后，最终得到一个属性值。<br>这个动态计算出来的属性值可以被模板结构或 methods 方法使用。</li>
+<li>应用场景：<font color='red'>实现代码复用</font></li>
+</ol>
+<ul>
+<li>计算属性的使用<ol>
+<li>计算属性要定义到computed节点下，定义成方法格式</li>
+<li>虽然声明的方法格式，但是要当做普通的属性来用<blockquote>
+<p>打印出vue实例，可以发现定义的计算属性是被挂到属性上面的，和data节点上的属性一样</p>
+</blockquote>
 </li>
-<li><p><font color='red'>最重要的生命周期钩子</font></p>
+</ol>
+</li>
+</ul>
+<p>示例代码如下︰</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> vm = <span class="keyword">new</span> <span class="title class_">Vue</span>(&#123;</span><br><span class="line">    <span class="attr">el</span>: <span class="string">&#x27;#app&#x27;</span>,</span><br><span class="line">    <span class="attr">data</span>: &#123;</span><br><span class="line">        <span class="attr">r</span>:<span class="number">0</span>,<span class="attr">g</span>:<span class="number">0</span>,<span class="attr">b</span>:<span class="number">0</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">computed</span>: &#123;</span><br><span class="line">        <span class="comment">// 计算属性要定义到computed节点下，定义成方法格式</span></span><br><span class="line">        <span class="title function_">rgb</span>(<span class="params"></span>)&#123;<span class="keyword">return</span> <span class="string">`rgb(<span class="subst">$&#123;<span class="variable language_">this</span>.r&#125;</span>,<span class="subst">$&#123;<span class="variable language_">this</span>.g&#125;</span>,<span class="subst">$&#123;<span class="variable language_">this</span>.b&#125;</span>)`</span>&#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">methods</span>: &#123;</span><br><span class="line">        <span class="title function_">show</span>(<span class="params"></span>) &#123;</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">this</span>.<span class="property">rgb</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; </span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="axios的基本用法"><a href="#axios的基本用法" class="headerlink" title="axios的基本用法"></a>axios的基本用法</h2><blockquote>
+<p>axios是一个<strong>专注于网络请求</strong>的库！它只负责发请求和拿数据<br>    中文官网地址：<a href="http://www.axios-js.com/">http://www.axios-js.com/</a></p>
+</blockquote>
+<ul>
+<li><p>基本语法：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="title function_">axios</span>(&#123;</span><br><span class="line">    <span class="attr">method</span>: <span class="string">&#x27;请求的类型&#x27;</span>,</span><br><span class="line">    <span class="attr">url</span>: <span class="string">&#x27;请求的 URL 地址&#x27;</span>,</span><br><span class="line">    <span class="comment">// 如果要携带请求体：</span></span><br><span class="line">    <span class="comment">// url中的查询参数，get请求体传参，可选</span></span><br><span class="line">    <span class="attr">params</span>:&#123;&#125;,</span><br><span class="line">    <span class="comment">// 请求体参数，post请求体传参，可选</span></span><br><span class="line">    <span class="attr">data</span>:&#123;&#125;</span><br><span class="line">&#125;).<span class="title function_">then</span>(<span class="function">(<span class="params">result</span>)=&gt;</span>&#123;</span><br><span class="line">    <span class="comment">// .then 用来指定请求成功之后的回调函数</span></span><br><span class="line">    <span class="comment">// 形参中的 result 是请求成功之后的结果</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>调用axios得到的返回值是一个 Promise 对象<br>axios在请求到数据之后，在真正的数据之外，套了一层壳,result得到的就是套完壳之后的结果。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">config</span>: &#123;&#125;,</span><br><span class="line">    <span class="attr">data</span>: &#123; 真实的数据 &#125;,</span><br><span class="line">    <span class="attr">headers</span>: &#123;&#125;,</span><br><span class="line">    <span class="attr">request</span>: &#123;&#125;,</span><br><span class="line">    <span class="attr">status</span>: xxx,</span><br><span class="line">    <span class="attr">statusText</span>: <span class="string">&#x27;&#x27;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong><font color='red'>结合async和await调用axios</font></strong><br>这个<code>.then</code>用起来有点麻烦，我们可以使用await来进行简化<br><font color='green'>如果调用某个方法的返回值是 Promise 实例，则前面可以添加await！（这样得到的就直接是result）</font><br><font color='red'>await 只能用在被 async 修饰 的方法中</font></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">ele.<span class="title function_">addEventLister</span>(<span class="string">&#x27;click&#x27;</span>, <span class="keyword">async</span> <span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="keyword">const</span> result =  <span class="keyword">await</span> <span class="title function_">axios</span>(&#123;</span><br><span class="line">        <span class="attr">method</span>: <span class="string">&#x27;请求的类型&#x27;</span>,</span><br><span class="line">        <span class="attr">url</span>: <span class="string">&#x27;请求的 URL 地址&#x27;</span>,</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(result.<span class="property">data</span>);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>使用解构赋值来获取data</strong></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">ele.<span class="title function_">addEventLister</span>(<span class="string">&#x27;click&#x27;</span>, <span class="keyword">async</span> <span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="keyword">const</span> &#123; data &#125; =  <span class="keyword">await</span> <span class="title function_">axios</span>(&#123;</span><br><span class="line">        <span class="attr">method</span>: <span class="string">&#x27;请求的类型&#x27;</span>,</span><br><span class="line">        <span class="attr">url</span>: <span class="string">&#x27;请求的 URL 地址&#x27;</span>,</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(data);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="基于axios-get和axios-post发起请求"><a href="#基于axios-get和axios-post发起请求" class="headerlink" title="基于axios.get和axios.post发起请求"></a>基于axios.get和axios.post发起请求</h3><ol>
+<li>axois.get<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123;data&#125; = <span class="keyword">await</span> axios.<span class="title function_">get</span>(<span class="string">&#x27;url地址&#x27;</span>,&#123;</span><br><span class="line">    <span class="comment">//GET参数</span></span><br><span class="line">    <span class="attr">params</span>: &#123;&#125;</span><br><span class="line">&#125;)</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(data)</span><br></pre></td></tr></table></figure></li>
+<li>axios.post<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">//注意await要在async修饰的函数中使用</span></span><br><span class="line"><span class="keyword">const</span> &#123; data &#125; = <span class="keyword">await</span> axios.<span class="title function_">post</span>(<span class="string">&#x27;http://127.0.0.1:8080/form&#x27;</span>,&#123;</span><br><span class="line">    <span class="attr">unit</span>: <span class="string">&quot;00&quot;</span>,</span><br><span class="line">    <span class="attr">contact</span>: <span class="string">&quot;朱宇楼&quot;</span>,</span><br><span class="line">    <span class="attr">phone</span>: <span class="string">&#x27;15639038667&#x27;</span>,</span><br><span class="line">    <span class="attr">numVisitors</span>: <span class="number">25</span>,</span><br><span class="line">    <span class="attr">guide</span>: <span class="string">&#x27;yes&#x27;</span>,</span><br><span class="line">    <span class="attr">date</span>: <span class="string">&#x27;2025-05-15&#x27;</span>,</span><br><span class="line">    <span class="attr">time</span>: <span class="string">&#x27;14:30&#x27;</span></span><br><span class="line">&#125;)</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(data);</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="vue-cli的安装和使用"><a href="#vue-cli的安装和使用" class="headerlink" title="vue-cli的安装和使用"></a>vue-cli的安装和使用</h2><p>中文官网：<a href="https://cli.vuejs.org/zh/">https://cli.vuejs.org/zh/</a></p>
 <ol>
-<li><font color='red'>created</font><br> data、props、methods都是可用状态<br> 常用它发起ajax请求来拿数据，转存到data中，供template模板渲染时候使用。</li>
-<li><font color='red'>mounted</font><br> 第一次把DOM元素结构渲染好，最早去操作DOM</li>
-<li><font color='red'>updated</font><br> 可以操作最新的更新过后的DOM</li>
-</ol>
-<p>  其他的很少会用到，记不住也没关系</p>
+<li><p>什么是单页面应用程序？<br><strong>单页面应用程序</strong>（英文名: Single Page Application）简称SPA，顾名思义，<strong>指的是一个Web 网站中只有唯一的一个HTML页面</strong>，所有的功能与交互都在这唯一的一个页面内完成。</p>
 </li>
-</ul>
-<h2 id="组件之间的通讯-数据共享"><a href="#组件之间的通讯-数据共享" class="headerlink" title="组件之间的通讯(数据共享)"></a>组件之间的通讯(数据共享)</h2><ol>
-<li><p>组件之间的关系<br>最常见的：兄弟关系、父子关系<br>离的比较远的，也可以认为是一种变态的兄弟关系</p>
+<li><p>什么是vue-cli<br><strong>vue-cli是Vue.js开发的标准工具</strong>。它简化了程序员基于webpack创建工程化的Vue项目的过程。</p>
 </li>
-<li><p><strong>父向子传值</strong> – <strong>自定义属性</strong><br><font color='red'>再次注意: props是只读的！</font><br><img src="/tsukimiya.github.io/images/vue/%E7%88%B6%E5%AD%90%E7%BB%84%E4%BB%B6%E5%85%B1%E4%BA%AB%E6%95%B0%E6%8D%AE.png" alt="img"></p>
-</li>
-<li><p><strong>子向父传值</strong> – <strong>自定义事件</strong><br>第一步是绑定了一个事件，这是个处理函数。<font color='red'><code>$emit</code>就代表触发这个事件</font>，谁触发这个事件，谁传一个值过来。<br><font color='#00a86b'>子向父传值：在子组件调用$emit，父组件<font color='red'>在子组件标签上</font>用@绑定(监听)这个自定义事件</font><br><font color='red'>绑定事件和触发事件要在同一个实例上！！</font><strong>有绑定有触发</strong>。<br><img src="/tsukimiya.github.io/images/vue/%E5%AD%90%E5%90%91%E7%88%B6%E4%BC%A0%E5%80%BC.png" alt="img"></p>
-<blockquote>
-<p>vue在内部要想触发click事件，它也是用this或vm<br> <figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">button</span> @<span class="attr">click</span>=<span class="string">&#x27;show&#x27;</span>&gt;</span>按钮<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br></pre></td></tr></table></figure><br> <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="attr">method</span>:&#123;</span><br><span class="line">    <span class="title function_">show</span>(<span class="params">e</span>)&#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line">vm.$emit(<span class="string">&#x27;click&#x27;</span>,&#123;<span class="comment">//事件对象e</span></span><br><span class="line">    ...</span><br><span class="line">    <span class="attr">clientX</span>:<span class="string">&quot;&quot;</span>,</span><br><span class="line">    <span class="attr">clientY</span>:<span class="string">&quot;&quot;</span>,</span><br><span class="line">    <span class="attr">target</span>:dom元素</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
-</blockquote>
-</li>
-<li><p><strong>兄弟组件之间的数据共享</strong> – <strong>EventBus</strong><br>在<font color='red'>vue2.x</font>中，兄弟组件之间数据共享的方案是<font color='red'>EventBus</font>。</p>
+<li><p>安装<br>vue-cli是npm上的一个全局包，使用<code>npm i</code>命令，即可方便的把它安装到自己电脑上：<code>npm i -g @vue/cli</code></p>
 <ul>
-<li>EventBus使用步骤</li>
+<li><code>vue -V</code>查看安装的版本号</li>
 </ul>
+</li>
+<li><p>使用<br>基于vue-cli快速生成工程化的Vue项目：<code>vue create 项目名称</code>(建议名称用不带空格的英文)<br> 在想要创建项目的文件夹执行此命令，即会生成项目文件夹，命名即为 项目名称</p>
+<ul>
+<li>选择预设(用方向键)<br>  <strong>初学者建议选择最后一项 – 手动选择要安装哪些功能</strong><br>  按空格选中要安装的预设<br>  一开始建议选择：<br>  Choose Vue version(新版没有这个)、Babel、CSS Pre-processors,其他的不要选<br>  下面接着选择vue版本为2.x，css预处理器为less</li>
+</ul>
+</li>
+<li><p>vue项目中src目录的构成：</p>
 <ol>
-<li>创建<code>eventBus.js</code>模块，并向外共享一个<strong>Vue的实例对象</strong></li>
-<li>在数据<strong>发送方</strong>，调用<code>bus.$emit(&#39;事件名称&#39;,要发送的数据)</code>方法<strong>触发自定义事件</strong></li>
-<li>在数据<strong>接收方</strong>，调用<code>bus.$on(&#39;事件名称&#39;,事件处理函数)</code>方法<strong>注册一个自定义事件</strong><br> 数据在事件处理函数的形参中拿到。</li>
+<li>assets 文件夹：存放项目中用到的静态资源文件，例如：css样式表、图片资源</li>
+<li>components 文件夹：程序员封装的、可复用的组件，都要放到components目录下。<br> 里面有一个默认组件HelloWorld.vue，给它删除</li>
+<li>main.js 是项目的入口文件。整个项目的运行，要先执行main.js</li>
+<li>app.Vue 是项目的根组件。我们创建项目之后，看到的页面就是app.Vue，如果想重新换一个页面出来，只需要把它给清空掉。里面的template是一个模版结构。</li>
 </ol>
-<p> <font color='#00a86b'>依旧是发送方触发事件，发送数据，接收方绑定事件监听，接受数据。</font><br> 这里的<code>$on</code>就相当于jQuery的on绑定事件<br> <strong>为什么这里要用到一个共享的实例EventBus</strong> ？因为<font color='red'>绑定事件和触发事件要在同一个实例上！！</font><strong>有绑定有触发</strong>。</p>
+</li>
+<li><p>vue项目的运行流程<br> 在工程化的项目中，vue要做的事情很单纯: <strong>通过main.js把 App.vue渲染到index.html的指定区域中</strong>。<br> 其中：</p>
+<ul>
+<li><strong>App.vue</strong>用来编写待渲染的<strong>模板结构</strong></li>
+<li><strong>index.html</strong>中需要预留一个<strong>el区域</strong></li>
+<li><strong>main.js</strong> 把 App.vue渲染到了index.html所预留的区域中  <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 导入 vue 这个包，得到Vue构造函数</span></span><br><span class="line"><span class="keyword">import</span> <span class="title class_">Vue</span> <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span></span><br><span class="line"><span class="comment">// 导入App.vue根组件，将来要把App.vue中的模板结构，渲染到HTML页面中</span></span><br><span class="line"><span class="keyword">import</span> <span class="title class_">App</span> <span class="keyword">from</span> <span class="string">&#x27;./App.vue&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="title class_">Vue</span>.<span class="property">config</span>.<span class="property">productionTip</span> = <span class="literal">false</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建Vue的实例对象</span></span><br><span class="line"><span class="keyword">new</span> <span class="title class_">Vue</span>(&#123;</span><br><span class="line">    <span class="comment">// 把 render 函数指定的组件渲染到HTML页面中，这里指定了App</span></span><br><span class="line">    <span class="comment">// 我们最终的结果是，把这个指定的组件，放到id为app的所在的这个位置，把它给替换掉了</span></span><br><span class="line">    <span class="attr">render</span>: <span class="function"><span class="params">h</span> =&gt;</span> <span class="title function_">h</span>(<span class="title class_">App</span>),</span><br><span class="line">&#125;).$mount(<span class="string">&#x27;#app&#x27;</span>)</span><br><span class="line"><span class="comment">// vue实例的$mount()方法，作用和el属性完全一样</span></span><br></pre></td></tr></table></figure></li>
+</ul>
 </li>
 </ol>
-<p><img src="/tsukimiya.github.io/images/vue/%E5%85%84%E5%BC%9F%E7%BB%84%E4%BB%B6%E4%BC%A0%E5%80%BC.png" alt="img"></p>
-<p>注意：虽然可以使用EventBus来在父子组件之间传值，但是这不是Vue官方推荐的做法。<strong>props和自定义事件更适合处理父子组件之间的通信，因为它们更直观和易于理解</strong>。 Event Bus 通常更适用于非父子关系的组件之间的通信，例如兄弟组件之间。</p>
-<h2 id="拓展"><a href="#拓展" class="headerlink" title="拓展"></a>拓展</h2><h3 id="vscode插件-Path-Autocomplete-路径提示"><a href="#vscode插件-Path-Autocomplete-路径提示" class="headerlink" title="vscode插件 Path Autocomplete - @路径提示"></a>vscode插件 Path Autocomplete - @路径提示</h3><p>下载插件之后，要在自己配置项里面添加如下配置,添加在头部就行<br>设置 – setting.json</p>
-<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 导入文件时是否携带文件的扩展名</span></span><br><span class="line"><span class="attr">&quot;path-autocomplete.extensionOnImport&quot;</span><span class="punctuation">:</span><span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line"><span class="comment">// 配置 @ 的路径提示</span></span><br><span class="line"><span class="attr">&quot;path-autocomplete.pathMappings&quot;</span><span class="punctuation">:</span><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;@&quot;</span><span class="punctuation">:</span><span class="string">&quot;$&#123;folder&#125;/src&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br></pre></td></tr></table></figure>
-<p><font color="red">注意：只有vscode打开的文件夹根目录是项目根目录时才起作用！！</font></p>
-<blockquote>
-<p>总觉得这个功能vscode也集成进去了？一开始没装的时候，好像就触发了，也懒得验证了hh</p>
-</blockquote>
-<h3 id="Auto-Close-Tag插件"><a href="#Auto-Close-Tag插件" class="headerlink" title="Auto Close Tag插件"></a>Auto Close Tag插件</h3><p>输入<code>&lt;xx&gt;</code>标签前半部分，会自动补全后半部分<br>不过新版vscode好像已经集成了这个功能，没有安装也是这样，装了没啥变化</p>
-<h3 id="方法简写形式"><a href="#方法简写形式" class="headerlink" title="方法简写形式"></a>方法简写形式</h3><p><strong>如果方法只有一行，可以简写到行内</strong>：</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">&lt;p&gt;count的值是：&#123;&#123;count&#125;&#125;&lt;/p&gt;</span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">button</span> @<span class="attr">click</span>=<span class="string">&quot;count += 1&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+<h2 id="扩展知识"><a href="#扩展知识" class="headerlink" title="扩展知识"></a>扩展知识</h2><h3 id="字符串函数charAt"><a href="#字符串函数charAt" class="headerlink" title="字符串函数charAt()"></a>字符串函数charAt()</h3><p>接收索引值，从字符串中获取对应字符，如：<br><code>&#39;hello&#39;.charAt(4) //&#39;o&#39;</code></p>
+<h3 id="将字符串第一个字符变为大写"><a href="#将字符串第一个字符变为大写" class="headerlink" title="将字符串第一个字符变为大写"></a>将字符串第一个字符变为大写</h3><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> str = <span class="string">&#x27;hello&#x27;</span></span><br><span class="line"><span class="keyword">const</span> first = str.<span class="title function_">charAt</span>(<span class="number">0</span>).<span class="title function_">toUpperCase</span>()</span><br><span class="line"><span class="keyword">const</span> other = str.<span class="title function_">slice</span>(<span class="number">1</span>)<span class="comment">//从指定索引往后截取字符串，返回得到的结果</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(str)</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(first+other)</span><br></pre></td></tr></table></figure>
 
-<h3 id="编码规范"><a href="#编码规范" class="headerlink" title="编码规范"></a>编码规范</h3><p>先指令，后绑定，最后绑事件<br>这是一个子组件的绑定示例：</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">&lt;<span class="title class_">Goods</span></span><br><span class="line">    v-<span class="keyword">for</span>=<span class="string">&quot;item in list&quot;</span></span><br><span class="line">    :key=<span class="string">&quot;item.id&quot;</span></span><br><span class="line">    :id=<span class="string">&quot;item.id&quot;</span></span><br><span class="line">    ...</span><br><span class="line">    :state=<span class="string">&quot;item.goods_state&quot;</span></span><br><span class="line">    @state_change=<span class="string">&quot;getNewState&quot;</span></span><br><span class="line">&gt;&lt;/<span class="title class_">Goods</span>&gt;</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-
-]]></content>
+<h3 id="ajax原生写法"><a href="#ajax原生写法" class="headerlink" title="ajax原生写法"></a>ajax原生写法</h3><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">xxx</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="keyword">const</span> xhr = <span class="keyword">new</span> <span class="title class_">XMLHttpRequest</span>()</span><br><span class="line">    xhr.<span class="title function_">addEventListener</span>(<span class="string">&#x27;load&#x27;</span>,<span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">        <span class="keyword">const</span> result = <span class="title class_">JSON</span>.<span class="title function_">parse</span>(xhr.<span class="property">responseText</span>)</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(result)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
       <categories>
         <category>Vue</category>
         <category>Vue2</category>
@@ -523,10 +527,11 @@
       <tags>
         <tag>Vue</tag>
         <tag>Vue2</tag>
-        <tag>组件</tag>
-        <tag>组件的porps</tag>
-        <tag>生命周期</tag>
-        <tag>组件通讯</tag>
+        <tag>过滤器</tag>
+        <tag>侦听器</tag>
+        <tag>计算属性</tag>
+        <tag>axios</tag>
+        <tag>vue-cli</tag>
       </tags>
   </entry>
   <entry>
@@ -748,139 +753,163 @@
       </tags>
   </entry>
   <entry>
-    <title>Vue2 过滤器、侦听器、计算属性、axios &amp; vue-cli</title>
-    <url>/tsukimiya.github.io/2024/04/21/Vue/3.%E8%BF%87%E6%BB%A4%E5%99%A8%20%E4%BE%A6%E5%90%AC%E5%99%A8%20%E8%AE%A1%E7%AE%97%E5%B1%9E%E6%80%A7%20axios&amp;vue-cli/</url>
+    <title>Vue组件与生命周期</title>
+    <url>/tsukimiya.github.io/2024/04/24/Vue/4.Vue%E7%BB%84%E4%BB%B6%E4%B8%8E%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/</url>
     <content><![CDATA[<blockquote>
-<p>目标：<br>在实际开发中合理运用过滤器、侦听器、计算属性解决问题<br>使用axios发起Ajax请求<br>使用vue-cli工具生成工程化的Vue项目</p>
+<p>目标：<br>掌握.vue单文件组件的基本用法<br>组件的props(自定义属性)：数组写法、对象写法<br>解决多个组件间的样式冲突 – scoped<br><a href="#deep"><strong>&#x2F;deep&#x2F;样式穿透</strong></a>应用场景：<strong>修改第三方组件库组件的默认样式</strong></p>
+</blockquote>
+<blockquote>
+<p>掌握组件生命周期的执行顺序和应用场景：创建阶段、运行阶段、销毁阶段<br>vue 中常用的生命周期函数&#x2F;生命周期钩子：<strong>created、mounted</strong></p>
+</blockquote>
+<blockquote>
+<p>能够掌握组件通讯的三种方式：父-&gt; 子（自定义属性）、子-&gt; 父（自定义事件）、兄弟组件（EventBus）</p>
 </blockquote>
 <p>[toc]</p>
-<h2 id="过滤器-Filters"><a href="#过滤器-Filters" class="headerlink" title="过滤器(Filters)"></a>过滤器(Filters)</h2><blockquote>
-<p>2020年9月 vue3发布。增加了很多新功能，但是也删掉了一些功能。 比如删掉了vue2中的过滤器filter功能。<br>与此同时，官方建议： <strong>用方法调用或计算属性替换过滤器</strong>。<br>filter过滤器能加工数据，computed计算属性和methods方法也都可以加工数据，这样的话，就功能重复了…(于是filter被开除了XDD)</p>
+<h2 id="vue组件"><a href="#vue组件" class="headerlink" title="vue组件"></a>vue组件</h2><ol>
+<li><p>什么是组件化开发<br><strong>组件化开发</strong>指的是∶根据<strong>封装</strong>的思想，<strong>把页面上可重用的UI结构封装为组件</strong>，从而方便项目的开发和维护。</p>
+</li>
+<li><p>vue中的组件化开发<br>vue是一个<strong>支持组件化开发</strong>的前端框架。<br>vue中规定：<strong>组件的后缀名是.vue</strong><br>vue中，root就是根，而这个根就是el所控制的那个区域。在main.js文件里，vue实例中通过 render 函数指定组件渲染到HTML页面中，替换了el区域。即：<strong>render函数中，渲染的是哪个.vue组件，那么这个组件就叫做“根组件”</strong></p>
+</li>
+<li><p><font color='green'>vue组件的三个组成部分</font></p>
+<ul>
+<li><font color='green'>template -&gt; 组件的模板结构</font></li>
+<li><font color='green'>script -&gt; 组件的JavaScript行为</font></li>
+<li><font color='green'>style -&gt; 组件的样式</font></li>
+</ul>
+<p> 注意：<font color='red'>每个组件中必须包含template模板结构，而script行为和style样式是可选的组成部分</font></p>
+</li>
+</ol>
+<p>简单示例：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">    &lt;!-- 组件的模版结构中，应该包含一个根元素，这个最外层的div不能有兄弟元素 --&gt;</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;text-box&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">h3</span> &gt;</span>这是用户自定义的Test.vue -- &#123;&#123; username &#125;&#125;<span class="tag">&lt;/<span class="name">h3</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">button</span> @<span class="attr">click</span>=<span class="string">&quot;changeName&quot;</span>&gt;</span>修改用户名<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    <span class="keyword">export</span> <span class="keyword">default</span> &#123;<span class="comment">// 默认导出，固定写法！</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        <span class="comment">// 注意：.vue组件中的data不能像之前一样，不能指向对象,必须是一个函数</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        <span class="title function_">data</span>(<span class="params"></span>)&#123;<span class="comment">// data数据源</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">            <span class="keyword">return</span>&#123;<span class="comment">// 这个return出去的对象中，可以定义数据</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">                <span class="attr">username</span>: <span class="string">&#x27;admin&#x27;</span>,</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">            &#125;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        &#125;,</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        <span class="attr">methods</span>:&#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">            <span class="title function_">changeName</span>(<span class="params"></span>)&#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">                <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">this</span>);<span class="comment">// 在组件中，this就表示当前组件的实例对象</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">                <span class="variable language_">this</span>.<span class="property">username</span> = <span class="string">&#x27;aaa&#x27;</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">            &#125;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        &#125;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    &#125;;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">style</span> <span class="attr">lang</span>=<span class="string">&quot;less&quot;</span>&gt;</span><span class="language-css"></span></span></span><br><span class="line"><span class="language-css"><span class="language-xml"><span class="selector-class">.text-box</span>&#123;</span></span></span><br><span class="line"><span class="language-css"><span class="language-xml">    <span class="attribute">background-color</span>: pink;</span></span></span><br><span class="line"><span class="language-css"><span class="language-xml">    <span class="selector-tag">h3</span> &#123;</span></span></span><br><span class="line"><span class="language-css"><span class="language-xml">        <span class="attribute">color</span>: red;</span></span></span><br><span class="line"><span class="language-css"><span class="language-xml">    &#125;</span></span></span><br><span class="line"><span class="language-css"><span class="language-xml">&#125;</span></span></span><br><span class="line"><span class="language-css"><span class="language-xml"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>组件之间的<font color='red'>父子关系</font><br>组件之间的父子关系、兄弟关系，<strong>是在使用时候才会产生的</strong><br><img src="/tsukimiya.github.io/images/vue/%E7%BB%84%E4%BB%B6%E4%B9%8B%E9%97%B4%E7%9A%84%E7%88%B6%E5%AD%90%E5%85%B3%E7%B3%BB.png" alt="img"></li>
+</ol>
+<h3 id="使用组件的三个步骤"><a href="#使用组件的三个步骤" class="headerlink" title="使用组件的三个步骤"></a>使用组件的<strong>三个步骤</strong></h3><p><img src="/tsukimiya.github.io/images/vue/%E4%BD%BF%E7%94%A8%E7%BB%84%E4%BB%B6%E7%9A%84%E4%B8%89%E4%B8%AA%E6%AD%A5%E9%AA%A4.png" alt="img"><br><font color="green">注意：在components节点中，注册组件是一个对象的写法，前面是定义的名称，后面是要注册的组件。在对象里面，键名和值如果一样，可以省略值只写键名。如’Left’:Left可以简写成Left</font></p>
+<ul>
+<li><p>通过components注册的是<font color='red'>私有子组件</font><br>例如：<br>在组件A的components节点下，注册了组件F。<br>则组件F只能用在组件A中;不能被用在组件C中。</p>
+</li>
+<li><p>注册<font color='red'>全局组件</font><br>如果某个组件，使用非常频繁，好多组件中都要用到它，那么每次都要导入注册并使用，就很麻烦。所以可以注册全局组件</p>
+<p>  <font color='green'>在vue项目的 main.js入口文件中，通过Vue.component()方法，可以注册全局组件。</font>示例代码如下:</p>
+  <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 导入需要全局注册的组件</span></span><br><span class="line"><span class="keyword">import</span> <span class="title class_">Count</span> <span class="keyword">from</span> <span class="string">&#x27;@/components/Count.vue&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 参数1：字符串格式，表示组件的“注册名称”</span></span><br><span class="line"><span class="comment">// 参数2：需要被全局注册的那个组件</span></span><br><span class="line"><span class="title class_">Vue</span>.<span class="title function_">component</span>(<span class="string">&#x27;MyCount&#x27;</span>,<span class="title class_">Count</span>)</span><br></pre></td></tr></table></figure>
+<p>  <strong>注意：在自己的组件中，不能使用自己！</strong></p>
+</li>
+</ul>
+<h2 id="组件的props"><a href="#组件的props" class="headerlink" title="组件的props"></a>组件的props</h2><p>props是组件的<strong>自定义属性</strong>，<strong>在封装通用组件的时候</strong>，合理地使用 props 可以极大的<font color='red' size='5'>提高组件的复用性！</font><br>它的语法格式如下:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    <span class="comment">//组件的自定义属性,允许使用者指定初始值</span></span><br><span class="line">    <span class="attr">props</span>:[<span class="string">&#x27;自定义属性A&#x27;</span>,<span class="string">&#x27;自定义属性B&#x27;</span>,<span class="string">&#x27;其它自定义属性...&#x27;</span>],</span><br><span class="line">    <span class="comment">//组件的私有数据</span></span><br><span class="line">    <span class="title function_">data</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> &#123; &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p><font fcolor='green'>props中的数据，可以直接在模板结构中被使用</font>。使用示例：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// Count.vue组件中</span></span><br><span class="line"><span class="comment">//...</span></span><br><span class="line">&lt;p&gt;&#123;&#123;init&#125;&#125;&lt;/p&gt;</span><br><span class="line"><span class="comment">//...</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;<span class="attr">props</span>:[<span class="string">&#x27;init&#x27;</span>],..&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Left.vue组件中，使用注册了的Count组件</span></span><br><span class="line"><span class="comment">// 指定初始值，但是这里传入的是一个字符串，并不是一个真正的数值</span></span><br><span class="line">&lt;<span class="title class_">Count</span> init=<span class="string">&quot;6&quot;</span>&gt;&lt;/<span class="title class_">Count</span>&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><font color='red'>结合v-bind使用自定义属性</font></p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">// 这样就传入的是数值6了</span><br><span class="line"><span class="tag">&lt;<span class="name">Count</span> <span class="attr">:init</span>=<span class="string">&quot;6&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">Count</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><font color='green'>官网文档-&gt;即便 <code>9</code> 是静态的，我们仍然需要 <code>v-bind</code> 来告诉 Vue，这是一个 JavaScript 表达式而不是一个字符串</font></p>
+</li>
+<li><p><font color='red'>props对子组件是只读的 (父组件-&gt;子组件 单向数据传递)</font><br>Vue规定:组件中封装的自定义属性是只读的，程序员不能直接修改props的值。否则会直接报错。<br>注意：props是对定义该属性的子组件只读，<font color='red'>在父组件中，你可以通过v-bind绑定props的值，并且这个值是可以更改的。</font><strong>当父组件中的值改变时，Vue会自动将新值传递给子组件，并且子组件会根据新的值重新渲染</strong>。这种方式实际上是通过props属性进行了<strong>单向数据流</strong>，确保数据流动的可预测性和可维护性。<br><font color='red'>如果子组件需要修改传递过来的值，通常应该通过触发事件并将修改传递给父组件来实现。</font><br><font color='green'>props可以被作为初始值使用的，把它传给data的属性进行初始赋值使用：</font></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// Count.vue组件中</span></span><br><span class="line"><span class="comment">//...</span></span><br><span class="line">&lt;p&gt;&#123;&#123;count&#125;&#125;&lt;/p&gt;</span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">button</span> @<span class="attr">click</span>=<span class="string">&quot;count+=1&quot;</span>&gt;</span>+1<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="comment">//...</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    <span class="attr">props</span>:[<span class="string">&#x27;init&#x27;</span>],</span><br><span class="line">    <span class="attr">data</span>:&#123; <span class="attr">count</span>:<span class="variable language_">this</span>.<span class="property">init</span>, &#125;    </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&lt;<span class="title class_">Count</span> :init=<span class="string">&quot;6&quot;</span>&gt;&lt;/<span class="title class_">Count</span>&gt;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="props的default默认值"><a href="#props的default默认值" class="headerlink" title="props的default默认值"></a>props的default默认值</h3><p>在声明自定义属性时，可以通过default来定义属性的默认值。示例代码如下:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    <span class="attr">props</span>: &#123;</span><br><span class="line">        <span class="comment">// 自定义属性：&#123; /* 配置选项 */ &#125;</span></span><br><span class="line">        <span class="attr">init</span>: &#123;</span><br><span class="line">            <span class="comment">//用default属性定义属性的默认值</span></span><br><span class="line">            <span class="comment">// 如果外界使用Count组件，没有传递默认值，则默认值生效</span></span><br><span class="line">            <span class="attr">default</span>: <span class="number">0</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="props的-type-值类型"><a href="#props的-type-值类型" class="headerlink" title="props的 type 值类型"></a>props的 type 值类型</h3><p>在声明自定义属性时，<font color='red'>可以通过type来定义属性的值类型。</font>示例代码如下:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    <span class="attr">props</span>: &#123;</span><br><span class="line">        <span class="attr">init</span>: &#123;</span><br><span class="line">            <span class="attr">default</span>: <span class="number">0</span>,</span><br><span class="line">            <span class="comment">// 用type属性定义属性的值类型</span></span><br><span class="line">            <span class="comment">// init的值类型必须是Number数字</span></span><br><span class="line">            <span class="attr">type</span>:<span class="title class_">Number</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><font color='red'>还可以通过数组形式，为当前属性定义多个可能的类型：<code>type: [Number, String]</code></font><br><font color='green'>如果是带有默认值的对象类型，对象或数组默认值必须从一个工厂函数获取：</font></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 封面的信息对象</span></span><br><span class="line"><span class="attr">cover</span>: &#123;</span><br><span class="line">    <span class="attr">type</span>: <span class="title class_">Object</span>,</span><br><span class="line">    <span class="comment">// 默认值是一个空对象</span></span><br><span class="line">    <span class="attr">default</span>: <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;&#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="props的-required-必填项"><a href="#props的-required-必填项" class="headerlink" title="props的 required 必填项"></a>props的 required 必填项</h3><p>加上required必填项之后，哪怕有默认值，不传也会报错</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">    <span class="attr">props</span>: &#123;</span><br><span class="line">        <span class="attr">init</span>: &#123;</span><br><span class="line">            <span class="attr">default</span>: <span class="number">0</span>,</span><br><span class="line">            <span class="attr">type</span>:<span class="title class_">Number</span>,</span><br><span class="line">            <span class="attr">require</span>: <span class="literal">true</span>,<span class="comment">//必填项校验</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="props属性的命名规定"><a href="#props属性的命名规定" class="headerlink" title="props属性的命名规定"></a>props属性的命名规定</h3><p>Vue里面有一个规定，如果<strong>某一个属性</strong>在定义的时候，里面<strong>包含了一个大写的字符</strong>（是一个<strong>小驼峰</strong>），在进行<strong>绑定的时候</strong>，可以直接写成原名字，不过<strong>建议改成连字符格式</strong>，因为这样看起来会<strong>更舒服</strong>一些<br>示例：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 子组件中</span></span><br><span class="line"><span class="attr">props</span>:[cmtCount]</span><br><span class="line"><span class="comment">// 父组件中</span></span><br><span class="line">&lt;xxx :cmtCount=<span class="string">&quot;...&quot;</span>&gt;&lt;/xxx&gt;</span><br><span class="line"><span class="comment">// 或</span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">xxx</span> <span class="attr">:cmt-count</span>=<span class="string">&quot;...&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">xxx</span>&gt;</span></span> <span class="comment">// 建议</span></span><br></pre></td></tr></table></figure>
+
+
+<h3 id="组件间的样式冲突-scoped"><a href="#组件间的样式冲突-scoped" class="headerlink" title="组件间的样式冲突 - scoped"></a>组件间的样式冲突 - scoped</h3><p>默认情况下，<strong>写在.vue组件中的样式会全局生效</strong>，因此很容易造成<strong>多个组件之间的样式冲突问题</strong>。<br>导致组件之间样式冲突的<strong>根本原因</strong>是:<br>    <font color='purple'>1. 单页面应用程序中，所有组件的DOM结构，都是基于唯一的index.html页面进行呈现的</font><br>    <font color='purple'>2. 每个组件中的样式，都会影响整个index.html页面中的DOM元素</font></p>
+<p>注意：单页面应用程序中，HTML页面是只有一个的，我们的所有组件都是在这个HTML中生效的</p>
+<ul>
+<li><p>解决方案 – <font color='red'>核心原理：css属性选择器</font><br>给当前页面标签都加一个固定的自定义属性，不同的组件之间的自定义属性不一样</p>
+</li>
+<li><p>vue简化：<strong>scoped属性</strong><br>只要给当前组件的style加上scoped的属性，vue底层在生成组件的时候，会自动给每个标签自动生成一个data-v-xxx</p>
+</li>
+</ul>
+<h4 id="deep-样式穿透"><a href="#deep-样式穿透" class="headerlink" title="&#x2F;deep&#x2F;样式穿透"></a><font id='deep' color='red'>&#x2F;deep&#x2F;样式穿透</font></h4><p><font color='#00a86b'>作用：在父组件中改造子组件里的样式</font><br><font color='red'>应用场景：当使用第三方组件库的时候，如果有修改组件默认样式的需求，需要用到&#x2F;deep&#x2F;</font></p>
+<ul>
+<li><p>scoped有一个缺陷，场景：<br>Left 和 Right 都注册使用了 Count组件<br>Left加了scoped属性，而Right没加<br>如果想在Left中的style里修改Count里面的样式，会发现不起作用，而如果在Right中修改，会发现Left和Right里面的Count组件样式都变了。</p>
+</li>
+<li><p>原因：<br>在Left中修改，比如h5{..},因为加了scoped，所以会变成h5[data-v-xx]{..}，而count中的标签并没有data-v-xx属性，所以不会生效。<br>而在没有scoped属性的Right中修改，则产生的就是样式冲突</p>
+</li>
+<li><p>解决方案：&#x2F;deep&#x2F;样式穿透<br>&#x2F;deep&#x2F; h5{ … }<br>在选择器前面加个前缀+空格，在浏览器可以查看到，这个h5标签被加上了一个[data-v-xx] 的前缀<br><font color='red'>加上<code>/deep/</code>之后就不再是 <code>类名[data-v-xxx]</code> 的 选择特定属性的选择器 了，而是变成了 <code>[data-v-xxx] 类名</code> 的 后代选择器 。</font></p>
+</li>
+</ul>
+<h2 id="Vue运行原理"><a href="#Vue运行原理" class="headerlink" title="Vue运行原理"></a><strong>Vue运行原理</strong></h2><p>在把app渲染到页面的过程中，不是把页面的模板结构直接丢到页面上，而是有个编译的过程。<br>浏览器能够直接解析HTML页面，但是不识别vue页面。<br>在<code>package.json</code>里面，<code>devDependencies</code>里面有个<code>vue-template-complier</code>包，就是vue模板编译器，作用就是把.vue文件编译成js交给浏览器解析运行。<br>在.vue中写的任何代码，要渲染到浏览器中，都依赖于这个包的解析与转换。</p>
+<p>我们上面在页面上渲染了2次Count.vue组件，我们在页面上看到的两个Count组件，就是两个组件的实例。<br>实例，就是相当于new一个构造函数得到一个实例。我们编写的Count.vue，可以理解为它就是一个构造函数，new这个构造函数就会得到一个Count实例。<br>我们没有直接new，而是通过标签形式去用这个组件，这个用的过程可以理解为一个new的过程<br>所以说，<strong>这个组件，在定义的时候，它只是一个模板结构，当用标签的形式去使用的时候，才是在创建一个它的实例。</strong><br>如果在components下声明一个组件，不去用它不会创建组件实例。</p>
+<blockquote>
+<p><font color='red'>整个项目如何跑起来的：</font><br><font color='#00a86b'>webpack从main.js(入口文件)开始打包，发现main里面用到了app，于是把app创建一个实例出来。然后app里面又用到了Left和Right，然后这两个里面又用到了Count，就这样一直通过一个树的形式，把整个树都解析转换，最后编译成纯js代码。然后把js文件放到首页里面去，浏览器就会解析和执行这里面的代码，把组件都给渲染到页面上</font></p>
 </blockquote>
-<p>vue3已经把过滤器删掉了，只能在vue2中使用，会基础语法就行了。</p>
-<ul>
-<li><font color="green">过滤器要点</font><ol>
-<li>必须被定义到 <code>filters节点</code> 之下，本质是一个函数</li>
-<li>强调：过滤器中一定要有一个返回值</li>
-<li>过滤器函数中的 形参<code>val</code>(随意命名)，永远都是管道符前面的那个值。(多个形参，则第一个外都是undefined)</li>
-<li>过滤器函数 由 管道符 <code>|</code> 调用</li>
-<li>过滤器只能在 <code>差值表达式</code> 或 <code>属性绑定指令v-bind</code> 中调用</li>
-<li>最终得到的结果是过滤器的返回值</li>
-</ol>
+<h2 id="组件的生命周期"><a href="#组件的生命周期" class="headerlink" title="组件的生命周期"></a>组件的生命周期</h2><ol>
+<li><p>生命周期 &amp; 生命周期函数<br><font color='red'>生命周期</font>(Life Cycle)是指一个组件从<font color='red'>创建-&gt;运行-&gt;销毁</font>的整个阶段，<font color='red'>强调的是一个时间段</font>。</p>
+<p> <font color='red'>生命周期函数</font>:是由vue框架提供的<font color='red'>内置函数</font>，会伴随着组件的生命周期，<font color='red'>自动按次序执行</font>。<br> 注意:<font color='#00a86b'>生命周期</font>强调的是<font color='#00a86b'>时间段</font>，<font color='#00a86b'>生命周期函数</font>强调的是<font color='#00a86b'>时间点</font>。</p>
 </li>
-</ul>
-<p><strong>过滤器常用于文本的格式化</strong>,应该被添加在JavaScript表达式的尾部，由“<strong>管道符</strong>”进行调用。示例:</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 在花括号中通过管道符调用capitalize过滤器，对message的值进行格式化 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>&#123;&#123;message | capitalize&#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 在v-bind中通过管道符调用formatId过滤器，对rawId的值进行格式化 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">v-bind:id</span>=<span class="string">&quot;rawId | formatId&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="私有过滤器-和-全局过滤器"><a href="#私有过滤器-和-全局过滤器" class="headerlink" title="私有过滤器 和 全局过滤器"></a>私有过滤器 和 全局过滤器</h3><p><strong>在 <code>filters节点</code> 下定义的过滤器</strong>，称为“<strong>私有过滤器</strong>”，因为它只能在当前vm实例所控制的el区域内使用。如果希望在多个vue实例之间共享过滤器，则可以按照如下的格式<strong>定义全局过滤器</strong>:</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 全局过滤器–独立于每个vm实例之外 </span></span><br><span class="line"><span class="comment">// Vue.filter()方法接收两个参数:</span></span><br><span class="line"><span class="comment">// 第1个参数，是全局过滤器的&quot;名字”</span></span><br><span class="line"><span class="comment">// 第2个参数，是全局过滤器的&quot;处理函数&quot;</span></span><br><span class="line"><span class="title class_">Vue</span>.<span class="title function_">filter</span>( <span class="string">&#x27;capitalize&#x27;</span>, <span class="function">(<span class="params">str</span>) =&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> str.<span class="title function_">charAt</span>(<span class="number">0</span>).<span class="title function_">toUpperCase</span>() + str.<span class="title function_">slice</span>(<span class="number">1</span>) + <span class="string">&#x27;~~&#x27;</span></span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment">// 如果想要定义多个全局过滤器就再写一个</span></span><br><span class="line"><span class="title class_">Vue</span>.<span class="title function_">filter</span>(<span class="string">&#x27;capi2&#x27;</span>,<span class="function">(<span class="params">str</span>)=&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> str + <span class="string">&#x27;--全局2&#x27;</span>;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-<p><font color="green">注意：如果私有过滤器和全局过滤器名字一致，此时按就近原则</font></p>
-<h3 id="其他用法-–-连续调用、传参"><a href="#其他用法-–-连续调用、传参" class="headerlink" title="其他用法 – 连续调用、传参"></a>其他用法 – 连续调用、传参</h3><ol>
-<li><p>连续调用多个过滤器 – 串联地调用<br>如：<code>&#123;&#123;message | filterA | filterB&#125;&#125;</code></p>
+<li><p>组件生命周期函数(<strong>生命周期钩子</strong>)的分类<br>在生命周期里面，它会按顺序依次执行这些函数。<br><img src="/tsukimiya.github.io/images/vue/%E7%BB%84%E4%BB%B6%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F.png" alt="img"></p>
 </li>
-<li><p>过滤器传参</p>
- <figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>&#123;&#123;message | filterA(arg1,arg2)&#125;&#125;<span class="tag">&lt;<span class="name">p</span>&gt;</span></span><br></pre></td></tr></table></figure>
- <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="title class_">Vue</span>.<span class="title function_">filter</span>(<span class="string">&#x27;filterA&#x27;</span>,<span class="function">(<span class="params">msg,arg1,arg2</span>)=&gt;</span>&#123;...&#125;)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>过滤器的兼容性<br>仅在vue 2.x 和 1.x中受支持<br>3.x建议使用 <strong>计算属性</strong> 或 <strong>方法</strong> 代替<br>具体的迁移指南参考官方文档给出的<a href="https://v3.vuejs.org/guide/migration/filters.html#migration-strategy">说明</a></p>
-</li>
-</ol>
-<h2 id="Watch侦听器"><a href="#Watch侦听器" class="headerlink" title="Watch侦听器"></a>Watch侦听器</h2><p>Watch侦听器 <strong>监视数据的变化，做出特定操作</strong>，变量名与监听的值对应。语法格式：</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> vm = <span class="keyword">new</span> <span class="title class_">Vue</span>(&#123;</span><br><span class="line">    <span class="attr">el</span>:<span class="string">&#x27;#app&#x27;</span>,</span><br><span class="line">    <span class="attr">data</span>:&#123; <span class="attr">username</span>: <span class="string">&#x27;&#x27;</span>&#125;,</span><br><span class="line">    <span class="attr">watch</span>:&#123;</span><br><span class="line">        <span class="comment">// 监视username变化</span></span><br><span class="line">        <span class="comment">// newVal - 变化后的新值，oldVal - 旧值</span></span><br><span class="line">        <span class="title function_">username</span>(<span class="params">newVal,oldVal</span>)&#123;</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(newVal,oldVal)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-<p><font color="green">应用场景如：侦听用户输入的用户名，每次变化就去查找是否被占用</font></p>
-<h3 id="侦听器的格式"><a href="#侦听器的格式" class="headerlink" title="侦听器的格式"></a>侦听器的格式</h3><ol>
-<li>方法格式的侦听器<ul>
-<li>缺点1: 无法在刚进入页面的时候，自动触发！！</li>
-<li>缺点2: 如果侦听的是一个对象，对象中的属性发生了变化，不会触发侦听器！！</li>
-</ul>
-</li>
-<li><strong>对象格式的侦听器</strong><ul>
-<li>好处1: 可以通过<strong>immediate选项</strong>，让侦听器自动触发！！</li>
-<li>好处2：可以通过<strong>deep选项</strong>，让侦听器深度监听对象中每个属性的变化！！</li>
-</ul>
+<li><p>生命周期图示<br>可以官方给出的<a href="https://cn.vuejs.org/v2/guide/instance.html#%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%E5%9B%BE%E7%A4%BA">“生命周期图示”</a>，<a href="https://www.bilibili.com/video/BV1zq4y1p7ga?p=106">进一步理解组件生命周期执行过程</a>。<br><a href="/tsukimiya.github.io/custom/pages/lifecycle.html" target="_blank"><font color='red'>中文详解图示</font></a></p>
 </li>
 </ol>
 <ul>
-<li><font color="green">推荐：为了写起来方便，建议定义成方法格式，如果确实需要，再改成对象格式。</font></li>
-</ul>
-<h3 id="immediate选项"><a href="#immediate选项" class="headerlink" title="immediate选项"></a>immediate选项</h3><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> vm = <span class="keyword">new</span> <span class="title class_">Vue</span>(&#123;</span><br><span class="line">    <span class="attr">el</span>:<span class="string">&#x27;#app&#x27;</span>,</span><br><span class="line">    <span class="attr">data</span>:&#123; <span class="attr">username</span>: <span class="string">&#x27;admin&#x27;</span>&#125;,</span><br><span class="line">    <span class="attr">watch</span>:&#123;</span><br><span class="line">        <span class="attr">username</span>:&#123;</span><br><span class="line">            <span class="title function_">handler</span>(<span class="params">newVal,oldVal</span>)&#123;<span class="comment">// 侦听器的处理函数</span></span><br><span class="line">                <span class="variable language_">console</span>.<span class="title function_">log</span>(newVal,oldVal)</span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="attr">immediate</span>: <span class="literal">true</span> <span class="comment">// true表示一进入页面就触发，false是默认值，不写这个参数也是false</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-
-<h3 id="深度侦听-–-deep选项"><a href="#深度侦听-–-deep选项" class="headerlink" title="深度侦听 – deep选项"></a>深度侦听 – deep选项</h3><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> vm = <span class="keyword">new</span> <span class="title class_">Vue</span>(&#123;</span><br><span class="line">    <span class="attr">el</span>:<span class="string">&#x27;#app&#x27;</span>,</span><br><span class="line">    <span class="attr">data</span>:&#123; <span class="attr">info</span>:&#123;</span><br><span class="line">        <span class="attr">username</span>: <span class="string">&#x27;admin&#x27;</span></span><br><span class="line">    &#125; &#125;,</span><br><span class="line">    <span class="attr">watch</span>:&#123;</span><br><span class="line">        <span class="attr">info</span>:&#123;</span><br><span class="line">            <span class="title function_">handler</span>(<span class="params">newVal,oldVal</span>)&#123;<span class="comment">// 侦听器的处理函数</span></span><br><span class="line">                <span class="variable language_">console</span>.<span class="title function_">log</span>(newVal,oldVal)</span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="attr">deep</span>: <span class="literal">true</span> <span class="comment">// 对象里任意属性变化了，都会触发侦听器</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-<p>如果要侦听的是对象的子属性的变化，则必须包裹一层单引号</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="attr">watch</span>:&#123;</span><br><span class="line">    <span class="string">&#x27;info.username&#x27;</span>(newVal)&#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(newVal,oldVal)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="computed计算属性"><a href="#computed计算属性" class="headerlink" title="computed计算属性"></a>computed计算属性</h2><ol>
-<li>什么是计算属性<br>计算属性指的是通过一系列运算之后，最终得到一个属性值。<br>这个动态计算出来的属性值可以被模板结构或 methods 方法使用。</li>
-<li>应用场景：<font color='red'>实现代码复用</font></li>
-</ol>
-<ul>
-<li>计算属性的使用<ol>
-<li>计算属性要定义到computed节点下，定义成方法格式</li>
-<li>虽然声明的方法格式，但是要当做普通的属性来用<blockquote>
-<p>打印出vue实例，可以发现定义的计算属性是被挂到属性上面的，和data节点上的属性一样</p>
-</blockquote>
+<li><p><font color='green'>执行次数</font><br>创建阶段：1次<br>运行阶段：0-N次<br>销毁阶段：1次</p>
 </li>
-</ol>
-</li>
-</ul>
-<p>示例代码如下︰</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> vm = <span class="keyword">new</span> <span class="title class_">Vue</span>(&#123;</span><br><span class="line">    <span class="attr">el</span>: <span class="string">&#x27;#app&#x27;</span>,</span><br><span class="line">    <span class="attr">data</span>: &#123;</span><br><span class="line">        <span class="attr">r</span>:<span class="number">0</span>,<span class="attr">g</span>:<span class="number">0</span>,<span class="attr">b</span>:<span class="number">0</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">computed</span>: &#123;</span><br><span class="line">        <span class="comment">// 计算属性要定义到computed节点下，定义成方法格式</span></span><br><span class="line">        <span class="title function_">rgb</span>(<span class="params"></span>)&#123;<span class="keyword">return</span> <span class="string">`rgb(<span class="subst">$&#123;<span class="variable language_">this</span>.r&#125;</span>,<span class="subst">$&#123;<span class="variable language_">this</span>.g&#125;</span>,<span class="subst">$&#123;<span class="variable language_">this</span>.b&#125;</span>)`</span>&#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">methods</span>: &#123;</span><br><span class="line">        <span class="title function_">show</span>(<span class="params"></span>) &#123;</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">this</span>.<span class="property">rgb</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; </span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-
-<h2 id="axios的基本用法"><a href="#axios的基本用法" class="headerlink" title="axios的基本用法"></a>axios的基本用法</h2><blockquote>
-<p>axios是一个<strong>专注于网络请求</strong>的库！它只负责发请求和拿数据<br>    中文官网地址：<a href="http://www.axios-js.com/">http://www.axios-js.com/</a></p>
-</blockquote>
-<ul>
-<li><p>基本语法：</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="title function_">axios</span>(&#123;</span><br><span class="line">    <span class="attr">method</span>: <span class="string">&#x27;请求的类型&#x27;</span>,</span><br><span class="line">    <span class="attr">url</span>: <span class="string">&#x27;请求的 URL 地址&#x27;</span>,</span><br><span class="line">    <span class="comment">// 如果要携带请求体：</span></span><br><span class="line">    <span class="comment">// url中的查询参数，get请求体传参，可选</span></span><br><span class="line">    <span class="attr">params</span>:&#123;&#125;,</span><br><span class="line">    <span class="comment">// 请求体参数，post请求体传参，可选</span></span><br><span class="line">    <span class="attr">data</span>:&#123;&#125;</span><br><span class="line">&#125;).<span class="title function_">then</span>(<span class="function">(<span class="params">result</span>)=&gt;</span>&#123;</span><br><span class="line">    <span class="comment">// .then 用来指定请求成功之后的回调函数</span></span><br><span class="line">    <span class="comment">// 形参中的 result 是请求成功之后的结果</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-<p>调用axios得到的返回值是一个 Promise 对象<br>axios在请求到数据之后，在真正的数据之外，套了一层壳,result得到的就是套完壳之后的结果。</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">config</span>: &#123;&#125;,</span><br><span class="line">    <span class="attr">data</span>: &#123; 真实的数据 &#125;,</span><br><span class="line">    <span class="attr">headers</span>: &#123;&#125;,</span><br><span class="line">    <span class="attr">request</span>: &#123;&#125;,</span><br><span class="line">    <span class="attr">status</span>: xxx,</span><br><span class="line">    <span class="attr">statusText</span>: <span class="string">&#x27;&#x27;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p><strong><font color='red'>结合async和await调用axios</font></strong><br>这个<code>.then</code>用起来有点麻烦，我们可以使用await来进行简化<br><font color='green'>如果调用某个方法的返回值是 Promise 实例，则前面可以添加await！（这样得到的就直接是result）</font><br><font color='red'>await 只能用在被 async 修饰 的方法中</font></p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">ele.<span class="title function_">addEventLister</span>(<span class="string">&#x27;click&#x27;</span>, <span class="keyword">async</span> <span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="keyword">const</span> result =  <span class="keyword">await</span> <span class="title function_">axios</span>(&#123;</span><br><span class="line">        <span class="attr">method</span>: <span class="string">&#x27;请求的类型&#x27;</span>,</span><br><span class="line">        <span class="attr">url</span>: <span class="string">&#x27;请求的 URL 地址&#x27;</span>,</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(result.<span class="property">data</span>);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p><strong>使用解构赋值来获取data</strong></p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">ele.<span class="title function_">addEventLister</span>(<span class="string">&#x27;click&#x27;</span>, <span class="keyword">async</span> <span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="keyword">const</span> &#123; data &#125; =  <span class="keyword">await</span> <span class="title function_">axios</span>(&#123;</span><br><span class="line">        <span class="attr">method</span>: <span class="string">&#x27;请求的类型&#x27;</span>,</span><br><span class="line">        <span class="attr">url</span>: <span class="string">&#x27;请求的 URL 地址&#x27;</span>,</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(data);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h3 id="基于axios-get和axios-post发起请求"><a href="#基于axios-get和axios-post发起请求" class="headerlink" title="基于axios.get和axios.post发起请求"></a>基于axios.get和axios.post发起请求</h3><ol>
-<li>axois.get<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123;data&#125; = <span class="keyword">await</span> axios.<span class="title function_">get</span>(<span class="string">&#x27;url地址&#x27;</span>,&#123;</span><br><span class="line">    <span class="comment">//GET参数</span></span><br><span class="line">    <span class="attr">params</span>: &#123;&#125;</span><br><span class="line">&#125;)</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(data)</span><br></pre></td></tr></table></figure></li>
-<li>axios.post<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">//注意await要在async修饰的函数中使用</span></span><br><span class="line"><span class="keyword">const</span> &#123; data &#125; = <span class="keyword">await</span> axios.<span class="title function_">post</span>(<span class="string">&#x27;http://127.0.0.1:8080/form&#x27;</span>,&#123;</span><br><span class="line">    <span class="attr">unit</span>: <span class="string">&quot;00&quot;</span>,</span><br><span class="line">    <span class="attr">contact</span>: <span class="string">&quot;朱宇楼&quot;</span>,</span><br><span class="line">    <span class="attr">phone</span>: <span class="string">&#x27;15639038667&#x27;</span>,</span><br><span class="line">    <span class="attr">numVisitors</span>: <span class="number">25</span>,</span><br><span class="line">    <span class="attr">guide</span>: <span class="string">&#x27;yes&#x27;</span>,</span><br><span class="line">    <span class="attr">date</span>: <span class="string">&#x27;2025-05-15&#x27;</span>,</span><br><span class="line">    <span class="attr">time</span>: <span class="string">&#x27;14:30&#x27;</span></span><br><span class="line">&#125;)</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(data);</span><br></pre></td></tr></table></figure></li>
-</ol>
-<h2 id="vue-cli的安装和使用"><a href="#vue-cli的安装和使用" class="headerlink" title="vue-cli的安装和使用"></a>vue-cli的安装和使用</h2><p>中文官网：<a href="https://cli.vuejs.org/zh/">https://cli.vuejs.org/zh/</a></p>
+<li><p><font color='red'>最重要的生命周期钩子</font></p>
 <ol>
-<li><p>什么是单页面应用程序？<br><strong>单页面应用程序</strong>（英文名: Single Page Application）简称SPA，顾名思义，<strong>指的是一个Web 网站中只有唯一的一个HTML页面</strong>，所有的功能与交互都在这唯一的一个页面内完成。</p>
+<li><font color='red'>created</font><br> data、props、methods都是可用状态<br> 常用它发起ajax请求来拿数据，转存到data中，供template模板渲染时候使用。</li>
+<li><font color='red'>mounted</font><br> 第一次把DOM元素结构渲染好，最早去操作DOM</li>
+<li><font color='red'>updated</font><br> 可以操作最新的更新过后的DOM</li>
+</ol>
+<p>  其他的很少会用到，记不住也没关系</p>
 </li>
-<li><p>什么是vue-cli<br><strong>vue-cli是Vue.js开发的标准工具</strong>。它简化了程序员基于webpack创建工程化的Vue项目的过程。</p>
-</li>
-<li><p>安装<br>vue-cli是npm上的一个全局包，使用<code>npm i</code>命令，即可方便的把它安装到自己电脑上：<code>npm i -g @vue/cli</code></p>
-<ul>
-<li><code>vue -V</code>查看安装的版本号</li>
 </ul>
+<h2 id="组件之间的通讯-数据共享"><a href="#组件之间的通讯-数据共享" class="headerlink" title="组件之间的通讯(数据共享)"></a>组件之间的通讯(数据共享)</h2><ol>
+<li><p>组件之间的关系<br>最常见的：兄弟关系、父子关系<br>离的比较远的，也可以认为是一种变态的兄弟关系</p>
 </li>
-<li><p>使用<br>基于vue-cli快速生成工程化的Vue项目：<code>vue create 项目名称</code>(建议名称用不带空格的英文)<br> 在想要创建项目的文件夹执行此命令，即会生成项目文件夹，命名即为 项目名称</p>
+<li><p><strong>父向子传值</strong> – <strong>自定义属性</strong><br><font color='red'>再次注意: props是只读的！</font><br><img src="/tsukimiya.github.io/images/vue/%E7%88%B6%E5%AD%90%E7%BB%84%E4%BB%B6%E5%85%B1%E4%BA%AB%E6%95%B0%E6%8D%AE.png" alt="img"></p>
+</li>
+<li><p><strong>子向父传值</strong> – <strong>自定义事件</strong><br>第一步是绑定了一个事件，这是个处理函数。<font color='red'><code>$emit</code>就代表触发这个事件</font>，谁触发这个事件，谁传一个值过来。<br><font color='#00a86b'>子向父传值：在子组件调用$emit，父组件<font color='red'>在子组件标签上</font>用@绑定(监听)这个自定义事件</font><br><font color='red'>绑定事件和触发事件要在同一个实例上！！</font><strong>有绑定有触发</strong>。<br><img src="/tsukimiya.github.io/images/vue/%E5%AD%90%E5%90%91%E7%88%B6%E4%BC%A0%E5%80%BC.png" alt="img"></p>
+<blockquote>
+<p>vue在内部要想触发click事件，它也是用this或vm<br> <figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">button</span> @<span class="attr">click</span>=<span class="string">&#x27;show&#x27;</span>&gt;</span>按钮<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br></pre></td></tr></table></figure><br> <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="attr">method</span>:&#123;</span><br><span class="line">    <span class="title function_">show</span>(<span class="params">e</span>)&#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line">vm.$emit(<span class="string">&#x27;click&#x27;</span>,&#123;<span class="comment">//事件对象e</span></span><br><span class="line">    ...</span><br><span class="line">    <span class="attr">clientX</span>:<span class="string">&quot;&quot;</span>,</span><br><span class="line">    <span class="attr">clientY</span>:<span class="string">&quot;&quot;</span>,</span><br><span class="line">    <span class="attr">target</span>:dom元素</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+</li>
+<li><p><strong>兄弟组件之间的数据共享</strong> – <strong>EventBus</strong><br>在<font color='red'>vue2.x</font>中，兄弟组件之间数据共享的方案是<font color='red'>EventBus</font>。</p>
 <ul>
-<li>选择预设(用方向键)<br>  <strong>初学者建议选择最后一项 – 手动选择要安装哪些功能</strong><br>  按空格选中要安装的预设<br>  一开始建议选择：<br>  Choose Vue version(新版没有这个)、Babel、CSS Pre-processors,其他的不要选<br>  下面接着选择vue版本为2.x，css预处理器为less</li>
+<li>EventBus使用步骤</li>
 </ul>
-</li>
-<li><p>vue项目中src目录的构成：</p>
 <ol>
-<li>assets 文件夹：存放项目中用到的静态资源文件，例如：css样式表、图片资源</li>
-<li>components 文件夹：程序员封装的、可复用的组件，都要放到components目录下。<br> 里面有一个默认组件HelloWorld.vue，给它删除</li>
-<li>main.js 是项目的入口文件。整个项目的运行，要先执行main.js</li>
-<li>app.Vue 是项目的根组件。我们创建项目之后，看到的页面就是app.Vue，如果想重新换一个页面出来，只需要把它给清空掉。里面的template是一个模版结构。</li>
+<li>创建<code>eventBus.js</code>模块，并向外共享一个<strong>Vue的实例对象</strong></li>
+<li>在数据<strong>发送方</strong>，调用<code>bus.$emit(&#39;事件名称&#39;,要发送的数据)</code>方法<strong>触发自定义事件</strong></li>
+<li>在数据<strong>接收方</strong>，调用<code>bus.$on(&#39;事件名称&#39;,事件处理函数)</code>方法<strong>注册一个自定义事件</strong><br> 数据在事件处理函数的形参中拿到。</li>
 </ol>
-</li>
-<li><p>vue项目的运行流程<br> 在工程化的项目中，vue要做的事情很单纯: <strong>通过main.js把 App.vue渲染到index.html的指定区域中</strong>。<br> 其中：</p>
-<ul>
-<li><strong>App.vue</strong>用来编写待渲染的<strong>模板结构</strong></li>
-<li><strong>index.html</strong>中需要预留一个<strong>el区域</strong></li>
-<li><strong>main.js</strong> 把 App.vue渲染到了index.html所预留的区域中  <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 导入 vue 这个包，得到Vue构造函数</span></span><br><span class="line"><span class="keyword">import</span> <span class="title class_">Vue</span> <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span></span><br><span class="line"><span class="comment">// 导入App.vue根组件，将来要把App.vue中的模板结构，渲染到HTML页面中</span></span><br><span class="line"><span class="keyword">import</span> <span class="title class_">App</span> <span class="keyword">from</span> <span class="string">&#x27;./App.vue&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="title class_">Vue</span>.<span class="property">config</span>.<span class="property">productionTip</span> = <span class="literal">false</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建Vue的实例对象</span></span><br><span class="line"><span class="keyword">new</span> <span class="title class_">Vue</span>(&#123;</span><br><span class="line">    <span class="comment">// 把 render 函数指定的组件渲染到HTML页面中，这里指定了App</span></span><br><span class="line">    <span class="comment">// 我们最终的结果是，把这个指定的组件，放到id为app的所在的这个位置，把它给替换掉了</span></span><br><span class="line">    <span class="attr">render</span>: <span class="function"><span class="params">h</span> =&gt;</span> <span class="title function_">h</span>(<span class="title class_">App</span>),</span><br><span class="line">&#125;).$mount(<span class="string">&#x27;#app&#x27;</span>)</span><br><span class="line"><span class="comment">// vue实例的$mount()方法，作用和el属性完全一样</span></span><br></pre></td></tr></table></figure></li>
-</ul>
+<p> <font color='#00a86b'>依旧是发送方触发事件，发送数据，接收方绑定事件监听，接受数据。</font><br> 这里的<code>$on</code>就相当于jQuery的on绑定事件<br> <strong>为什么这里要用到一个共享的实例EventBus</strong> ？因为<font color='red'>绑定事件和触发事件要在同一个实例上！！</font><strong>有绑定有触发</strong>。</p>
 </li>
 </ol>
-<h2 id="扩展知识"><a href="#扩展知识" class="headerlink" title="扩展知识"></a>扩展知识</h2><h3 id="字符串函数charAt"><a href="#字符串函数charAt" class="headerlink" title="字符串函数charAt()"></a>字符串函数charAt()</h3><p>接收索引值，从字符串中获取对应字符，如：<br><code>&#39;hello&#39;.charAt(4) //&#39;o&#39;</code></p>
-<h3 id="将字符串第一个字符变为大写"><a href="#将字符串第一个字符变为大写" class="headerlink" title="将字符串第一个字符变为大写"></a>将字符串第一个字符变为大写</h3><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> str = <span class="string">&#x27;hello&#x27;</span></span><br><span class="line"><span class="keyword">const</span> first = str.<span class="title function_">charAt</span>(<span class="number">0</span>).<span class="title function_">toUpperCase</span>()</span><br><span class="line"><span class="keyword">const</span> other = str.<span class="title function_">slice</span>(<span class="number">1</span>)<span class="comment">//从指定索引往后截取字符串，返回得到的结果</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(str)</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(first+other)</span><br></pre></td></tr></table></figure>
+<p><img src="/tsukimiya.github.io/images/vue/%E5%85%84%E5%BC%9F%E7%BB%84%E4%BB%B6%E4%BC%A0%E5%80%BC.png" alt="img"></p>
+<p>注意：虽然可以使用EventBus来在父子组件之间传值，但是这不是Vue官方推荐的做法。<strong>props和自定义事件更适合处理父子组件之间的通信，因为它们更直观和易于理解</strong>。 Event Bus 通常更适用于非父子关系的组件之间的通信，例如兄弟组件之间。</p>
+<h2 id="拓展"><a href="#拓展" class="headerlink" title="拓展"></a>拓展</h2><h3 id="vscode插件-Path-Autocomplete-路径提示"><a href="#vscode插件-Path-Autocomplete-路径提示" class="headerlink" title="vscode插件 Path Autocomplete - @路径提示"></a>vscode插件 Path Autocomplete - @路径提示</h3><p>下载插件之后，要在自己配置项里面添加如下配置,添加在头部就行<br>设置 – setting.json</p>
+<figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 导入文件时是否携带文件的扩展名</span></span><br><span class="line"><span class="attr">&quot;path-autocomplete.extensionOnImport&quot;</span><span class="punctuation">:</span><span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line"><span class="comment">// 配置 @ 的路径提示</span></span><br><span class="line"><span class="attr">&quot;path-autocomplete.pathMappings&quot;</span><span class="punctuation">:</span><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;@&quot;</span><span class="punctuation">:</span><span class="string">&quot;$&#123;folder&#125;/src&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br></pre></td></tr></table></figure>
+<p><font color="red">注意：只有vscode打开的文件夹根目录是项目根目录时才起作用！！</font></p>
+<blockquote>
+<p>总觉得这个功能vscode也集成进去了？一开始没装的时候，好像就触发了，也懒得验证了hh</p>
+</blockquote>
+<h3 id="Auto-Close-Tag插件"><a href="#Auto-Close-Tag插件" class="headerlink" title="Auto Close Tag插件"></a>Auto Close Tag插件</h3><p>输入<code>&lt;xx&gt;</code>标签前半部分，会自动补全后半部分<br>不过新版vscode好像已经集成了这个功能，没有安装也是这样，装了没啥变化</p>
+<h3 id="方法简写形式"><a href="#方法简写形式" class="headerlink" title="方法简写形式"></a>方法简写形式</h3><p><strong>如果方法只有一行，可以简写到行内</strong>：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">&lt;p&gt;count的值是：&#123;&#123;count&#125;&#125;&lt;/p&gt;</span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">button</span> @<span class="attr">click</span>=<span class="string">&quot;count += 1&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
 
-<h3 id="ajax原生写法"><a href="#ajax原生写法" class="headerlink" title="ajax原生写法"></a>ajax原生写法</h3><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">xxx</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="keyword">const</span> xhr = <span class="keyword">new</span> <span class="title class_">XMLHttpRequest</span>()</span><br><span class="line">    xhr.<span class="title function_">addEventListener</span>(<span class="string">&#x27;load&#x27;</span>,<span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">        <span class="keyword">const</span> result = <span class="title class_">JSON</span>.<span class="title function_">parse</span>(xhr.<span class="property">responseText</span>)</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(result)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+<h3 id="编码规范"><a href="#编码规范" class="headerlink" title="编码规范"></a>编码规范</h3><p>先指令，后绑定，最后绑事件<br>这是一个子组件的绑定示例：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">&lt;<span class="title class_">Goods</span></span><br><span class="line">    v-<span class="keyword">for</span>=<span class="string">&quot;item in list&quot;</span></span><br><span class="line">    :key=<span class="string">&quot;item.id&quot;</span></span><br><span class="line">    :id=<span class="string">&quot;item.id&quot;</span></span><br><span class="line">    ...</span><br><span class="line">    :state=<span class="string">&quot;item.goods_state&quot;</span></span><br><span class="line">    @state_change=<span class="string">&quot;getNewState&quot;</span></span><br><span class="line">&gt;&lt;/<span class="title class_">Goods</span>&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+]]></content>
       <categories>
         <category>Vue</category>
         <category>Vue2</category>
@@ -888,18 +917,23 @@
       <tags>
         <tag>Vue</tag>
         <tag>Vue2</tag>
-        <tag>过滤器</tag>
-        <tag>侦听器</tag>
-        <tag>计算属性</tag>
-        <tag>axios</tag>
-        <tag>vue-cli</tag>
+        <tag>组件</tag>
+        <tag>组件的porps</tag>
+        <tag>生命周期</tag>
+        <tag>组件通讯</tag>
       </tags>
   </entry>
   <entry>
     <title>ref引用DOM元素和组件实例</title>
     <url>/tsukimiya.github.io/2024/04/30/Vue/5.ref%E5%BC%95%E7%94%A8DOM%E5%85%83%E7%B4%A0%E5%92%8C%E7%BB%84%E4%BB%B6%E5%AE%9E%E4%BE%8B/</url>
     <content><![CDATA[<blockquote>
-<p>目标:<br>能够使用<code>ref</code>获取页面上DOM或组件的引用<br>能够知道<code>$nextTick</code>的应用场景并合理地使用<br>通过<a href="https://www.bilibili.com/video/BV1zq4y1p7ga?p=127">“购物车案例”</a>巩固前4天所有学知识</p>
+<p>目标:<br>能够使用<code>ref</code>获取页面上DOM或组件的引用：<br>给元素或组件添加<code>ref=&quot;xxx&quot;</code>的引用名称，通过<code>this.$refs.xxx</code>获取元素或组件的实例</p>
+</blockquote>
+<blockquote>
+<p>能够知道<code>$nextTick</code>的应用场景并合理地使用：把回调函数里面的代码推迟到当DOM重新渲染完毕之后执行</p>
+</blockquote>
+<blockquote>
+<p>通过<a href="https://www.bilibili.com/video/BV1zq4y1p7ga?p=127">“购物车案例”</a>巩固前4天所有学知识</p>
 </blockquote>
 <h2 id="ref引用-引用DOM元素-组件实例"><a href="#ref引用-引用DOM元素-组件实例" class="headerlink" title="ref引用 - 引用DOM元素 &#x2F; 组件实例"></a>ref引用 - 引用DOM元素 &#x2F; 组件实例</h2><blockquote>
 <p><font color='red'>Vue的优势：MVVM的数据驱动视图 – 在vue中，程序员不需要操作DOM，只需要把数据维护好即可。</font><br>因此，在vue项目中，墙裂不建议安装和使用jQuery，因为没有操作DOM的需求，如果有也是极少的。</p>
@@ -925,13 +959,13 @@
 <p>在app组件中，控制组件内按钮和输入框元素的切换</p>
 <figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">v-if</span>=<span class="string">&quot;inputVisible&quot;</span> @<span class="attr">blur</span>=<span class="string">&quot;showButton&quot;</span> <span class="attr">ref</span>=<span class="string">&quot;iptRef&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">v-else</span> @<span class="attr">click</span>=<span class="string">&quot;showinput&quot;</span>&gt;</span>显示输入框<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <p>当我们想要在切换到输入框的时候，直接进入输入框焦点</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="title function_">showinput</span>(<span class="params"></span>)&#123;</span><br><span class="line"><span class="variable language_">this</span>.<span class="property">inputVisible</span> = <span class="literal">true</span>;</span><br><span class="line"><span class="variable language_">this</span>.<span class="property">$refs</span>.<span class="property">iptRef</span>.<span class="title function_">focus</span>()</span><br><span class="line">&#125;,</span><br><span class="line"><span class="title function_">showButton</span>(<span class="params"></span>)&#123;</span><br><span class="line"><span class="variable language_">this</span>.<span class="property">inputVisible</span> = <span class="literal">false</span>;</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="title function_">showinput</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">inputVisible</span> = <span class="literal">true</span>;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">$refs</span>.<span class="property">iptRef</span>.<span class="title function_">focus</span>()</span><br><span class="line">&#125;,</span><br><span class="line"><span class="title function_">showButton</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">inputVisible</span> = <span class="literal">false</span>;</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
 <p>但是<code>this.$refs.iptRef.focus()</code>这样却报错了<br><code>TypeError: Cannot read properties of undefined (reading &#39;focus&#39;)</code><br>这个错误代表说，我要调用一个focus方法，或我要访问一个focus属性，但是它前面那个东西是undefined<br>当我们打印<code>console.log(this.$refs.iptRef);</code>会发现它是<code>undefined</code>！</p>
 <ul>
 <li><strong>分析原因</strong></li>
 </ul>
 <p>在这个函数中，我们是更改inputVisible的值让文本框显示出来，但是现在页面上文本框还未显示出来，所以拿不到这个元素，因此是undefined<br>在Vue的生命周期中，当data里面的数据变化，会触发DOM元素的更新，根据最新的数据，重新渲染页面的UI结构。<strong>在updated之前，页面还没来得及重新渲染，所以数据是新的，但是页面的结构是旧的。</strong><br>所以<code>this.inputVisible = true;</code>这句执行之后，页面上还是按钮，文本框还未被展示，还需要一个更新的过程，需要一定的时间。如果立马去执行<code>this.$refs.iptRef.focus()</code>是拿不到文本框的</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="title function_">showinput</span>(<span class="params"></span>)&#123;</span><br><span class="line"><span class="variable language_">this</span>.<span class="property">inputVisible</span> = <span class="literal">true</span>;</span><br><span class="line"><span class="variable language_">this</span>.<span class="property">$refs</span>.<span class="property">iptRef</span>.<span class="title function_">focus</span>()</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="title function_">showinput</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">inputVisible</span> = <span class="literal">true</span>;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">$refs</span>.<span class="property">iptRef</span>.<span class="title function_">focus</span>()</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
 <p><font color='red'>总结：<code>this.inputVisible = true</code>这行代码执行完，只是数据是最新的，页面还没来得及重新渲染，没有文本框，拿不到它的引用，所以是undefined</font><br>要想不报错，<code>this.$refs.iptRef.focus()</code>这一行调用应该放在页面重新渲染完毕之后</p>
 <ul>
 <li><strong>解决</strong> – <code>this.$nextTick(cb)</code>方法<br>里面接收一个回调，cb是callback<br>代表：<strong>把回调函数里面的代码推迟到当DOM重新渲染完毕之后执行</strong><br>保证cb回调函数可以操作到最新的DOM元素</li>
@@ -951,7 +985,13 @@
     <title>vue组件高级用法 - 动态组件&amp;插槽&amp;自定义指令&amp;ESlint</title>
     <url>/tsukimiya.github.io/2024/05/01/Vue/6.vue%E7%BB%84%E4%BB%B6%E9%AB%98%E7%BA%A7%E7%94%A8%E6%B3%95%20-%20%E5%8A%A8%E6%80%81%E7%BB%84%E4%BB%B6&amp;%E6%8F%92%E6%A7%BD&amp;%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8C%87%E4%BB%A4/</url>
     <content><![CDATA[<blockquote>
-<p>目标:<br>能够使用keep-alive实现组件的缓存<br>能够使用插槽提高组件的复用性<br>能够了解常见的ESLint语法规则</p>
+<p>目标:<br>掌握keep-alive实现组件的缓存：keep-alive标签、include 属性<br>能够使用插槽提高组件的复用性：slot标签、具名插槽、<strong>作用域插槽</strong>(接收数据并使用)、后备内容<br><strong><code>v-slot</code>指令</strong>：<strong>把内容填充到指定名称的插槽中，只能被用在 组件components 或 template标签</strong><br><code>v-slot:</code> 简写 <code>#</code> 如：<code>&lt;template #title&gt;&lt;/template&gt;</code></p>
+</blockquote>
+<blockquote>
+<p>能够知道如何自定义指令：<br>私有自定义指令<code>directives: &#123; &#125;</code><br>全局自定义指令<code>Vue.directive()</code></p>
+</blockquote>
+<blockquote>
+<p>了解常见的ESLint语法规则、习惯在ESLint下进行开发<br>配置VSCode插件及设置，帮助我们规范代码格式，高效开发</p>
 </blockquote>
 <h2 id="动态组件的使用"><a href="#动态组件的使用" class="headerlink" title="动态组件的使用"></a>动态组件的使用</h2><p>动态组件指的是<strong>动态切换组件的显示与隐藏</strong>。实现不同组件的按需展示。</p>
 <ol>
@@ -1117,7 +1157,7 @@
     <title>路由(vue-router)</title>
     <url>/tsukimiya.github.io/2024/05/02/Vue/7.%E8%B7%AF%E7%94%B1%EF%BC%88vue-router%EF%BC%89/</url>
     <content><![CDATA[<blockquote>
-<p>目标:<br>能够在项目中安装和配置路由<br>能够使用路由实现单页面应用程序的开发<br>能够使用导航守卫控制路由的访问权限</p>
+<p>目标:<br>能够在项目中安装和配置路由：<code>createRouter</code>、<code>app.use(router)</code><br>能够使用路由实现单页面应用程序的开发<br>能够使用嵌套路由：通过<code>children</code>属性进行路由嵌套<br>能够实现动态路由匹配：使用冒号声明参数项、<code>this.$route.params</code>、<code>props: true</code><br>能够使用编程式导航：<code>this.$router.push</code>、<code>this.$router.go</code><br>能够使用导航守卫控制路由的访问权限：<br><code>路由实例.beforeEach((to, from, next) =&gt; &#123; /* 必须调 next 函数*/ &#125;)</code></p>
 </blockquote>
 <h2 id="axios的使用"><a href="#axios的使用" class="headerlink" title="axios的使用"></a>axios的使用</h2><ol>
 <li><p>首先安装axios包<br><code>npm i axios</code> ，结果报错<code>ERR! ERESOLVE could not resolve ERESOLVE could not resolve</code><br>解决办法是在后面加 <code>--legacy-peer-deps</code> 即可<br><code>npm install axios -save --legacy-peer-deps</code><br>报错的原因是由于npm不同版本库之间命令不兼容。</p>
@@ -1147,6 +1187,21 @@
 <li><p>缺点<br><strong>无法实现api接口的复用</strong>：如果这个api在多个页面都需要被用到，每一次都需要重新调这个api接口</p>
 </li>
 </ul>
+<h3 id="axios最优使用-–-实现api接口的复用"><a href="#axios最优使用-–-实现api接口的复用" class="headerlink" title="axios最优使用 – 实现api接口的复用"></a>axios最优使用 – 实现api接口的复用</h3><p>使用axios的最优解 —— <strong>封装！</strong>（也就是模块化）</p>
+<blockquote>
+<p>将axios接口作为可导入的工具包进行封装</p>
+</blockquote>
+<p><font color="green">推荐：将其放在utils文件夹下(工具类的意思)</font></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// utils/request.js</span></span><br><span class="line"><span class="keyword">import</span> axios <span class="keyword">from</span> <span class="string">&#x27;axios&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> request = axios.<span class="title function_">create</span>(&#123;</span><br><span class="line">  <span class="comment">// 指定请求根路径</span></span><br><span class="line">  <span class="attr">baseURL</span>: <span class="string">&#x27;https://applet-base-api-t.itheima.net&#x27;</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> request</span><br></pre></td></tr></table></figure>
+
+<p>需要几个服务器的接口，就封装几个，用哪个就导入哪个。如：request1封装TB的接口，2封装JD的接口</p>
+<h3 id="进一步的封装-模块化"><a href="#进一步的封装-模块化" class="headerlink" title="进一步的封装&#x2F;模块化"></a>进一步的封装&#x2F;模块化</h3><p>如果有多个组件，都要调用request的articles接口，那么每个组件都要这么写：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> request <span class="keyword">from</span> <span class="string">&#x27;@/utils/request&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  <span class="title function_">data</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="keyword">return</span>&#123;</span><br><span class="line">      <span class="attr">page</span>: <span class="number">1</span>,  <span class="comment">// 页码值</span></span><br><span class="line">      <span class="attr">limit</span>: <span class="number">10</span> <span class="comment">// 每页显示多少条数据</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  created () &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="title function_">initArticleList</span>()</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">methods</span>: &#123;</span><br><span class="line">    <span class="comment">// 封装获取文章列表数据的方法</span></span><br><span class="line">    <span class="keyword">async</span> initArticleList () &#123;</span><br><span class="line">      <span class="comment">// 发起get请求，获取文章的列表数据</span></span><br><span class="line">      <span class="keyword">const</span> &#123; <span class="attr">data</span>: res &#125; = <span class="keyword">await</span> request.<span class="title function_">get</span>(<span class="string">&#x27;/articles&#x27;</span>, &#123;</span><br><span class="line">         <span class="comment">// 请求参数，一般会把参数值定义在data结点，在这里传进去</span></span><br><span class="line">         <span class="comment">// 具体是否需要传参，是什么参数取决于后端API</span></span><br><span class="line">        <span class="attr">params</span>: &#123; <span class="attr">_page</span>: page, <span class="attr">_limit</span>: limit &#125;</span><br><span class="line">      &#125;)</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(res)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>await后面返回的是一个Promise类型的值，所以我们可以把这一块单独拿出去<br>可以将其<strong>进一步的封装</strong><br>所有的API调用都可以放进 API 文件夹<br>封装的API文件都以API的命名结尾，可以一眼看出这是个API</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// API/articleAPI.js</span></span><br><span class="line"><span class="comment">// 文章相关的API接口，都封装到这个模块中</span></span><br><span class="line"><span class="keyword">import</span> request <span class="keyword">from</span> <span class="string">&#x27;@/utils/request&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 这里不是默认导出，是按需导出</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> getArticleListAPI = <span class="keyword">function</span> (<span class="params">_page, _limit</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> request.<span class="title function_">get</span>(<span class="string">&#x27;/articles&#x27;</span>, &#123;</span><br><span class="line">    <span class="attr">params</span>: &#123; _page, _limit &#125; <span class="comment">// 请求参数</span></span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后每个组件都可以这样调用接口</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; getArticleListAPI &#125; <span class="keyword">from</span> <span class="string">&#x27;@/api/articleAPI&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  <span class="title function_">data</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="keyword">return</span>&#123;</span><br><span class="line">      <span class="attr">page</span>: <span class="number">1</span>,  <span class="comment">// 页码值</span></span><br><span class="line">      <span class="attr">limit</span>: <span class="number">10</span> <span class="comment">// 每页显示多少条数据</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  created () &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="title function_">initArticleList</span>()</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">methods</span>: &#123;</span><br><span class="line">    <span class="comment">// 封装获取文章列表数据的方法</span></span><br><span class="line">    <span class="keyword">async</span> initArticleList () &#123;</span><br><span class="line">      <span class="comment">// 发起get请求，获取文章的列表数据</span></span><br><span class="line">      <span class="keyword">const</span> &#123; <span class="attr">data</span>: res &#125; = <span class="keyword">await</span> <span class="title function_">getArticleListAPI</span>(<span class="variable language_">this</span>.<span class="property">page</span>, <span class="variable language_">this</span>.<span class="property">limit</span>)</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(res)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><font color="red">这样才达到了axios真正的用法</font></p>
 <h2 id="路由的基本配置与使用"><a href="#路由的基本配置与使用" class="headerlink" title="路由的基本配置与使用"></a>路由的基本配置与使用</h2><ol>
 <li><p>什么是路由<br>路由(router) 就是 <strong>对应关系</strong></p>
 </li>
@@ -1274,13 +1329,66 @@
 vue的导航守卫中除了全局前置守卫之外，还有全局解析守卫、全局后置钩子、路由独享的守卫、组件内的守卫，共5种<br>其中，<strong>全局前置守卫的用法是最常见的</strong>，后面的几种后续会进行补充</li>
 </ul>
 <h2 id="案例练习"><a href="#案例练习" class="headerlink" title="案例练习"></a>案例练习</h2><ul>
-<li><a href="https://www.bilibili.com/video/BV1zq4y1p7ga?t=87.0&p=193">路由应用案例</a><blockquote>
+<li><p><a href="https://www.bilibili.com/video/BV1zq4y1p7ga?t=87.0&p=193">路由应用案例</a></p>
+<blockquote>
 <p>后台管理案例</p>
 </blockquote>
 </li>
-<li><a href="https://www.bilibili.com/video/BV1zq4y1p7ga?p=204">黑马头条</a><blockquote>
+<li><p><a href="https://www.bilibili.com/video/BV1zq4y1p7ga?p=204">黑马头条</a></p>
+<blockquote>
 <p>SPA单页面应用程序 移动端 简单案例<br>  实现下拉刷新、上拉加载更多功能、Vant组件库的使用</p>
 </blockquote>
+<p>  配置：Babel、Router、CSS Pre-processors、Linter &#x2F; Formatter、Vue 2.x<br>  选择路由模式 – Use history mode for router？ – N</p>
+<blockquote>
+<p>history mode for router 需要和后端配合使用，兼容性比较差<br>#开头的hash值所表示的路由，通用性更强，低级还是高级的浏览器都支持</p>
+</blockquote>
+<p>  css预处理器 – less<br>  ESLint – Standard config 标准配置<br>  Lint on save 在保存的时候进行格式的检查</p>
+<p>  项目结构：<br>  views文件夹</p>
+<blockquote>
+<p>如果某个组件，是通过路由进行动态展示和切换的，这种组件要放到views里面<br>  如果某个组件不是通过路由切换的，是一个可复用的组件，那么这个组件要放到components里面</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="Vant组件库"><a href="#Vant组件库" class="headerlink" title="Vant组件库"></a>Vant组件库</h3><p>轻量、可靠的移动端组件库<br><a href="https://vant-ui.github.io/vant/v2/#/zh-CN/">Vant2官方文档</a>(适用于 Vue2 开发) <a href="https://vant-ui.github.io/vant/#/zh-CN/">Vant4官方文档</a>(适用于 Vue3 开发)</p>
+<ol>
+<li><p>安装</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line"># Vue 3 项目，安装最新版 Vant：</span><br><span class="line">npm i vant -S</span><br><span class="line"></span><br><span class="line"># Vue 2 项目，安装 Vant 2：</span><br><span class="line">npm i vant@latest-v2 -S</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>导入组件<br>我们选择最便捷的方式 – 导入所有组件</p>
+<blockquote>
+<p>虽然官方推荐的做法是：自动按需引入组件。但是配起来太复杂了，成本太高了<br>引入所有组件会增加代码包体积，但是开发的时候我们怎么快怎么来，不用考虑体积的问题<br>在发布的时候，我们可以进行项目体积的优化，可以直接把Vant从项目里面抽出去</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// main.js</span></span><br><span class="line"><span class="keyword">import</span> <span class="title class_">Vue</span> <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="title class_">Vant</span> <span class="keyword">from</span> <span class="string">&#x27;vant&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">&#x27;vant/lib/index.css&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="title class_">Vue</span>.<span class="title function_">use</span>(<span class="title class_">Vant</span>);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用<br>查阅官方文档即可<br><a href="https://vant-ui.github.io/vant/v2/#/zh-CN/">Vant2官方文档</a>(适用于 Vue2 开发)<br><a href="https://vant-ui.github.io/vant/#/zh-CN/">Vant4官方文档</a>(适用于 Vue3 开发)<br><font color="red">注意：在使用Vant组件的时候，如果某个组件的某个属性默认值是false，希望把它改成true，直接把这个属性写上就可以了</font><br>如：<code>&lt;van-nav-bar title=&quot;标题&quot; fixed placeholder /&gt;</code><br>相当于<code>&lt;van-nav-bar title=&quot;标题&quot; :fixed=&#39;ture&#39; :placeholder=&#39;true&#39; /&gt;</code><br>这里给属性值类型是布尔值，所以要用v-bind绑定，否则是字符串</p>
+</li>
+<li><p><strong>覆盖Vant组件的样式</strong>： <a href="/tsukimiya.github.io/2024/04/24/Vue/4.Vue%E7%BB%84%E4%BB%B6%E4%B8%8E%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F#deep-%E6%A0%B7%E5%BC%8F%E7%A9%BF%E9%80%8F"><strong>&#x2F;deep&#x2F; 样式穿透</strong></a></p>
+<p> 还可以通过Vant组件库提供的定制主题，来直接改变组件的样式，这样在每个组件使用该组件都不需要再去修改。</p>
+ <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 在main.js中 引入全部样式</span></span><br><span class="line"><span class="keyword">import</span> <span class="string">&#x27;vant/lib/index.less&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// vue.config.js</span></span><br><span class="line"><span class="comment">// 这个文件是 vue-cli 创建出来的项目的配置文件</span></span><br><span class="line"><span class="comment">// 在vue.config.js 这个配置文件中，可以对整个项目的打包、构建进行全局性的配置</span></span><br><span class="line"><span class="keyword">const</span> &#123; defineConfig &#125; = <span class="built_in">require</span>(<span class="string">&#x27;@vue/cli-service&#x27;</span>)</span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = <span class="title function_">defineConfig</span>(&#123;</span><br><span class="line">  <span class="attr">transpileDependencies</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">css</span>: &#123;</span><br><span class="line">    <span class="attr">loaderOptions</span>: &#123;</span><br><span class="line">      <span class="attr">less</span>: &#123;</span><br><span class="line">        <span class="comment">// 若 less-loader 版本小于 6.0，请移除 lessOptions 这一级，直接配置选项。</span></span><br><span class="line">        <span class="attr">lessOptions</span>: &#123;</span><br><span class="line">          <span class="attr">modifyVars</span>: &#123;</span><br><span class="line">            <span class="comment">// 直接覆盖变量</span></span><br><span class="line">            <span class="comment">// 这里是覆盖了 NavBar 导航栏 的背景色</span></span><br><span class="line">            <span class="string">&#x27;nav-bar-background-color&#x27;</span>: <span class="string">&#x27;red&#x27;</span> <span class="comment">// #007bff</span></span><br><span class="line">            <span class="comment">// 或者可以通过 less 文件覆盖（文件路径为绝对路径）</span></span><br><span class="line">            <span class="comment">// hack: `true; @import &quot;your-less-file-path.less&quot;;`</span></span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p> 缺点：需要修改配置文件，必须重启打包服务器，太过麻烦，所以了解即可，实际开发不会这么使用<br> 而是通过 less 文件覆盖进行主题的定制：</p>
+ <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="attr">hack</span>: <span class="string">`true; @import &quot;your-less-file-path.less&quot;;`</span></span><br></pre></td></tr></table></figure>
+<p> <strong>好处：不用重启打包服务器，直接改就能生效</strong></p>
+</li>
+</ol>
+<h3 id="通过less文件覆盖进行主题定制"><a href="#通过less文件覆盖进行主题定制" class="headerlink" title="通过less文件覆盖进行主题定制"></a>通过less文件覆盖进行主题定制</h3><p>如：在src目录下新建一个theme.less</p>
+<figure class="highlight less"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 在theme.less文件中，覆盖Vant官方的less变量值</span></span><br><span class="line"><span class="variable">@blue:</span> <span class="number">#007bff</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 覆盖 Navbar 的 less 样式</span></span><br><span class="line"><span class="variable">@nav-bar-background-color:</span> <span class="variable">@blue</span>;</span><br></pre></td></tr></table></figure>
+<p>然后配置vue.config.js文件</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 这个文件是 vue-cli 创建出来的项目的配置文件</span></span><br><span class="line"><span class="comment">// 在vue.config.js 这个配置文件中，可以对整个项目的打包、构建进行全局性的配置</span></span><br><span class="line"><span class="keyword">const</span> &#123; defineConfig &#125; = <span class="built_in">require</span>(<span class="string">&#x27;@vue/cli-service&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// webpack在进行打包的时候，底层用到了node .js</span></span><br><span class="line"><span class="comment">// 因此，在vue.config.js 配置文件中，可以导入并使用node.js中的核心模块</span></span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">&#x27;path&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> themePath = path.<span class="title function_">join</span>(__dirname, <span class="string">&#x27;/src/theme.less&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = <span class="title function_">defineConfig</span>(&#123;</span><br><span class="line">  <span class="attr">transpileDependencies</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">css</span>: &#123;</span><br><span class="line">    <span class="attr">loaderOptions</span>: &#123;</span><br><span class="line">      <span class="attr">less</span>: &#123;</span><br><span class="line">        <span class="comment">// 若 less-loader 版本小于 6.0，请移除 lessOptions 这一级，直接配置选项。</span></span><br><span class="line">        <span class="attr">lessOptions</span>: &#123;</span><br><span class="line">          <span class="attr">modifyVars</span>: &#123;</span><br><span class="line">            <span class="comment">// 通过 less 文件覆盖（文件路径为绝对路径）</span></span><br><span class="line">            <span class="attr">hack</span>: <span class="string">`true; @import &quot;<span class="subst">$&#123;themePath&#125;</span>&quot;;`</span></span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="vue-config-js-配置文件"><a href="#vue-config-js-配置文件" class="headerlink" title="vue.config.js 配置文件"></a>vue.config.js 配置文件</h2><p>这个文件是 vue-cli 创建出来的项目的配置文件<br>在这个配置文件中，可以对整个项目的打包、构建进行全局性的配置</p>
+<p>项目开发完成之后，可以npm run build进行打包<br>最终项目里面会有个dist文件夹，里面有个index.html首页</p>
+<p>但是有个问题：我们直接进入dist目录，双击这个首页打开，是看不到效果的。<br>因为：默认情况下，我们运行npm run build打包生成的dist，里面的这些文件，只能发布到服务器上，通过http协议才可以正常被打开。而双击打开的是file协议，所以看不到效果</p>
+<p>如果想要看到效果，需要做一下打包发布的配置：<a href="https://cli.vuejs.org/zh/config/#publicpath">vue.config.js-publicPath</a><br>在vue.config.js配置文件中设置publicPath为’.&#x2F;‘，再次打包文件，即可在文件夹中双击打开</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// ...</span></span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = <span class="title function_">defineConfig</span>(&#123;</span><br><span class="line">  <span class="attr">transpileDependencies</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">publicPath</span>: <span class="string">&#x27;./&#x27;</span>,</span><br><span class="line">  <span class="attr">css</span>: &#123;...&#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p><strong>publicPath</strong><br>部署应用包时的基本 URL。<br>默认情况下，Vue CLI 会假设你的应用是被部署在一个域名的根路径上，例如 <a href="https://www.my-app.com/">https://www.my-app.com/</a><br><strong>如果应用被部署在一个子路径上</strong>，你就需要<strong>用这个选项指定这个子路径</strong>。例如，如果你的应用被部署在 <a href="https://www.my-app.com/my-app/%EF%BC%8C%E5%88%99%E8%AE%BE%E7%BD%AE">https://www.my-app.com/my-app/，则设置</a> publicPath 为 &#x2F;my-app&#x2F; 。</p>
+<p>这个值也可以被设置为空字符串 (‘’) 或是相对路径 (‘.&#x2F;‘)，这样所有的资源都会被链接为相对路径，这样打出来的包可以被部署在任意路径，也可以用在类似 Cordova hybrid 应用的文件系统中。</p>
+<p>相对路径的 publicPath 有一些使用上的限制。在以下情况下，应当避免使用相对 publicPath:</p>
+<ul>
+<li>当使用基于 HTML5 history.pushState 的路由时；</li>
+<li>当使用 pages 选项构建多页面应用时。</li>
+</ul>
 </li>
 </ul>
 <h2 id="拓展"><a href="#拓展" class="headerlink" title="拓展"></a>拓展</h2><h3 id="hash地址注意点"><a href="#hash地址注意点" class="headerlink" title="hash地址注意点"></a>hash地址注意点</h3><p>hash地址里面字母都要是小写，<font color="red">url地址里面不要出现大写字符或字母</font>。<br>除非是一些 搜索关键字 可以出现大写</p>
@@ -1328,7 +1436,11 @@ vue的导航守卫中除了全局前置守卫之外，还有全局解析守卫�
 <p>另一种方法：<br>向后端 API 发送一个请求，携带用户的 token 和路由的所需角色。后端 API 检查用户的权限并返回一个响应，指示用户是否具有访问权限。</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">hasRequiredRoles</span>(<span class="params">requiredRoles</span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> token = <span class="variable language_">localStorage</span>.<span class="title function_">getItem</span>(<span class="string">&#x27;token&#x27;</span>)<span class="comment">// 从本地存储中获取用户的 token</span></span><br><span class="line">  <span class="comment">// 向后端 API 发送请求</span></span><br><span class="line">  <span class="keyword">return</span> <span class="title function_">fetch</span>(<span class="string">&#x27;/api/auth/check-permissions&#x27;</span>, &#123;</span><br><span class="line">    <span class="attr">method</span>: <span class="string">&#x27;POST&#x27;</span>,</span><br><span class="line">    <span class="attr">headers</span>: &#123;</span><br><span class="line">      <span class="string">&#x27;Authorization&#x27;</span>: <span class="string">`Bearer <span class="subst">$&#123;token&#125;</span>`</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">body</span>: <span class="title class_">JSON</span>.<span class="title function_">stringify</span>(&#123;</span><br><span class="line">      <span class="attr">requiredRoles</span>: requiredRoles</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;)</span><br><span class="line">  .<span class="title function_">then</span>(<span class="function"><span class="params">res</span> =&gt;</span> res.<span class="title function_">json</span>())</span><br><span class="line">  .<span class="title function_">then</span>(<span class="function"><span class="params">data</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (data.<span class="property">success</span>) &#123;<span class="comment">// 如果用户具有访问权限，返回 true</span></span><br><span class="line">      <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">    &#125; <span class="keyword">else</span> &#123; <span class="comment">// 如果用户没有访问权限，返回 false</span></span><br><span class="line">      <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br><span class="line">  .<span class="title function_">catch</span>(<span class="function"><span class="params">err</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span> <span class="comment">// 如果请求失败，返回 false</span></span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
 </ul>
-]]></content>
+<h3 id="Less变量"><a href="#Less变量" class="headerlink" title="Less变量"></a>Less变量</h3><p><a href="https://less.bootcss.com/">Less</a> 是一种可编程的样式语言。</p>
+<p><code>@</code>是在less语法里面，专门定义变量的一种格式<br>支持我们以编程的方式来写CSS代码</p>
+<figure class="highlight less"><table><tr><td class="code"><pre><span class="line"><span class="variable">@width:</span> <span class="number">10px</span>;</span><br><span class="line"><span class="variable">@height:</span> <span class="variable">@width</span> + <span class="number">10px</span>;</span><br><span class="line"></span><br><span class="line"><span class="selector-id">#header</span>&#123;</span><br><span class="line">  <span class="attribute">width</span>: <span class="variable">@width</span>;</span><br><span class="line">  <span class="attribute">height</span>: <span class="variable">@height</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>编译为：</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><span class="line"><span class="selector-id">#header</span>&#123;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">10px</span>;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">20px</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
       <categories>
         <category>Vue</category>
         <category>Vue2</category>
@@ -1364,18 +1476,26 @@ vue的导航守卫中除了全局前置守卫之外，还有全局解析守卫�
   <entry>
     <title>Hello Front-end</title>
     <url>/tsukimiya.github.io/index.html</url>
-    <content><![CDATA[<p>Welcome to my study blog! This is my continuously make up a main post. If you get any problems when using my blog, you can send the email to <a href="mailto:&#x68;&#x61;&#114;&#105;&#x69;&#106;&#105;&#99;&#111;&#64;&#x6f;&#x75;&#x74;&#x6c;&#111;&#111;&#107;&#46;&#99;&#111;&#x6d;">&#x68;&#x61;&#114;&#105;&#x69;&#106;&#105;&#99;&#111;&#64;&#x6f;&#x75;&#x74;&#x6c;&#111;&#111;&#107;&#46;&#99;&#111;&#x6d;</a></p>
+    <content><![CDATA[<p>Welcome to my study blog! This is my continuously make up a main post. If you get any problems when using my blog, you can send the email to <a href="mailto:&#104;&#97;&#114;&#x69;&#105;&#106;&#x69;&#x63;&#x6f;&#x40;&#x6f;&#x75;&#116;&#108;&#111;&#111;&#107;&#x2e;&#x63;&#x6f;&#109;">&#104;&#97;&#114;&#x69;&#105;&#106;&#x69;&#x63;&#x6f;&#x40;&#x6f;&#x75;&#116;&#108;&#111;&#111;&#107;&#x2e;&#x63;&#x6f;&#109;</a></p>
 <h2 id="Study-Guide"><a href="#Study-Guide" class="headerlink" title="Study Guide"></a>Study Guide</h2><center>Here provide you some study sources and study route.</center>
 <!-- This is [main tech](#Main-Line) -->
 <center>This is <a href='#Main-Line'>main tech</a></center>
 
 <h3 id="Nice-Tools"><a href="#Nice-Tools" class="headerlink" title="Nice Tools"></a>Nice Tools</h3><ul>
+<li><p><a href="https://www.lodashjs.com/">Loadsh 中文文档</a>(鲁大师) <font color='red'> 推荐 </font></p>
+<blockquote>
+<p>鲁大师 提供了许多牛逼的函数 节流、防抖、操作数组、对象的一系列函数（对象的深拷贝、浅拷贝）<br>轶事：lodash为什么叫lodash? lodash可以理解为low dash，dash就是中划线-，比较low的dash就是下划线_，因为之前有一个underscore类库，也是用下划线表示，开发一个新类，沿用以前的传统，所以就用了一个同义词lodash(low dash)。</p>
+</blockquote>
+</li>
 <li><p><a href="https://cn.vuejs.org/api/">Vue.js API官方文档</a> <font color='red'> 推荐 </font></p>
 </li>
-<li><p><a href="https://jquery.cuishifeng.cn/">JQuery API 中文在线文档</a>(<a href="https://jquery.cuishifeng.cn/">https://jquery.cuishifeng.cn/</a>)</p>
-<blockquote>
-<p>不过很多API的解释和案例都有点解释不清。。</p>
-</blockquote>
+<li><p>JQuery API 中文在线文档&#x2F;速查表</p>
+<ul>
+<li><p>by Shifone <a href="https://www.bejson.com/apidoc/jquery/">地址1</a> 地址2(<a href="https://jquery.cuishifeng.cn/">失效了</a>)（不过看过的一些API的解释和案例都写的不好）</p>
+</li>
+<li><p>by hemin <a href="http://hemin.cn/jq/">地址</a></p>
+</li>
+</ul>
 </li>
 <li><p><a href="https://regexr-cn.com/">正则表达式测试工具</a>(<a href="https://regexr-cn.com/">https://regexr-cn.com/</a>)</p>
 </li>
@@ -1626,7 +1746,7 @@ vue的导航守卫中除了全局前置守卫之外，还有全局解析守卫�
 </li>
 <li><p><strong>Tailwind CSS</strong>(2017)</p>
 <blockquote>
-<p>在React和Vue等组件化开发框架的发展下，DOM的不用不再是难题，在大型项目下，CSS的复用已经名存实亡，于是Tailwind CSS出现了。<br>  Tailwind CSS的设计理念是提供一组原子类，以快速构建样式，而不需要编写自定义的CSS，这一开发方式深受开发者喜爱，并成为Next框架的默认组件。至此，Sass、Less完成了它们的历史使命。</p>
+<p>在React和Vue等组件化开发框架的发展下，DOM的复用不再是难题，在大型项目下，CSS的复用已经名存实亡，于是Tailwind CSS出现了。<br>  Tailwind CSS的设计理念是提供一组原子类，以快速构建样式，而不需要编写自定义的CSS，这一开发方式深受开发者喜爱，并成为Next框架的默认组件。至此，Sass、Less完成了它们的历史使命。</p>
 </blockquote>
 </li>
 <li><p>Flutter(2017 Google)</p>
@@ -1667,19 +1787,6 @@ vue的导航守卫中除了全局前置守卫之外，还有全局解析守卫�
 </li>
 </ol>
 ]]></content>
-  </entry>
-  <entry>
-    <title>留言板</title>
-    <url>/tsukimiya.github.io/guestbook/index.html</url>
-    <content><![CDATA[<h1 id="欢迎来到我的博客！"><a href="#欢迎来到我的博客！" class="headerlink" title="欢迎来到我的博客！"></a>欢迎来到我的博客！</h1><blockquote>
-<p>欢迎在这里留言！任何问题都可以在这里留言，我会及时回复的。目前留言板块尚未配置完全，暂时无法使用，如有问题请邮箱：<br><a href="mailto:&#104;&#x61;&#x72;&#105;&#105;&#x6a;&#x69;&#x63;&#x6f;&#x40;&#111;&#117;&#116;&#x6c;&#x6f;&#x6f;&#107;&#x2e;&#99;&#x6f;&#x6d;">&#104;&#x61;&#x72;&#105;&#105;&#x6a;&#x69;&#x63;&#x6f;&#x40;&#111;&#117;&#116;&#x6c;&#x6f;&#x6f;&#107;&#x2e;&#99;&#x6f;&#x6d;</a><br><a href="mailto:&#x31;&#56;&#x33;&#50;&#x37;&#x31;&#x35;&#56;&#51;&#x38;&#64;&#x71;&#113;&#x2e;&#99;&#x6f;&#x6d;">&#x31;&#56;&#x33;&#50;&#x37;&#x31;&#x35;&#56;&#51;&#x38;&#64;&#x71;&#113;&#x2e;&#99;&#x6f;&#x6d;</a><br>欢迎给我发送邮件</p>
-</blockquote>
-]]></content>
-  </entry>
-  <entry>
-    <title>分类</title>
-    <url>/tsukimiya.github.io/categories/index.html</url>
-    <content><![CDATA[]]></content>
   </entry>
   <entry>
     <title>Pulled Post</title>
@@ -1772,9 +1879,11 @@ vue的导航守卫中除了全局前置守卫之外，还有全局解析守卫�
 <p>NexT默认使用微软雅黑，这里我将blog title修改为了 <a href="https://fonts.google.com/selection/embed">Miniver</a> 字体，size: 1.5<br> 详细请参考该文章：<a href="https://blog.csdn.net/sailist/article/details/104114578">Hexo-Next主题更改字体</a><br> 文中提到的字体网站：<a href="https://fonts.google.com/">Google Fonts</a></p>
 </blockquote>
 </li>
+<li><p><a href="https://blog.csdn.net/weixin_58068682/article/details/116611715">添加自定义html页面</a>(CSDN)</p>
+</li>
 </ol>
 <h1 id="408"><a href="#408" class="headerlink" title="408"></a>408</h1><h2 id="计算机网络原理"><a href="#计算机网络原理" class="headerlink" title="计算机网络原理"></a>计算机网络原理</h2><ul>
-<li>计算机网络原理 谢希仁（第8版）课后习题答案<ul>
+<li>计算机网络原理 谢希仁（第8版）课后习题 及 参考答案<ul>
 <li><a href="https://blog.csdn.net/weixin_45773137/article/details/126150861">第一章–分组交换 &#x2F; 时延 &#x2F; 性能指标 &#x2F; OSI七层模型和TCP&#x2F;IP五层模型–网络体系结构</a>(CSDN&#x2F;答案不全)<br>  不全的部分参考这个 <a href="https://cloud.tencent.com/developer/article/2055618">Post</a> (腾讯云&#x2F;Q10开始排版不好)</li>
 <li><a href="https://blog.csdn.net/weixin_62985813/article/details/134105653">第二章–物理层</a>(CSDN)</li>
 <li><a href="https://blog.csdn.net/weixin_45773137/article/details/126276788">第三章–数据链路层</a>(CSDN)</li>
@@ -1794,6 +1903,19 @@ vue的导航守卫中除了全局前置守卫之外，还有全局解析守卫�
 </li>
 </ol>
 <h1 id="ELSE"><a href="#ELSE" class="headerlink" title="ELSE"></a>ELSE</h1>]]></content>
+  </entry>
+  <entry>
+    <title>分类</title>
+    <url>/tsukimiya.github.io/categories/index.html</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>留言板</title>
+    <url>/tsukimiya.github.io/guestbook/index.html</url>
+    <content><![CDATA[<h1 id="欢迎来到我的博客！"><a href="#欢迎来到我的博客！" class="headerlink" title="欢迎来到我的博客！"></a>欢迎来到我的博客！</h1><blockquote>
+<p>欢迎在这里留言！任何问题都可以在这里留言，我会及时回复的。目前留言板块尚未配置完全，暂时无法使用，如有问题请邮箱：<br><a href="mailto:&#104;&#x61;&#114;&#x69;&#105;&#x6a;&#x69;&#99;&#x6f;&#x40;&#x6f;&#117;&#116;&#x6c;&#x6f;&#x6f;&#x6b;&#46;&#99;&#x6f;&#109;">&#104;&#x61;&#114;&#x69;&#105;&#x6a;&#x69;&#99;&#x6f;&#x40;&#x6f;&#117;&#116;&#x6c;&#x6f;&#x6f;&#x6b;&#46;&#99;&#x6f;&#109;</a><br><a href="mailto:&#49;&#x38;&#x33;&#x32;&#55;&#x31;&#53;&#x38;&#51;&#x38;&#64;&#x71;&#x71;&#46;&#x63;&#x6f;&#109;">&#49;&#x38;&#x33;&#x32;&#55;&#x31;&#53;&#x38;&#51;&#x38;&#64;&#x71;&#x71;&#46;&#x63;&#x6f;&#109;</a><br>欢迎给我发送邮件</p>
+</blockquote>
+]]></content>
   </entry>
   <entry>
     <title>Array API | 数组方法 | 数组函数</title>
@@ -1956,10 +2078,10 @@ forEach(callbackFn(element,index,array), thisArg)`,
                 type: '累加器',
                 name: 'Array.prototype.reduce()',
                 address: 'https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce',
-                describe: `累加器。可以用来计算一组数据的和，每次循环return的值，都会作为下次循环的初始值`,
+                describe: `累加器。<br>可以用来计算一组数据的和，每次循环return的值，都会作为下次循环的初始值`,
                 use:
-`[1,2,3,4,5].reduce( (total,num)=>total+num ) // 15 -- 所有数值的累加和
-[1,2,3,4,5].reduce((total,num)=>total+num),20) // 35 -- 从初始值20开始累加
+`[1,2,3,4,5].reduce( (total,num)=>total+num ) // 15 -- 所有数值的累加和 循环4次
+[1,2,3,4,5].reduce((total,num)=>total+num),20) // 35 -- 从初始值20开始累加 循环5次
 
 [1,2,3,4,5].reduce((total,num)=>{
     //没有初始值，第一个数值被赋值给了total作为初始值，函数执行4次
@@ -1970,7 +2092,17 @@ forEach(callbackFn(element,index,array), thisArg)`,
     //传了初始值，函数执行5次
     console.log(total + ' ' + num); // 20 1, 21 2, 23 3, 26 4, 30 5
     return total + num;
-},20) // 35`,
+},20) // 35
+
+// reduce()函数还可以进行一些复杂的处理，如：融合对象
+// 简单的示例：
+let c = {c:'c'}; 
+[{a:'a'},{b:'b'}].reduce((mix,item)=>Object.assign(mix,item),c)
+// 这里作用等同于
+Object.assign(c,...[{a:'a'},{b:'b'}]) // c: {a:'a',b:'b',c:'c'}
+更复杂的实例参考：
+ES6 - 对象的新增方法 - Object.getOwnPropertyDescriptors方法最后一个例子
+https://es6.ruanyifeng.com/#docs/object-methods#Object-getOwnPropertyDescriptors`,
                 syntax:
 `array.reduce(callbackFn(total,currentValue)) //必选的参数
 array.reduce(function(total, currentValue, currentIndex, arr), initialValue)`,
@@ -1979,7 +2111,7 @@ array.reduce(function(total, currentValue, currentIndex, arr), initialValue)`,
                 return: '返回最终的累加值 total',
             },
             some: {
-                type: '循环 | 遍历 | 查找 | 查询',
+                type: '循环 | 遍历 | 查找 | 查询 | 判断',
                 name: 'Array.prototype.some()',
                 address: 'https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/some',
                 describe: `forEach虽然能实现我们的需求，但是性能比较差，不能被终止。<br>从数组里面找元素用some比较合适，因为some找到那一项之后，就可以终止后续的循环`,
@@ -2142,7 +2274,7 @@ forEach(callbackFn(element,index,array), thisArg)`,
 </li>
 <li><p><a href="./npmAPI.html">npm - 常用包 | 第三方模块</a></p>
 </li>
-<li><p><a href="pages/MakeCV.html">MakeCV</a></p>
+<li><p><a href="pages/MakeCV.html" target='_blank'>MakeCV</a></p>
 <blockquote>
 <p>制作简历</p>
 </blockquote>
@@ -2159,34 +2291,29 @@ forEach(callbackFn(element,index,array), thisArg)`,
 <h2 id="全局包"><a href="#全局包" class="headerlink" title="全局包"></a>全局包</h2><blockquote>
 <p>全局包会被安装到C:\Users\用户目录\AppData\Roaming\npm\node _modules目录下。<br>    <code>npm i 包名 -g</code> #全局安装指定的包<br>    <code>npm uninstall 包名 -g</code> #卸载全局安装的包</p>
 </blockquote>
-<div style="font-weight:bolder;font-size:20px;">
-
 <ul>
-<li>npm i axios</li>
+<li>npm i xxx</li>
 </ul>
-</div>
-
-
 <h2 id="项目包-开发依赖包"><a href="#项目包-开发依赖包" class="headerlink" title="项目包 - 开发依赖包"></a>项目包 - 开发依赖包</h2><blockquote>
 <p>被记录到devDependencies节点中的包，只在开发期间会用到<br>    简写：<code>npm i 包名-D</code>  (<code>npm install包名 --save-dev</code>)</p>
 </blockquote>
-<div style="font-weight:bolder;font-size:20px;">
-
 <ul>
-<li>npm i axios</li>
+<li><code>npm i xxx</code></li>
 </ul>
-</div>
-
-
 <h2 id="项目包-核心依赖包"><a href="#项目包-核心依赖包" class="headerlink" title="项目包 - 核心依赖包"></a>项目包 - 核心依赖包</h2><blockquote>
 <p>被记录到 dependencies 节点中的包，在开发期间和项目上线之后都会用到<br>    简写：<code>npm i 包名</code>  (<code>npm install包名 -S(--save)</code>)<br>    从npm 5.0.0版本开始，–save已经变成默认行为，所以即使不加-S或–save，安装的包也会自动被加入到dependencies。</p>
 </blockquote>
-<div style="font-weight:bolder;font-size:20px;">
-
 <ul>
-<li>npm i axios</li>
+<li><p><code>npm i axios</code></p>
+</li>
+<li><p><code>npm i vue-router@3.5.2 -S</code> (Vue2使用路由需制定为Router3版本)</p>
+<blockquote>
+<p>最新版的 Vue Router4 是为vue3设计的，不兼容Vue2。<br>  所以想在 Vue 2 中使用 Vue Router，安装包的时候需要指定 Vue Router 3 的版本</p>
+</blockquote>
+</li>
+<li><p><code>npm i vue-router</code> (Vue3路由使用最新版即可)</p>
+</li>
 </ul>
-</div>
 ]]></content>
   </entry>
   <entry>
@@ -2246,6 +2373,8 @@ forEach(callbackFn(element,index,array), thisArg)`,
 </li>
 </ul>
 <h3 id="TODO"><a href="#TODO" class="headerlink" title="TODO"></a>TODO</h3><ul>
+<li><p>写一个sleep函数？研究过promise的应该写个sleep函数很简单？</p>
+</li>
 <li><p>为什么v-if是把元素移除和添加进页面的，然而v-if添加进页面的元素上带有的id属性，页面上的a链接指向它的锚点不起作用，为什么？如果换成v-show就没关系，因为控制的是display的值<br>也就是说，新添加进页面的元素的id属性不能作为锚点使用？</p>
 </li>
 <li><p>Hexo中使用emoji表情</p>
@@ -2309,28 +2438,42 @@ forEach(callbackFn(element,index,array), thisArg)`,
     <content><![CDATA[]]></content>
   </entry>
   <entry>
-    <title>MakeCV</title>
-    <url>/tsukimiya.github.io/custom/pages/MakeCV.html</url>
-    <content><![CDATA[
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MakeCV | Ayu's Study Blog</title>
-    <style>
-        /* 取消自定义页面顶部显示文件夹目录位置 */
-        .breadcrumb{ 
-            display: none;
-        }
-    </style>
-</head>
-<body>
-    <h1>测试页面</h1>
-    <p>
-        慧落笔乐饮使洪洪衣二略德愚斯，归者娘恨平一措者了挟何可了上于他要普，办太人恨是烦快奔京薪卑价手的了，小落老，流三京尽国航作色饮，人仇哥孔尝出以无之她服他，了你先司设投中仆饮，的方后，与说名以者卡，受。
-    </p>
-</body>
-</html>]]></content>
+    <title>ACGNCollections</title>
+    <url>/tsukimiya.github.io/%E6%AC%A1%E5%85%83/AC.html</url>
+    <content><![CDATA[<pre><center>汝等即将踏入此地的人，舍弃所有的希望吧</center></pre>
+
+<h1 id="Anime"><a href="#Anime" class="headerlink" title="Anime"></a>Anime</h1><h2 id="Sakuga"><a href="#Sakuga" class="headerlink" title="Sakuga"></a>Sakuga</h2><h3 id="Sakugaer"><a href="#Sakugaer" class="headerlink" title="Sakugaer"></a>Sakugaer</h3><ul>
+<li><a href="https://space.bilibili.com/1905952529?spm_id_from=333.337.0.0">O_bscure</a>(TW)</li>
+</ul>
+<h3 id="Animetor"><a href="#Animetor" class="headerlink" title="Animetor"></a>Animetor</h3><ol>
+<li><p>文森特 Vincent Chansard（France）</p>
+<blockquote>
+<p>V圣<br>近两年引人注目的超新星，以及备受争议的新人原画，在ONE PIECE、咒術迴戰等片场大放异彩。以及，大魔镜的OP非常出色，光影感很强烈，魔法少女ED那段是谁画的来着？当时好像都误以为是文森特？（待修改） —— 24.5<br>以及路飞五档的超抽象大举、and 路奇 vs 路飞那段都令人影响深刻 —— 24.5</p>
+</blockquote>
+<ul>
+<li><a href="https://www.bilibili.com/opus/927643447686332480?spm_id_from=333.999.0.0">访谈</a> - 24.5 ，译 O_bscure</li>
+</ul>
+</li>
+<li><p>长田宽人（SHAFT）</p>
+<blockquote>
+<p>和川田和树并为沙发套强力新人 —— 23.8</p>
+</blockquote>
+<blockquote>
+<p>shaft所属新人原画 1994年生人<br> 创形美术学校视觉设计科媒体影像专攻2016毕业生，毕业后开始在shaft参与补间动画工作，因沙发套大批员工出走，长田宽人和川田和树在shaft作品中作为主要原画输出，在魔法纪录中的超亮眼表现让其备受瞩目，其后在rwby也持续贡献优秀作画。细线条锯齿，金属质感的块状阴影和头发的飘动让其辨识度极高，但也因画面太乱受人诟病，是一位个人风格强烈的原画师。今年（23年）也在五等分初次担当了OP分镜，表现依旧出色，期待进一步突破！—— 23.8</p>
+</blockquote>
+<blockquote>
+<p>好久没见到长田宽人的身影了，也不能咬定不活跃了，上一次见到他还是在推上见他吐槽，以及提到了回老家？休假？沙发套的物语新作就在7月！魔圆剧场版就在今年冬！大的一定在后面！ —— 24.5</p>
+</blockquote>
+</li>
+<li><p>太田晃博</p>
+<blockquote>
+<p>活跃在海贼片场的超级新星，22-23年是其超进化的一年<br>路飞开启五档（ep？，23.？），太田终于与自己的偶像大平共舞，为作画史添上了浓墨重彩的一笔！</p>
+</blockquote>
+</li>
+</ol>
+<h3 id="老害"><a href="#老害" class="headerlink" title="老害"></a>老害</h3><ol>
+<li>大平</li>
+</ol>
+<h1 id="Comic"><a href="#Comic" class="headerlink" title="Comic"></a>Comic</h1><h1 id="Gyaruge"><a href="#Gyaruge" class="headerlink" title="Gyaruge"></a>Gyaruge</h1><h1 id="Novel"><a href="#Novel" class="headerlink" title="Novel"></a>Novel</h1>]]></content>
   </entry>
 </search>

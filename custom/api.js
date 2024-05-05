@@ -90,10 +90,10 @@ forEach(callbackFn(element,index,array), thisArg)`,
                 type: '累加器',
                 name: 'Array.prototype.reduce()',
                 address: 'https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce',
-                describe: `累加器。可以用来计算一组数据的和，每次循环return的值，都会作为下次循环的初始值`,
+                describe: `累加器。<br>可以用来计算一组数据的和，每次循环return的值，都会作为下次循环的初始值`,
                 use:
-`[1,2,3,4,5].reduce( (total,num)=>total+num ) // 15 -- 所有数值的累加和
-[1,2,3,4,5].reduce((total,num)=>total+num),20) // 35 -- 从初始值20开始累加
+`[1,2,3,4,5].reduce( (total,num)=>total+num ) // 15 -- 所有数值的累加和 循环4次
+[1,2,3,4,5].reduce((total,num)=>total+num),20) // 35 -- 从初始值20开始累加 循环5次
 
 [1,2,3,4,5].reduce((total,num)=>{
     //没有初始值，第一个数值被赋值给了total作为初始值，函数执行4次
@@ -104,7 +104,17 @@ forEach(callbackFn(element,index,array), thisArg)`,
     //传了初始值，函数执行5次
     console.log(total + ' ' + num); // 20 1, 21 2, 23 3, 26 4, 30 5
     return total + num;
-},20) // 35`,
+},20) // 35
+
+// reduce()函数还可以进行一些复杂的处理，如：融合对象
+// 简单的示例：
+let c = {c:'c'}; 
+[{a:'a'},{b:'b'}].reduce((mix,item)=>Object.assign(mix,item),c)
+// 这里作用等同于
+Object.assign(c,...[{a:'a'},{b:'b'}]) // c: {a:'a',b:'b',c:'c'}
+更复杂的实例参考：
+ES6 - 对象的新增方法 - Object.getOwnPropertyDescriptors方法最后一个例子
+https://es6.ruanyifeng.com/#docs/object-methods#Object-getOwnPropertyDescriptors`,
                 syntax:
 `array.reduce(callbackFn(total,currentValue)) //必选的参数
 array.reduce(function(total, currentValue, currentIndex, arr), initialValue)`,
@@ -113,7 +123,7 @@ array.reduce(function(total, currentValue, currentIndex, arr), initialValue)`,
                 return: '返回最终的累加值 total',
             },
             some: {
-                type: '循环 | 遍历 | 查找 | 查询',
+                type: '循环 | 遍历 | 查找 | 查询 | 判断',
                 name: 'Array.prototype.some()',
                 address: 'https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/some',
                 describe: `forEach虽然能实现我们的需求，但是性能比较差，不能被终止。<br>从数组里面找元素用some比较合适，因为some找到那一项之后，就可以终止后续的循环`,

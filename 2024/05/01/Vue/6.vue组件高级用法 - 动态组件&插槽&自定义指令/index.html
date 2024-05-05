@@ -20,16 +20,16 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"tsukimiyanano.github.io","root":"/tsukimiya.github.io/","images":"/tsukimiya.github.io/images","scheme":"Pisces","darkmode":true,"version":"8.19.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/tsukimiya.github.io/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/tsukimiya.github.io/js/config.js"></script>
 
-    <meta name="description" content="目标:能够使用keep-alive实现组件的缓存能够使用插槽提高组件的复用性能够了解常见的ESLint语法规则  动态组件的使用动态组件指的是动态切换组件的显示与隐藏。实现不同组件的按需展示。  如何实现动态组件的渲染 vue提供了一个内置的component组件，作用：组件的占位符。专门用来实现动态组件的渲染。示例代码如下:  12345678910data() &#123;    &#x2F;&#x2F; 1．">
+    <meta name="description" content="目标:掌握keep-alive实现组件的缓存：keep-alive标签、include 属性能够使用插槽提高组件的复用性：slot标签、具名插槽、作用域插槽(接收数据并使用)、后备内容v-slot指令：把内容填充到指定名称的插槽中，只能被用在 组件components 或 template标签v-slot: 简写 # 如：&lt;template #title&gt;&lt;&#x2F;template&amp;">
 <meta property="og:type" content="article">
 <meta property="og:title" content="vue组件高级用法 - 动态组件&amp;插槽&amp;自定义指令&amp;ESlint">
 <meta property="og:url" content="https://tsukimiyanano.github.io/tsukimiya.github.io/2024/05/01/Vue/6.vue%E7%BB%84%E4%BB%B6%E9%AB%98%E7%BA%A7%E7%94%A8%E6%B3%95%20-%20%E5%8A%A8%E6%80%81%E7%BB%84%E4%BB%B6&%E6%8F%92%E6%A7%BD&%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8C%87%E4%BB%A4/index.html">
 <meta property="og:site_name" content="Ayu&#39;s Study Blog">
-<meta property="og:description" content="目标:能够使用keep-alive实现组件的缓存能够使用插槽提高组件的复用性能够了解常见的ESLint语法规则  动态组件的使用动态组件指的是动态切换组件的显示与隐藏。实现不同组件的按需展示。  如何实现动态组件的渲染 vue提供了一个内置的component组件，作用：组件的占位符。专门用来实现动态组件的渲染。示例代码如下:  12345678910data() &#123;    &#x2F;&#x2F; 1．">
+<meta property="og:description" content="目标:掌握keep-alive实现组件的缓存：keep-alive标签、include 属性能够使用插槽提高组件的复用性：slot标签、具名插槽、作用域插槽(接收数据并使用)、后备内容v-slot指令：把内容填充到指定名称的插槽中，只能被用在 组件components 或 template标签v-slot: 简写 # 如：&lt;template #title&gt;&lt;&#x2F;template&amp;">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://tsukimiyanano.github.io/tsukimiya.github.io/images/vue/%E6%8F%92%E6%A7%BD.png">
 <meta property="article:published_time" content="2024-05-01T02:01:07.883Z">
-<meta property="article:modified_time" content="2024-05-02T07:15:37.259Z">
+<meta property="article:modified_time" content="2024-05-04T14:58:07.107Z">
 <meta property="article:author" content="Ayu">
 <meta property="article:tag" content="Vue">
 <meta property="article:tag" content="Vue2">
@@ -163,25 +163,28 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/tsukimiya.github.io/archives/">
-          <span class="site-state-item-count">8</span>
+          <span class="site-state-item-count">9</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/tsukimiya.github.io/categories/">
-        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-count">7</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tsukimiya.github.io/tags/">
-        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-count">27</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
 </div>
   <div class="links-of-author animated">
       <span class="links-of-author-item">
-        <a href="mailto:1832715838@qq.com" title="E-Mail → mailto:1832715838@qq.com" rel="noopener me" target="_blank">E-Mail</a>
+        <a href="mailto:1832715838@qq.com" title="E-Mail → mailto:1832715838@qq.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://github.com/tsukimiyanano" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;tsukimiyanano" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
       </span>
   </div>
 
@@ -242,7 +245,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-05-02 15:15:37" itemprop="dateModified" datetime="2024-05-02T15:15:37+08:00">2024-05-02</time>
+      <time title="修改时间：2024-05-04 22:58:07" itemprop="dateModified" datetime="2024-05-04T22:58:07+08:00">2024-05-04</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -287,14 +290,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>8.2k</span>
+      <span>8.5k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>7 分钟</span>
+      <span>8 分钟</span>
     </span>
 </div>
 
@@ -305,7 +308,13 @@
     
     
     <div class="post-body" itemprop="articleBody"><blockquote>
-<p>目标:<br>能够使用keep-alive实现组件的缓存<br>能够使用插槽提高组件的复用性<br>能够了解常见的ESLint语法规则</p>
+<p>目标:<br>掌握keep-alive实现组件的缓存：keep-alive标签、include 属性<br>能够使用插槽提高组件的复用性：slot标签、具名插槽、<strong>作用域插槽</strong>(接收数据并使用)、后备内容<br><strong><code>v-slot</code>指令</strong>：<strong>把内容填充到指定名称的插槽中，只能被用在 组件components 或 template标签</strong><br><code>v-slot:</code> 简写 <code>#</code> 如：<code>&lt;template #title&gt;&lt;/template&gt;</code></p>
+</blockquote>
+<blockquote>
+<p>能够知道如何自定义指令：<br>私有自定义指令<code>directives: &#123; &#125;</code><br>全局自定义指令<code>Vue.directive()</code></p>
+</blockquote>
+<blockquote>
+<p>了解常见的ESLint语法规则、习惯在ESLint下进行开发<br>配置VSCode插件及设置，帮助我们规范代码格式，高效开发</p>
 </blockquote>
 <h2 id="动态组件的使用"><a href="#动态组件的使用" class="headerlink" title="动态组件的使用"></a>动态组件的使用</h2><p>动态组件指的是<strong>动态切换组件的显示与隐藏</strong>。实现不同组件的按需展示。</p>
 <ol>
@@ -531,13 +540,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">64k</span>
+    <span title="站点总字数">71k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">58 分钟</span>
+    <span title="站点阅读时长">1:04</span>
   </span>
 </div>
 
