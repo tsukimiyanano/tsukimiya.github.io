@@ -1,9 +1,143 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Hexo使用emoji表情</title>
+    <url>/tsukimiya.github.io/2024/05/07/Hexo/hexo%E4%BD%BF%E7%94%A8emoji%E8%A1%A8%E6%83%85/</url>
+    <content><![CDATA[<blockquote>
+<p>本文章不对emoji的使用做太深入的研究，因为在写文章上是一个不太必要的需求，也是一个鲜少使用的东西，总之能用就行。</p>
+</blockquote>
+<h2 id="如何使用"><a href="#如何使用" class="headerlink" title="如何使用"></a>如何使用</h2><p>直接给出结论：</p>
+<ol>
+<li><strong>将表情符号复制并粘贴到Markdown格式的文本中</strong> <font color="red">推荐</font></li>
+<li>直接使用表情符号的Unicode编码，格式：<code>&amp;#x[Unicode编码];</code><br>例如，😊的 Unicode 编码是 U+1F60A —— 对应的 HTML 实体编码是 <code>&amp;#x1F60A;</code><br>直接在md文件的文本内容里面输入HTML实体编码即可<code>&amp;#x1F60A;</code>&#x1F60A;</li>
+</ol>
+<p>Tip: 如果您使用的是静态网站生成器，请确保将HTML页面编码为UTF-8。</p>
+<ul>
+<li>附上可供使用的工具：<br>在线工具-Emoji表情符号(可搜索)：<a href="https://www.toolhelper.cn/Encoding/Emoji">https://www.toolhelper.cn/Encoding/Emoji</a> <font color="red">推荐</font><blockquote>
+<p>最推荐，附有表情说明，及其Unicode编码</p>
+</blockquote>
+Emoji大全(可搜索)：<a href="https://emoji6.com/emojiall/">https://emoji6.com/emojiall/</a> <font color="green">推荐</font><blockquote>
+<p>可备用</p>
+</blockquote>
+EMOJI中文网(可搜索)：<a href="https://www.emojiall.com/zh-hans">https://www.emojiall.com/zh-hans</a><blockquote>
+<p>速度有点慢，东西也太多了，不太好用</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="原理："><a href="#原理：" class="headerlink" title="原理："></a>原理：</h3><p>因为<strong>emoji表情符号也是Unicode字符的一种</strong>。</p>
+<ol>
+<li><p><strong>Markdown文件显示的原理</strong><br>像 VSCode 中通过插件预览 Markdown 文件的功能，以及其他类似的 Markdown 预览功能，通常也是<strong>通过 Markdown 渲染引擎生成的 HTML 页面</strong>来实现的。</p>
+</li>
+<li><p>emoji正常显示的原理<br>Markdown本身对于文本中的普通Unicode字符都有很好的支持，包括表情符号。<br>所以在Markdown文本中，你可以直接使用表情符号的Unicode编码，或者直接复制粘贴表情符号，当 Markdown 文件被渲染时，渲染引擎会将表情符号正确地转换为对应的图像，并在最终生成的 HTML 页面中显示出来。<br>通常情况下，Markdown 渲染引擎会将表情符号识别为 Unicode 字符，就像对待普通的文本文字一样，并不会对其做什么处理。<strong>这和直接在 HTML 页面中使用表情符号是一样的效果。</strong></p>
+</li>
+<li><p>Hexo渲染的HTML页面显示emoji<br>Hexo依赖于 hexo-renderer-marked 渲染引擎来解析 Markdown 文本，和vscode中预览是一样的原理，只是使用的渲染器不同而已</p>
+</li>
+</ol>
+<blockquote>
+<p>关于一些探究性的内容放在下面，有兴趣可以一读</p>
+</blockquote>
+<h2 id="关于在hexo中如何使用emoji的问题"><a href="#关于在hexo中如何使用emoji的问题" class="headerlink" title="关于在hexo中如何使用emoji的问题"></a>关于在hexo中如何使用emoji的问题</h2><p>因为之前从未在md使用过emoji，突然有想要使用的念头，于是在不太了解的情况下试图找到方法。于是导致产生了一系列的问题。</p>
+<ol>
+<li><strong>误解</strong><br>由于一些误解性的信息导向，以至于我一度以为Hexo不支持使用emoji<ul>
+<li>vscode是支持 </li>
+<li>Hexo 默认的 markdown 渲染引擎不支持将 Github emoji 渲染到静态的 html 页面中</li>
+</ul>
+</li>
+</ol>
+<p>但是，他们几乎都是在说 使用 <a href="https://markdown.com.cn/extended-syntax/emoji.html"><strong>表情符号简码</strong></a> 的方式来 在Hexo中使用Emoji</p>
+<blockquote>
+<p>表情符号简码，通过键入表情符号短代码来插入表情符号，如：<code>:smile:</code>、<code>:punch:</code></p>
+</blockquote>
+<p>期间想到了也许可以通过使用base64来解决这个问题</p>
+<p>问题来了，在html页面如何使用emoji表情？</p>
+<p>js如何使用emoji？<br><a href="https://zhuanlan.zhihu.com/p/328516890">https://zhuanlan.zhihu.com/p/328516890</a></p>
+<p>对于表情符号，GitHub Markdown支持使用特定的简码来直接显示表情。当你在Markdown文本中使用表情符号的简码时，GitHub会自动将其解析并替换为对应的表情符号图像，从而在文档中显示出来。</p>
+<p>这种自动替换是GitHub的一个特性，使得Markdown文本中的表情符号可以直观地显示出来，增强了文档的可读性和趣味性。</p>
+<ul>
+<li>Hexo中使用emoji表情<blockquote>
+<p>可以参考这三篇<br>  <a href="https://blog.xaoxu.cn/archives/hexo-use-emoji">https://blog.xaoxu.cn/archives/hexo-use-emoji</a><br>  苏苏的小屋，这个博客值得学习一下<br>  <a href="https://luckysusu.top/post/hexo_emoji.html">https://luckysusu.top/post/hexo_emoji.html</a><br>  <a href="https://cloud.tencent.com/developer/article/2065824">https://cloud.tencent.com/developer/article/2065824</a></p>
+</blockquote>
+</li>
+</ul>
+<p>Markdown 官方教程 - Markdown 使用 Emoji 表情<br><a href="https://markdown.com.cn/extended-syntax/emoji.html">https://markdown.com.cn/extended-syntax/emoji.html</a></p>
+<p>参考页面<br><a href="https://www.unicode.org/emoji/charts/full-emoji-list.html#1f44a">https://www.unicode.org/emoji/charts/full-emoji-list.html#1f44a</a><br><a href="https://juejin.cn/post/7021360477221421069">https://juejin.cn/post/7021360477221421069</a><br><a href="https://www.toolhelper.cn/Encoding/Emoji">https://www.toolhelper.cn/Encoding/Emoji</a><br><a href="https://www.toolhelper.cn/Encoding/Emoji">https://www.toolhelper.cn/Encoding/Emoji</a></p>
+<h2 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h2><h3 id="hexo引入图片的全局资源文件夹引用"><a href="#hexo引入图片的全局资源文件夹引用" class="headerlink" title="hexo引入图片的全局资源文件夹引用"></a>hexo引入图片的全局资源文件夹引用</h3><p><code>![img](/images/vue/组件生命周期.png)</code><br>该格式会被渲染器解析为img元素渲染到页面上<br>[]里的值会被解析为img元素的alt属性，即如果找不到图片会显示为img这个字符串<br>()里的则会解析为img元素的src属性</p>
+]]></content>
+      <categories>
+        <category>Hexo</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
+        <tag>emoji</tag>
+        <tag>markdown渲染器</tag>
+        <tag>markdown</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>ES6模块化</title>
-    <url>/tsukimiya.github.io/2024/05/05/ES6/ES6%E6%A8%A1%E5%9D%97%E5%8C%96/</url>
-    <content><![CDATA[]]></content>
+    <url>/tsukimiya.github.io/2024/05/05/ES6/1.ES6%E6%A8%A1%E5%9D%97%E5%8C%96/</url>
+    <content><![CDATA[<blockquote>
+<p>ES6模块化 与 异步编程高级用法：<br>  E6的模块化语法<br>  使用Promise解决回调地狱的问题<br>  使用 async&#x2F;await 简化 Promise 的调用<br>  什么是 EventLoop<br>  宏任务 和 微任务 的执行顺序</p>
+</blockquote>
+<h2 id="模块化"><a href="#模块化" class="headerlink" title="模块化"></a>模块化</h2><ol>
+<li><p>node.js中如何实现模块化<br>node.js遵循了<strong>CommonJS</strong>的模块化规范。其中:</p>
+<ul>
+<li>导入其它模块使用<code>require()</code>方法</li>
+<li>模块对外共享成员使用<code>module.exports</code>对象</li>
+</ul>
+</li>
+<li><p><strong>模块化的好处</strong>：<br>大家都遵守同样的模块化规范写代码，<strong>降低了沟通的成本，极大方便了各个模块之间的相互调用</strong>，利人利己。</p>
+</li>
+</ol>
+<h3 id="前端模块化规范的分类"><a href="#前端模块化规范的分类" class="headerlink" title="前端模块化规范的分类"></a>前端模块化规范的分类</h3><p>在<strong>ES6模块化规范诞生之前</strong>，JavaScript 社区已经尝试并提出了<strong>AMD、CMD、CommonJS</strong>等模块化规范。</p>
+<blockquote>
+<p>这几个规范不是官方的模块化标准，而是社区的开发者经过反复的实践与尝试，提出来的规范</p>
+</blockquote>
+<p>但是，这些由社区提出的模块化标准，还是存在一定的<strong>差异性与局限性</strong>、<strong>并不是</strong>浏览器与服务器<strong>通用的模块化标准</strong>，例如:</p>
+<ul>
+<li>AMD和CMD适用于<strong>浏览器端</strong>的Javascript模块化</li>
+<li>CommonJS适用于<strong>服务器端</strong>的Javascript模块化</li>
+</ul>
+<p>太多的模块化规范给开发者增加了学习的难度与开发的成本。因此，<strong>大一统的ES6模块化规范诞生了</strong>!</p>
+<h3 id="ES6模块化规范"><a href="#ES6模块化规范" class="headerlink" title="ES6模块化规范"></a>ES6模块化规范</h3><p>ES6模块化规范是浏览器端与服务器端通用的模块化开发规范。</p>
+<p>ES6模块化规范中定义:</p>
+<ul>
+<li>每个js文件都是一个独立的模块</li>
+<li>导入其它模块成员使用<strong>import</strong>关键字</li>
+<li>向外共享模块成员使用<strong>export</strong>关键字</li>
+</ul>
+<h3 id="在node-js中使用ES6模块化"><a href="#在node-js中使用ES6模块化" class="headerlink" title="在node.js中使用ES6模块化"></a>在node.js中使用ES6模块化</h3><p>node.js默认支持CommonJS模块化规范，如果要使用ES6模块化语法，需要配置：</p>
+<ol>
+<li>确保安装了v14.15.1或更高版本的node.js</li>
+<li>在package.json的根节点中添加<code>&quot;type&quot;:&quot;module&quot;</code>节点</li>
+</ol>
+<h2 id="ES6模块化的基本语法"><a href="#ES6模块化的基本语法" class="headerlink" title="ES6模块化的基本语法"></a>ES6模块化的基本语法</h2><p>ES6的模块化主要包含如下3种用法:<br>    1. 默认导出与默认导入<br>    2. 按需导出与按需导入<br>    3. 直接导入并执行模块中的代码</p>
+<ol>
+<li><p>默认导出<br><code>export dufault 默认导出的成员</code></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> n1 = <span class="number">10</span></span><br><span class="line"><span class="keyword">let</span> n2 = <span class="number">20</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">show</span>(<span class="params"></span>)&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  n1,</span><br><span class="line">  show</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注意事项：<strong>只允许默认导出一次</strong>(使用唯一的一次export default)</p>
+</li>
+<li><p>默认导入<br><code>import 接收名称 from &#39;模块标识符&#39;</code></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> m1 <span class="keyword">from</span> <span class="string">&#x27;./1.默认导出.js&#x27;</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(m1); <span class="comment">//&#123; n1: 10, show: [Function: show] &#125;</span></span><br></pre></td></tr></table></figure>
+<p>注意事项：<strong>接收名称</strong>可以是任意名称，只要是<strong>合法的成员名称即可</strong>(只能以字符_$开头，不能以数字)</p>
+</li>
+<li><p>按需导出<br><code>export 按需导出的成员</code></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">let</span> s1 = <span class="string">&#x27;aaa&#x27;</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">let</span> s2 = <span class="string">&#x27;ccc&#x27;</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> <span class="title function_">say</span>(<span class="params"></span>)&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  <span class="attr">a</span>: <span class="number">20</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注意事项：<strong>可以使用多次</strong>，可以和默认导出一起使用。</p>
+</li>
+<li><p>按需导入<br><code>import &#123;s1&#125; from &#39;模块标识符&#39;</code><br>导入多个模块成员<br><code>import &#123;s1,s2,s3&#125; from &#39;模块标识符&#39;</code></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> info, &#123;s1, s2 <span class="keyword">as</span> str2, say&#125; <span class="keyword">from</span> <span class="string">&#x27;./3.按需导出.js&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(s1); <span class="comment">// aaa</span></span><br><span class="line"><span class="comment">// console.log(s2); // 报错，未定义</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(str2); <span class="comment">// ccc</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(say);<span class="comment">// [Function: say]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// info 接收的默认导出的对象</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(info); <span class="comment">// &#123; a:20 &#125;</span></span><br></pre></td></tr></table></figure>
+<p>注意事项：</p>
+<ol>
+<li>按需导入的成员<strong>名称必须</strong>和按需导出的名称<strong>保持一致</strong></li>
+<li>按需导入时，可以使用 <strong>as关键字</strong> 进行<strong>重命名</strong></li>
+<li>按需导入可以和默认导入一起使用</li>
+</ol>
+</li>
+<li><p><strong>直接导入并执行模块中的代码</strong><br>如果<strong>只想单纯地执行某个模块中的代码</strong>，并不需要得到模块中向外共享的成员。此时，可以直接导入并执行模块代码，示例代码如下:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 05.js</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="number">3</span>; i++) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(i);  </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// test.js</span></span><br><span class="line"><span class="keyword">import</span> <span class="string">&#x27;./5.直接运行模块中的代码.js&#x27;</span></span><br><span class="line"><span class="comment">// node testjs 结果 --  0 1 2</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+]]></content>
       <categories>
         <category>JS</category>
         <category>ES6</category>
@@ -11,6 +145,276 @@
       <tags>
         <tag>ES6</tag>
         <tag>ES6模块化</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Promise</title>
+    <url>/tsukimiya.github.io/2024/05/06/ES6/2.Promise/</url>
+    <content><![CDATA[<h2 id="回调地狱"><a href="#回调地狱" class="headerlink" title="回调地狱"></a>回调地狱</h2><ol>
+<li><p>回调地狱<br>多层回调函数的相互嵌套，就形成了回调地狱。示例代码如:</p>
+<blockquote>
+<p>回调地狱更多导致的问题还是：<strong>难以阅读和维护</strong>，通常出现在异步操作中<br>其和递归问题导致的栈溢出还是不同的，两者是不同的问题</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="built_in">setTimeout</span>( <span class="function">() =&gt;</span>&#123; <span class="comment">//第1层回调函数</span></span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>( <span class="string">&#x27;延时1秒后输出&#x27;</span>)</span><br><span class="line">  </span><br><span class="line">  <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123; <span class="comment">//第2层回调函数</span></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;再延时2秒后输出&#x27;</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123; <span class="comment">//第3层回调函数</span></span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;再延时3秒后输出&#x27;</span>)</span><br><span class="line">    &#125;,<span class="number">3000</span>)</span><br><span class="line"></span><br><span class="line">  &#125;,<span class="number">2000</span>)</span><br><span class="line"></span><br><span class="line">&#125;,<span class="number">1000</span>)</span><br></pre></td></tr></table></figure>
+<p>回调地狱的缺点:<br>代码耦合性太强，牵一发而动全身，<strong>难以维护</strong><br>大量冗余的代码相互嵌套，代码的<strong>可读性变差</strong></p>
+</li>
+<li><p>如何解决<br>为了解决回调地狱的问题，ES6 (ECMAScript 2015)中新增了<strong>Promise</strong>的概念。</p>
+<blockquote>
+<p>解决回调地狱的方法包括使用 Promise、async&#x2F;await 等异步编程技术，以及使用函数式编程的方式来组织代码，使其更具可读性和可维护性。</p>
+</blockquote>
+</li>
+</ol>
+<h2 id="Promise基本概念"><a href="#Promise基本概念" class="headerlink" title="Promise基本概念"></a>Promise基本概念</h2><ol>
+<li><p><strong>Promise是一个构造函数</strong></p>
+<ul>
+<li>我们可以创建Promise 的实例 <code>const p = newPromise()</code></li>
+<li>new出来的Promise 实例对象，<strong>代表一个异步操作</strong></li>
+</ul>
+</li>
+<li><p><strong>Promise.prototype 上包含一个.then()方法</strong></p>
+<ul>
+<li>每一次new Promise()构造函数得到的实例对象，</li>
+<li>都可以<strong>通过原型链的方式</strong>访问到.then()方法，例如<code>p.then()</code></li>
+</ul>
+</li>
+<li><p><strong>.then()方法用来预先指定成功和失败的回调函数</strong></p>
+<ul>
+<li>p.then(<strong>成功的回调函数</strong>，<strong>失败的回调函数</strong>)</li>
+<li>p.then(result,&#x3D;&gt; {}, error &#x3D;&gt; {})</li>
+<li>调用.then()方法时，<strong>成功的回调函数是必选的</strong>、失败的回调函数是可选的</li>
+</ul>
+</li>
+</ol>
+<h2 id="基于-then-fs-异步的读取文件内容"><a href="#基于-then-fs-异步的读取文件内容" class="headerlink" title="基于 then-fs 异步的读取文件内容"></a>基于 then-fs 异步的读取文件内容</h2><ol>
+<li><p>基于回调函数按顺序读取文件内容<br>虽然可以保证文件的读取顺序，但是形成了一个回调地狱的问题<br><img src="/tsukimiya.github.io/images/ES6/%E5%9F%BA%E4%BA%8E%E5%9B%9E%E8%B0%83%E5%87%BD%E6%95%B0%E6%8C%89%E9%A1%BA%E5%BA%8F%E8%AF%BB%E5%8F%96%E6%96%87%E4%BB%B6%E5%86%85%E5%AE%B9.png" alt="img"></p>
+</li>
+<li><p>基于 then-fs 读取文件内容<br><strong>fs模块仅支持 以回调函数的方式 读取文件，不支持Promise的调用方式</strong>。因此，需要先安装 then-fs 第三方包，从而支持基于Promise的方式读取文件的内容： <code>npm install then-fs</code></p>
+</li>
+</ol>
+<ul>
+<li><strong>then-fs 的基本使用</strong><br>调用 then-fs 提供的<strong>readFile()<strong>方法，可以异步地读取文件的内容，</strong>它的返回值是 Promise 的实例对象</strong>。因此可以<strong>调用.then()方法</strong>为每个 Promise 异步操作指定<strong>成功</strong>和<strong>失败</strong>之后的回调函数。示例代码如下:<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 基于Promise的方式读取文件</span></span><br><span class="line"><span class="keyword">import</span> thenFs <span class="keyword">from</span> <span class="string">&#x27;then-fs&#x27;</span></span><br><span class="line"><span class="comment">// .then()中的失败回调是可选的，这里省略了</span></span><br><span class="line">thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/1.txt&#x27;</span>,<span class="string">&#x27;utf8&#x27;</span>).<span class="title function_">then</span>(<span class="function">(<span class="params">r1</span>)=&gt;</span>&#123;<span class="variable language_">console</span>.<span class="title function_">log</span>(r1);&#125;)</span><br><span class="line">thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/2.txt&#x27;</span>,<span class="string">&#x27;utf8&#x27;</span>).<span class="title function_">then</span>(<span class="function">(<span class="params">r2</span>)=&gt;</span>&#123;<span class="variable language_">console</span>.<span class="title function_">log</span>(r2);&#125;)</span><br><span class="line">thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/3.txt&#x27;</span>,<span class="string">&#x27;utf8&#x27;</span>).<span class="title function_">then</span>(<span class="function">(<span class="params">r3</span>)=&gt;</span>&#123;<span class="variable language_">console</span>.<span class="title function_">log</span>(r3);&#125;)</span><br></pre></td></tr></table></figure>
+当前只是异步的去读文件，<strong>无法保证文件的读取顺序</strong>，多次执行读取顺序不一</li>
+</ul>
+<h2 id="基于Promise按顺序读取文件的内容"><a href="#基于Promise按顺序读取文件的内容" class="headerlink" title="基于Promise按顺序读取文件的内容"></a>基于Promise按顺序读取文件的内容</h2><ul>
+<li><p><strong>.then方法的特性</strong><br>如果上一个.then()方法中<strong>返回了一个新的Promise实例对象</strong>，则可以通过下一个.then()继续进行处理。通过.then()方法的<strong>链式调用</strong>，就解决了回调地狱的问题。</p>
+</li>
+<li><p><strong>基于Promise</strong>按顺序读取文件的内容<br><strong>只要任何方法返回值是一个Promise实例对象，那就都可以继续调用.then()方法</strong></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> thenFs <span class="keyword">from</span> <span class="string">&#x27;then-fs&#x27;</span></span><br><span class="line"></span><br><span class="line">thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/1.txt&#x27;</span>, <span class="string">&#x27;utf8&#x27;</span>)<span class="comment">// 返回值是Promise的实例对象</span></span><br><span class="line">  .<span class="title function_">then</span>(<span class="function">(<span class="params">r1</span>) =&gt;</span> &#123; <span class="comment">// 通过.then 为返回的promise实例指定成功之后的回调函数</span></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(r1)</span><br><span class="line">    <span class="keyword">return</span> thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/2.txt&#x27;</span>, <span class="string">&#x27;utf8&#x27;</span>)</span><br><span class="line">  &#125;).<span class="title function_">then</span>(<span class="function">(<span class="params">r2</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(r2)</span><br><span class="line">    <span class="keyword">return</span> thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/3.txt&#x27;</span>, <span class="string">&#x27;utf8&#x27;</span>)</span><br><span class="line">  &#125;).<span class="title function_">then</span>(<span class="function">(<span class="params">r3</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(r3)</span><br><span class="line">  &#125;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>通过 .catch 捕获错误<br>在 Promise 的链式操作中如果发生了错误，可以使用Promise.prototype.catch方法进行捕获和处理:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> thenFs <span class="keyword">from</span> <span class="string">&#x27;then-fs&#x27;</span></span><br><span class="line"></span><br><span class="line">thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/11.txt&#x27;</span>, <span class="string">&#x27;utf8&#x27;</span>) <span class="comment">// 文件不存在</span></span><br><span class="line">  .<span class="title function_">then</span>(<span class="function">(<span class="params">r1</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(r1)</span><br><span class="line">    <span class="keyword">return</span> thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/2.txt&#x27;</span>, <span class="string">&#x27;utf8&#x27;</span>)</span><br><span class="line">  &#125;)</span><br><span class="line">  .<span class="title function_">then</span>(<span class="function">(<span class="params">r2</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(r2)</span><br><span class="line">    <span class="keyword">return</span> thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/3.txt&#x27;</span>, <span class="string">&#x27;utf8&#x27;</span>)</span><br><span class="line">  &#125;)</span><br><span class="line">  .<span class="title function_">then</span>(<span class="function">(<span class="params">r3</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(r3)</span><br><span class="line">  &#125;)</span><br><span class="line">  .<span class="title function_">catch</span>(<span class="function">(<span class="params">err</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(err.<span class="property">message</span>)</span><br><span class="line">  &#125;) <span class="comment">// 只返回错误，没有读取的文件内容</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>如果不希望前面的错误导致后续的.then无法正常执行，<strong>可以将.catch的调用提前</strong>：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> thenFs <span class="keyword">from</span> <span class="string">&#x27;then-fs&#x27;</span></span><br><span class="line"></span><br><span class="line">thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/11.txt&#x27;</span>, <span class="string">&#x27;utf8&#x27;</span>)</span><br><span class="line">  .<span class="title function_">catch</span>(<span class="function">(<span class="params">err</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(err.<span class="property">message</span>)</span><br><span class="line">  &#125;)</span><br><span class="line">  .<span class="title function_">then</span>(<span class="function">(<span class="params">r1</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(r1)</span><br><span class="line">    <span class="keyword">return</span> thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/2.txt&#x27;</span>, <span class="string">&#x27;utf8&#x27;</span>)</span><br><span class="line">  &#125;)</span><br><span class="line">  .<span class="title function_">then</span>(<span class="function">(<span class="params">r2</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(r2)</span><br><span class="line">    <span class="keyword">return</span> thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/3.txt&#x27;</span>, <span class="string">&#x27;utf8&#x27;</span>)</span><br><span class="line">  &#125;)</span><br><span class="line">  .<span class="title function_">then</span>(<span class="function">(<span class="params">r3</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(r3)</span><br><span class="line">  &#125;) <span class="comment">// 先打印错误，然后打印读取内容，r1为undefined，r2r3读取成功</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="Promise-all-方法"><a href="#Promise-all-方法" class="headerlink" title="Promise.all()方法"></a>Promise.all()方法</h2><p>Promise.all()方法会发起并行的Promise异步操作，等<strong>所有的异步操作全部结束后</strong>才会执行下一步的.then操作（等待机制）。示例代码如下:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> thenFs <span class="keyword">from</span> <span class="string">&#x27;then-fs&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> promiseArr = [</span><br><span class="line">  thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/1.txt&#x27;</span>, <span class="string">&#x27;utf8&#x27;</span>), </span><br><span class="line">  thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/2.txt&#x27;</span>, <span class="string">&#x27;utf8&#x27;</span>), </span><br><span class="line">  thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/3.txt&#x27;</span>, <span class="string">&#x27;utf8&#x27;</span>)</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="title class_">Promise</span>.<span class="title function_">all</span>(promiseArr).<span class="title function_">then</span>(<span class="function"><span class="params">result</span> =&gt;</span>&#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(result); <span class="comment">// [ &#x27;111&#x27;, &#x27;222&#x27;, &#x27;333&#x27; ]</span></span><br><span class="line">&#125;)</span><br><span class="line">.<span class="title function_">catch</span>(<span class="function"><span class="params">err</span>=&gt;</span>&#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(err.<span class="property">message</span>);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>Promise示例的顺序，就是最终拿到的结果的顺序。如果有一个文件读取错误，所有数据都拿不到</p>
+<h2 id="Promise-race-方法"><a href="#Promise-race-方法" class="headerlink" title="Promise.race() 方法"></a>Promise.race() 方法</h2><p>Promise.race()方法会发起并行的Promise异步操作，<strong>只要任何一个异步操作完成，就立即执行下一步的.then操作</strong>（赛跑机制）。示例代码如下:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> thenFs <span class="keyword">from</span> <span class="string">&#x27;then-fs&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> promiseArr = [</span><br><span class="line">  thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/1.txt&#x27;</span>, <span class="string">&#x27;utf8&#x27;</span>), </span><br><span class="line">  thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/2.txt&#x27;</span>, <span class="string">&#x27;utf8&#x27;</span>), </span><br><span class="line">  thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/3.txt&#x27;</span>, <span class="string">&#x27;utf8&#x27;</span>)</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="title class_">Promise</span>.<span class="title function_">race</span>(promiseArr).<span class="title function_">then</span>(<span class="function"><span class="params">result</span> =&gt;</span>&#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(result);</span><br><span class="line">&#125;)</span><br><span class="line">.<span class="title function_">catch</span>(<span class="function"><span class="params">err</span>=&gt;</span>&#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(err.<span class="property">message</span>);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>只会拿到一个文件的读取结果，读取最快的那个，无法保证读取的文件是哪个</p>
+<h2 id="基于Promise封装异步读文件的方法"><a href="#基于Promise封装异步读文件的方法" class="headerlink" title="基于Promise封装异步读文件的方法"></a>基于Promise封装异步读文件的方法</h2><ul>
+<li><p>方法的封装要求:</p>
+<ol>
+<li>方法的名称要定义为getFile</li>
+<li>方法接收一个形参fpath，表示要读取的文件的路径</li>
+<li>方法的返回值为Promise 实例对象</li>
+</ol>
+</li>
+<li><p>getFile方法的基本定义</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">getFile</span>(<span class="params">fpath</span>)&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Promise</span>()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注意：<strong>new Promise()</strong> 只是创建了一个<strong>形式上的异步操作</strong></p>
+</li>
+<li><p><strong>创建具体的异步操作</strong><br>如果想要创建具体的异步操作，则需要在new Promise()构造函数期间，<strong>传递一个function函数，将具体的<br>异步操作定义到function函数内部</strong>。示例代码如下:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> fs <span class="keyword">from</span> <span class="string">&#x27;fs&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">getFile</span>(<span class="params">fpath</span>)&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">    fs.<span class="title function_">readFile</span>(fpath,<span class="string">&#x27;utf-8&#x27;</span>,<span class="function">(<span class="params">err,dataStr</span>)=&gt;</span>&#123; &#125;)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>获取.then的两个实参<br>通过.then()指定的成功和失败的回调函数，可以在 function的形参中 进行接收，示例代码如下:<br><img src="/tsukimiya.github.io/images/ES6/%E8%8E%B7%E5%8F%96.then%E7%9A%84%E4%B8%A4%E4%B8%AA%E5%AE%9E%E5%8F%82.png" alt="img"></p>
+</li>
+<li><p>调用 resolve 和 reject 回调函数<br>Promise<strong>异步操作的结果</strong>，可以调用 <strong>resolve</strong> 或 <strong>reject</strong> 回调函数进行处理。示例代码如下:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> fs <span class="keyword">from</span> <span class="string">&#x27;fs&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">getFile</span>(<span class="params">fpath</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="keyword">function</span> (<span class="params">resolve,reject</span>) &#123;</span><br><span class="line">    fs.<span class="title function_">readFile</span>(fpath, <span class="string">&#x27;utf-8&#x27;</span>, <span class="function">(<span class="params">err, dataStr</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">if</span>(err) <span class="keyword">return</span> <span class="title function_">reject</span>(err) <span class="comment">// 发生错误</span></span><br><span class="line">      <span class="title function_">resolve</span>(dataStr) <span class="comment">// 读取成功</span></span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_">getFile</span>(<span class="string">&#x27;./files/1.txt&#x27;</span>).<span class="title function_">then</span>(<span class="function">(<span class="params">r1</span>)=&gt;</span>&#123;<span class="variable language_">console</span>.<span class="title function_">log</span>(r1)&#125;,<span class="function">(<span class="params">err</span>)=&gt;</span>&#123;<span class="variable language_">console</span>.<span class="title function_">log</span>(err.<span class="property">message</span>);&#125;)</span><br><span class="line"><span class="comment">// 失败的回调函数可以省略不写，可以用catch进行捕获</span></span><br><span class="line"><span class="title function_">getFile</span>(<span class="string">&#x27;./files/1.txt&#x27;</span>).<span class="title function_">then</span>(<span class="function">(<span class="params">r1</span>)=&gt;</span>&#123;<span class="variable language_">console</span>.<span class="title function_">log</span>(r1)&#125;).<span class="title function_">catch</span>(<span class="function">(<span class="params">err</span>)=&gt;</span>&#123;<span class="variable language_">console</span>.<span class="title function_">log</span>(err.<span class="property">message</span>)&#125;)</span><br></pre></td></tr></table></figure></li>
+</ul>
+]]></content>
+      <categories>
+        <category>JS</category>
+        <category>ES6</category>
+      </categories>
+      <tags>
+        <tag>ES6</tag>
+        <tag>Promise</tag>
+        <tag>回调地狱</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>async/await</title>
+    <url>/tsukimiya.github.io/2024/05/06/ES6/3.async-await/</url>
+    <content><![CDATA[<h2 id="什么是-async-await"><a href="#什么是-async-await" class="headerlink" title="什么是 async &#x2F; await"></a>什么是 async &#x2F; await</h2><p><strong>async&#x2F;await</strong> 是 <strong>ES8</strong>(ECMAScript 2017)引入的新语法，用来<strong>简化Promise异步操作</strong>。在async&#x2F;await出现之前，开发者只能通过<strong>链式.then()的方式</strong>处理Promise异步操作。示例代码如下:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> thenFs <span class="keyword">from</span> <span class="string">&#x27;then-fs&#x27;</span></span><br><span class="line"></span><br><span class="line">thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/1.txt&#x27;</span>, <span class="string">&#x27;utf8&#x27;</span>)<span class="comment">// 返回值是Promise的实例对象</span></span><br><span class="line">  .<span class="title function_">then</span>(<span class="function">(<span class="params">r1</span>) =&gt;</span> &#123; <span class="comment">// 通过.then 为返回的promise实例指定成功之后的回调函数</span></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(r1)</span><br><span class="line">    <span class="keyword">return</span> thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/2.txt&#x27;</span>, <span class="string">&#x27;utf8&#x27;</span>)</span><br><span class="line">  &#125;).<span class="title function_">then</span>(<span class="function">(<span class="params">r2</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(r2)</span><br><span class="line">    <span class="keyword">return</span> thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/3.txt&#x27;</span>, <span class="string">&#x27;utf8&#x27;</span>)</span><br><span class="line">  &#125;).<span class="title function_">then</span>(<span class="function">(<span class="params">r3</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(r3)</span><br><span class="line">  &#125;)</span><br></pre></td></tr></table></figure>
+<p>.then链式调用的<strong>优点</strong>：解决了回调地狱的问题<br>.then链式调用的<strong>缺点</strong>：代码冗余、阅读性差、不易理解</p>
+<h2 id="async-await-的基本使用"><a href="#async-await-的基本使用" class="headerlink" title="async &#x2F; await 的基本使用"></a>async &#x2F; await 的基本使用</h2><p>使用async&#x2F; await简化 Promise异步操作的示例代码如下:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> thenFs <span class="keyword">from</span> <span class="string">&#x27;then-fs&#x27;</span></span><br><span class="line"><span class="comment">// 按顺序读取文件 1 2 3 的内容</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">getAllFile</span>(<span class="params"></span>)&#123;</span><br><span class="line">  <span class="comment">// 如果不加await，它的返回值就是Promise实例，加了await，返回值就是最终读取到的文件中的内容</span></span><br><span class="line">  <span class="keyword">const</span> r1 = <span class="keyword">await</span> thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/1.txt&#x27;</span>,<span class="string">&#x27;utf-8&#x27;</span>)</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(r1) <span class="comment">// 111</span></span><br><span class="line">  <span class="keyword">const</span> r2 = <span class="keyword">await</span> thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/2.txt&#x27;</span>, <span class="string">&#x27;utf-8&#x27;</span>)</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(r2) <span class="comment">// 222</span></span><br><span class="line">  <span class="keyword">const</span> r3 = <span class="keyword">await</span> thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/3.txt&#x27;</span>, <span class="string">&#x27;utf-8&#x27;</span>)</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(r3) <span class="comment">// 333</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_">getAllFile</span>()</span><br></pre></td></tr></table></figure>
+<p>如果<strong>某个方法的返回值是个Promise实例对象</strong>，那么我们就可以在前面<strong>用await</strong>来进行<strong>修饰</strong>，修饰完毕之后，这个<strong>返回值就不再是Promise实例</strong>，而是<strong>变成一个真正的值</strong>。<br>而且需要注意：<font color='red'>如果这个方法内部用到了await，那么这个方法必须被async来修饰</font></p>
+<h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><ol>
+<li><font color='green'>如果在 function 中使用了 await ，则 function <strong>必须</strong>被 async 修饰</font></li>
+<li><font color='green'>在 async 方法中，<strong>第一个 await 之前的代码会同步执行</strong>，await之后的代码会异步执行</font><br>最终输出的顺序：A、B、C、111 222 333、D<br>碰到第一个await，主线程就退出了方法执行，立马输出了C，当1 2 3异步读取完成之后就按顺序输出，最后异步的输出了D<br><img src="/tsukimiya.github.io/images/ES6/async%E6%96%B9%E6%B3%95%E6%89%A7%E8%A1%8C%E9%A1%BA%E5%BA%8F.png" alt="async/await方法执行顺序"></li>
+</ol>
+]]></content>
+      <categories>
+        <category>JS</category>
+        <category>ES6</category>
+      </categories>
+      <tags>
+        <tag>ES6</tag>
+        <tag>async</tag>
+        <tag>await</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>EventLoop</title>
+    <url>/tsukimiya.github.io/2024/05/07/ES6/4.EventLoop/</url>
+    <content><![CDATA[<h2 id="JS的单线程"><a href="#JS的单线程" class="headerlink" title="JS的单线程"></a>JS的单线程</h2><p>JS是一门<strong>单线程执行</strong>的编程语言。同一事件只能做一件事情。</p>
+<p>JS的执行线程<br>↓<br>任务1 → 任务2 → 任务3 → 任务N（待执行的任务队列）</p>
+<p>单线程执行队列的问题：<br>如果<strong>前一个任务非常耗时</strong>，则后续的任务就不得不一直等待，从而导致<strong>程序假死</strong>的问题。</p>
+<h2 id="同步任务和异步任务"><a href="#同步任务和异步任务" class="headerlink" title="同步任务和异步任务"></a>同步任务和异步任务</h2><p>为了防止某个<strong>耗时任务</strong>导致<strong>程序假死</strong>的问题，JavaScript把待执行的任务分为了两类:</p>
+<ol>
+<li>同步任务 (synchronous)<ul>
+<li>又叫做<strong>非耗时任务</strong>，指的是在主线程上排队执行的那些任务</li>
+<li>只有前一个任务执行完毕，才能执行后一个任务</li>
+</ul>
+</li>
+<li>异步任务 (asynchronous)<ul>
+<li>又叫做<strong>耗时任务</strong>，异步任务由JavaScript<strong>委托给宿主环境</strong>进行执行</li>
+<li>当异步任务执行完成后，会<strong>通知JavaScript主线程</strong>执行异步任务的<strong>回调函数</strong><blockquote>
+<p>宿主环境就是JS的执行环境，在浏览器里面运行JS，浏览器就是JS的宿主环境，在Node.js…</p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="同步任务和异步任务的执行过程"><a href="#同步任务和异步任务的执行过程" class="headerlink" title="同步任务和异步任务的执行过程"></a>同步任务和异步任务的执行过程</h2><p><img src="/tsukimiya.github.io/images/ES6/js%E6%89%A7%E8%A1%8C%E8%BF%87%E7%A8%8B.png" alt="js执行过程"></p>
+<h2 id="EventLoop的基本概念"><a href="#EventLoop的基本概念" class="headerlink" title="EventLoop的基本概念"></a>EventLoop的基本概念</h2><p><strong>JavaScript主线程从“任务队列”中读取异步任务的回调函数，放到执行栈中依次执行</strong>。这个过程是循环不断的，所以整个的这种运行机<br>制又称为<strong>EventLoop</strong>(事件循环)。</p>
+<ul>
+<li><p>练习<br><img src="/tsukimiya.github.io/images/ES6/%E7%BB%83%E4%B9%A0.png" alt="练习"></p>
+</li>
+<li><p>分享文章<br>面试必问之 JS 事件循环(Event Loop)，看这一篇足够(<a href="https://zhuanlan.zhihu.com/p/580956436">https://zhuanlan.zhihu.com/p/580956436</a>)</p>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>JS</category>
+        <category>ES6</category>
+      </categories>
+      <tags>
+        <tag>ES6</tag>
+        <tag>EventLoop</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>宏任务和微任务</title>
+    <url>/tsukimiya.github.io/2024/05/08/ES6/5.%E5%AE%8F%E4%BB%BB%E5%8A%A1%E5%92%8C%E5%BE%AE%E4%BB%BB%E5%8A%A1/</url>
+    <content><![CDATA[<h2 id="什么是宏任务和微任务"><a href="#什么是宏任务和微任务" class="headerlink" title="什么是宏任务和微任务"></a>什么是宏任务和微任务</h2><p>JavaScript把异步任务又做了进一步的划分，异步任务又分为两类，分别是:</p>
+<ol>
+<li>宏任务( macrotask)<ul>
+<li>异步Ajax请求、</li>
+<li>setTimeout、setlnterval、</li>
+<li>文件操作</li>
+<li>其它宏任务</li>
+</ul>
+</li>
+<li>微任务( microtask)<ul>
+<li>Promise.then、.catch和.finally</li>
+<li>process.nextTick</li>
+<li>其它微任务</li>
+</ul>
+</li>
+</ol>
+<p><img src="/tsukimiya.github.io/images/ES6/%E5%AE%8F%E4%BB%BB%E5%8A%A1%E5%92%8C%E5%BE%AE%E4%BB%BB%E5%8A%A1.png" alt="宏任务和微任务"></p>
+<h2 id="划分依据"><a href="#划分依据" class="headerlink" title="划分依据"></a>划分依据</h2><p>异步任务是根据<strong>任务的触发时机</strong>和<strong>任务队列的不同</strong>来分为宏任务和微任务的。下面是它们的依据：</p>
+<ol>
+<li><p><strong>触发时机</strong>：</p>
+<ul>
+<li><strong>宏任务（Macro Task）</strong>：宏任务是由 JavaScript 引擎外部的任务触发的，比如 DOM 事件（如点击事件、鼠标移动事件）、<code>setTimeout</code>、<code>setInterval</code>、网络请求等。宏任务代表着一个独立的、顺序执行的任务单元，它们会被放入宏任务队列中等待执行。</li>
+<li><strong>微任务（Micro Task）</strong>：微任务是在当前任务执行完成之后立即执行的任务，它们一般是由 JavaScript 引擎内部触发的，比如 Promise 的状态改变、<code>queueMicrotask</code> 函数等。微任务的执行时机是在当前宏任务执行结束、事件循环进入下一次循环之前。</li>
+</ul>
+</li>
+<li><p><strong>任务队列</strong>：</p>
+<ul>
+<li><strong>宏任务队列</strong>：宏任务队列中存放着各种宏任务，包括了 DOM 事件、定时器、I&#x2F;O 操作等。在事件循环的每一轮中，只有一个宏任务会被执行。</li>
+<li><strong>微任务队列</strong>：微任务队列中存放着微任务，它们的执行顺序是按照它们进入队列的顺序执行的。在每个宏任务执行结束后，会检查并执行所有的微任务，直到微任务队列为空。</li>
+</ul>
+</li>
+</ol>
+<p>因此，异步任务是根据触发时机和任务队列的不同而被分为宏任务和微任务的。这种分化使得 JavaScript 引擎能够灵活地处理异步任务，并根据执行上下文的情况来调度它们的执行顺序。</p>
+<h2 id="执行顺序"><a href="#执行顺序" class="headerlink" title="执行顺序"></a>执行顺序</h2><p>宏任务和微任务是交替执行的。<br>在 JavaScript 中，<strong>执行完同步任务后</strong>，<strong>会先检查是否存在微任务</strong>，如果存在，则先执行微任务队列中的所有微任务。执行完所有微任务后，再去执行宏任务队列中的任务。<br><img src="/tsukimiya.github.io/images/ES6/%E5%AE%8F%E4%BB%BB%E5%8A%A1%E5%BE%AE%E4%BB%BB%E5%8A%A1%E6%89%A7%E8%A1%8C%E9%A1%BA%E5%BA%8F.png" alt="宏任务微任务执行顺序"></p>
+<ul>
+<li><p>场景举例<br><img src="/tsukimiya.github.io/images/ES6/%E5%9C%BA%E6%99%AF.png" alt="场景"></p>
+</li>
+<li><p>练习<br>new Promise 是同步任务，其调用的.then是微任务<br><img src="/tsukimiya.github.io/images/ES6/%E7%BB%83%E4%B9%A02.png" alt="练习2"></p>
+</li>
+<li><p>练习<br><img src="/tsukimiya.github.io/images/ES6/%E7%BB%83%E4%B9%A03.png" alt="练习3"></p>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>JS</category>
+        <category>ES6</category>
+      </categories>
+      <tags>
+        <tag>ES6</tag>
+        <tag>宏任务和微任务</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>简单的API接口案例</title>
+    <url>/tsukimiya.github.io/2024/05/08/Node/API%E6%8E%A5%E5%8F%A3%E6%A1%88%E4%BE%8B/</url>
+    <content><![CDATA[<h2 id="API接口案例"><a href="#API接口案例" class="headerlink" title="API接口案例"></a>API接口案例</h2><p>基于<strong>MySQL数据库 + Express</strong>对外提供<strong>用户列表</strong>的API接口服务</p>
+<ol>
+<li>技术栈：<ul>
+<li>第三方包express、mysql2</li>
+<li>ES6模块化</li>
+<li>Promise</li>
+<li>async&#x2F;await</li>
+</ul>
+</li>
+<li>主要实现步骤<ol>
+<li>搭建项目的基本结构</li>
+<li>创建基本的服务器</li>
+<li>创建db数据库操作模块</li>
+<li>创建user_ctrl 业务模块</li>
+<li>创建user_router路由模块</li>
+</ol>
+</li>
+</ol>
+<h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><ol>
+<li><p>初始化包管理配置文件package.json —— <code>npm init -y</code></p>
+</li>
+<li><p>启用ES6模块化支持</p>
+<ul>
+<li>在package.json中声明<code>&quot;type&quot;: &quot;module&quot;</code></li>
+</ul>
+</li>
+<li><p>安装第三方依赖包</p>
+<ul>
+<li>运行<code>npm install express@4.17.1 mysql2@2.2.5</code></li>
+</ul>
+</li>
+<li><p>创建最基本的web服务器</p>
+ <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// app.js</span></span><br><span class="line"><span class="comment">//导入express模块</span></span><br><span class="line"><span class="keyword">import</span> express <span class="keyword">from</span> <span class="string">&#x27;express&#x27;</span></span><br><span class="line"><span class="comment">//创建express服务器实例</span></span><br><span class="line"><span class="keyword">const</span> app = <span class="title function_">express</span>()</span><br><span class="line"></span><br><span class="line"><span class="comment">//调用app.listen方法，指定端口号并启动web服务器</span></span><br><span class="line">app.<span class="title function_">listen</span>(<span class="number">8080</span>,<span class="function">()=&gt;</span>&#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;Express server running at http://127.0.0.1:8080&#x27;</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></li>
+<li><p>创建db数据库操作模块</p>
+ <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// db/index.js</span></span><br><span class="line"><span class="keyword">import</span> mysql <span class="keyword">from</span> <span class="string">&#x27;mysql2&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> pool = mysql.<span class="title function_">createPool</span>(&#123;</span><br><span class="line">  <span class="attr">host</span>: <span class="string">&#x27;127.0.0.1&#x27;</span>, <span class="comment">// 指定操作哪台电脑</span></span><br><span class="line">  <span class="attr">port</span>: <span class="number">3306</span>, <span class="comment">// 指定端口号，一般mysql数据库的端口号都是3306</span></span><br><span class="line">  <span class="attr">database</span>: <span class="string">&#x27;my_db_01&#x27;</span>,</span><br><span class="line">  <span class="attr">user</span>: <span class="string">&#x27;root&#x27;</span>,</span><br><span class="line">  <span class="attr">password</span>: <span class="string">&#x27;ayu123+&#x27;</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 如果导出pool，它不支持以promise API的形式来操作数据库</span></span><br><span class="line"><span class="comment">// 此时我们需要调用pool提供的.promise()，把返回值导出出去</span></span><br><span class="line"><span class="comment">// 外界拿到数据库的连接对象之后，就可以以Promise的方式来操作数据库</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> pool.<span class="title function_">promise</span>()</span><br></pre></td></tr></table></figure></li>
+<li><p>创建user_ctrl 业务模块</p>
+ <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// controller/user_ctrl.js</span></span><br><span class="line"><span class="keyword">import</span> db <span class="keyword">from</span> <span class="string">&#x27;../db/index.js&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用ES6的按需导出语法，将getALLUser语法导出出去</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">getAllUser</span>(<span class="params">req,res</span>)&#123;</span><br><span class="line">  <span class="comment">// 数组中，索引为0的那一项，是最终需要的数据，所以解构赋值出一个rows</span></span><br><span class="line">  <span class="keyword">const</span> [rows] = <span class="keyword">await</span> db.<span class="title function_">query</span>(<span class="string">&#x27;select id,username,nickname from users&#x27;</span>)</span><br><span class="line">  res.<span class="title function_">send</span>(&#123;</span><br><span class="line">    <span class="attr">status</span>: <span class="number">0</span>,</span><br><span class="line">    <span class="attr">messages</span>: <span class="string">&#x27;获取用户列表数据成功！&#x27;</span>,</span><br><span class="line">    <span class="attr">data</span>: rows,</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>创建user_router路由模块</p>
+ <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// router/user_router.js</span></span><br><span class="line"><span class="keyword">import</span> express <span class="keyword">from</span> <span class="string">&#x27;express&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123; getAllUser &#125; <span class="keyword">from</span> <span class="string">&#x27;../controller/user_ctrl.js&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> router = <span class="keyword">new</span> express.<span class="title class_">Router</span>()</span><br><span class="line">router.<span class="title function_">get</span>(<span class="string">&#x27;/user&#x27;</span>, getAllUser)</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> router</span><br><span class="line"></span><br><span class="line"><span class="comment">// 在app.js注册路由</span></span><br><span class="line"><span class="keyword">import</span> userRouter <span class="keyword">from</span> <span class="string">&#x27;./router/user_router.js&#x27;</span></span><br><span class="line">app.<span class="title function_">use</span>(<span class="string">&#x27;/api&#x27;</span>, userRouter)</span><br></pre></td></tr></table></figure></li>
+<li><p>使用try…catch捕获异常<br>当报错之后，使用catch进行处理，程序不会发生崩溃</p>
+ <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// controller/user_ctrl.js</span></span><br><span class="line"><span class="keyword">import</span> db <span class="keyword">from</span> <span class="string">&#x27;../db/index.js&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用ES6的按需导出语法，将getALLUser语法导出出去</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">getAllUser</span>(<span class="params">req,res</span>)&#123;</span><br><span class="line">  <span class="comment">// 数组中，索引为0的那一项，是最终需要的数据，所以解构赋值出一个rows</span></span><br><span class="line">  <span class="keyword">try</span>&#123;</span><br><span class="line">    <span class="keyword">const</span> [rows] = <span class="keyword">await</span> db.<span class="title function_">query</span>(<span class="string">&#x27;select id,username,nickname,xxx from users&#x27;</span>)</span><br><span class="line">    res.<span class="title function_">send</span>(&#123;</span><br><span class="line">      <span class="attr">status</span>: <span class="number">0</span>,</span><br><span class="line">      <span class="attr">messages</span>: <span class="string">&#x27;获取用户列表数据成功！&#x27;</span>,</span><br><span class="line">      <span class="attr">data</span>: rows,</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;<span class="keyword">catch</span>(err)&#123;</span><br><span class="line">    res.<span class="title function_">send</span>(&#123;</span><br><span class="line">      <span class="attr">status</span>: <span class="number">1</span>,</span><br><span class="line">      <span class="attr">messages</span>: <span class="string">&#x27;获取用户数据失败！&#x27;</span>,</span><br><span class="line">      <span class="attr">desc</span>: err.<span class="property">messages</span></span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+]]></content>
+      <categories>
+        <category>Node.js</category>
+      </categories>
+      <tags>
+        <tag>Node.js</tag>
       </tags>
   </entry>
   <entry>
@@ -141,7 +545,7 @@
   </entry>
   <entry>
     <title>前端工程化与Webpack</title>
-    <url>/tsukimiya.github.io/2024/04/18/Vue/1.%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96%E4%B8%8EWebpack/</url>
+    <url>/tsukimiya.github.io/2024/04/18/Vue2/1.%E5%89%8D%E7%AB%AF%E5%B7%A5%E7%A8%8B%E5%8C%96%E4%B8%8EWebpack/</url>
     <content><![CDATA[<blockquote>
 <p>目标：<br>了解工程化的前端开发方式<br>知道Webpack在实际开发中所起到的作用</p>
 <blockquote>
@@ -151,7 +555,6 @@
 <blockquote>
 <p><strong>webpack 的基本使用</strong>：安装、webpack.config.js、修改打包入口<br><strong>webpack的两个插件</strong>(常用的plugin的基本使用)：<br>webpack-dev-server – (每次修改后自动进行项目的打包和构建)<br>html-webpack-plugin – (把src里面的首页在内存中复制一份，放到根目录中)<br><strong>常用的loader 的基本使用</strong>：协助webpack打包处理特定的文件模块。<br><strong>Source Map 的作用</strong>：精准定位到错误行并显示对应的源码，方便开发者调试源码中的错误</p>
 </blockquote>
-<p>[toc]</p>
 <h2 id="前端工程化相关概念"><a href="#前端工程化相关概念" class="headerlink" title="前端工程化相关概念"></a>前端工程化相关概念</h2><p>前端工程化指的是:在企业级的前端项目开发中，把前端开发所需的工具、技术、流程、经验等进行规范化、标准化。<br>好处:前端开发自成体系，有一套标准的开发方案和流程。</p>
 <p>实际的前端开发，是四个现代化：</p>
 <ul>
@@ -309,7 +712,7 @@
 <li>webpack 把 index.css 这个文件，先转交给最后一个 loader 进行处理(先转交给css-loader) .</li>
 <li>当 css-loader 处理完毕之后，会把处理的结果，转交给下一个 loader (转交给style-loader)</li>
 <li>当 style-loader 处理完毕之后，发现没有下一个 loader 了，于是就把处理的结果，转交给了 webpack</li>
-<li>webpack 把 style-loader 处理的结果，合并到&#x2F;dist&#x2F;bundle.js中，最终生成打包好的文件。</li>
+<li>webpack 把 style-loader 处理的结果，合并到&#x2F;dist&#x2F;bundle.js中，最终生成打包好的文件。<br><img src="/tsukimiya.github.io/images/vue/loader%E8%B0%83%E7%94%A8%E8%BF%87%E7%A8%8B.png" alt="loader调用过程"></li>
 </ol>
 <h3 id="base64图片的优缺点"><a href="#base64图片的优缺点" class="headerlink" title="base64图片的优缺点"></a>base64图片的优缺点</h3><p>浏览器在拿到HTMl标签以后，需要再发送请求，拿到图片以后才能把图片渲染出来</p>
 <p>但是使用用base64图片，在拿到img标签以后，就顺手的把图片对应的字符串也给请求下来了，可以防止发起一些不必要的网络请求</p>
@@ -334,6 +737,15 @@
 
 <ul>
 <li><strong>检验是否是删除之后重新生产的方法</strong>：<br>可以在dist文件夹下新建如1.txt文件，重新打包，如果文件还在，说明是没有删除直接打包的，如果不再了，那就是删除之后重新打包。</li>
+</ul>
+<h3 id="企业级项目的打包发布"><a href="#企业级项目的打包发布" class="headerlink" title="企业级项目的打包发布"></a><font color="red">企业级项目的打包发布</font></h3><p>企业级的项目在进行打包发布时，远比刚才的方式要复杂的多，主要的发布流程如下:</p>
+<ul>
+<li>生成打包报告，根据报告分析具体的优化方案</li>
+<li>Tree-Shaking</li>
+<li>为第三方库启用CDN加载</li>
+<li>配置组件的按需加载</li>
+<li>开启路由懒加载</li>
+<li>自定制首页内容</li>
 </ul>
 <h2 id="source-Map-–-开发阶段检错"><a href="#source-Map-–-开发阶段检错" class="headerlink" title="source Map – 开发阶段检错"></a>source Map – 开发阶段检错</h2><p>告诉你文件的报错位置，用于调试bug<br>开发阶段 npm run dev 检错的<br><strong>在发布项目的时候，处于安全性考虑，建议关闭SourceMap</strong>。防止一些人通过报错位置来拿到我们的源代码(通过修改页面代码来主动让页面某功能报错来拿到该功能位置的源码这样吗？)<br>新版本开发环境建议使用cheap-module-source-map？</p>
 <ol>
@@ -387,8 +799,226 @@
       </tags>
   </entry>
   <entry>
+    <title>Vue2 基本使用 &amp; 常用指令</title>
+    <url>/tsukimiya.github.io/2024/04/20/Vue2/2.vue2%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8&amp;%E5%B8%B8%E7%94%A8%E6%8C%87%E4%BB%A4/</url>
+    <content><![CDATA[<blockquote>
+<p>目标：<br>使用Vue指令完成页面结构的渲染<br>使用Vue调试工具辅助Vue的开发</p>
+</blockquote>
+<blockquote>
+<p><strong>掌握Vue的两个特性：数据驱动视图、双向数据绑定<br>    掌握Vue的底层原理 MVVM – model数据源、view视图&#x2F;页面结构、viewmodel vue实例<br>    掌握Vue六大类指令的使用</strong><br>    vue2指令新学到的东西：<br>    事件绑定指令中的：<a href="#param">参数问题</a>、<a href="#event">$event</a>、<a href="#modifier">事件修饰符</a>、<a href="#keyModifier">按键修饰符</a><br>    双向绑定指令中的：<a href="#v-model">v-model修饰符</a><br>    条件渲染指令中的：<a href="#if">v-if配套的v-else指令</a><br>    列表渲染指令中的：<a href="#key">key属性绑定</a></p>
+</blockquote>
+<blockquote>
+<p>vscode插件推荐：Volar、Vue VSCode Snippets。 <a href="https://blog.csdn.net/weixin_40808668/article/details/134277604">简单说明</a>(CSDN)</p>
+</blockquote>
+<blockquote>
+<p><font color='red'>Vue的优势：MVVM的数据驱动视图 – 在vue中，程序员不需要操作DOM，只需要把数据维护好即可。</font><br>因此，在vue项目中，墙裂不建议安装和使用jQuery，因为没有操作DOM的需求，如果有也是极少的。</p>
+</blockquote>
+<p>[toc]</p>
+<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p><a href="https://v2.cn.vuejs.org/v2/guide/">Vue 2.x 官方文档</a>(已不再维护)<br>Vue是一套<strong>用于构建用户界面的前端框架</strong><br>构建用户界面：用vue往html页面填充数据<br>框架：一套现成的解决方案，程序员只能遵守框架的规范去编写业务功能</p>
+<p>学习vue就是学习vue框架中规定的用法<br><strong>vue的指令、组件(是对UI结构的复用)、路由、Vuex、vue组件库</strong></p>
+<p><font color='red'>Vue的优势：MVVM的数据驱动视图 – 在vue中，程序员不需要操作DOM，只需要把数据维护好即可。</font><br>因此，在vue项目中，墙裂不建议安装和使用jQuery，因为没有操作DOM的需求，如果有也是极少的。</p>
+<h3 id="vue的两个特性："><a href="#vue的两个特性：" class="headerlink" title="vue的两个特性："></a>vue的两个特性：</h3><ol>
+<li><strong>数据驱动视图</strong><br> vue会监听数据的变化，自动重新渲染页面的结构<br> 注意：<span style="color:red;" >数据驱动视图是单向的数据绑定<span></li>
+<li><strong>双向数据绑定</strong><br> 填写表单时，自动把内容同步到数据源中<blockquote>
+<p>在网页中，form表单负责<font color='green'>采集数据</font>，Ajax负责<font color='green'>提交数据</font></p>
+</blockquote>
+</li>
+</ol>
+<h3 id="MVVM-–-vue的底层原理"><a href="#MVVM-–-vue的底层原理" class="headerlink" title="MVVM – vue的底层原理"></a>MVVM – vue的底层原理</h3><p><font color='red'>MVVM是 vue 实现数据驱动视图和双向数据绑定的核心原理。</font><br>MVVM 指的是 <strong>M</strong>odel(数据源)、<strong>V</strong>iew(视图) 和 <strong>V</strong>iew<strong>M</strong>odel(vue实例)，它把每个 HTML 页面都拆分成了这三个部分。</p>
+<p>在MVVM概念中:<br><strong>Model</strong> 表示当前页面渲染时所依赖的<strong>数据源</strong>。<br><strong>View</strong> 表示当前页面所渲染的 DOM 结构。(<strong>页面结构，也即是视图</strong>)<br><strong>ViewModel</strong> 表示 <strong>vue 的实例</strong>，它是<strong>MVVM的核心</strong>。(也就是vue)<br><img src="/tsukimiya.github.io/images/vue/MVVM%E7%A4%BA%E6%84%8F%E5%9B%BE.png" alt="image"></p>
+<ul>
+<li>MVVM的工作原理：<br>  ViewModel作为MVVM的核心，是它把当前页面的<font color="green">数据源</font>(Model)和<font color="green">页面的结构</font>(View)连接在了一起。<br>  <img src="/tsukimiya.github.io/images/vue/MVVM%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86.png" alt="image"><br>  <strong>当数据源发生变化时</strong>，会被ViewModel监听到，VM会根据最新的数据源<strong>自动更新</strong>页面的结构<br>  <strong>当表单元素的值发生变化时</strong>，也会被VM监听到，VM会把变化过后最新的值<strong>自动同步</strong>到Model数据源中</li>
+</ul>
+<h3 id="vue的版本"><a href="#vue的版本" class="headerlink" title="vue的版本"></a>vue的版本</h3><p>当前，vue共有3个大版本，其中:<br>3.x版本的vue 于2020-09-19发布<br>2.x版本的vue 已于 2023 年 12 月 31 日停止维护<br>1.x版本的vue几乎被淘汰，不再建议学习与使用</p>
+<h2 id="基本使用"><a href="#基本使用" class="headerlink" title="基本使用"></a>基本使用</h2><ol>
+<li><p>基本使用步骤</p>
+<ol>
+<li>导入VUE.js脚本文件<br> 可以借助 script 标签直接通过 CDN(提供 npm 包服务) 来使用 Vue：<br> <code>&lt;script src=&quot;https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js&quot;&gt;&lt;/script&gt;</code></li>
+<li>在页面声明一个将要被vue所控制的区域</li>
+<li>创建vm实例对象(vue实例对象)</li>
+</ol>
+</li>
+<li><p>基本代码与MVVM的对应关系<br> model：data指向的对象<br> view：el指向的选择器<br> ViewModel：new Vue()构造函数得到的实例对象</p>
+</li>
+</ol>
+<h2 id="指令"><a href="#指令" class="headerlink" title="指令"></a>指令</h2><p>指令(Directives)是vue为开发者提供的模板语法，用于辅助开发者渲染页面的基本结构。<br>指令是vue开发中最基础、最常用、最简单的知识点</p>
+<p>vue的指令 <strong>按照不同用途</strong> 可以分为如下6大类：</p>
+<ol>
+<li><p>内容渲染指令：<code>v-text</code> 、<code>&#123;&#123;&#125;&#125;</code>  、 <code>v-html</code></p>
+<blockquote>
+<p>v-test 会覆盖默认文本内容，一般使用<code>&#123;&#123;&#125;&#125;</code>插值表达式<br> v-text和差值表达式只能渲染纯文本内容<br> v-html可以把带标签的字符串渲染成HTML内容</p>
+</blockquote>
+</li>
+<li><p>属性绑定指令: <code>v-bind</code> &#x2F; <code>:xxx=</code> </p>
+<blockquote>
+<p>差值表达式只能用在元素的内容节点中，不能用在属性节点中<br> v-bind用法：<code>&lt;input type=&quot;text&quot; v-bind:placeholder=&quot;tips&quot;&gt;</code><br> <strong>vue规定 <code>v-bind:</code> 指令可以简写为<code>:</code></strong></p>
+</blockquote>
+<blockquote>
+<p>在vue提供的<strong>模版渲染语法中</strong>，除了支持绑定简单的数据值之外，还<font color="green">支持JS表达式的运算</font><br> 但是<font color="green">只能写简单的JS表达式，不能写if等复杂的JS语句</font>，如字符串拼接等：<br> <figure class="highlight js"><table><tr><td class="code"><pre><span class="line">&#123;&#123;number + <span class="number">1</span>&#125;&#125;、&#123;&#123;ok?<span class="string">&#x27;YES&#x27;</span>:<span class="string">&#x27;NO&#x27;</span>&#125;&#125;、&#123;&#123;msg.<span class="title function_">split</span>(<span class="string">&#x27;&#x27;</span>).<span class="title function_">reserve</span>().<span class="title function_">join</span>(<span class="string">&#x27;&#x27;</span>)&#125;&#125;<span class="comment">//反转字符串</span></span><br></pre></td></tr></table></figure></p>
+</blockquote>
+</li>
+<li><p>事件绑定指令：<code>v-on</code> &#x2F; <code>@</code></p>
+<blockquote>
+<p>语法如 <code>v-on:clock=&quot;add&quot;</code> 简写<code>@click=&quot;add&quot;</code><br> methods下的函数变量也支持简写：<code>add:function()&#123;&#125; --&gt; add()&#123;&#125;</code><br> 在处理函数中<strong>修改数据的值</strong>可以通过vm(接受vue实例的变量名)来修改：vm.count,但是不推荐，<strong>推荐用this</strong></p>
+</blockquote>
+<ul>
+<li><p>绑定事件并传参</p>
+<blockquote>
+<p>在调用的地方传参 <code>@click=&quot;add(1)&quot;</code></p>
+</blockquote>
+</li>
+<li><p><font id="param" color="red">参数问题</font></p>
+<blockquote>
+<ul>
+<li>如果定义的函数变量是有参数的<br>1. <code>add(n)&#123;&#125; -- @click=&quot;add(1)&quot;</code> 正常传参 n&#x2F;&#x2F;1<br>2. <code>add(n)&#123;&#125; -- @click=&quot;add()&quot;</code> n&#x2F;&#x2F;undefined<br>3. <code>add(n)&#123;&#125; -- @click=&quot;add&quot;</code> n被认定为事件对象PointerEvent，通常我们会定义为e&#x2F;event</li>
+</ul>
+</blockquote>
+<blockquote>
+<ul>
+<li>如果是多个参数，如<br>1. <code>add(a,b)&#123;&#125; -- @click=&quot;add(1,2)&quot;</code> 正常传参 a&#x2F;&#x2F;1 b&#x2F;&#x2F;2<br>2. <code>add(a,b)&#123;&#125; -- @click=&quot;add(1)&quot;</code> a&#x2F;&#x2F;1 b&#x2F;&#x2F;undefined<br>3. <code>add(a,b)&#123;&#125; -- @click=&quot;add()&quot;</code> a&#x2F;un b&#x2F;&#x2F;un<br>4. <code>add(a,b)&#123;&#125; -- @click=&quot;add&quot;</code> a&#x2F;&#x2F;事件对象PointerEvent ，b&#x2F;&#x2F;undefined</li>
+</ul>
+</blockquote>
+</li>
+<li><p><font id="event" color="red">事件对象$event</font>(不常用)</p>
+<blockquote>
+<p>vue提供了内置变量<code>$event</code>,它就是原生DOM的事件对象e<br>  在绑定事件的时候，如果不传参 <code>add(e)&#123;&#125; -- @click=&quot;add&quot;</code> , 我们会接受到一个事件对象e<br>  如果传参，<code>@click=&quot;add(1)&quot;</code>,我们就接收不到这个事件对象了<br>  <strong>我们既要传参，又要用到事件对象e</strong>，如想要从事件对象上拿到e.target(触发事件的事件源) ，这个时候就可以用<code>$event</code><br>  <strong><code>$event</code>使用：传<code>$event</code>作参数进去，拿形参接收</strong><br>  <code>add(n,e)&#123;&#125; --  @click=&quot;add(1,$event)&quot;</code><br>  或<code>add(e,n)&#123;&#125; --  @click=&quot;add($event,1)&quot;</code></p>
+</blockquote>
+</li>
+<li><p><font id="modifier" color="red">事件修饰符</font></p>
+<blockquote>
+<p>在事件处理函数中，调用<code>event.preventDefault()</code>(阻止默认行为)或<code>event.stopPropagation()</code>(阻止冒泡)是非常常见的需求。<br>  因此，vue提供了<strong>事件修饰符</strong>的概念，辅助程序员更方便的<strong>对事件的触发进行控制</strong>。<br>  如 <code>@click.prevent=&quot;show&quot;</code>绑定了show事件，同时阻止了默认行为<br>  常见的5个事件修饰符如下：</p>
+</blockquote>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th align="center">事件修饰符</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><strong>.prevent</strong></td>
+<td><strong>阻止默认行为</strong>(例如：阻止a链接的跳转、表单的提交等)</td>
+</tr>
+<tr>
+<td align="center"><strong>.stop</strong></td>
+<td><strong>阻止事件冒泡</strong></td>
+</tr>
+<tr>
+<td align="center">.capture</td>
+<td>以 捕获模式 触发当前的 事件处理函数</td>
+</tr>
+<tr>
+<td align="center">.once</td>
+<td>绑定的事件只触发1次</td>
+</tr>
+<tr>
+<td align="center">.self</td>
+<td>只有在 event.target 是当前元素自身时 触发事件处理函数</td>
+</tr>
+</tbody></table>
+<ul>
+<li><font id="keyModifier" color="red">按键修饰符</font>(用的不是很多)<blockquote>
+<p>在<strong>监听键盘事件</strong>时，经常需要<strong>判断详细的按键</strong>。<br>  此时，可以为键盘的相关事件添加<strong>按键修饰符</strong>，如：<br>  <code>&lt;input @keyup.enter=&quot;submit&quot;&gt;</code> – 只有在<code>key</code>是<code>Enter</code>时，调用<code>vm.submit()</code><br>  <code>&lt;input @keyup.esc=&quot;clearInput&quot;&gt;</code> – 只有在<code>key</code>是<code>Esc</code>时，调用<code>vm.clearInput()</code></p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p>双向绑定指令 <code>v-model</code></p>
+<blockquote>
+<p>用来辅助程序员在<strong>不操作DOM</strong>的前提下，<strong>快速获取表单的数据</strong>。<br>     能够产生数据交互的只有表单元素，所以只有表单元素才能使用<code>v-model</code>,才有意义<br>     表单元素 input、textarea、select<br>     v-model内部会判断绑定元素的类型，根据元素类型来决定将绑定的值给哪个属性。如复选框checkbox就是给checked属性，如果是text框就是value属性</p>
+</blockquote>
+<ul>
+<li><font id="v-model" color="red">v-model修饰符</font><blockquote>
+<p>为了方便对用户输入的内容进行处理，vue为v-model指令提供了3个修饰符：</p>
+</blockquote>
+</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th align="center">修饰符</th>
+<th>作用</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">.number</td>
+<td>自动将用户的输入值转为数值类型</td>
+<td><code>&lt;input v-model.number=&quot;age&quot;/&gt;</code></td>
+</tr>
+<tr>
+<td align="center">.trim</td>
+<td>自动过滤用户输入的首尾空白字符</td>
+<td><code>&lt;input v-model.trim=&quot;msg&quot;/&gt;</code></td>
+</tr>
+<tr>
+<td align="center">.lazy</td>
+<td>在”change”时而非”input”时更新</td>
+<td><code>&lt;input v-model.lazy=&quot;msg&quot;/&gt;</code></td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>lazy的作用是input事件(表单处于焦点时候)不更新，失去焦点触发change事件才更新</p>
+</blockquote>
+</li>
+<li><p>条件渲染指令 <code>v-if</code>、<code>v-show</code></p>
+<blockquote>
+<p>辅助开发者<strong>按需控制DOM的显示与隐藏</strong><br> v-if动态的把元素DOM从页面添加和移除<br> v-show是通过css动态添加display：none样式来显示和隐藏<br> <strong>如果要频繁切换元素的显示状态，show的性能更好</strong><br> <strong>如果刚进入页面，某些元素默认不需要被展示，而且后期这个元素很可能也不需要被展示出来，此时v-if性能更好</strong><br> 这个只是说给面试官听的，<font color="green">在实际开发中，绝大多数情况不用考虑性能问题，直接使用v-if就好了！</font><br> 因为在大多数情况下，这种性能差异是微不足道的，除非在处理大量组件或频繁切换时才会产生明显影响。</p>
+</blockquote>
+<ul>
+<li><p><font color="green">页面的执行(一个v-if的好问题)</font></p>
+<blockquote>
+<p>Q：如果我们页面有一个<code>&lt;p v-if=&quot;flag&quot;&gt;&lt;/p&gt; -- flag=false</code>，因为页面是从上往下执行的，那么页面是先创建p标签再移除呢，还是一开始就不创建呢？<br>  A：<strong>当我们用了vue-cli以后，用到单文件组件(.vue文件)的时候，它是先编译，然后再去运行。</strong><br>  先把整个网页编译成js，然后完整的去执行。标签也是被当做js去运行的，去加载的，这个问题就不存在了<br>  在 Vue 中，会根据 <code>v-if</code> 指令来决定是否渲染 DOM 元素。当 <code>flag</code> 初始值为 <code>false</code> 时，<code>&lt;p&gt;</code> 标签不会被创建到 DOM 中，<strong>Vue 在编译阶段会将 <code>v-if</code> 条件为 <code>false</code> 的元素直接移除</strong>。<br>  具体的流程如下：<br>      1. Vue 开始解析模板，并执行编译步骤。<br>      2. 当解析到带有 <code>v-if</code> 指令的元素时，Vue 会根据条件的真假决定是否将该元素包含在虚拟 DOM 中。<br>      3. 如果 <code>flag</code> 的初始值为 <code>false</code>，则 Vue 不会将 <code>&lt;p&gt;</code> 标签添加到虚拟 DOM 中。<br>      4. 最终，Vue 将虚拟 DOM 渲染为真实的 DOM，此时 <code>&lt;p&gt;</code> 标签不会出现在页面上。<br>  因此，页面上不会先创建 <code>&lt;p&gt;</code> 标签再移除，而是在一开始就不会创建 <code>&lt;p&gt;</code> 标签。</p>
+</blockquote>
+</li>
+<li><p><font id="if" color="green">v-if配套的指令 – <code>v-else</code></font></p>
+<blockquote>
+<p>多个元素按需展示<br>  注意：v-else指令<strong>必须配合v-if指令一起使用</strong>，否则不会被识别：<br> <figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">v-if</span>=<span class="string">&quot;type === &#x27;A&#x27;&quot;</span>&gt;</span>优秀<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">v-else-if</span>=<span class="string">&quot;type === &#x27;B&#x27;&quot;</span>&gt;</span>良好<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">v-else-if</span>=<span class="string">&quot;type === &#x27;C&#x27;&quot;</span>&gt;</span>一般<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">v-else</span>&gt;</span>差<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p>列表渲染指令 <code>v-for</code> 和 <code>:key</code> <font color="red">重要</font></p>
+<blockquote>
+<p>辅助开发者<strong>基于一个数组来循环渲染一个列表结构</strong>。<br>     v-for指令需要使用<code>item in items</code>形式的特殊语法<br>     v-for支持一个可选的第二个参数，即当前项的索引<code>(item,index) in items</code><br>     注意：v-for指令中的 item项 和 index索引 都是形参，可以根据需要命名</p>
+</blockquote>
+<ul>
+<li><font id="key" color="red">强调v-for循环中key值的绑定</font><blockquote>
+<p>官方推荐在用v-for的时候一定要绑定一个key属性，既提升性能、又防止列表状态紊乱。而且尽量把id作为key的值(id唯一)<br>  <font color="#000">官方对key的值类型有要求，只能是字符串或数字类型，并且key的值必须唯一，不能重复(相当于id)</font><br>  也不能以index为值，如果key以索引为值，会数据紊乱，<strong>key必须唯一且稳定，不唯一就会终端报错，唯一又不稳定就会数据紊乱。</strong><br>  <code>&lt;div v-for=&quot;(item,index) in items&quot; :key=&quot;item.id&quot;&gt;&lt;/div&gt;</code><br>  在vue单组件中，如果用到for循环，但是没有绑key的话，会直接在终端里报错<br>  <font color="green">不懂key到底有什么用的可以去了解下diff算法和虚拟dom？</font><br>  如果使用v-for只是为了循环渲染出内容，<code>:key</code>可以绑定为index索引，因为这个时候并没有实际的作用，只是为了不让报错而已</p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="扩展知识"><a href="#扩展知识" class="headerlink" title="扩展知识"></a>扩展知识</h2><h3 id="lable复选框的for属性"><a href="#lable复选框的for属性" class="headerlink" title="lable复选框的for属性"></a>lable复选框的for属性</h3><p>下面这个示例中,如果要选中男，应该点击对应的复选框，点击男不行，这样用户的体验很不好，可操作区域非常窄。<br>应该把它的可操作区域给放大，点击复选框还是男都可以选中，此时就用到了for属性</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;checkbox&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">&quot;&quot;</span>&gt;</span>男<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">hr</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;checkbox&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">&quot;&quot;</span>&gt;</span>女<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><strong>for指向id，希望点这个lable让谁被选中，就for那个元素的id</strong></p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;checkbox&quot;</span> <span class="attr">id</span>=<span class="string">&quot;cb1&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">&quot;cb1&quot;</span>&gt;</span>男<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">hr</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;checkbox&quot;</span> <span class="attr">id</span>=<span class="string">&quot;cb2&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">&quot;cb2&quot;</span>&gt;</span>女<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="a元素的JavaScript-伪协议"><a href="#a元素的JavaScript-伪协议" class="headerlink" title="a元素的JavaScript 伪协议"></a>a元素的JavaScript 伪协议</h3><p><code>&lt;a href=&quot;javascript:;&quot; @click=&quot;remove&quot;&gt;删除&lt;/a&gt;</code><br>这段代码是一个 HTML 锚点元素 <code>&lt;a&gt;</code> 的写法，其中<code>javascript:;</code> 是一个 JavaScript 伪协议，用于在点击链接时执行 JavaScript 代码或阻止默认行为。</p>
+<p>通常情况下，当用户点击这个链接时，浏览器会执行 <code>JavaScript:;</code> 这里的 JavaScript 代码是空的，所以实际上不会发生任何操作。<br>这种写法通常用于创建一个占位符链接，或者作为一个“空链接”，<strong>用于在不跳转页面的情况下执行一些 JavaScript 操作，比如触发事件或者执行某些函数</strong>。</p>
+<h3 id="JS-filter-方法-–-Array-prototype-filter"><a href="#JS-filter-方法-–-Array-prototype-filter" class="headerlink" title="JS - filter() 方法 – Array.prototype.filter()"></a>JS - filter() 方法 – Array.prototype.filter()</h3><p><code>filter()</code> 方法是 JavaScript 中数组的一个内置方法，用于过滤数组中的元素，并返回一个符合条件的新数组。<br>如：<br><code>let arr = [1,2,3].filter(item=&gt;item&gt;1) //[1,2]</code><br><code>let arr = [&#123;id:1,name:&quot;zs&quot;&#125;,&#123;id:2..&#125;].filter(item =&gt; item.id !=2) // [&#123;id:1,name:&quot;zs&quot;&#125;]</code></p>
+<p>但是，除了数组外，<code>filter()</code> 方法还可以应用于类数组对象和可迭代对象。例如，字符串也可以通过 <code>filter()</code> 方法进行过滤操作。</p>
+<p>下面是一个例子，演示如何在字符串中使用 <code>filter()</code> 方法来过滤出特定的字符：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> str = <span class="string">&#x27;Hello World!&#x27;</span>;</span><br><span class="line"><span class="keyword">const</span> filteredStr = <span class="title class_">Array</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">filter</span>.<span class="title function_">call</span>(str, <span class="function"><span class="params">char</span> =&gt;</span> char !== <span class="string">&#x27;l&#x27;</span>);</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(filteredStr.<span class="title function_">join</span>(<span class="string">&#x27;&#x27;</span>)); <span class="comment">// 输出：Heo Word!</span></span><br></pre></td></tr></table></figure>
+
+<p>在这个例子中，我们首先使用 <code>Array.prototype.filter.call()</code> 来调用 <code>filter()</code> 方法，并将字符串 <code>str</code> 当作第一个参数传入。然后，我们定义了一个过滤条件，即过滤掉所有的 ‘l’ 字符。最后，我们将过滤后的字符数组通过 <code>join()</code> 方法连接成一个新的字符串，并输出结果。</p>
+<p>总之，虽然 <code>filter()</code> 方法通常用于数组，但通过一些技巧，我们也可以在其他类型的对象上使用它。</p>
+]]></content>
+      <categories>
+        <category>Vue</category>
+        <category>Vue2</category>
+      </categories>
+      <tags>
+        <tag>Vue</tag>
+        <tag>Vue2</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Vue2 过滤器、侦听器、计算属性、axios &amp; vue-cli</title>
-    <url>/tsukimiya.github.io/2024/04/21/Vue/3.%E8%BF%87%E6%BB%A4%E5%99%A8%20%E4%BE%A6%E5%90%AC%E5%99%A8%20%E8%AE%A1%E7%AE%97%E5%B1%9E%E6%80%A7%20axios&amp;vue-cli/</url>
+    <url>/tsukimiya.github.io/2024/04/21/Vue2/3.%E8%BF%87%E6%BB%A4%E5%99%A8%20%E4%BE%A6%E5%90%AC%E5%99%A8%20%E8%AE%A1%E7%AE%97%E5%B1%9E%E6%80%A7%20axios&amp;vue-cli/</url>
     <content><![CDATA[<blockquote>
 <p>目标：<br>在实际开发中合理运用过滤器、侦听器、计算属性解决问题<br>使用axios发起Ajax请求<br>使用vue-cli工具生成工程化的Vue项目</p>
 </blockquote>
@@ -535,226 +1165,8 @@
       </tags>
   </entry>
   <entry>
-    <title>Vue2 基本使用 &amp; 常用指令</title>
-    <url>/tsukimiya.github.io/2024/04/20/Vue/2.vue2%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8&amp;%E5%B8%B8%E7%94%A8%E6%8C%87%E4%BB%A4/</url>
-    <content><![CDATA[<blockquote>
-<p>目标：<br>使用Vue指令完成页面结构的渲染<br>使用Vue调试工具辅助Vue的开发</p>
-</blockquote>
-<blockquote>
-<p><strong>掌握Vue的两个特性：数据驱动视图、双向数据绑定<br>    掌握Vue的底层原理 MVVM – model数据源、view视图&#x2F;页面结构、viewmodel vue实例<br>    掌握Vue六大类指令的使用</strong><br>    vue2指令新学到的东西：<br>    事件绑定指令中的：<a href="#param">参数问题</a>、<a href="#event">$event</a>、<a href="#modifier">事件修饰符</a>、<a href="#keyModifier">按键修饰符</a><br>    双向绑定指令中的：<a href="#v-model">v-model修饰符</a><br>    条件渲染指令中的：<a href="#if">v-if配套的v-else指令</a><br>    列表渲染指令中的：<a href="#key">key属性绑定</a></p>
-</blockquote>
-<blockquote>
-<p>vscode插件推荐：Volar、Vue VSCode Snippets。 <a href="https://blog.csdn.net/weixin_40808668/article/details/134277604">简单说明</a>(CSDN)</p>
-</blockquote>
-<blockquote>
-<p><font color='red'>Vue的优势：MVVM的数据驱动视图 – 在vue中，程序员不需要操作DOM，只需要把数据维护好即可。</font><br>因此，在vue项目中，墙裂不建议安装和使用jQuery，因为没有操作DOM的需求，如果有也是极少的。</p>
-</blockquote>
-<p>[toc]</p>
-<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p><a href="https://v2.cn.vuejs.org/v2/guide/">Vue 2.x 官方文档</a>(已不再维护)<br>Vue是一套<strong>用于构建用户界面的前端框架</strong><br>构建用户界面：用vue往html页面填充数据<br>框架：一套现成的解决方案，程序员只能遵守框架的规范去编写业务功能</p>
-<p>学习vue就是学习vue框架中规定的用法<br><strong>vue的指令、组件(是对UI结构的复用)、路由、Vuex、vue组件库</strong></p>
-<p><font color='red'>Vue的优势：MVVM的数据驱动视图 – 在vue中，程序员不需要操作DOM，只需要把数据维护好即可。</font><br>因此，在vue项目中，墙裂不建议安装和使用jQuery，因为没有操作DOM的需求，如果有也是极少的。</p>
-<h3 id="vue的两个特性："><a href="#vue的两个特性：" class="headerlink" title="vue的两个特性："></a>vue的两个特性：</h3><ol>
-<li><strong>数据驱动视图</strong><br> vue会监听数据的变化，自动重新渲染页面的结构<br> 注意：<span style="color:red;" >数据驱动视图是单向的数据绑定<span></li>
-<li><strong>双向数据绑定</strong><br> 填写表单时，自动把内容同步到数据源中<blockquote>
-<p>在网页中，form表单负责<font color='green'>采集数据</font>，Ajax负责<font color='green'>提交数据</font></p>
-</blockquote>
-</li>
-</ol>
-<h3 id="MVVM-–-vue的底层原理"><a href="#MVVM-–-vue的底层原理" class="headerlink" title="MVVM – vue的底层原理"></a>MVVM – vue的底层原理</h3><p><font color='red'>MVVM是 vue 实现数据驱动视图和双向数据绑定的核心原理。</font><br>MVVM 指的是 <strong>M</strong>odel(数据源)、<strong>V</strong>iew(视图) 和 <strong>V</strong>iew<strong>M</strong>odel(vue实例)，它把每个 HTML 页面都拆分成了这三个部分。</p>
-<p>在MVVM概念中:<br><strong>Model</strong> 表示当前页面渲染时所依赖的<strong>数据源</strong>。<br><strong>View</strong> 表示当前页面所渲染的 DOM 结构。(<strong>页面结构，也即是视图</strong>)<br><strong>ViewModel</strong> 表示 <strong>vue 的实例</strong>，它是<strong>MVVM的核心</strong>。(也就是vue)<br><img src="/tsukimiya.github.io/images/vue/MVVM%E7%A4%BA%E6%84%8F%E5%9B%BE.png" alt="img"></p>
-<ul>
-<li>MVVM的工作原理：<br>  ViewModel作为MVVM的核心，是它把当前页面的<font color="green">数据源</font>(Model)和<font color="green">页面的结构</font>(View)连接在了一起。<br>  <img src="/tsukimiya.github.io/images/vue/MVVM%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86.png" alt="img"><br>  <strong>当数据源发生变化时</strong>，会被ViewModel监听到，VM会根据最新的数据源<strong>自动更新</strong>页面的结构<br>  <strong>当表单元素的值发生变化时</strong>，也会被VM监听到，VM会把变化过后最新的值<strong>自动同步</strong>到Model数据源中</li>
-</ul>
-<h3 id="vue的版本"><a href="#vue的版本" class="headerlink" title="vue的版本"></a>vue的版本</h3><p>当前，vue共有3个大版本，其中:<br>3.x版本的vue 于2020-09-19发布<br>2.x版本的vue 已于 2023 年 12 月 31 日停止维护<br>1.x版本的vue几乎被淘汰，不再建议学习与使用</p>
-<h2 id="基本使用"><a href="#基本使用" class="headerlink" title="基本使用"></a>基本使用</h2><ol>
-<li><p>基本使用步骤</p>
-<ol>
-<li>导入VUE.js脚本文件<br> 可以借助 script 标签直接通过 CDN(提供 npm 包服务) 来使用 Vue：<br> <code>&lt;script src=&quot;https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js&quot;&gt;&lt;/script&gt;</code></li>
-<li>在页面声明一个将要被vue所控制的区域</li>
-<li>创建vm实例对象(vue实例对象)</li>
-</ol>
-</li>
-<li><p>基本代码与MVVM的对应关系<br> model：data指向的对象<br> view：el指向的选择器<br> ViewModel：new Vue()构造函数得到的实例对象</p>
-</li>
-</ol>
-<h2 id="指令"><a href="#指令" class="headerlink" title="指令"></a>指令</h2><p>指令(Directives)是vue为开发者提供的模板语法，用于辅助开发者渲染页面的基本结构。<br>指令是vue开发中最基础、最常用、最简单的知识点</p>
-<p>vue的指令 <strong>按照不同用途</strong> 可以分为如下6大类：</p>
-<ol>
-<li><p>内容渲染指令：<code>v-text</code> 、<code>&#123;&#123;&#125;&#125;</code>  、 <code>v-html</code></p>
-<blockquote>
-<p>v-test 会覆盖默认文本内容，一般使用<code>&#123;&#123;&#125;&#125;</code>插值表达式<br> v-text和差值表达式只能渲染纯文本内容<br> v-html可以把带标签的字符串渲染成HTML内容</p>
-</blockquote>
-</li>
-<li><p>属性绑定指令: <code>v-bind</code> &#x2F; <code>:xxx=</code> </p>
-<blockquote>
-<p>差值表达式只能用在元素的内容节点中，不能用在属性节点中<br> v-bind用法：<code>&lt;input type=&quot;text&quot; v-bind:placeholder=&quot;tips&quot;&gt;</code><br> <strong>vue规定 <code>v-bind:</code> 指令可以简写为<code>:</code></strong></p>
-</blockquote>
-<blockquote>
-<p>在vue提供的<strong>模版渲染语法中</strong>，除了支持绑定简单的数据值之外，还<font color="green">支持JS表达式的运算</font><br> 但是<font color="green">只能写简单的JS表达式，不能写if等复杂的JS语句</font>，如字符串拼接等：<br> <figure class="highlight js"><table><tr><td class="code"><pre><span class="line">&#123;&#123;number + <span class="number">1</span>&#125;&#125;、&#123;&#123;ok?<span class="string">&#x27;YES&#x27;</span>:<span class="string">&#x27;NO&#x27;</span>&#125;&#125;、&#123;&#123;msg.<span class="title function_">split</span>(<span class="string">&#x27;&#x27;</span>).<span class="title function_">reserve</span>().<span class="title function_">join</span>(<span class="string">&#x27;&#x27;</span>)&#125;&#125;<span class="comment">//反转字符串</span></span><br></pre></td></tr></table></figure></p>
-</blockquote>
-</li>
-<li><p>事件绑定指令：<code>v-on</code> &#x2F; <code>@</code></p>
-<blockquote>
-<p>语法如 <code>v-on:clock=&quot;add&quot;</code> 简写<code>@click=&quot;add&quot;</code><br> methods下的函数变量也支持简写：<code>add:function()&#123;&#125; --&gt; add()&#123;&#125;</code><br> 在处理函数中<strong>修改数据的值</strong>可以通过vm(接受vue实例的变量名)来修改：vm.count,但是不推荐，<strong>推荐用this</strong></p>
-</blockquote>
-<ul>
-<li><p>绑定事件并传参</p>
-<blockquote>
-<p>在调用的地方传参 <code>@click=&quot;add(1)&quot;</code></p>
-</blockquote>
-</li>
-<li><p><font id="param" color="red">参数问题</font></p>
-<blockquote>
-<ul>
-<li>如果定义的函数变量是有参数的<br>1. <code>add(n)&#123;&#125; -- @click=&quot;add(1)&quot;</code> 正常传参 n&#x2F;&#x2F;1<br>2. <code>add(n)&#123;&#125; -- @click=&quot;add()&quot;</code> n&#x2F;&#x2F;undefined<br>3. <code>add(n)&#123;&#125; -- @click=&quot;add&quot;</code> n被认定为事件对象PointerEvent，通常我们会定义为e&#x2F;event</li>
-</ul>
-</blockquote>
-<blockquote>
-<ul>
-<li>如果是多个参数，如<br>1. <code>add(a,b)&#123;&#125; -- @click=&quot;add(1,2)&quot;</code> 正常传参 a&#x2F;&#x2F;1 b&#x2F;&#x2F;2<br>2. <code>add(a,b)&#123;&#125; -- @click=&quot;add(1)&quot;</code> a&#x2F;&#x2F;1 b&#x2F;&#x2F;undefined<br>3. <code>add(a,b)&#123;&#125; -- @click=&quot;add()&quot;</code> a&#x2F;un b&#x2F;&#x2F;un<br>4. <code>add(a,b)&#123;&#125; -- @click=&quot;add&quot;</code> a&#x2F;&#x2F;事件对象PointerEvent ，b&#x2F;&#x2F;undefined</li>
-</ul>
-</blockquote>
-</li>
-<li><p><font id="event" color="red">事件对象$event</font>(不常用)</p>
-<blockquote>
-<p>vue提供了内置变量<code>$event</code>,它就是原生DOM的事件对象e<br>  在绑定事件的时候，如果不传参 <code>add(e)&#123;&#125; -- @click=&quot;add&quot;</code> , 我们会接受到一个事件对象e<br>  如果传参，<code>@click=&quot;add(1)&quot;</code>,我们就接收不到这个事件对象了<br>  <strong>我们既要传参，又要用到事件对象e</strong>，如想要从事件对象上拿到e.target(触发事件的事件源) ，这个时候就可以用<code>$event</code><br>  <strong><code>$event</code>使用：传<code>$event</code>作参数进去，拿形参接收</strong><br>  <code>add(n,e)&#123;&#125; --  @click=&quot;add(1,$event)&quot;</code><br>  或<code>add(e,n)&#123;&#125; --  @click=&quot;add($event,1)&quot;</code></p>
-</blockquote>
-</li>
-<li><p><font id="modifier" color="red">事件修饰符</font></p>
-<blockquote>
-<p>在事件处理函数中，调用<code>event.preventDefault()</code>(阻止默认行为)或<code>event.stopPropagation()</code>(阻止冒泡)是非常常见的需求。<br>  因此，vue提供了<strong>事件修饰符</strong>的概念，辅助程序员更方便的<strong>对事件的触发进行控制</strong>。<br>  如 <code>@click.prevent=&quot;show&quot;</code>绑定了show事件，同时阻止了默认行为<br>  常见的5个事件修饰符如下：</p>
-</blockquote>
-</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th align="center">事件修饰符</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center"><strong>.prevent</strong></td>
-<td><strong>阻止默认行为</strong>(例如：阻止a链接的跳转、表单的提交等)</td>
-</tr>
-<tr>
-<td align="center"><strong>.stop</strong></td>
-<td><strong>阻止事件冒泡</strong></td>
-</tr>
-<tr>
-<td align="center">.capture</td>
-<td>以 捕获模式 触发当前的 事件处理函数</td>
-</tr>
-<tr>
-<td align="center">.once</td>
-<td>绑定的事件只触发1次</td>
-</tr>
-<tr>
-<td align="center">.self</td>
-<td>只有在 event.target 是当前元素自身时 触发事件处理函数</td>
-</tr>
-</tbody></table>
-<ul>
-<li><font id="keyModifier" color="red">按键修饰符</font>(用的不是很多)<blockquote>
-<p>在<strong>监听键盘事件</strong>时，经常需要<strong>判断详细的按键</strong>。<br>  此时，可以为键盘的相关事件添加<strong>按键修饰符</strong>，如：<br>  <code>&lt;input @keyup.enter=&quot;submit&quot;&gt;</code> – 只有在<code>key</code>是<code>Enter</code>时，调用<code>vm.submit()</code><br>  <code>&lt;input @keyup.esc=&quot;clearInput&quot;&gt;</code> – 只有在<code>key</code>是<code>Esc</code>时，调用<code>vm.clearInput()</code></p>
-</blockquote>
-</li>
-</ul>
-</li>
-<li><p>双向绑定指令 <code>v-model</code></p>
-<blockquote>
-<p>用来辅助程序员在<strong>不操作DOM</strong>的前提下，<strong>快速获取表单的数据</strong>。<br>     能够产生数据交互的只有表单元素，所以只有表单元素才能使用<code>v-model</code>,才有意义<br>     表单元素 input、textarea、select<br>     v-model内部会判断绑定元素的类型，根据元素类型来决定将绑定的值给哪个属性。如复选框checkbox就是给checked属性，如果是text框就是value属性</p>
-</blockquote>
-<ul>
-<li><font id="v-model" color="red">v-model修饰符</font><blockquote>
-<p>为了方便对用户输入的内容进行处理，vue为v-model指令提供了3个修饰符：</p>
-</blockquote>
-</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th align="center">修饰符</th>
-<th>作用</th>
-<th>示例</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">.number</td>
-<td>自动将用户的输入值转为数值类型</td>
-<td><code>&lt;input v-model.number=&quot;age&quot;/&gt;</code></td>
-</tr>
-<tr>
-<td align="center">.trim</td>
-<td>自动过滤用户输入的首尾空白字符</td>
-<td><code>&lt;input v-model.trim=&quot;msg&quot;/&gt;</code></td>
-</tr>
-<tr>
-<td align="center">.lazy</td>
-<td>在”change”时而非”input”时更新</td>
-<td><code>&lt;input v-model.lazy=&quot;msg&quot;/&gt;</code></td>
-</tr>
-</tbody></table>
-<blockquote>
-<p>lazy的作用是input事件(表单处于焦点时候)不更新，失去焦点触发change事件才更新</p>
-</blockquote>
-</li>
-<li><p>条件渲染指令 <code>v-if</code>、<code>v-show</code></p>
-<blockquote>
-<p>辅助开发者<strong>按需控制DOM的显示与隐藏</strong><br> v-if动态的把元素DOM从页面添加和移除<br> v-show是通过css动态添加display：none样式来显示和隐藏<br> <strong>如果要频繁切换元素的显示状态，show的性能更好</strong><br> <strong>如果刚进入页面，某些元素默认不需要被展示，而且后期这个元素很可能也不需要被展示出来，此时v-if性能更好</strong><br> 这个只是说给面试官听的，<font color="green">在实际开发中，绝大多数情况不用考虑性能问题，直接使用v-if就好了！</font><br> 因为在大多数情况下，这种性能差异是微不足道的，除非在处理大量组件或频繁切换时才会产生明显影响。</p>
-</blockquote>
-<ul>
-<li><p><font color="green">页面的执行(一个v-if的好问题)</font></p>
-<blockquote>
-<p>Q：如果我们页面有一个<code>&lt;p v-if=&quot;flag&quot;&gt;&lt;/p&gt; -- flag=false</code>，因为页面是从上往下执行的，那么页面是先创建p标签再移除呢，还是一开始就不创建呢？<br>  A：<strong>当我们用了vue-cli以后，用到单文件组件(.vue文件)的时候，它是先编译，然后再去运行。</strong><br>  先把整个网页编译成js，然后完整的去执行。标签也是被当做js去运行的，去加载的，这个问题就不存在了</p>
-</blockquote>
-</li>
-<li><p><font id="if" color="green">v-if配套的指令 – <code>v-else</code></font></p>
-<blockquote>
-<p>多个元素按需展示<br>  注意：v-else指令<strong>必须配合v-if指令一起使用</strong>，否则不会被识别：<br> <figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">v-if</span>=<span class="string">&quot;type === &#x27;A&#x27;&quot;</span>&gt;</span>优秀<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">v-else-if</span>=<span class="string">&quot;type === &#x27;B&#x27;&quot;</span>&gt;</span>良好<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">v-else-if</span>=<span class="string">&quot;type === &#x27;C&#x27;&quot;</span>&gt;</span>一般<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">v-else</span>&gt;</span>差<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
-</blockquote>
-</li>
-</ul>
-</li>
-<li><p>列表渲染指令 <code>v-for</code> 和 <code>:key</code> <font color="red">重要</font></p>
-<blockquote>
-<p>辅助开发者<strong>基于一个数组来循环渲染一个列表结构</strong>。<br>     v-for指令需要使用<code>item in items</code>形式的特殊语法<br>     v-for支持一个可选的第二个参数，即当前项的索引<code>(item,index) in items</code><br>     注意：v-for指令中的 item项 和 index索引 都是形参，可以根据需要命名</p>
-</blockquote>
-<ul>
-<li><font id="key" color="red">强调v-for循环中key值的绑定</font><blockquote>
-<p>官方推荐在用v-for的时候一定要绑定一个key属性，既提升性能、又防止列表状态紊乱。而且尽量把id作为key的值(id唯一)<br>  <font color="#000">官方对key的值类型有要求，只能是字符串或数字类型，并且key的值必须唯一，不能重复(相当于id)</font><br>  也不能以index为值，如果key以索引为值，会数据紊乱，<strong>key必须唯一且稳定，不唯一就会终端报错，唯一又不稳定就会数据紊乱。</strong><br>  <code>&lt;div v-for=&quot;(item,index) in items&quot; :key=&quot;item.id&quot;&gt;&lt;/div&gt;</code><br>  在vue单组件中，如果用到for循环，但是没有绑key的话，会直接在终端里报错<br>  <font color="green">不懂key到底有什么用的可以去了解下diff算法和虚拟dom？</font></p>
-</blockquote>
-</li>
-</ul>
-</li>
-</ol>
-<h2 id="扩展知识"><a href="#扩展知识" class="headerlink" title="扩展知识"></a>扩展知识</h2><h3 id="lable复选框的for属性"><a href="#lable复选框的for属性" class="headerlink" title="lable复选框的for属性"></a>lable复选框的for属性</h3><p>下面这个示例中,如果要选中男，应该点击对应的复选框，点击男不行，这样用户的体验很不好，可操作区域非常窄。<br>应该把它的可操作区域给放大，点击复选框还是男都可以选中，此时就用到了for属性</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;checkbox&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">&quot;&quot;</span>&gt;</span>男<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">hr</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;checkbox&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">&quot;&quot;</span>&gt;</span>女<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p><strong>for指向id，希望点这个lable让谁被选中，就for那个元素的id</strong></p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;checkbox&quot;</span> <span class="attr">id</span>=<span class="string">&quot;cb1&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">&quot;cb1&quot;</span>&gt;</span>男<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">hr</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;checkbox&quot;</span> <span class="attr">id</span>=<span class="string">&quot;cb2&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">label</span> <span class="attr">for</span>=<span class="string">&quot;cb2&quot;</span>&gt;</span>女<span class="tag">&lt;/<span class="name">label</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="a元素的JavaScript-伪协议"><a href="#a元素的JavaScript-伪协议" class="headerlink" title="a元素的JavaScript 伪协议"></a>a元素的JavaScript 伪协议</h3><p><code>&lt;a href=&quot;javascript:;&quot; @click=&quot;remove&quot;&gt;删除&lt;/a&gt;</code><br>这段代码是一个 HTML 锚点元素 <code>&lt;a&gt;</code> 的写法，其中<code>javascript:;</code> 是一个 JavaScript 伪协议，用于在点击链接时执行 JavaScript 代码或阻止默认行为。</p>
-<p>通常情况下，当用户点击这个链接时，浏览器会执行 <code>JavaScript:;</code> 这里的 JavaScript 代码是空的，所以实际上不会发生任何操作。<br>这种写法通常用于创建一个占位符链接，或者作为一个“空链接”，<strong>用于在不跳转页面的情况下执行一些 JavaScript 操作，比如触发事件或者执行某些函数</strong>。</p>
-<h3 id="JS-filter-方法-–-Array-prototype-filter"><a href="#JS-filter-方法-–-Array-prototype-filter" class="headerlink" title="JS - filter() 方法 – Array.prototype.filter()"></a>JS - filter() 方法 – Array.prototype.filter()</h3><p><code>filter()</code> 方法是 JavaScript 中数组的一个内置方法，用于过滤数组中的元素，并返回一个符合条件的新数组。<br>如：<br><code>let arr = [1,2,3].filter(item=&gt;item&gt;1) //[1,2]</code><br><code>let arr = [&#123;id:1,name:&quot;zs&quot;&#125;,&#123;id:2..&#125;].filter(item =&gt; item.id !=2) // [&#123;id:1,name:&quot;zs&quot;&#125;]</code></p>
-<p>但是，除了数组外，<code>filter()</code> 方法还可以应用于类数组对象和可迭代对象。例如，字符串也可以通过 <code>filter()</code> 方法进行过滤操作。</p>
-<p>下面是一个例子，演示如何在字符串中使用 <code>filter()</code> 方法来过滤出特定的字符：</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> str = <span class="string">&#x27;Hello World!&#x27;</span>;</span><br><span class="line"><span class="keyword">const</span> filteredStr = <span class="title class_">Array</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">filter</span>.<span class="title function_">call</span>(str, <span class="function"><span class="params">char</span> =&gt;</span> char !== <span class="string">&#x27;l&#x27;</span>);</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(filteredStr.<span class="title function_">join</span>(<span class="string">&#x27;&#x27;</span>)); <span class="comment">// 输出：Heo Word!</span></span><br></pre></td></tr></table></figure>
-
-<p>在这个例子中，我们首先使用 <code>Array.prototype.filter.call()</code> 来调用 <code>filter()</code> 方法，并将字符串 <code>str</code> 当作第一个参数传入。然后，我们定义了一个过滤条件，即过滤掉所有的 ‘l’ 字符。最后，我们将过滤后的字符数组通过 <code>join()</code> 方法连接成一个新的字符串，并输出结果。</p>
-<p>总之，虽然 <code>filter()</code> 方法通常用于数组，但通过一些技巧，我们也可以在其他类型的对象上使用它。</p>
-]]></content>
-      <categories>
-        <category>Vue</category>
-        <category>Vue2</category>
-      </categories>
-      <tags>
-        <tag>Vue</tag>
-        <tag>Vue2</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Vue组件与生命周期</title>
-    <url>/tsukimiya.github.io/2024/04/24/Vue/4.Vue%E7%BB%84%E4%BB%B6%E4%B8%8E%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/</url>
+    <url>/tsukimiya.github.io/2024/04/24/Vue2/4.Vue%E7%BB%84%E4%BB%B6%E4%B8%8E%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/</url>
     <content><![CDATA[<blockquote>
 <p>目标：<br>掌握.vue单文件组件的基本用法<br>组件的props(自定义属性)：数组写法、对象写法<br>解决多个组件间的样式冲突 – scoped<br><a href="#deep"><strong>&#x2F;deep&#x2F;样式穿透</strong></a>应用场景：<strong>修改第三方组件库组件的默认样式</strong></p>
 </blockquote>
@@ -783,9 +1195,9 @@
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">    &lt;!-- 组件的模版结构中，应该包含一个根元素，这个最外层的div不能有兄弟元素 --&gt;</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;text-box&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">h3</span> &gt;</span>这是用户自定义的Test.vue -- &#123;&#123; username &#125;&#125;<span class="tag">&lt;/<span class="name">h3</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">button</span> @<span class="attr">click</span>=<span class="string">&quot;changeName&quot;</span>&gt;</span>修改用户名<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    <span class="keyword">export</span> <span class="keyword">default</span> &#123;<span class="comment">// 默认导出，固定写法！</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        <span class="comment">// 注意：.vue组件中的data不能像之前一样，不能指向对象,必须是一个函数</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        <span class="title function_">data</span>(<span class="params"></span>)&#123;<span class="comment">// data数据源</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">            <span class="keyword">return</span>&#123;<span class="comment">// 这个return出去的对象中，可以定义数据</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">                <span class="attr">username</span>: <span class="string">&#x27;admin&#x27;</span>,</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">            &#125;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        &#125;,</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        <span class="attr">methods</span>:&#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">            <span class="title function_">changeName</span>(<span class="params"></span>)&#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">                <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">this</span>);<span class="comment">// 在组件中，this就表示当前组件的实例对象</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">                <span class="variable language_">this</span>.<span class="property">username</span> = <span class="string">&#x27;aaa&#x27;</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">            &#125;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        &#125;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    &#125;;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">style</span> <span class="attr">lang</span>=<span class="string">&quot;less&quot;</span>&gt;</span><span class="language-css"></span></span></span><br><span class="line"><span class="language-css"><span class="language-xml"><span class="selector-class">.text-box</span>&#123;</span></span></span><br><span class="line"><span class="language-css"><span class="language-xml">    <span class="attribute">background-color</span>: pink;</span></span></span><br><span class="line"><span class="language-css"><span class="language-xml">    <span class="selector-tag">h3</span> &#123;</span></span></span><br><span class="line"><span class="language-css"><span class="language-xml">        <span class="attribute">color</span>: red;</span></span></span><br><span class="line"><span class="language-css"><span class="language-xml">    &#125;</span></span></span><br><span class="line"><span class="language-css"><span class="language-xml">&#125;</span></span></span><br><span class="line"><span class="language-css"><span class="language-xml"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
 
 <ol start="4">
-<li>组件之间的<font color='red'>父子关系</font><br>组件之间的父子关系、兄弟关系，<strong>是在使用时候才会产生的</strong><br><img src="/tsukimiya.github.io/images/vue/%E7%BB%84%E4%BB%B6%E4%B9%8B%E9%97%B4%E7%9A%84%E7%88%B6%E5%AD%90%E5%85%B3%E7%B3%BB.png" alt="img"></li>
+<li>组件之间的<font color='red'>父子关系</font><br>组件之间的父子关系、兄弟关系，<strong>是在使用时候才会产生的</strong><br><img src="/tsukimiya.github.io/images/vue/%E7%BB%84%E4%BB%B6%E4%B9%8B%E9%97%B4%E7%9A%84%E7%88%B6%E5%AD%90%E5%85%B3%E7%B3%BB.png" alt="image"></li>
 </ol>
-<h3 id="使用组件的三个步骤"><a href="#使用组件的三个步骤" class="headerlink" title="使用组件的三个步骤"></a>使用组件的<strong>三个步骤</strong></h3><p><img src="/tsukimiya.github.io/images/vue/%E4%BD%BF%E7%94%A8%E7%BB%84%E4%BB%B6%E7%9A%84%E4%B8%89%E4%B8%AA%E6%AD%A5%E9%AA%A4.png" alt="img"><br><font color="green">注意：在components节点中，注册组件是一个对象的写法，前面是定义的名称，后面是要注册的组件。在对象里面，键名和值如果一样，可以省略值只写键名。如’Left’:Left可以简写成Left</font></p>
+<h3 id="使用组件的三个步骤"><a href="#使用组件的三个步骤" class="headerlink" title="使用组件的三个步骤"></a>使用组件的<strong>三个步骤</strong></h3><p><img src="/tsukimiya.github.io/images/vue/%E4%BD%BF%E7%94%A8%E7%BB%84%E4%BB%B6%E7%9A%84%E4%B8%89%E4%B8%AA%E6%AD%A5%E9%AA%A4.png" alt="image"><br><font color="green">注意：在components节点中，注册组件是一个对象的写法，前面是定义的名称，后面是要注册的组件。在对象里面，键名和值如果一样，可以省略值只写键名。如’Left’:Left可以简写成Left</font></p>
 <ul>
 <li><p>通过components注册的是<font color='red'>私有子组件</font><br>例如：<br>在组件A的components节点下，注册了组件F。<br>则组件F只能用在组件A中;不能被用在组件C中。</p>
 </li>
@@ -870,9 +1282,9 @@
 <h2 id="组件之间的通讯-数据共享"><a href="#组件之间的通讯-数据共享" class="headerlink" title="组件之间的通讯(数据共享)"></a>组件之间的通讯(数据共享)</h2><ol>
 <li><p>组件之间的关系<br>最常见的：兄弟关系、父子关系<br>离的比较远的，也可以认为是一种变态的兄弟关系</p>
 </li>
-<li><p><strong>父向子传值</strong> – <strong>自定义属性</strong><br><font color='red'>再次注意: props是只读的！</font><br><img src="/tsukimiya.github.io/images/vue/%E7%88%B6%E5%AD%90%E7%BB%84%E4%BB%B6%E5%85%B1%E4%BA%AB%E6%95%B0%E6%8D%AE.png" alt="img"></p>
+<li><p><strong>父向子传值</strong> – <strong>自定义属性</strong><br><font color='red'>再次注意: props是只读的！</font><br><img src="/tsukimiya.github.io/images/vue/%E7%88%B6%E5%AD%90%E7%BB%84%E4%BB%B6%E5%85%B1%E4%BA%AB%E6%95%B0%E6%8D%AE.png" alt="image"></p>
 </li>
-<li><p><strong>子向父传值</strong> – <strong>自定义事件</strong><br>第一步是绑定了一个事件，这是个处理函数。<font color='red'><code>$emit</code>就代表触发这个事件</font>，谁触发这个事件，谁传一个值过来。<br><font color='#00a86b'>子向父传值：在子组件调用$emit，父组件<font color='red'>在子组件标签上</font>用@绑定(监听)这个自定义事件</font><br><font color='red'>绑定事件和触发事件要在同一个实例上！！</font><strong>有绑定有触发</strong>。<br><img src="/tsukimiya.github.io/images/vue/%E5%AD%90%E5%90%91%E7%88%B6%E4%BC%A0%E5%80%BC.png" alt="img"></p>
+<li><p><strong>子向父传值</strong> – <strong>自定义事件</strong><br>第一步是绑定了一个事件，这是个处理函数。<font color='red'><code>$emit</code>就代表触发这个事件</font>，谁触发这个事件，谁传一个值过来。<br><font color='#00a86b'>子向父传值：在子组件调用$emit，父组件<font color='red'>在子组件标签上</font>用@绑定(监听)这个自定义事件</font><br><font color='red'>绑定事件和触发事件要在同一个实例上！！</font><strong>有绑定有触发</strong>。<br><img src="/tsukimiya.github.io/images/vue/%E5%AD%90%E5%90%91%E7%88%B6%E4%BC%A0%E5%80%BC.png" alt="image"></p>
 <blockquote>
 <p>vue在内部要想触发click事件，它也是用this或vm<br> <figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">button</span> @<span class="attr">click</span>=<span class="string">&#x27;show&#x27;</span>&gt;</span>按钮<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br></pre></td></tr></table></figure><br> <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="attr">method</span>:&#123;</span><br><span class="line">    <span class="title function_">show</span>(<span class="params">e</span>)&#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line">vm.$emit(<span class="string">&#x27;click&#x27;</span>,&#123;<span class="comment">//事件对象e</span></span><br><span class="line">    ...</span><br><span class="line">    <span class="attr">clientX</span>:<span class="string">&quot;&quot;</span>,</span><br><span class="line">    <span class="attr">clientY</span>:<span class="string">&quot;&quot;</span>,</span><br><span class="line">    <span class="attr">target</span>:dom元素</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></p>
 </blockquote>
@@ -889,7 +1301,7 @@
 <p> <font color='#00a86b'>依旧是发送方触发事件，发送数据，接收方绑定事件监听，接受数据。</font><br> 这里的<code>$on</code>就相当于jQuery的on绑定事件<br> <strong>为什么这里要用到一个共享的实例EventBus</strong> ？因为<font color='red'>绑定事件和触发事件要在同一个实例上！！</font><strong>有绑定有触发</strong>。</p>
 </li>
 </ol>
-<p><img src="/tsukimiya.github.io/images/vue/%E5%85%84%E5%BC%9F%E7%BB%84%E4%BB%B6%E4%BC%A0%E5%80%BC.png" alt="img"></p>
+<p><img src="/tsukimiya.github.io/images/vue/%E5%85%84%E5%BC%9F%E7%BB%84%E4%BB%B6%E4%BC%A0%E5%80%BC.png" alt="image"></p>
 <p>注意：虽然可以使用EventBus来在父子组件之间传值，但是这不是Vue官方推荐的做法。<strong>props和自定义事件更适合处理父子组件之间的通信，因为它们更直观和易于理解</strong>。 Event Bus 通常更适用于非父子关系的组件之间的通信，例如兄弟组件之间。</p>
 <h2 id="拓展"><a href="#拓展" class="headerlink" title="拓展"></a>拓展</h2><h3 id="vscode插件-Path-Autocomplete-路径提示"><a href="#vscode插件-Path-Autocomplete-路径提示" class="headerlink" title="vscode插件 Path Autocomplete - @路径提示"></a>vscode插件 Path Autocomplete - @路径提示</h3><p>下载插件之后，要在自己配置项里面添加如下配置,添加在头部就行<br>设置 – setting.json</p>
 <figure class="highlight json"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 导入文件时是否携带文件的扩展名</span></span><br><span class="line"><span class="attr">&quot;path-autocomplete.extensionOnImport&quot;</span><span class="punctuation">:</span><span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line"><span class="comment">// 配置 @ 的路径提示</span></span><br><span class="line"><span class="attr">&quot;path-autocomplete.pathMappings&quot;</span><span class="punctuation">:</span><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;@&quot;</span><span class="punctuation">:</span><span class="string">&quot;$&#123;folder&#125;/src&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br></pre></td></tr></table></figure>
@@ -925,7 +1337,7 @@
   </entry>
   <entry>
     <title>ref引用DOM元素和组件实例</title>
-    <url>/tsukimiya.github.io/2024/04/30/Vue/5.ref%E5%BC%95%E7%94%A8DOM%E5%85%83%E7%B4%A0%E5%92%8C%E7%BB%84%E4%BB%B6%E5%AE%9E%E4%BE%8B/</url>
+    <url>/tsukimiya.github.io/2024/04/30/Vue2/5.ref%E5%BC%95%E7%94%A8DOM%E5%85%83%E7%B4%A0%E5%92%8C%E7%BB%84%E4%BB%B6%E5%AE%9E%E4%BE%8B/</url>
     <content><![CDATA[<blockquote>
 <p>目标:<br>能够使用<code>ref</code>获取页面上DOM或组件的引用：<br>给元素或组件添加<code>ref=&quot;xxx&quot;</code>的引用名称，通过<code>this.$refs.xxx</code>获取元素或组件的实例</p>
 </blockquote>
@@ -983,7 +1395,7 @@
   </entry>
   <entry>
     <title>vue组件高级用法 - 动态组件&amp;插槽&amp;自定义指令&amp;ESlint</title>
-    <url>/tsukimiya.github.io/2024/05/01/Vue/6.vue%E7%BB%84%E4%BB%B6%E9%AB%98%E7%BA%A7%E7%94%A8%E6%B3%95%20-%20%E5%8A%A8%E6%80%81%E7%BB%84%E4%BB%B6&amp;%E6%8F%92%E6%A7%BD&amp;%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8C%87%E4%BB%A4/</url>
+    <url>/tsukimiya.github.io/2024/05/01/Vue2/6.vue%E7%BB%84%E4%BB%B6%E9%AB%98%E7%BA%A7%E7%94%A8%E6%B3%95%20-%20%E5%8A%A8%E6%80%81%E7%BB%84%E4%BB%B6&amp;%E6%8F%92%E6%A7%BD&amp;%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8C%87%E4%BB%A4&amp;ESlint/</url>
     <content><![CDATA[<blockquote>
 <p>目标:<br>掌握keep-alive实现组件的缓存：keep-alive标签、include 属性<br>能够使用插槽提高组件的复用性：slot标签、具名插槽、<strong>作用域插槽</strong>(接收数据并使用)、后备内容<br><strong><code>v-slot</code>指令</strong>：<strong>把内容填充到指定名称的插槽中，只能被用在 组件components 或 template标签</strong><br><code>v-slot:</code> 简写 <code>#</code> 如：<code>&lt;template #title&gt;&lt;/template&gt;</code></p>
 </blockquote>
@@ -1021,7 +1433,7 @@
 </ol>
 <p>开发中，为了标准、方便，<strong>建议给每个组件起一个name名称</strong>。(虽然我还是不理解除了4的情况有什么必要)</p>
 <h2 id="插槽的使用-默认插槽、具名插槽、作用域插槽"><a href="#插槽的使用-默认插槽、具名插槽、作用域插槽" class="headerlink" title="插槽的使用(默认插槽、具名插槽、作用域插槽)"></a>插槽的使用(默认插槽、具名插槽、作用域插槽)</h2><p><strong>插槽</strong>（Slot）是vue为<strong>组件的封装者</strong>提供的能力。允许开发者在封装组件时，把<strong>不确定的、希望由用户指定的部分</strong>定义为插槽。</p>
-<p><font color="red">在组件的内容节点填写内容，然后把它给渲染出来</font><br><img src="/tsukimiya.github.io/images/vue/%E6%8F%92%E6%A7%BD.png" alt="img"></p>
+<p><font color="red">在组件的内容节点填写内容，然后把它给渲染出来</font><br><img src="/tsukimiya.github.io/images/vue/%E6%8F%92%E6%A7%BD.png" alt="image"></p>
 <h3 id="v-slot指令-–-简写："><a href="#v-slot指令-–-简写：" class="headerlink" title="v-slot指令  – 简写：#"></a>v-slot指令  – 简写：#</h3><p><strong>vue官方规定：每一个 slot 插槽，都要有一个 name 名称</strong><br>如果省略了 slot 的 name 属性，则有一个<strong>默认名称</strong>叫做 <strong>default</strong></p>
 <p>默认情况下，在使用组件的时候，提供的内容都会被填充到名字为default的插槽中</p>
 <figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">Left</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>这是在Left组件的内容区域，声明的p标签<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>这是第二个p标签<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">Left</span>&gt;</span></span><br></pre></td></tr></table></figure>
@@ -1119,8 +1531,8 @@
 <li><p>ESLint插件<br>装过之后需要再配置文件中加一下配置项：</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 设置 -- settingsjson</span></span><br><span class="line"><span class="comment">// ESLint 插件的配置</span></span><br><span class="line"><span class="string">&quot;editor.codeActionsOnSave&quot;</span>: &#123;</span><br><span class="line">    <span class="comment">// 老师是这样的</span></span><br><span class="line">    <span class="string">&quot;source.fixAll&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="comment">// 搜的一个是这样</span></span><br><span class="line">    <span class="string">&quot;source.fixAll.eslint&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>Prettier - Code formatter 插件<br>在<code>C:\Users\lenovo</code>目录下新建<code>.prettierrc</code>配置文件<br>填入 <code>&#123;&quot;semi&quot;: false, &quot;singleQuote&quot;: true, &quot;printWidth&quot;: 300&#125;</code><br>然后在vscode设置 – settings.json里面添加如下配置：</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="string">&quot;prettier.configPath&quot;</span>: <span class="string">&quot;C:\\Users\\lenovo\\.prettierrc&quot;</span>,</span><br><span class="line"><span class="string">&quot;eslint.alwaysShowStatus&quot;</span>:<span class="literal">true</span>,</span><br><span class="line"><span class="string">&quot;prettier.trailingComma&quot;</span>: <span class="string">&quot;none&quot;</span>,</span><br><span class="line"><span class="string">&quot;prettier.semi&quot;</span>: <span class="literal">false</span>,</span><br><span class="line"><span class="comment">// 每行文字个数超过此限制将会被迫换行</span></span><br><span class="line"><span class="string">&quot;prettier.singleQuote&quot;</span>: <span class="literal">true</span>,</span><br><span class="line"><span class="string">&quot;prettier.arrowParens&quot;</span>: <span class="string">&quot;avoid&quot;</span>,</span><br><span class="line"><span class="comment">// 设置vue文件中，HTML代码的格式化插件    </span></span><br><span class="line"><span class="string">&quot;vetur.format.defaultFormatter.html&quot;</span>: <span class="string">&quot;js-beautify-html&quot;</span>,</span><br><span class="line"><span class="string">&quot;vetur.ignoreProjectWarning&quot;</span>: <span class="literal">true</span>,</span><br><span class="line"><span class="string">&quot;vetur.format.defaultFormatterOptions&quot;</span>: &#123;</span><br><span class="line">    <span class="string">&quot;js-beautify-html&quot;</span>: &#123;</span><br><span class="line">        <span class="string">&quot;wrap_attributes&quot;</span>: <span class="string">&quot;false&quot;</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="string">&quot;prettier&quot;</span>: &#123;</span><br><span class="line">        <span class="string">&quot;trailingComma&quot;</span>:<span class="string">&quot;none&quot;</span>,</span><br><span class="line">        <span class="string">&quot;semi&quot;</span>:<span class="literal">false</span>,</span><br><span class="line">        <span class="string">&quot;singleQuote&quot;</span>:<span class="literal">true</span>,</span><br><span class="line">        <span class="string">&quot;arrowParens&quot;</span>:<span class="string">&quot;avoid&quot;</span>,</span><br><span class="line">        <span class="string">&quot;printWidth&quot;</span>:<span class="number">300</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+<li><p>Prettier - Code formatter 插件<br>在<code>C:\Users\lenovo</code>目录下新建<code>.prettierrc</code>配置文件<br>填入 <code>&#123;&quot;semi&quot;: false, &quot;singleQuote&quot;: true, &quot;printWidth&quot;: 300, &quot;bracketSpacing&quot;: true&#125;</code><br>然后在vscode设置 – settings.json里面添加如下配置：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="string">&quot;prettier.configPath&quot;</span>: <span class="string">&quot;C:\\Users\\lenovo\\.prettierrc&quot;</span>,</span><br><span class="line"><span class="string">&quot;eslint.alwaysShowStatus&quot;</span>: <span class="literal">true</span>,</span><br><span class="line"><span class="string">&quot;prettier.trailingComma&quot;</span>: <span class="string">&quot;none&quot;</span>,</span><br><span class="line"><span class="string">&quot;prettier.semi&quot;</span>: <span class="literal">false</span>,</span><br><span class="line"><span class="comment">// 每行文字个数超过此限制将会被迫换行</span></span><br><span class="line"><span class="string">&quot;prettier.printWidth&quot;</span>: <span class="number">300</span>,</span><br><span class="line"><span class="comment">// 使用单引号替换双引号</span></span><br><span class="line"><span class="string">&quot;prettier.singleQuote&quot;</span>: <span class="literal">true</span>,</span><br><span class="line"><span class="string">&quot;prettier.arrowParens&quot;</span>: <span class="string">&quot;avoid&quot;</span>,</span><br><span class="line"><span class="comment">// 设置vue文件中，HTML代码的格式化插件</span></span><br><span class="line"><span class="string">&quot;vetur.format.defaultFormatter.html&quot;</span>: <span class="string">&quot;js-beautify-html&quot;</span>,</span><br><span class="line"><span class="string">&quot;vetur.ignoreProjectWarning&quot;</span>: <span class="literal">true</span>,</span><br><span class="line"><span class="string">&quot;vetur.format.defaultFormatterOptions&quot;</span>: &#123;</span><br><span class="line">  <span class="string">&quot;js-beautify-html&quot;</span>: &#123;</span><br><span class="line">    <span class="string">&quot;wrap_attributes&quot;</span>: <span class="string">&quot;false&quot;</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="string">&quot;prettier&quot;</span>: &#123;</span><br><span class="line">    <span class="string">&quot;trailingComma&quot;</span>: <span class="string">&quot;none&quot;</span>,</span><br><span class="line">    <span class="string">&quot;semi&quot;</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="string">&quot;singleQuote&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="string">&quot;arrowParens&quot;</span>: <span class="string">&quot;avoid&quot;</span>,</span><br><span class="line">    <span class="string">&quot;printWidth&quot;</span>: <span class="number">300</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;,</span><br><span class="line"><span class="comment">// ESLint 插件的配置</span></span><br><span class="line"><span class="string">&quot;editor.codeActionsOnSave&quot;</span>: &#123;</span><br><span class="line">  <span class="string">&quot;source.fixAll&quot;</span>: <span class="literal">true</span></span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>注意点：</p>
 <ol>
@@ -1132,6 +1544,15 @@
 </ol>
 </li>
 </ul>
+<h3 id="项目初始化"><a href="#项目初始化" class="headerlink" title="项目初始化"></a><font color="red">项目初始化</font></h3><p>每次新建项目，如果开启了ESLint，一定要进行下面配置，便于我们开发：</p>
+<ol>
+<li>配置默认格式化程序为prettier<br> 在项目中，任意某文件中 右键 – 使用…格式化文档 – 配置默认格式化程序 – prettier</li>
+<li>ESLint配置文件添加配置以下两条规则： <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// .eslintrc.js</span></span><br><span class="line"><span class="attr">rules</span>: &#123;</span><br><span class="line">    <span class="comment">// 方法名 和 括号 之间不强制加空格</span></span><br><span class="line">    <span class="comment">// 注意这里none不是正确的值，应该是never！！！</span></span><br><span class="line">    <span class="string">&#x27;space-before-function-paren&#x27;</span>: [<span class="string">&#x27;warn&#x27;</span>, <span class="string">&#x27;never&#x27;</span>],</span><br><span class="line">    <span class="comment">// 组件名可以使用单个单词</span></span><br><span class="line">    <span class="string">&#x27;vue/multi-word-component-names&#x27;</span>: <span class="number">0</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><strong>关于不符合ESLint格式的显示标记问题</strong>，如果我们添加的规则，值的格式错误，或者输入的是没有的值，会不起作用。如none就不是正确的值。</p>
+</blockquote>
+</li>
+</ol>
 <h2 id="拓展"><a href="#拓展" class="headerlink" title="拓展"></a>拓展</h2><h3 id="自定义事件使用-event"><a href="#自定义事件使用-event" class="headerlink" title="自定义事件使用$event"></a>自定义事件使用$event</h3><p>内置变量<code>$event</code>，是在我们需要向绑定事件传递参数时候，用来接收事件对象e使用的<br><code>@click=&quot;add(1,$event)&quot; --- add(n,e)&#123;&#125;</code></p>
 <p><font color="green">只要自定义事件里面接收到的值被覆盖了，就可以考虑使用<code>$event</code></font></p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line">&lt;<span class="title class_">Count</span> @num-change=<span class="string">&quot;getNewNum(item,$event)&quot;</span>&gt;&lt;/<span class="title class_">Count</span>&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 这里的自定义事件</span></span><br><span class="line"><span class="title function_">getNewNum</span>(<span class="params">item,val</span>)&#123; </span><br><span class="line">    item.<span class="property">goods_count</span> = val;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -1155,7 +1576,7 @@
   </entry>
   <entry>
     <title>路由(vue-router)</title>
-    <url>/tsukimiya.github.io/2024/05/02/Vue/7.%E8%B7%AF%E7%94%B1%EF%BC%88vue-router%EF%BC%89/</url>
+    <url>/tsukimiya.github.io/2024/05/02/Vue2/7.%E8%B7%AF%E7%94%B1%EF%BC%88vue-router%EF%BC%89/</url>
     <content><![CDATA[<blockquote>
 <p>目标:<br>能够在项目中安装和配置路由：<code>createRouter</code>、<code>app.use(router)</code><br>能够使用路由实现单页面应用程序的开发<br>能够使用嵌套路由：通过<code>children</code>属性进行路由嵌套<br>能够实现动态路由匹配：使用冒号声明参数项、<code>this.$route.params</code>、<code>props: true</code><br>能够使用编程式导航：<code>this.$router.push</code>、<code>this.$router.go</code><br>能够使用导航守卫控制路由的访问权限：<br><code>路由实例.beforeEach((to, from, next) =&gt; &#123; /* 必须调 next 函数*/ &#125;)</code></p>
 </blockquote>
@@ -1216,7 +1637,7 @@
 <li>前端路由监听了到Hash地址的变化</li>
 <li>前端路由把当前Hash地址对应的组件渲染都浏览器中</li>
 </ol>
-<p> <font color="green">结论：前端路由，指的是 Hash地址 与 组件之间 的 对应关系</font><br> <img src="/tsukimiya.github.io/images/vue/%E5%89%8D%E7%AB%AF%E8%B7%AF%E7%94%B1.png" alt="img"></p>
+<p> <font color="green">结论：前端路由，指的是 Hash地址 与 组件之间 的 对应关系</font><br> <img src="/tsukimiya.github.io/images/vue/%E5%89%8D%E7%AB%AF%E8%B7%AF%E7%94%B1.png" alt="image"></p>
 </li>
 </ol>
 <h3 id="vue-router的基本使用"><a href="#vue-router的基本使用" class="headerlink" title="vue-router的基本使用"></a>vue-router的基本使用</h3><blockquote>
@@ -1249,7 +1670,7 @@
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> router = <span class="keyword">new</span> <span class="title class_">VueRouter</span>(&#123;</span><br><span class="line">  <span class="comment">// 在routers数组中，声明路由的匹配规则</span></span><br><span class="line">  <span class="attr">routes</span>: [</span><br><span class="line">    <span class="comment">// 当用户访问 / 的时候，通过 redirect 属性跳转到 /left 对应的路由规则</span></span><br><span class="line">    &#123; <span class="attr">path</span>: <span class="string">&#x27;/&#x27;</span>, <span class="attr">redirect</span>: <span class="string">&#x27;/left&#x27;</span>&#125;, </span><br><span class="line">    &#123; <span class="attr">path</span>: <span class="string">&#x27;/left&#x27;</span>, <span class="attr">component</span>: <span class="title class_">Left</span> &#125;,</span><br><span class="line">    &#123; <span class="attr">path</span>: <span class="string">&#x27;/right&#x27;</span>, <span class="attr">component</span>: <span class="title class_">Right</span> &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
 
 <h2 id="嵌套路由"><a href="#嵌套路由" class="headerlink" title="嵌套路由"></a>嵌套路由</h2><p>通过路由实现<strong>组件的嵌套展示</strong>，叫做嵌套路由。</p>
-<p>如果某个组件本身就是通过路由的方式呈现出来的，在这个组件里又放一些路由规则，这样就形成了路由嵌套。<br><img src="/tsukimiya.github.io/images/vue/%E5%B5%8C%E5%A5%97%E8%B7%AF%E7%94%B1.png" alt="img"></p>
+<p>如果某个组件本身就是通过路由的方式呈现出来的，在这个组件里又放一些路由规则，这样就形成了路由嵌套。<br><img src="/tsukimiya.github.io/images/vue/%E5%B5%8C%E5%A5%97%E8%B7%AF%E7%94%B1.png" alt="image"></p>
 <ul>
 <li><p>声明子级路由标签和占位符</p>
 <figure class="highlight html"><table><tr><td class="code"><pre><span class="line">// Right.vue</span><br><span class="line"><span class="comment">&lt;!-- 子级路由链接 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">router-link</span> <span class="attr">to</span>=<span class="string">&quot;/right/tab1&quot;</span>&gt;</span>tab1<span class="tag">&lt;/<span class="name">router-link</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">router-link</span> <span class="attr">to</span>=<span class="string">&quot;/right/tab2&quot;</span>&gt;</span>tab2<span class="tag">&lt;/<span class="name">router-link</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">hr</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 子级路由占位符 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">router-view</span>&gt;</span><span class="tag">&lt;/<span class="name">router-view</span>&gt;</span></span><br></pre></td></tr></table></figure>
@@ -1313,7 +1734,7 @@
 <p><font color="red">注意：在行内使用编程式导航跳转的时候，this必须要省略，否则会报错！</font></p>
 <h3 id="路由导航守卫-–-控制路由的访问权限"><a href="#路由导航守卫-–-控制路由的访问权限" class="headerlink" title="路由导航守卫 – 控制路由的访问权限"></a>路由导航守卫 – 控制路由的访问权限</h3><p><strong>导航守卫</strong>可以<strong>控制路由的访问权限</strong>。</p>
 <p>假设规定，当前项目中，main这个后台主页只有登陆以后才允许被访问(前提)<br>怎么证明你有没有登陆————token<br>可以读你的localStorage，看里面有没有token值，如果有就认为你已经是登录了，没有就认为你没有登陆。</p>
-<p><img src="/tsukimiya.github.io/images/vue/%E5%AF%BC%E8%88%AA%E5%AE%88%E5%8D%AB.png" alt="img"></p>
+<p><img src="/tsukimiya.github.io/images/vue/%E5%AF%BC%E8%88%AA%E5%AE%88%E5%8D%AB.png" alt="image"></p>
 <ol>
 <li><p>全局前置守卫<br>  前置：比如从a跳到b，还没跳过去，就会触发守卫。<br>  每次发生路由的<strong>导航跳转</strong>时，都会触发<strong>全局前置守卫</strong>。因此，在全局前置守卫中，程序员可以<strong>对每个路由进行访问权限的控制</strong>:</p>
   <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">//创建路由实例对象</span></span><br><span class="line"><span class="keyword">const</span> router = <span class="keyword">new</span> <span class="title class_">VueRouter</span>(&#123; ... &#125;)</span><br><span class="line"><span class="comment">//调用路由实例对象的beforeEach方法，即可声明“全局前置守卫”</span></span><br><span class="line"><span class="comment">//每次发生路由导航跳转的时候，都会自动触发 fn 这个“回调函数”</span></span><br><span class="line">router.<span class="title function_">beforeEach</span>(fn)</span><br></pre></td></tr></table></figure>
@@ -1321,7 +1742,7 @@
 <li><p>守卫方法的3个形参<br>  全局前置守卫的回调函数中接收3个形参，格式为:</p>
   <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> router = <span class="keyword">new</span> <span class="title class_">VueRouter</span>(&#123; ... &#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 全局前置守卫</span></span><br><span class="line">router.<span class="title function_">beforeEach</span>(<span class="function">(<span class="params">to,<span class="keyword">from</span>,next</span>)=&gt;</span>&#123;</span><br><span class="line">  <span class="comment">// ro 是将要访问的路由的信息对象</span></span><br><span class="line">  <span class="comment">// from 是将要离开的路由的信息对象</span></span><br><span class="line">  <span class="comment">// next 是一个函数，调用next() 表示放行，允许这次路由导航</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>next函数的3种调用方式<br>具体使用哪一种，看自己的需求<br><img src="/tsukimiya.github.io/images/vue/next%E5%87%BD%E6%95%B0%E4%B8%89%E7%A7%8D%E8%B0%83%E7%94%A8%E6%96%B9%E5%BC%8F.png" alt="img"></p>
+<li><p>next函数的3种调用方式<br>具体使用哪一种，看自己的需求<br><img src="/tsukimiya.github.io/images/vue/next%E5%87%BD%E6%95%B0%E4%B8%89%E7%A7%8D%E8%B0%83%E7%94%A8%E6%96%B9%E5%BC%8F.png" alt="image"></p>
 </li>
 </ol>
 <ul>
@@ -1456,6 +1877,191 @@ vue的导航守卫中除了全局前置守卫之外，还有全局解析守卫�
       </tags>
   </entry>
   <entry>
+    <title>Vuex - 组件全局状态(数据)管理机制</title>
+    <url>/tsukimiya.github.io/2024/05/08/Vue2/8.vuex/</url>
+    <content><![CDATA[<blockquote>
+<p>总结：<br>组件全局状态(数据)管理机制<strong>Vuex</strong>的安装、<strong>导入及使用</strong>：<br><strong>四大核心概念使用</strong>：<br>    1. <strong>State 存储数据</strong><br>    (1) <code>this.$store.state.全局数据名称</code><br>    (2) <code>import &#123; mapState &#125; from &#39;vuex&#39;</code> —— <code>computed: &#123; ...mapState([&#39;count&#39;]) &#125;</code><br>    2. <strong>Mutation 修改数据</strong>（同步）<br>    (1) <code>this.$store.commit(&#39;addN&#39;, 3) // 触发时，携带参数</code><br>    (2) <code>import &#123; mapMutations &#125; from &#39;vuex&#39;</code> —— <code>methods: &#123; ...mapMutations([&#39;add&#39;,&#39;addN&#39;]) &#125;</code><br>    3. <strong>Action 处理异步逻辑</strong>，并触发 Mutation 以间接更新 State<br>    (1) <code>this.$store.dispatch(&#39;addNAsync&#39;, 3) // 携带参数</code><br>    (2) <code>import &#123; mapActions &#125; from &#39;vuex&#39;</code> —— <code>methods: &#123; ...mapAction([&#39;addAsync&#39;,&#39;addNAsync&#39;]) &#125;</code><br>    4. <strong>Getter 提供数据加工</strong><br>    (1) <code>this.$store.getters.名称</code><br>    (2) <code>import &#123; mapGetters &#125; from &#39;vuex&#39;</code> —— <code>computed: &#123; ...mapGetters([&#39;showNum&#39;]) &#125;</code></p>
+</blockquote>
+<h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><ol>
+<li><p>组件之间共享数据的方式<br> 父向子：porps自定义属性<br> 子向父：自定义事件<code>$.emit</code>、<code>v-on/@</code><br> 兄弟组件之间：EventBus<code>$.emit</code>、<code>$.on</code></p>
+<p> 这三种的方式，<strong>只适合在小范围内来进行数据的共享</strong><br> 如果需要频繁的，或者大范围的来实现数据的共享，这三种方案就有些力不从心</p>
+</li>
+<li><p><strong>Vuex</strong><br><strong>Vuex</strong>是<strong>实现组件全局状态(数据)管理</strong>的一种机制，可以方便的实现组件之间<strong>数据的共享</strong>。<br><img src="/tsukimiya.github.io/images/vue/vuex.png" alt="vuex"><br>Vuex就相当于在这些组件旁边定义了<strong>一个共享的数据状态对象Store</strong></p>
+</li>
+<li><p>使用Vuex统一管理状态的<strong>好处</strong></p>
+<ul>
+<li>能够在vuex中<strong>集中管理共享的数据</strong>，易于开发和后期维护   </li>
+<li>能够<strong>高效</strong>地实现组件之间的<strong>数据共享</strong>，提高开发效率</li>
+<li>存储在vuex中的数据都是响应式的，能够<strong>实时</strong>保持数据与页面的<strong>同步</strong></li>
+</ul>
+</li>
+<li><p>什么样的数据适合存储到Vuex中<br> 一般情况下，<strong>只有组件之间共享的数据</strong>，<strong>才有必要存储到vuex中</strong>;对于组件中的私有数据，依旧存储在组件自身的data中即可。</p>
+</li>
+</ol>
+<h2 id="基本使用"><a href="#基本使用" class="headerlink" title="基本使用"></a>基本使用</h2><ol>
+<li>安装vuex依赖包：<code>npm i vuex -S</code></li>
+<li>导入vuex包<br> <code>import Vuex from &#39;vuex&#39;</code><br> <code>Vue.use(Vuex)</code></li>
+<li>创建store对象 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> store = <span class="keyword">new</span> <span class="title class_">Vuex</span>.<span class="title class_">Store</span>(&#123;</span><br><span class="line">  <span class="comment">// state中存放的就是全局共享的数据</span></span><br><span class="line">  <span class="attr">state</span>: &#123; <span class="attr">count</span>: <span class="number">0</span> &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></li>
+<li>将store对象挂载到vue实例中 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">new</span> <span class="title class_">Vue</span>(&#123;</span><br><span class="line">  <span class="attr">el</span>: <span class="string">&#x27;#app&#x27;</span>,</span><br><span class="line">  <span class="attr">render</span>: <span class="function"><span class="params">h</span> =&gt;</span> <span class="title function_">h</span>(app),</span><br><span class="line">  router,</span><br><span class="line">  <span class="comment">// 将创建的共享数据对象，挂载到Vue实例中</span></span><br><span class="line">  <span class="comment">// 所有的组件，就可以直接从store中获取全局的数据了</span></span><br><span class="line">  store</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></li>
+</ol>
+<p>创建vue项目时，如果添加了vuex的配置，会自动帮我们配置好这些</p>
+<h2 id="核心概念"><a href="#核心概念" class="headerlink" title="核心概念"></a>核心概念</h2><p>Vuex中主要的核心概念如下：</p>
+<ul>
+<li>State</li>
+<li>Mutation</li>
+<li>Action</li>
+<li>Getter</li>
+</ul>
+<p>总结来说，<strong>State 存储数据</strong>，<strong>Getter 提供数据加工</strong>，<strong>Mutation 修改数据（同步）</strong>，而 <strong>Action 处理异步逻辑</strong>并触发 Mutation 以间接更新 State。这四者共同构成了 Vuex 的核心机制，帮助开发者更好地管理和维护应用的状态。</p>
+<h3 id="State"><a href="#State" class="headerlink" title="State"></a>State</h3><p>State<strong>提供唯一的公共数据源</strong>，所有共享的数据都要统一放到Store的State中进行存储。</p>
+<ul>
+<li><p><strong>组件访问State中数据</strong>的<strong>方式一</strong>：<strong>直接访问</strong><br><code>this.$store.state.全局数据名称</code>，如<code>this.$store.state.count</code></p>
+</li>
+<li><p>组件访问State中数据的<strong>方式二</strong>：<strong>使用mapState辅助函数</strong></p>
+<ol>
+<li>从vuex中按需导入mapState函数<br>  <code>import &#123; mapState &#125; from &#39;vuex&#39;</code></li>
+<li>通过mapState函数，将当前组件需要的全局数据，映射为当前组件的computed计算属性 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="attr">computed</span>: &#123;</span><br><span class="line">  ...<span class="title function_">mapState</span>([<span class="string">&#x27;count&#x27;</span>])</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+ 或者使用对象展开语法进行更细致的映射： <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="attr">computed</span>: &#123;</span><br><span class="line">  ...<span class="title function_">mapState</span>(&#123;</span><br><span class="line">    <span class="attr">localCount</span>: <span class="function"><span class="params">state</span> =&gt;</span> state.<span class="property">count</span></span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+</li>
+<li><p><strong>使用方式建议</strong></p>
+<ul>
+<li>只需要<strong>访问一两个State属性</strong>，且<strong>不频繁</strong>使用 —— <strong>直接访问</strong></li>
+<li><strong>访问多个State属性</strong>，或者需要<strong>对State数据</strong>进行一些<strong>转换处理</strong> —— <strong>mapState辅助函数</strong><blockquote>
+<p>更加清晰和高效，使代码更模块化，易于阅读和维护。</p>
+</blockquote>
+</li>
+<li>项目<strong>使用了TS</strong> —— <strong>mapState辅助函数</strong><blockquote>
+<p>mapState配合类型注解可以提供更好的类型安全性。</p>
+</blockquote>
+</li>
+</ul>
+<p>总的来说，选择哪种方式取决于具体场景和个人偏好，但通常<strong>推荐使用mapState</strong>，因为它可以让你的<strong>代码更加整洁、易于维护</strong>，并且在<strong>处理复杂逻辑时更为灵活</strong>。</p>
+</li>
+</ul>
+<h3 id="Mutation"><a href="#Mutation" class="headerlink" title="Mutation"></a>Mutation</h3><blockquote>
+<p>在组件中，虽然可以<code>this.$store.state.count = 1</code>直接修改全局的数据，且不报错，但是在Vuex中，它<strong>不允许组件直接去修改Store的数据</strong>，而是推荐使用Mutation</p>
+</blockquote>
+<p>Mutation用于变更Store中的数据。<br>通过这种方式虽然操作稍微繁琐一些，但是<strong>可以集中监控所有数据的变化</strong></p>
+<blockquote>
+<p>通过<code>this.$store.state.count = 1</code>修改数据，如果想看一下是谁修改的，需要挨个组件去翻，不利于后期维护。<br>通过<code>Mutation</code>里面的函数修改数据，如果发现数据修改有问题，可以直接找对应的Mutation</p>
+</blockquote>
+<h4 id="定义Mutations"><a href="#定义Mutations" class="headerlink" title="定义Mutations"></a>定义Mutations</h4><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> store = <span class="keyword">new</span> <span class="title class_">Vuex</span>.<span class="title class_">Store</span>(&#123;</span><br><span class="line">  <span class="attr">state</span>:&#123;</span><br><span class="line">    <span class="attr">count</span>: <span class="number">0</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">mutations</span>: &#123;</span><br><span class="line">    <span class="title function_">add</span>(<span class="params">state</span>) &#123;</span><br><span class="line">      state.<span class="property">count</span>++ <span class="comment">// 变更状态</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>传递参数</strong></li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> store = <span class="keyword">new</span> <span class="title class_">Vuex</span>.<span class="title class_">Store</span>(&#123;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">  <span class="attr">mutations</span>: &#123;</span><br><span class="line">    <span class="title function_">addN</span>(<span class="params">state, step</span>) &#123;</span><br><span class="line">      state.<span class="property">count</span> += step <span class="comment">// 变更状态</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h4 id="触发方式一"><a href="#触发方式一" class="headerlink" title="触发方式一"></a>触发方式一</h4><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="attr">methods</span>: &#123;</span><br><span class="line">  <span class="title function_">handlel</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="comment">// 注意这里是**小写**store！！！</span></span><br><span class="line">    <span class="comment">// commit的作用，就是调用某个mutation函数</span></span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">$store</span>.<span class="title function_">commit</span>(<span class="string">&#x27;add&#x27;</span>)</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">$store</span>.<span class="title function_">commit</span>(<span class="string">&#x27;addN&#x27;</span>, <span class="number">3</span>) <span class="comment">// 触发时，携带参数</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="触发方式二"><a href="#触发方式二" class="headerlink" title="触发方式二"></a>触发方式二</h4><ol>
+<li>从Vuex中按需导入 mapMutations 函数：<br><code>import &#123; mapMutations &#125; from &#39;vuex&#39;</code><blockquote>
+<p>注意是<strong>小写</strong>的<strong>vuex</strong></p>
+</blockquote>
+</li>
+<li><strong>通过mapMutations函数</strong>，将需要的mutations函数，<strong>映射为当前组件的methods方法</strong>：<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="attr">methods</span>: &#123;</span><br><span class="line">  ...<span class="title function_">mapMutations</span>([<span class="string">&#x27;add&#x27;</span>,<span class="string">&#x27;addN&#x27;</span>])</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 可以直接调用</span></span><br><span class="line">&lt;button @click=<span class="string">&quot;add&quot;</span>&gt;count +<span class="number">1</span>&lt;/button&gt;</span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">button</span> @<span class="attr">click</span>=<span class="string">&quot;addN(3)&quot;</span>&gt;</span>count +3<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span> <span class="comment">// 携带参数</span></span><br><span class="line"><span class="comment">// 也可以在方法中调用 -- 推荐</span></span><br><span class="line"><span class="attr">methods</span>: &#123;</span><br><span class="line">  ...<span class="title function_">mapMutations</span>([<span class="string">&#x27;add&#x27;</span>,<span class="string">&#x27;addN&#x27;</span>]),</span><br><span class="line">  <span class="title function_">btnHandle1</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="title function_">add</span>()</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="title function_">btnHandle2</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="title function_">addN</span>(<span class="number">3</span>) <span class="comment">// 携带参数</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="Action"><a href="#Action" class="headerlink" title="Action"></a>Action</h3><blockquote>
+<p>在Mutations函数中，不能写异步的代码(setTimeout、setIterval等)，虽然页面效果没有问题，但是数据没有传到state，会导致在devtools提交更新后，页面的数据又恢复原来的了</p>
+</blockquote>
+<p><strong>Action 用于处理异步任务</strong><br>但是在Action中，还是要通过触发Mutation的方式间接变更数据</p>
+<h4 id="定义Action"><a href="#定义Action" class="headerlink" title="定义Action"></a>定义Action</h4><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> store = <span class="keyword">new</span> <span class="title class_">Vuex</span>.<span class="title function_">store</span>(&#123;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">  <span class="attr">mutations</span>: &#123;</span><br><span class="line">    <span class="title function_">add</span>(<span class="params">state</span>) &#123;</span><br><span class="line">      state.<span class="property">count</span>++</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">actions</span>: &#123;</span><br><span class="line">    <span class="comment">// 只有mutations函数中，才有权利修改state中的数据</span></span><br><span class="line">    <span class="comment">// 在actions中，必须通过context.commit()触发某个mutation才行</span></span><br><span class="line">    <span class="title function_">addAsync</span>(<span class="params">context</span>)&#123;</span><br><span class="line">      <span class="built_in">setTimeout</span>(<span class="function">()=&gt;</span>&#123;</span><br><span class="line">        context.<span class="title function_">commit</span>(<span class="string">&#x27;add&#x27;</span>)</span><br><span class="line">      &#125;,<span class="number">2000</span>)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>传参</strong></li>
+</ul>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> store = <span class="keyword">new</span> <span class="title class_">Vuex</span>.<span class="title function_">store</span>(&#123;</span><br><span class="line">  <span class="comment">// ...</span></span><br><span class="line">  <span class="attr">mutations</span>: &#123;</span><br><span class="line">    <span class="title function_">addN</span>(<span class="params">state, step</span>) &#123;</span><br><span class="line">      state.<span class="property">count</span> += step</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">actions</span>: &#123;</span><br><span class="line">    <span class="title function_">addNAsync</span>(<span class="params">context,step</span>)&#123;</span><br><span class="line">      <span class="built_in">setTimeout</span>(<span class="function">()=&gt;</span>&#123;</span><br><span class="line">        context.<span class="title function_">commit</span>(<span class="string">&#x27;addN&#x27;</span>,step)</span><br><span class="line">      &#125;,<span class="number">2000</span>)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h4 id="触发Action-方式一"><a href="#触发Action-方式一" class="headerlink" title="触发Action - 方式一"></a>触发Action - 方式一</h4><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="attr">methods</span>: &#123;</span><br><span class="line">  <span class="title function_">add</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="comment">// 这里的dispatch函数，站门用来触发action</span></span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">$store</span>.<span class="title function_">dispatch</span>(<span class="string">&#x27;addAsync&#x27;</span>)</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="title function_">addN</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">$store</span>.<span class="title function_">dispatch</span>(<span class="string">&#x27;addNAsync&#x27;</span>, <span class="number">3</span>) <span class="comment">// 携带参数</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="触发Action-方式二"><a href="#触发Action-方式二" class="headerlink" title="触发Action - 方式二"></a>触发Action - 方式二</h4><blockquote>
+<p>和Mutations一样</p>
+</blockquote>
+<ol>
+<li>从Vuex中按需导入 mapActions 函数：<br><code>import &#123; mapActions &#125; from &#39;vuex&#39;</code><blockquote>
+<p>注意是<strong>小写</strong>的vuex</p>
+</blockquote>
+</li>
+<li><strong>通过mapActions函数</strong>，将需要的actions函数，<strong>映射为当前组件的methods方法</strong>：<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="attr">methods</span>: &#123;</span><br><span class="line">  ...<span class="title function_">mapActions</span>([<span class="string">&#x27;addAsync&#x27;</span>,<span class="string">&#x27;addNAsync&#x27;</span>])</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="Getter"><a href="#Getter" class="headerlink" title="Getter"></a>Getter</h3><p>Getter用于对Store中的<strong>数据进行加工处理</strong>形成新的数据。起到一个<strong>包装数据</strong>的作用，<strong>类似计算属性</strong>computed</p>
+<ul>
+<li>定义Getter<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> store = <span class="keyword">new</span> <span class="title class_">Vuex</span>.<span class="title function_">store</span>(&#123;</span><br><span class="line">  <span class="attr">state</span>: &#123;</span><br><span class="line">    <span class="attr">count</span>: <span class="number">0</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">getters</span>: &#123;</span><br><span class="line">    <span class="attr">showNum</span>: <span class="function"><span class="params">state</span>=&gt;</span>&#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="string">&#x27;当前最新的数量是【&#x27;</span> + state.<span class="property">count</span> +<span class="string">&#x27;】&#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></li>
+</ul>
+<p>Getters的使用同样<strong>和State一致</strong></p>
+<ul>
+<li><p>使用Getter方式一<br><code>this.$store.getters.名称</code>如：<code>this.$store.getters.showNum</code></p>
+</li>
+<li><p>使用Getter方式二 —— mapGetters</p>
+<ol>
+<li>从vuex中按需导入mapGetters函数<br>  <code>import &#123; mapGetters &#125; from &#39;vuex&#39;</code></li>
+<li>通过mapGetters函数，将当前组件需要的getters，映射为当前组件的computed计算属性 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="attr">computed</span>: &#123;</span><br><span class="line">  ...<span class="title function_">mapGetters</span>([<span class="string">&#x27;showNum&#x27;</span>])</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+</li>
+</ul>
+<h2 id="关于核心概念的使用方式"><a href="#关于核心概念的使用方式" class="headerlink" title="关于核心概念的使用方式"></a>关于核心概念的使用方式</h2><p>就像state中说到的那样：</p>
+<ul>
+<li>使用<strong>不频繁</strong> —— <strong>直接访问</strong></li>
+<li><strong>访问多次</strong>，或者需要进行<strong>转换处理</strong> —— <strong>mapXXX辅助函数</strong><blockquote>
+<p>更加清晰和高效，使代码更模块化，易于阅读和维护。</p>
+</blockquote>
+</li>
+<li>项目<strong>使用了TS</strong> —— <strong>mapXXX辅助函数</strong><blockquote>
+<p>mapXXX辅助函数配合类型注解可以提供更好的类型安全性。</p>
+</blockquote>
+</li>
+</ul>
+<p>总的来说，选择哪种方式取决于具体场景和个人偏好，但通常<strong>推荐使用mapXXX辅助函数</strong>，因为它可以让你的<strong>代码更加整洁、易于维护</strong>，并且在<strong>处理复杂逻辑时更为灵活</strong>。</p>
+]]></content>
+      <categories>
+        <category>Vue</category>
+        <category>Vue2</category>
+      </categories>
+      <tags>
+        <tag>Vue</tag>
+        <tag>Vue2</tag>
+        <tag>Vuex</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>vue3基本使用</title>
+    <url>/tsukimiya.github.io/2024/05/08/vue3/1.vue3%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/</url>
+    <content><![CDATA[<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>Vue是一套<strong>用于构建用户界面的前端框架</strong>。它为构建用户界面提供了一整套的解决方案(俗称Vue全家桶)：</p>
+<ul>
+<li>vue (核心库)</li>
+<li>vue-router (路由方案)</li>
+<li>vuex (状态管理方案)</li>
+<li>vue 组件库 (快速搭建页面U效果的方案)</li>
+</ul>
+<p>以及<strong>辅助vue项目开发</strong>的一系列工具:</p>
+<ul>
+<li>vue-cli (npm 全局包: 一键生成工程化的vue 项目 - 基于webpack、大而全)</li>
+<li>vite (npm 全局包: 一键生成工程化的vue项目 – 小而巧)</li>
+<li>vue-devtools (浏览器插件: 辅助调试的工具)</li>
+<li>vetur (vscode插件: 提供语法高亮和智能提示)</li>
+</ul>
+<p><img src="/tsukimiya.github.io/images/vue/vue3.png" alt="vue3"></p>
+<h2 id="版本更新"><a href="#版本更新" class="headerlink" title="版本更新"></a>版本更新</h2><p>vue2.x中<strong>绝大多数的API与特性</strong>，在vue3.x中<strong>同样支持</strong>。同时，vue3.x中还<strong>新增了3.x所特有的功能</strong>、并<strong>废弃了某些2.x中的旧功能</strong>:</p>
+<ul>
+<li><p>新增的功能例如:<br><strong>组合式API</strong>、多根节点组件、更好的TypeScript支持等</p>
+</li>
+<li><p>废弃的旧功能如下︰<br><strong>过滤器</strong>、不再支持$on，$off和$once实例方法等</p>
+</li>
+</ul>
+<p>详细的变更信息，请参考官方文档给出的<strong>迁移指南</strong>:<br><a href="https://v3-migration.vuejs.org/zh/">https://v3-migration.vuejs.org/zh/</a></p>
+<h2 id="基本使用"><a href="#基本使用" class="headerlink" title="基本使用"></a>基本使用</h2><ul>
+<li>vue-devtools调试工具<br>vue-devtools有 vue2.x 和 vue3.x 两个版本，<strong>不能交叉使用</strong>!<br>带Beta标记的版本是vue3.x的<br>.<br>如何安装：<br><a href="https://juejin.cn/post/7125983116396593165">掘金</a><br><a href="https://blog.csdn.net/ashin8032/article/details/122600345">CSDN</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>Vue</category>
+        <category>Vue3</category>
+      </categories>
+      <tags>
+        <tag>Vue</tag>
+        <tag>Vue3</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Hello World</title>
     <url>/tsukimiya.github.io/hello%20world.html</url>
     <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
@@ -1476,7 +2082,7 @@ vue的导航守卫中除了全局前置守卫之外，还有全局解析守卫�
   <entry>
     <title>Hello Front-end</title>
     <url>/tsukimiya.github.io/index.html</url>
-    <content><![CDATA[<p>Welcome to my study blog! This is my continuously make up a main post. If you get any problems when using my blog, you can send the email to <a href="mailto:&#104;&#97;&#114;&#x69;&#105;&#106;&#x69;&#x63;&#x6f;&#x40;&#x6f;&#x75;&#116;&#108;&#111;&#111;&#107;&#x2e;&#x63;&#x6f;&#109;">&#104;&#97;&#114;&#x69;&#105;&#106;&#x69;&#x63;&#x6f;&#x40;&#x6f;&#x75;&#116;&#108;&#111;&#111;&#107;&#x2e;&#x63;&#x6f;&#109;</a></p>
+    <content><![CDATA[<p>Welcome to my study blog! This is my continuously make up a main post. If you get any problems when using my blog, you can send the email to <a href="mailto:&#104;&#x61;&#x72;&#105;&#105;&#x6a;&#105;&#99;&#111;&#x40;&#111;&#x75;&#x74;&#108;&#x6f;&#111;&#107;&#46;&#x63;&#111;&#x6d;">&#104;&#x61;&#x72;&#105;&#105;&#x6a;&#105;&#99;&#111;&#x40;&#111;&#x75;&#x74;&#108;&#x6f;&#111;&#107;&#46;&#x63;&#111;&#x6d;</a></p>
 <h2 id="Study-Guide"><a href="#Study-Guide" class="headerlink" title="Study Guide"></a>Study Guide</h2><center>Here provide you some study sources and study route.</center>
 <!-- This is [main tech](#Main-Line) -->
 <center>This is <a href='#Main-Line'>main tech</a></center>
@@ -1860,7 +2466,10 @@ vue的导航守卫中除了全局前置守卫之外，还有全局解析守卫�
 </blockquote>
 </li>
 </ol>
-<h2 id="Hexo-Next"><a href="#Hexo-Next" class="headerlink" title="Hexo + Next"></a>Hexo + Next</h2><ol>
+<h2 id="Hexo-Next"><a href="#Hexo-Next" class="headerlink" title="Hexo + Next"></a>Hexo + Next</h2><ul>
+<li><a href="https://hexo-next.readthedocs.io/zh-cn/latest/">Hexo-NexT官网文档</a></li>
+</ul>
+<ol>
 <li><p><a href="https://cloud.tencent.com/developer/article/2065803">Hexo图标样式参考</a>(腾讯云)</p>
 <blockquote>
 <p>Hexo 支持FontAwesome图标，就是在代码中出现名字以fa fa开头的类名，本文介绍具具体图标来源和使用方法。</p>
@@ -1887,6 +2496,7 @@ vue的导航守卫中除了全局前置守卫之外，还有全局解析守卫�
 <li><a href="https://blog.csdn.net/weixin_45773137/article/details/126150861">第一章–分组交换 &#x2F; 时延 &#x2F; 性能指标 &#x2F; OSI七层模型和TCP&#x2F;IP五层模型–网络体系结构</a>(CSDN&#x2F;答案不全)<br>  不全的部分参考这个 <a href="https://cloud.tencent.com/developer/article/2055618">Post</a> (腾讯云&#x2F;Q10开始排版不好)</li>
 <li><a href="https://blog.csdn.net/weixin_62985813/article/details/134105653">第二章–物理层</a>(CSDN)</li>
 <li><a href="https://blog.csdn.net/weixin_45773137/article/details/126276788">第三章–数据链路层</a>(CSDN)</li>
+<li><a href="https://blog.csdn.net/qq_56919740/article/details/128908573">第四章–网络层</a>(CSDN)</li>
 </ul>
 </li>
 </ul>
@@ -1903,19 +2513,6 @@ vue的导航守卫中除了全局前置守卫之外，还有全局解析守卫�
 </li>
 </ol>
 <h1 id="ELSE"><a href="#ELSE" class="headerlink" title="ELSE"></a>ELSE</h1>]]></content>
-  </entry>
-  <entry>
-    <title>分类</title>
-    <url>/tsukimiya.github.io/categories/index.html</url>
-    <content><![CDATA[]]></content>
-  </entry>
-  <entry>
-    <title>留言板</title>
-    <url>/tsukimiya.github.io/guestbook/index.html</url>
-    <content><![CDATA[<h1 id="欢迎来到我的博客！"><a href="#欢迎来到我的博客！" class="headerlink" title="欢迎来到我的博客！"></a>欢迎来到我的博客！</h1><blockquote>
-<p>欢迎在这里留言！任何问题都可以在这里留言，我会及时回复的。目前留言板块尚未配置完全，暂时无法使用，如有问题请邮箱：<br><a href="mailto:&#104;&#x61;&#114;&#x69;&#105;&#x6a;&#x69;&#99;&#x6f;&#x40;&#x6f;&#117;&#116;&#x6c;&#x6f;&#x6f;&#x6b;&#46;&#99;&#x6f;&#109;">&#104;&#x61;&#114;&#x69;&#105;&#x6a;&#x69;&#99;&#x6f;&#x40;&#x6f;&#117;&#116;&#x6c;&#x6f;&#x6f;&#x6b;&#46;&#99;&#x6f;&#109;</a><br><a href="mailto:&#49;&#x38;&#x33;&#x32;&#55;&#x31;&#53;&#x38;&#51;&#x38;&#64;&#x71;&#x71;&#46;&#x63;&#x6f;&#109;">&#49;&#x38;&#x33;&#x32;&#55;&#x31;&#53;&#x38;&#51;&#x38;&#64;&#x71;&#x71;&#46;&#x63;&#x6f;&#109;</a><br>欢迎给我发送邮件</p>
-</blockquote>
-]]></content>
   </entry>
   <entry>
     <title>Array API | 数组方法 | 数组函数</title>
@@ -1982,6 +2579,30 @@ vue的导航守卫中除了全局前置守卫之外，还有全局解析守卫�
 </body>
 
 </html>]]></content>
+  </entry>
+  <entry>
+    <title>分类</title>
+    <url>/tsukimiya.github.io/categories/index.html</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>Cuntom Page</title>
+    <url>/tsukimiya.github.io/custom/index.html</url>
+    <content><![CDATA[<blockquote>
+<p>Take a look at some of the pages created by me.<br>  <font color=violet>Tips: Unrendered pages are not searchable.</font></p>
+</blockquote>
+<ol start="0">
+<li><p><a href="api.html">Array API | 数组方法 | 数组函数</a></p>
+</li>
+<li><p><a href="./npmAPI.html">npm - 常用包 | 第三方模块</a></p>
+</li>
+<li><p><a href="pages/MakeCV.html" target='_blank'>MakeCV</a></p>
+<blockquote>
+<p>制作简历</p>
+</blockquote>
+</li>
+</ol>
+]]></content>
   </entry>
   <entry>
     <title></title>
@@ -2264,22 +2885,11 @@ forEach(callbackFn(element,index,array), thisArg)`,
 })]]></content>
   </entry>
   <entry>
-    <title>Cuntom Page</title>
-    <url>/tsukimiya.github.io/custom/index.html</url>
-    <content><![CDATA[<blockquote>
-<p>Take a look at some of the pages created by me.</p>
+    <title>留言板</title>
+    <url>/tsukimiya.github.io/guestbook/index.html</url>
+    <content><![CDATA[<h1 id="欢迎来到我的博客！"><a href="#欢迎来到我的博客！" class="headerlink" title="欢迎来到我的博客！"></a>欢迎来到我的博客！</h1><blockquote>
+<p>欢迎在这里留言！任何问题都可以在这里留言，我会及时回复的。目前留言板块尚未配置完全，暂时无法使用，如有问题请邮箱：<br><a href="mailto:&#x68;&#97;&#114;&#105;&#105;&#106;&#x69;&#x63;&#x6f;&#x40;&#x6f;&#117;&#x74;&#108;&#111;&#111;&#107;&#46;&#x63;&#111;&#x6d;">&#x68;&#97;&#114;&#105;&#105;&#106;&#x69;&#x63;&#x6f;&#x40;&#x6f;&#117;&#x74;&#108;&#111;&#111;&#107;&#46;&#x63;&#111;&#x6d;</a><br><a href="mailto:&#x31;&#56;&#51;&#x32;&#55;&#49;&#53;&#x38;&#x33;&#56;&#x40;&#113;&#113;&#x2e;&#99;&#111;&#x6d;">&#x31;&#56;&#51;&#x32;&#55;&#49;&#53;&#x38;&#x33;&#56;&#x40;&#113;&#113;&#x2e;&#99;&#111;&#x6d;</a><br>欢迎给我发送邮件</p>
 </blockquote>
-<ol start="0">
-<li><p><a href="api.html">Array API | 数组方法 | 数组函数</a></p>
-</li>
-<li><p><a href="./npmAPI.html">npm - 常用包 | 第三方模块</a></p>
-</li>
-<li><p><a href="pages/MakeCV.html" target='_blank'>MakeCV</a></p>
-<blockquote>
-<p>制作简历</p>
-</blockquote>
-</li>
-</ol>
 ]]></content>
   </entry>
   <entry>
@@ -2322,16 +2932,63 @@ forEach(callbackFn(element,index,array), thisArg)`,
     <content><![CDATA[]]></content>
   </entry>
   <entry>
+    <title>标签</title>
+    <url>/tsukimiya.github.io/tags/index.html</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>ACGNCollections</title>
+    <url>/tsukimiya.github.io/%E6%AC%A1%E5%85%83/AC.html</url>
+    <content><![CDATA[<pre><center>汝等即将踏入此地的人，舍弃所有的希望吧</center></pre>
+
+<h1 id="Anime"><a href="#Anime" class="headerlink" title="Anime"></a>Anime</h1><h2 id="Sakuga"><a href="#Sakuga" class="headerlink" title="Sakuga"></a>Sakuga</h2><h3 id="Sakugaer"><a href="#Sakugaer" class="headerlink" title="Sakugaer"></a>Sakugaer</h3><ul>
+<li><a href="https://space.bilibili.com/1905952529?spm_id_from=333.337.0.0">O_bscure</a>(TW)</li>
+</ul>
+<h3 id="Animetor"><a href="#Animetor" class="headerlink" title="Animetor"></a>Animetor</h3><ol>
+<li><p>文森特 Vincent Chansard（France）</p>
+<blockquote>
+<p>V圣<br>近两年引人注目的超新星，以及备受争议的新人原画，在ONE PIECE、咒術迴戰等片场大放异彩。以及，大魔镜的OP非常出色，光影感很强烈，魔法少女ED那段是谁画的来着？当时好像都误以为是文森特？（待修改） —— 24.5<br>以及路飞五档的超抽象大举、and 路奇 vs 路飞那段都令人影响深刻 —— 24.5</p>
+</blockquote>
+<ul>
+<li><a href="https://www.bilibili.com/opus/927643447686332480?spm_id_from=333.999.0.0">访谈</a> - 24.5 ，译 O_bscure</li>
+</ul>
+</li>
+<li><p>长田宽人（SHAFT）</p>
+<blockquote>
+<p>和川田和树并为沙发套强力新人 —— 23.8</p>
+</blockquote>
+<blockquote>
+<p>shaft所属新人原画 1994年生人<br> 创形美术学校视觉设计科媒体影像专攻2016毕业生，毕业后开始在shaft参与补间动画工作，因沙发套大批员工出走，长田宽人和川田和树在shaft作品中作为主要原画输出，在魔法纪录中的超亮眼表现让其备受瞩目，其后在rwby也持续贡献优秀作画。细线条锯齿，金属质感的块状阴影和头发的飘动让其辨识度极高，但也因画面太乱受人诟病，是一位个人风格强烈的原画师。今年（23年）也在五等分初次担当了OP分镜，表现依旧出色，期待进一步突破！—— 23.8</p>
+</blockquote>
+<blockquote>
+<p>好久没见到长田宽人的身影了，也不能咬定不活跃了，上一次见到他还是在推上见他吐槽，以及提到了回老家？休假？沙发套的物语新作就在7月！魔圆剧场版就在今年冬！大的一定在后面！ —— 24.5</p>
+</blockquote>
+</li>
+<li><p>太田晃博</p>
+<blockquote>
+<p>活跃在海贼片场的超级新星，22-23年是其超进化的一年<br>路飞开启五档（ep？，23.？），太田终于与自己的偶像大平共舞，为作画史添上了浓墨重彩的一笔！</p>
+</blockquote>
+</li>
+</ol>
+<h3 id="老害"><a href="#老害" class="headerlink" title="老害"></a>老害</h3><ol>
+<li>大平</li>
+</ol>
+<h1 id="Comic"><a href="#Comic" class="headerlink" title="Comic"></a>Comic</h1><h1 id="Gyaruge"><a href="#Gyaruge" class="headerlink" title="Gyaruge"></a>Gyaruge</h1><h1 id="Novel"><a href="#Novel" class="headerlink" title="Novel"></a>Novel</h1>]]></content>
+  </entry>
+  <entry>
     <title>Task</title>
     <url>/tsukimiya.github.io/schedule/task.html</url>
     <content><![CDATA[<blockquote>
-<p>快给我滚去学习！给你一拳 :punch: :punch: :facepunch:</p>
+<p>快给我滚去学习！给你一拳 👊👊👊</p>
 </blockquote>
 <p>[toc]</p>
 <h2 id="Study-Tech"><a href="#Study-Tech" class="headerlink" title="Study Tech"></a>Study Tech</h2><h3 id="NOW"><a href="#NOW" class="headerlink" title="NOW"></a>NOW</h3><ol>
 <li><p>vue框架</p>
 <ul>
-<li><p>黑马vue课程（21.8 | vue2 - 12h）<br>  <a href="https://www.bilibili.com/video/BV1zq4y1p7ga?t=3.5&p=32">https://www.bilibili.com/video/BV1zq4y1p7ga?t=3.5&amp;p=32</a></p>
+<li><p>黑马vue课程（21.8 | vue2 - 12h）<br>  <a href="https://www.bilibili.com/video/BV1zq4y1p7ga?t=3.5&p=32">https://www.bilibili.com/video/BV1zq4y1p7ga?t=3.5&amp;p=32</a><br>  <a href="https://www.bilibili.com/video/BV1zq4y1p7ga?p=296">vue3-p296</a></p>
+<blockquote>
+<p>vue3的部分和vue2的东西弄到一块了，不太好<br>  从这里往后是vue3的内容，但是和vue2的内容，有绝大程度上的重合，不推荐这个教程</p>
+</blockquote>
 </li>
 <li><p>邓瑞编程 3小时学会Vue3 (24.1.23 | 2h16min)</p>
 <blockquote>
@@ -2371,16 +3028,19 @@ forEach(callbackFn(element,index,array), thisArg)`,
 </li>
 <li><p>js面试<br><a href="https://www.bilibili.com/video/BV1mH4y1Q7Z7?t=282.1">https://www.bilibili.com/video/BV1mH4y1Q7Z7?t=282.1</a></p>
 </li>
+<li><p>vue项目 双元 day9-p14 路由懒加载 、p15上线<br>p12 通过CDN优化打包<br>day10 - vuex</p>
+</li>
 </ul>
 <h3 id="TODO"><a href="#TODO" class="headerlink" title="TODO"></a>TODO</h3><ul>
+<li><p>面试必问之 JS 事件循环(Event Loop)，看这一篇足够 <a href="https://zhuanlan.zhihu.com/p/580956436">https://zhuanlan.zhihu.com/p/580956436</a></p>
+</li>
+<li><p>如果想要本地搜索排除某些页面，其余全部页面都会被搜索到<br>目前只有一个办法：将想要排除搜索的页面，排除渲染，不被渲染的页面上的内容是搜索不到的，<br>所以还是得手搓页面XD</p>
+</li>
+<li><p>移动端使用js的控制台<br>【探秘JavaScript移动调试神器：JS-Mobile-Console】<a href="https://mbd.baidu.com/ma/s/WNjqoqqA">https://mbd.baidu.com/ma/s/WNjqoqqA</a><br>【移动端调试神器vConsole】<a href="https://mbd.baidu.com/ma/s/ZTdBK5C1">https://mbd.baidu.com/ma/s/ZTdBK5C1</a><br>可以直接使用js在线工具就行了，因为我只是需要在移动端使用控制台来进行验证一些代码，所以js在线工具完全可以满足</p>
+</li>
 <li><p>写一个sleep函数？研究过promise的应该写个sleep函数很简单？</p>
 </li>
 <li><p>为什么v-if是把元素移除和添加进页面的，然而v-if添加进页面的元素上带有的id属性，页面上的a链接指向它的锚点不起作用，为什么？如果换成v-show就没关系，因为控制的是display的值<br>也就是说，新添加进页面的元素的id属性不能作为锚点使用？</p>
-</li>
-<li><p>Hexo中使用emoji表情</p>
-<blockquote>
-<p>可以参考这三篇<br>  <a href="https://blog.xaoxu.cn/archives/hexo-use-emoji">https://blog.xaoxu.cn/archives/hexo-use-emoji</a><br>  尤其是这个苏苏的小屋的博客，做的很好，很值得学习一下<br>  <a href="https://luckysusu.top/post/hexo_emoji.html">https://luckysusu.top/post/hexo_emoji.html</a><br>  <a href="https://cloud.tencent.com/developer/article/2065824">https://cloud.tencent.com/developer/article/2065824</a></p>
-</blockquote>
 </li>
 <li><p>制作一个简历制作模板网页</p>
 <blockquote>
@@ -2431,49 +3091,5 @@ forEach(callbackFn(element,index,array), thisArg)`,
 </li>
 </ul>
 ]]></content>
-  </entry>
-  <entry>
-    <title>标签</title>
-    <url>/tsukimiya.github.io/tags/index.html</url>
-    <content><![CDATA[]]></content>
-  </entry>
-  <entry>
-    <title>ACGNCollections</title>
-    <url>/tsukimiya.github.io/%E6%AC%A1%E5%85%83/AC.html</url>
-    <content><![CDATA[<pre><center>汝等即将踏入此地的人，舍弃所有的希望吧</center></pre>
-
-<h1 id="Anime"><a href="#Anime" class="headerlink" title="Anime"></a>Anime</h1><h2 id="Sakuga"><a href="#Sakuga" class="headerlink" title="Sakuga"></a>Sakuga</h2><h3 id="Sakugaer"><a href="#Sakugaer" class="headerlink" title="Sakugaer"></a>Sakugaer</h3><ul>
-<li><a href="https://space.bilibili.com/1905952529?spm_id_from=333.337.0.0">O_bscure</a>(TW)</li>
-</ul>
-<h3 id="Animetor"><a href="#Animetor" class="headerlink" title="Animetor"></a>Animetor</h3><ol>
-<li><p>文森特 Vincent Chansard（France）</p>
-<blockquote>
-<p>V圣<br>近两年引人注目的超新星，以及备受争议的新人原画，在ONE PIECE、咒術迴戰等片场大放异彩。以及，大魔镜的OP非常出色，光影感很强烈，魔法少女ED那段是谁画的来着？当时好像都误以为是文森特？（待修改） —— 24.5<br>以及路飞五档的超抽象大举、and 路奇 vs 路飞那段都令人影响深刻 —— 24.5</p>
-</blockquote>
-<ul>
-<li><a href="https://www.bilibili.com/opus/927643447686332480?spm_id_from=333.999.0.0">访谈</a> - 24.5 ，译 O_bscure</li>
-</ul>
-</li>
-<li><p>长田宽人（SHAFT）</p>
-<blockquote>
-<p>和川田和树并为沙发套强力新人 —— 23.8</p>
-</blockquote>
-<blockquote>
-<p>shaft所属新人原画 1994年生人<br> 创形美术学校视觉设计科媒体影像专攻2016毕业生，毕业后开始在shaft参与补间动画工作，因沙发套大批员工出走，长田宽人和川田和树在shaft作品中作为主要原画输出，在魔法纪录中的超亮眼表现让其备受瞩目，其后在rwby也持续贡献优秀作画。细线条锯齿，金属质感的块状阴影和头发的飘动让其辨识度极高，但也因画面太乱受人诟病，是一位个人风格强烈的原画师。今年（23年）也在五等分初次担当了OP分镜，表现依旧出色，期待进一步突破！—— 23.8</p>
-</blockquote>
-<blockquote>
-<p>好久没见到长田宽人的身影了，也不能咬定不活跃了，上一次见到他还是在推上见他吐槽，以及提到了回老家？休假？沙发套的物语新作就在7月！魔圆剧场版就在今年冬！大的一定在后面！ —— 24.5</p>
-</blockquote>
-</li>
-<li><p>太田晃博</p>
-<blockquote>
-<p>活跃在海贼片场的超级新星，22-23年是其超进化的一年<br>路飞开启五档（ep？，23.？），太田终于与自己的偶像大平共舞，为作画史添上了浓墨重彩的一笔！</p>
-</blockquote>
-</li>
-</ol>
-<h3 id="老害"><a href="#老害" class="headerlink" title="老害"></a>老害</h3><ol>
-<li>大平</li>
-</ol>
-<h1 id="Comic"><a href="#Comic" class="headerlink" title="Comic"></a>Comic</h1><h1 id="Gyaruge"><a href="#Gyaruge" class="headerlink" title="Gyaruge"></a>Gyaruge</h1><h1 id="Novel"><a href="#Novel" class="headerlink" title="Novel"></a>Novel</h1>]]></content>
   </entry>
 </search>

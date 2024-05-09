@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.1.1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/tsukimiya.github.io/images/Study.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/tsukimiya.github.io/images/Study.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/tsukimiya.github.io/images/Study.ico">
+  <link rel="mask-icon" href="/tsukimiya.github.io/images/Study.ico" color="#222">
+
+<link rel="stylesheet" href="/tsukimiya.github.io/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Miniver:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"tsukimiyanano.github.io","root":"/tsukimiya.github.io/","images":"/tsukimiya.github.io/images","scheme":"Pisces","darkmode":true,"version":"8.19.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/tsukimiya.github.io/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true}}</script><script src="/tsukimiya.github.io/js/config.js"></script>
+
+    <meta name="description" content="目标:能够在项目中安装和配置路由：createRouter、app.use(router)能够使用路由实现单页面应用程序的开发能够使用嵌套路由：通过children属性进行路由嵌套能够实现动态路由匹配：使用冒号声明参数项、this.$route.params、props: true能够使用编程式导航：this.$router.push、this.$router.go能够使用导航守卫控制路由的访问">
+<meta property="og:type" content="article">
+<meta property="og:title" content="路由(vue-router)">
+<meta property="og:url" content="https://tsukimiyanano.github.io/tsukimiya.github.io/2024/05/02/Vue2/7.%E8%B7%AF%E7%94%B1%EF%BC%88vue-router%EF%BC%89/index.html">
+<meta property="og:site_name" content="Ayu&#39;s Study Blog">
+<meta property="og:description" content="目标:能够在项目中安装和配置路由：createRouter、app.use(router)能够使用路由实现单页面应用程序的开发能够使用嵌套路由：通过children属性进行路由嵌套能够实现动态路由匹配：使用冒号声明参数项、this.$route.params、props: true能够使用编程式导航：this.$router.push、this.$router.go能够使用导航守卫控制路由的访问">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://tsukimiyanano.github.io/tsukimiya.github.io/images/vue/%E5%89%8D%E7%AB%AF%E8%B7%AF%E7%94%B1.png">
+<meta property="og:image" content="https://tsukimiyanano.github.io/tsukimiya.github.io/images/vue/%E5%B5%8C%E5%A5%97%E8%B7%AF%E7%94%B1.png">
+<meta property="og:image" content="https://tsukimiyanano.github.io/tsukimiya.github.io/images/vue/%E5%AF%BC%E8%88%AA%E5%AE%88%E5%8D%AB.png">
+<meta property="og:image" content="https://tsukimiyanano.github.io/tsukimiya.github.io/images/vue/next%E5%87%BD%E6%95%B0%E4%B8%89%E7%A7%8D%E8%B0%83%E7%94%A8%E6%96%B9%E5%BC%8F.png">
+<meta property="article:published_time" content="2024-05-02T07:42:11.190Z">
+<meta property="article:modified_time" content="2024-05-06T14:20:08.346Z">
+<meta property="article:author" content="Ayu">
+<meta property="article:tag" content="Vue">
+<meta property="article:tag" content="Vue2">
+<meta property="article:tag" content="路由">
+<meta property="article:tag" content="路由重定向">
+<meta property="article:tag" content="路由嵌套">
+<meta property="article:tag" content="动态路由">
+<meta property="article:tag" content="路由导航">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://tsukimiyanano.github.io/tsukimiya.github.io/images/vue/%E5%89%8D%E7%AB%AF%E8%B7%AF%E7%94%B1.png">
+
+
+<link rel="canonical" href="https://tsukimiyanano.github.io/tsukimiya.github.io/2024/05/02/Vue2/7.%E8%B7%AF%E7%94%B1%EF%BC%88vue-router%EF%BC%89/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://tsukimiyanano.github.io/tsukimiya.github.io/2024/05/02/Vue2/7.%E8%B7%AF%E7%94%B1%EF%BC%88vue-router%EF%BC%89/","path":"2024/05/02/Vue2/7.路由（vue-router）/","title":"路由(vue-router)"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>路由(vue-router) | Ayu's Study Blog</title>
+  
+
+
+
+
+
+
+
+<link rel="dns-prefetch" href="https://waline.vercel.app">
+  <noscript>
+    <link rel="stylesheet" href="/tsukimiya.github.io/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/tsukimiya.github.io/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Ayu's Study Blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">求求你给我一份工作吧，我什么都会做的`orz</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/tsukimiya.github.io/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tsukimiya.github.io/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/tsukimiya.github.io/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/tsukimiya.github.io/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-schedule"><a href="/tsukimiya.github.io/schedule/task.html" rel="section"><i class="fa fa-calendar fa-fw"></i>日程表</a></li><li class="menu-item menu-item-guestbook"><a href="/tsukimiya.github.io/guestbook/" rel="section"><i class="fa fa-book fa-fw"></i>guestbook</a></li><li class="menu-item menu-item-pulledpost"><a href="/tsukimiya.github.io/PulledPost/" rel="section"><i class="fa fa-heart fa-fw"></i>PulledPost</a></li><li class="menu-item menu-item-cuntom-page"><a href="/tsukimiya.github.io/custom" rel="section"><i class="fa fa-folder fa-fw"></i>Cuntom Page</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#axios%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-number">1.</span> <span class="nav-text">axios的使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%80%83%E8%99%91%E9%97%AE%E9%A2%98-%E2%80%93-%E4%BC%98%E5%8C%96"><span class="nav-number">1.1.</span> <span class="nav-text">考虑问题 – 优化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#axios%E6%9C%80%E4%BC%98%E4%BD%BF%E7%94%A8-%E2%80%93-%E5%AE%9E%E7%8E%B0api%E6%8E%A5%E5%8F%A3%E7%9A%84%E5%A4%8D%E7%94%A8"><span class="nav-number">1.2.</span> <span class="nav-text">axios最优使用 – 实现api接口的复用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%9B%E4%B8%80%E6%AD%A5%E7%9A%84%E5%B0%81%E8%A3%85-%E6%A8%A1%E5%9D%97%E5%8C%96"><span class="nav-number">1.3.</span> <span class="nav-text">进一步的封装&#x2F;模块化</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B7%AF%E7%94%B1%E7%9A%84%E5%9F%BA%E6%9C%AC%E9%85%8D%E7%BD%AE%E4%B8%8E%E4%BD%BF%E7%94%A8"><span class="nav-number">2.</span> <span class="nav-text">路由的基本配置与使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#vue-router%E7%9A%84%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8"><span class="nav-number">2.1.</span> <span class="nav-text">vue-router的基本使用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B7%AF%E7%94%B1%E9%87%8D%E5%AE%9A%E5%90%91-%E2%80%93-redirect"><span class="nav-number">3.</span> <span class="nav-text">路由重定向 – redirect</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B5%8C%E5%A5%97%E8%B7%AF%E7%94%B1"><span class="nav-number">4.</span> <span class="nav-text">嵌套路由</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%A8%E6%80%81%E8%B7%AF%E7%94%B1"><span class="nav-number">5.</span> <span class="nav-text">动态路由</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BA%E8%B7%AF%E7%94%B1%E8%A7%84%E5%88%99%E5%BC%80%E5%90%AFprop%E4%BC%A0%E5%8F%82"><span class="nav-number">5.1.</span> <span class="nav-text">为路由规则开启prop传参</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8B%93%E5%B1%95-query-%E5%92%8C-fullPath"><span class="nav-number">5.2.</span> <span class="nav-text">拓展 query 和 fullPath</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B7%AF%E7%94%B1%E5%AF%BC%E8%88%AA"><span class="nav-number">6.</span> <span class="nav-text">路由导航</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A3%B0%E6%98%8E%E5%BC%8F%E5%AF%BC%E8%88%AA-%E7%BC%96%E7%A8%8B%E5%BC%8F%E5%AF%BC%E8%88%AA"><span class="nav-number">6.1.</span> <span class="nav-text">声明式导航 &amp; 编程式导航</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#vue-router-%E4%B8%AD%E7%9A%84%E7%BC%96%E7%A8%8B%E5%BC%8F%E5%AF%BC%E8%88%AAAPI"><span class="nav-number">6.1.1.</span> <span class="nav-text">vue-router 中的编程式导航API</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B7%AF%E7%94%B1%E5%AF%BC%E8%88%AA%E5%AE%88%E5%8D%AB-%E2%80%93-%E6%8E%A7%E5%88%B6%E8%B7%AF%E7%94%B1%E7%9A%84%E8%AE%BF%E9%97%AE%E6%9D%83%E9%99%90"><span class="nav-number">6.2.</span> <span class="nav-text">路由导航守卫 – 控制路由的访问权限</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A1%88%E4%BE%8B%E7%BB%83%E4%B9%A0"><span class="nav-number">7.</span> <span class="nav-text">案例练习</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Vant%E7%BB%84%E4%BB%B6%E5%BA%93"><span class="nav-number">7.1.</span> <span class="nav-text">Vant组件库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%9A%E8%BF%87less%E6%96%87%E4%BB%B6%E8%A6%86%E7%9B%96%E8%BF%9B%E8%A1%8C%E4%B8%BB%E9%A2%98%E5%AE%9A%E5%88%B6"><span class="nav-number">7.2.</span> <span class="nav-text">通过less文件覆盖进行主题定制</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#vue-config-js-%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6"><span class="nav-number">8.</span> <span class="nav-text">vue.config.js 配置文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8B%93%E5%B1%95"><span class="nav-number">9.</span> <span class="nav-text">拓展</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#hash%E5%9C%B0%E5%9D%80%E6%B3%A8%E6%84%8F%E7%82%B9"><span class="nav-number">9.1.</span> <span class="nav-text">hash地址注意点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%89%E6%9D%83%E9%99%90%E7%9A%84hash%E5%9C%B0%E5%9D%80"><span class="nav-number">9.2.</span> <span class="nav-text">有权限的hash地址</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8meta%E5%B1%9E%E6%80%A7%E8%BF%9B%E8%A1%8C%E6%9D%83%E9%99%90%E5%A4%84%E7%90%86"><span class="nav-number">9.3.</span> <span class="nav-text">使用meta属性进行权限处理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Less%E5%8F%98%E9%87%8F"><span class="nav-number">9.4.</span> <span class="nav-text">Less变量</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Ayu"
+      src="/tsukimiya.github.io/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Ayu</p>
+  <div class="site-description" itemprop="description">你们怎么能这么卷！！</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/tsukimiya.github.io/archives/">
+          <span class="site-state-item-count">17</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/tsukimiya.github.io/categories/">
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tsukimiya.github.io/tags/">
+        <span class="site-state-item-count">39</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="mailto:1832715838@qq.com" title="E-Mail → mailto:1832715838@qq.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://github.com/tsukimiyanano" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;tsukimiyanano" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://tsukimiyanano.github.io/tsukimiya.github.io/2024/05/02/Vue2/7.%E8%B7%AF%E7%94%B1%EF%BC%88vue-router%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/tsukimiya.github.io/images/avatar.jpg">
+      <meta itemprop="name" content="Ayu">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ayu's Study Blog">
+      <meta itemprop="description" content="你们怎么能这么卷！！">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="路由(vue-router) | Ayu's Study Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          路由(vue-router)
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-05-02 15:42:11" itemprop="dateCreated datePublished" datetime="2024-05-02T15:42:11+08:00">2024-05-02</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-05-06 22:20:08" itemprop="dateModified" datetime="2024-05-06T22:20:08+08:00">2024-05-06</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/tsukimiya.github.io/categories/Vue/" itemprop="url" rel="index"><span itemprop="name">Vue</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/tsukimiya.github.io/categories/Vue/Vue2/" itemprop="url" rel="index"><span itemprop="name">Vue2</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="far fa-comment"></i>
+    </span>
+    <span class="post-meta-item-text">Waline：</span>
+  
+    <a title="waline" href="/tsukimiya.github.io/2024/05/02/Vue2/7.%E8%B7%AF%E7%94%B1%EF%BC%88vue-router%EF%BC%89/#waline" itemprop="discussionUrl">
+      <span class="post-comments-count waline-comment-count" data-path="/tsukimiya.github.io/2024/05/02/Vue2/7.%E8%B7%AF%E7%94%B1%EF%BC%88vue-router%EF%BC%89/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>19k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>18 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><blockquote>
+<p>目标:<br>能够在项目中安装和配置路由：<code>createRouter</code>、<code>app.use(router)</code><br>能够使用路由实现单页面应用程序的开发<br>能够使用嵌套路由：通过<code>children</code>属性进行路由嵌套<br>能够实现动态路由匹配：使用冒号声明参数项、<code>this.$route.params</code>、<code>props: true</code><br>能够使用编程式导航：<code>this.$router.push</code>、<code>this.$router.go</code><br>能够使用导航守卫控制路由的访问权限：<br><code>路由实例.beforeEach((to, from, next) =&gt; &#123; /* 必须调 next 函数*/ &#125;)</code></p>
+</blockquote>
+<h2 id="axios的使用"><a href="#axios的使用" class="headerlink" title="axios的使用"></a>axios的使用</h2><ol>
+<li><p>首先安装axios包<br><code>npm i axios</code> ，结果报错<code>ERR! ERESOLVE could not resolve ERESOLVE could not resolve</code><br>解决办法是在后面加 <code>--legacy-peer-deps</code> 即可<br><code>npm install axios -save --legacy-peer-deps</code><br>报错的原因是由于npm不同版本库之间命令不兼容。</p>
+</li>
+<li><p>在left组件发送get请求：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;button @click=<span class="string">&quot;getInfo&quot;</span>&gt;发起<span class="title class_">Get</span>请求&lt;/button&gt;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> axios <span class="keyword">from</span> <span class="string">&#x27;axios&#x27;</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  <span class="attr">methods</span>: &#123;</span><br><span class="line">    <span class="keyword">async</span> <span class="title function_">getInfo</span>(<span class="params"></span>) &#123;</span><br><span class="line">      <span class="keyword">const</span> &#123; <span class="attr">data</span>: res &#125; = <span class="keyword">await</span> axios.<span class="title function_">get</span>(<span class="string">&#x27;http://www.liulongbin.top:3006/api/get&#x27;</span>)</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(res)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在right组件发送post请求</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;button @click=<span class="string">&quot;postInfo&quot;</span>&gt;发起 <span class="title class_">Post</span> 请求&lt;/button&gt;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> axios <span class="keyword">from</span> <span class="string">&#x27;axios&#x27;</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  <span class="attr">methods</span>: &#123;</span><br><span class="line">    <span class="keyword">async</span> <span class="title function_">postInfo</span>(<span class="params"></span>) &#123;</span><br><span class="line">      <span class="keyword">const</span> &#123; <span class="attr">data</span>: res &#125; = <span class="keyword">await</span> axios.<span class="title function_">post</span>(<span class="string">&#x27;http://www.liulongbin.top:3006/api/post&#x27;</span>, &#123; <span class="attr">name</span>: <span class="string">&#x27;zs&#x27;</span>, <span class="attr">age</span>: <span class="number">25</span> &#125;)</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(res)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="考虑问题-–-优化"><a href="#考虑问题-–-优化" class="headerlink" title="考虑问题 – 优化"></a>考虑问题 – 优化</h3><ul>
+<li><p>问题</p>
+<ol>
+<li>每个组件中，都可能会有发请求的需求，都需要先导入axios，然后调用这些方法，每次用都很麻烦</li>
+<li>每次请求地址都需要写完整地址，但是我们的请求根路径都完全一样。如果将来后端把根路径改了，我们就需要修改每一个组件，不利于后期维护。</li>
+</ol>
+</li>
+<li><p>思考<br>每一个.vue组件都相当于一个vue实例，我们可以理解为：每一个.vue组件都是new Vue()这个构造函数得到的</p>
+</li>
+<li><p>优化1 – <strong>在Vue的原型链上挂载一个axios</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// main.js</span></span><br><span class="line"><span class="keyword">import</span> axios <span class="keyword">from</span> <span class="string">&#x27;axios&#x27;</span></span><br><span class="line"><span class="comment">// 一般我们不叫axios，而是$http</span></span><br><span class="line"><span class="comment">// 因为vue内置的一些成员都是以$开头的(模仿内置成员)</span></span><br><span class="line"><span class="title class_">Vue</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">$http</span> = axios</span><br></pre></td></tr></table></figure>
+<p>这样我们<strong>在每一个组件中</strong>，就不需要再导入axios，<strong>直接通过this&#x2F;原型访问</strong></p>
+</li>
+<li><p>优化2 – <strong>全局配置 axios 的请求根路径</strong><br>在往原型上挂之前，通过axios做一下局域的配置：<br><code>axios.defaults.baseURL = &#39;请求根路径&#39; // axios自带的属性</code><br>组件使用：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">async</span> <span class="title function_">getInfo</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> &#123; <span class="attr">data</span>: res &#125; = <span class="keyword">await</span> <span class="variable language_">this</span>.<span class="property">$http</span>.<span class="title function_">get</span>(<span class="string">&#x27;/api/get&#x27;</span>)</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(res)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>缺点<br><strong>无法实现api接口的复用</strong>：如果这个api在多个页面都需要被用到，每一次都需要重新调这个api接口</p>
+</li>
+</ul>
+<h3 id="axios最优使用-–-实现api接口的复用"><a href="#axios最优使用-–-实现api接口的复用" class="headerlink" title="axios最优使用 – 实现api接口的复用"></a>axios最优使用 – 实现api接口的复用</h3><p>使用axios的最优解 —— <strong>封装！</strong>（也就是模块化）</p>
+<blockquote>
+<p>将axios接口作为可导入的工具包进行封装</p>
+</blockquote>
+<p><font color="green">推荐：将其放在utils文件夹下(工具类的意思)</font></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// utils/request.js</span></span><br><span class="line"><span class="keyword">import</span> axios <span class="keyword">from</span> <span class="string">&#x27;axios&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> request = axios.<span class="title function_">create</span>(&#123;</span><br><span class="line">  <span class="comment">// 指定请求根路径</span></span><br><span class="line">  <span class="attr">baseURL</span>: <span class="string">&#x27;https://applet-base-api-t.itheima.net&#x27;</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> request</span><br></pre></td></tr></table></figure>
+
+<p>需要几个服务器的接口，就封装几个，用哪个就导入哪个。如：request1封装TB的接口，2封装JD的接口</p>
+<h3 id="进一步的封装-模块化"><a href="#进一步的封装-模块化" class="headerlink" title="进一步的封装&#x2F;模块化"></a>进一步的封装&#x2F;模块化</h3><p>如果有多个组件，都要调用request的articles接口，那么每个组件都要这么写：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> request <span class="keyword">from</span> <span class="string">&#x27;@/utils/request&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  <span class="title function_">data</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="keyword">return</span>&#123;</span><br><span class="line">      <span class="attr">page</span>: <span class="number">1</span>,  <span class="comment">// 页码值</span></span><br><span class="line">      <span class="attr">limit</span>: <span class="number">10</span> <span class="comment">// 每页显示多少条数据</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  created () &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="title function_">initArticleList</span>()</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">methods</span>: &#123;</span><br><span class="line">    <span class="comment">// 封装获取文章列表数据的方法</span></span><br><span class="line">    <span class="keyword">async</span> initArticleList () &#123;</span><br><span class="line">      <span class="comment">// 发起get请求，获取文章的列表数据</span></span><br><span class="line">      <span class="keyword">const</span> &#123; <span class="attr">data</span>: res &#125; = <span class="keyword">await</span> request.<span class="title function_">get</span>(<span class="string">&#x27;/articles&#x27;</span>, &#123;</span><br><span class="line">         <span class="comment">// 请求参数，一般会把参数值定义在data结点，在这里传进去</span></span><br><span class="line">         <span class="comment">// 具体是否需要传参，是什么参数取决于后端API</span></span><br><span class="line">        <span class="attr">params</span>: &#123; <span class="attr">_page</span>: page, <span class="attr">_limit</span>: limit &#125;</span><br><span class="line">      &#125;)</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(res)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>await后面返回的是一个Promise类型的值，所以我们可以把这一块单独拿出去<br>可以将其<strong>进一步的封装</strong><br>所有的API调用都可以放进 API 文件夹<br>封装的API文件都以API的命名结尾，可以一眼看出这是个API</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// API/articleAPI.js</span></span><br><span class="line"><span class="comment">// 文章相关的API接口，都封装到这个模块中</span></span><br><span class="line"><span class="keyword">import</span> request <span class="keyword">from</span> <span class="string">&#x27;@/utils/request&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 这里不是默认导出，是按需导出</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> getArticleListAPI = <span class="keyword">function</span> (<span class="params">_page, _limit</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> request.<span class="title function_">get</span>(<span class="string">&#x27;/articles&#x27;</span>, &#123;</span><br><span class="line">    <span class="attr">params</span>: &#123; _page, _limit &#125; <span class="comment">// 请求参数</span></span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>然后每个组件都可以这样调用接口</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; getArticleListAPI &#125; <span class="keyword">from</span> <span class="string">&#x27;@/api/articleAPI&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  <span class="title function_">data</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="keyword">return</span>&#123;</span><br><span class="line">      <span class="attr">page</span>: <span class="number">1</span>,  <span class="comment">// 页码值</span></span><br><span class="line">      <span class="attr">limit</span>: <span class="number">10</span> <span class="comment">// 每页显示多少条数据</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  created () &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="title function_">initArticleList</span>()</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">methods</span>: &#123;</span><br><span class="line">    <span class="comment">// 封装获取文章列表数据的方法</span></span><br><span class="line">    <span class="keyword">async</span> initArticleList () &#123;</span><br><span class="line">      <span class="comment">// 发起get请求，获取文章的列表数据</span></span><br><span class="line">      <span class="keyword">const</span> &#123; <span class="attr">data</span>: res &#125; = <span class="keyword">await</span> <span class="title function_">getArticleListAPI</span>(<span class="variable language_">this</span>.<span class="property">page</span>, <span class="variable language_">this</span>.<span class="property">limit</span>)</span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(res)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><font color="red">这样才达到了axios真正的用法</font></p>
+<h2 id="路由的基本配置与使用"><a href="#路由的基本配置与使用" class="headerlink" title="路由的基本配置与使用"></a>路由的基本配置与使用</h2><ol>
+<li><p>什么是路由<br>路由(router) 就是 <strong>对应关系</strong></p>
+</li>
+<li><p>SPA(单页面应用程序) 与 前端路由<br>SPA指的是一个web网站只有唯一的一个HTML页面，<strong>所有组件的展示与切换</strong>都在这唯一的一个页面内完成。此时，<strong>不同组件之间的切换</strong>需要通过<strong>前端路由</strong>来实现。</p>
+</li>
+<li><p>什么是前端路由<br>通俗易懂的概念：<strong>Hash地址</strong>(就是#锚链接) 与 <strong>组件</strong> 之间的 <strong>对应关系</strong><br>不同的哈希，会展示出不同的组件页面</p>
+</li>
+<li><p><strong>前端路由的工作方式</strong></p>
+<ol>
+<li>用户点击了页面上的路由链接</li>
+<li>导致了URL地址栏中的Hash值发生了变化</li>
+<li>前端路由监听了到Hash地址的变化</li>
+<li>前端路由把当前Hash地址对应的组件渲染都浏览器中</li>
+</ol>
+<p> <font color="green">结论：前端路由，指的是 Hash地址 与 组件之间 的 对应关系</font><br> <img src="/tsukimiya.github.io/images/vue/%E5%89%8D%E7%AB%AF%E8%B7%AF%E7%94%B1.png" alt="image"></p>
+</li>
+</ol>
+<h3 id="vue-router的基本使用"><a href="#vue-router的基本使用" class="headerlink" title="vue-router的基本使用"></a>vue-router的基本使用</h3><blockquote>
+<p>前端路由的底层原理是监听了浏览器的onhashchange事件，自己去封装前端路由是非常麻烦的一件事，我们可以用现成的包去实现前端路由的处理 – vue-router(vue项目中的一个路由的包，只能在vue项目中用)</p>
+</blockquote>
+<ol>
+<li><p>什么是vue-router<br><strong>vue-router</strong>是vue.js官方给出的<strong>路由解决方案</strong>。它只能结合vue项目进行使用，能够轻松的管理SPA项目中组件的切换。<br>vue-router 的官方文档地址: <a target="_blank" rel="noopener" href="https://router.vuejs.org/zh/">https://router.vuejs.org/zh/</a></p>
+</li>
+<li><p><strong>vue-router 安装和配置的步骤</strong></p>
+<ol>
+<li><p>安装vue-router包：<code>npm i vue-router@3.5.2 -S</code><br>   如果因为ESLint安装报错，可以加上后缀：<code>npm i vue-router@3.5.2 -S --legacy-peer-deps</code><br>   vue-router最新版本Vue Router 4 是为 Vue 3 设计的，不兼容Vue2。<br>   所以想在 Vue 2 中使用 Vue Router，安装包的时候需要指定 Vue Router 3 的版本</p>
+</li>
+<li><p>创建路由模块<br>   在src源代码目录下，新建router&#x2F;index.js路由模块，并初始化如下代码：</p>
+ <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// src/router/index.js 就是当前项目的路由模块</span></span><br><span class="line"><span class="comment">// 1. 导入 Vue 和 VueRouter 的包</span></span><br><span class="line"><span class="keyword">import</span> <span class="title class_">Vue</span> <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span></span><br><span class="line"><span class="keyword">import</span> <span class="title class_">VueRouter</span> <span class="keyword">from</span> <span class="string">&#x27;vue-router&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 2. 调用 Vue.use() 函数，把 VueRouter 安装为 Vue 的插件</span></span><br><span class="line"><span class="title class_">Vue</span>.<span class="title function_">use</span>(<span class="title class_">VueRouter</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 3. 创建路由的实例对象</span></span><br><span class="line"><span class="keyword">const</span> router = <span class="keyword">new</span> <span class="title class_">VueRouter</span>()</span><br><span class="line"></span><br><span class="line"><span class="comment">// 4. 向外共享路由的实例对象</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> router</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>导入并挂载路由模块</p>
+ <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 导入路由模块，目的：拿到路由的实例对象</span></span><br><span class="line"><span class="keyword">import</span> router <span class="keyword">from</span> <span class="string">&#x27;@/router/index.js&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">new</span> <span class="title class_">Vue</span>(&#123;</span><br><span class="line">  <span class="attr">render</span>: <span class="function">(<span class="params">h</span>) =&gt;</span> <span class="title function_">h</span>(<span class="title class_">App</span>),</span><br><span class="line">  <span class="comment">// 在 Vue 项目中，要想把路由用起来，必须把路由实例对象，通过下面的方式进行挂载</span></span><br><span class="line">  <span class="comment">// router：路由的实例对象</span></span><br><span class="line">  router <span class="comment">// 这里是简写</span></span><br><span class="line">&#125;).$mount(<span class="string">&#x27;#app&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<p> 导入路由的时候，index.js可以省略 – <code>import router from &#39;@/router&#39;</code><br> <font color="green">在模块化导入的时候，如果只给了一层路径，默认会导入和加载路径下面名字叫index.js的文件</font></p>
+</li>
+<li><p>声明路由链接和占位符&#x2F;<strong>声明路由的对应关系(路由规则)</strong><br> 声明占位符：<br> <font color="red">App.vue甚至不需要导入组件，只需要声明一个占位符即可，通过a链接切换对应的组件</font></p>
+ <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;#/left&quot;</span>&gt;</span>left <span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">&quot;#/right&quot;</span>&gt;</span> right<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 只要在项目中安装和配置了 vue-router，则就可以使用 router-view 这个组件 --&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 作用：占位符 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">router-view</span>&gt;</span><span class="tag">&lt;/<span class="name">router-view</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p> 在路由模块声明路由的对应关系 – <strong>路由规则</strong>：</p>
+ <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 导入需要的组件</span></span><br><span class="line"><span class="keyword">import</span> <span class="title class_">Left</span> <span class="keyword">from</span> <span class="string">&#x27;@/components/Left-item.vue&#x27;</span></span><br><span class="line"><span class="keyword">import</span> <span class="title class_">Right</span> <span class="keyword">from</span> <span class="string">&#x27;@/components/Right-item.vue&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 3. 创建路由的实例对象</span></span><br><span class="line"><span class="keyword">const</span> router = <span class="keyword">new</span> <span class="title class_">VueRouter</span>(&#123;</span><br><span class="line">  <span class="comment">// routes 是一个数组，作用：定义 “hash 地址” 与 “组件”之间的对应关系</span></span><br><span class="line">  <span class="attr">routes</span>: [</span><br><span class="line">    <span class="comment">// 路由规则</span></span><br><span class="line">    &#123; <span class="attr">path</span>: <span class="string">&#x27;/left&#x27;</span>, <span class="attr">component</span>: <span class="title class_">Left</span> &#125;,</span><br><span class="line">    &#123; <span class="attr">path</span>: <span class="string">&#x27;/right&#x27;</span>, <span class="attr">component</span>: <span class="title class_">Right</span> &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></li>
+<li><p>使用router-link代替a链接<br>   router-link本质上也会被渲染成a链接</p>
+ <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 当安装和配置了 vue-router 后，就可以使用 router-link来替代普通的a链接 --&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 优势：不用写前面的#，它会在点这个router-link的时候自动在前面加上# --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">router-link</span> <span class="attr">to</span>=<span class="string">&quot;/left&quot;</span>&gt;</span>left<span class="tag">&lt;/<span class="name">router-link</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">router-link</span> <span class="attr">to</span>=<span class="string">&quot;/right&quot;</span>&gt;</span>right<span class="tag">&lt;/<span class="name">router-link</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+</li>
+</ol>
+<h2 id="路由重定向-–-redirect"><a href="#路由重定向-–-redirect" class="headerlink" title="路由重定向 – redirect"></a>路由重定向 – redirect</h2><p><strong>路由重定向</strong>指的是:用户在访问<strong>地址A</strong>的时候，<strong>强制用户跳转</strong>到地址C，从而展示特定的组件页面。通过路由规则的<strong>redirect</strong>属性，指定一个新的路由地址，可以很方便地设置路由的重定向:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> router = <span class="keyword">new</span> <span class="title class_">VueRouter</span>(&#123;</span><br><span class="line">  <span class="comment">// 在routers数组中，声明路由的匹配规则</span></span><br><span class="line">  <span class="attr">routes</span>: [</span><br><span class="line">    <span class="comment">// 当用户访问 / 的时候，通过 redirect 属性跳转到 /left 对应的路由规则</span></span><br><span class="line">    &#123; <span class="attr">path</span>: <span class="string">&#x27;/&#x27;</span>, <span class="attr">redirect</span>: <span class="string">&#x27;/left&#x27;</span>&#125;, </span><br><span class="line">    &#123; <span class="attr">path</span>: <span class="string">&#x27;/left&#x27;</span>, <span class="attr">component</span>: <span class="title class_">Left</span> &#125;,</span><br><span class="line">    &#123; <span class="attr">path</span>: <span class="string">&#x27;/right&#x27;</span>, <span class="attr">component</span>: <span class="title class_">Right</span> &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="嵌套路由"><a href="#嵌套路由" class="headerlink" title="嵌套路由"></a>嵌套路由</h2><p>通过路由实现<strong>组件的嵌套展示</strong>，叫做嵌套路由。</p>
+<p>如果某个组件本身就是通过路由的方式呈现出来的，在这个组件里又放一些路由规则，这样就形成了路由嵌套。<br><img src="/tsukimiya.github.io/images/vue/%E5%B5%8C%E5%A5%97%E8%B7%AF%E7%94%B1.png" alt="image"></p>
+<ul>
+<li><p>声明子级路由标签和占位符</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">// Right.vue</span><br><span class="line"><span class="comment">&lt;!-- 子级路由链接 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">router-link</span> <span class="attr">to</span>=<span class="string">&quot;/right/tab1&quot;</span>&gt;</span>tab1<span class="tag">&lt;/<span class="name">router-link</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">router-link</span> <span class="attr">to</span>=<span class="string">&quot;/right/tab2&quot;</span>&gt;</span>tab2<span class="tag">&lt;/<span class="name">router-link</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">hr</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 子级路由占位符 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">router-view</span>&gt;</span><span class="tag">&lt;/<span class="name">router-view</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>声明嵌套路由的规则 – 路由对应关系</strong><br>通过<strong>Children</strong>属性声明<strong>子路由规则</strong><br>在src&#x2F;router&#x2F;index.js路由模块中，导入需要的组件，并通过children属性声明子路由规则：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> <span class="title class_">Tab1</span> <span class="keyword">from</span> <span class="string">&#x27;@/components/tab1.vue&#x27;</span></span><br><span class="line"><span class="keyword">import</span> <span class="title class_">Tab2</span> <span class="keyword">from</span> <span class="string">&#x27;@/components/tab2.vue&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 3. 创建路由的实例对象</span></span><br><span class="line"><span class="keyword">const</span> router = <span class="keyword">new</span> <span class="title class_">VueRouter</span>(&#123;</span><br><span class="line">  <span class="comment">// routes 是一个数组，作用：定义 “hash 地址” 与 “组件”之间的对应关系</span></span><br><span class="line">  <span class="attr">routes</span>: [</span><br><span class="line">    <span class="comment">// 当用户访问 / 的时候，通过 redirect 属性跳转到 /left 对应的路由规则</span></span><br><span class="line">    &#123; <span class="attr">path</span>: <span class="string">&#x27;/&#x27;</span>, <span class="attr">redirect</span>: <span class="string">&#x27;/left&#x27;</span> &#125;,</span><br><span class="line">    &#123; <span class="attr">path</span>: <span class="string">&#x27;/left&#x27;</span>, <span class="attr">component</span>: <span class="title class_">Left</span> &#125;,</span><br><span class="line">    &#123; <span class="comment">// right页面的路由规则(父级路由规则)</span></span><br><span class="line">      <span class="attr">path</span>: <span class="string">&#x27;/right&#x27;</span>,</span><br><span class="line">      <span class="attr">component</span>: <span class="title class_">Right</span>,</span><br><span class="line">      <span class="attr">children</span>: [ <span class="comment">// 通过children属性，嵌套声明子级路由规则</span></span><br><span class="line">        &#123; <span class="attr">path</span>:<span class="string">&#x27;&#x27;</span>&#125;</span><br><span class="line">        &#123; <span class="attr">path</span>: <span class="string">&#x27;tab1&#x27;</span>, <span class="attr">component</span>: <span class="title class_">Tab1</span> &#125;,</span><br><span class="line">        &#123; <span class="attr">path</span>: <span class="string">&#x27;tab2&#x27;</span>, <span class="attr">component</span>: <span class="title class_">Tab2</span> &#125;</span><br><span class="line">      ]</span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p><font color="red">注意：子路由规则，不要以斜线开头！</font></p>
+</li>
+<li><p>嵌套路由的路由重定向<br>在right的路由规则中加上redirect即可，这样路径&#x2F;right就直接跳转到了&#x2F;right&#x2F;tab2</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">routes</span>: [</span><br><span class="line">  <span class="comment">// 当用户访问 / 的时候，通过 redirect 属性跳转到 /left 对应的路由规则</span></span><br><span class="line">  &#123; <span class="attr">path</span>: <span class="string">&#x27;/&#x27;</span>, <span class="attr">redirect</span>: <span class="string">&#x27;/left&#x27;</span> &#125;,</span><br><span class="line">  &#123; <span class="attr">path</span>: <span class="string">&#x27;/left&#x27;</span>, <span class="attr">component</span>: <span class="title class_">Left</span> &#125;,</span><br><span class="line">  &#123; <span class="comment">// right页面的路由规则(父级路由规则)</span></span><br><span class="line">    <span class="attr">path</span>: <span class="string">&#x27;/right&#x27;</span>,</span><br><span class="line">    <span class="attr">component</span>: <span class="title class_">Right</span>,</span><br><span class="line">    <span class="attr">redirect</span>: <span class="string">&#x27;/right/tab2&#x27;</span>,</span><br><span class="line">    <span class="attr">children</span>: [ <span class="comment">// 通过children属性，嵌套声明子级路由规则</span></span><br><span class="line">      &#123; <span class="attr">path</span>: <span class="string">&#x27;tab1&#x27;</span>, <span class="attr">component</span>: <span class="title class_">Tab1</span> &#125;,</span><br><span class="line">      &#123; <span class="attr">path</span>: <span class="string">&#x27;tab2&#x27;</span>, <span class="attr">component</span>: <span class="title class_">Tab2</span> &#125;</span><br><span class="line">    ]</span><br><span class="line">  &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>默认子路由</strong><br>除了使用redirect路由重定向，还可以使用默认子路由<br>默认子路由：如果children数组中，某个路由规则的path值为空字符串，则这条路由规则，叫做“默认子路由”。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  // right页面的路由规则(父级路由规则)</span><br><span class="line">  path: &#x27;/right&#x27;,</span><br><span class="line">  component: Right,</span><br><span class="line">  children: [</span><br><span class="line">    &#123; path: &#x27;&#x27;, component: Tab1 &#125;,</span><br><span class="line">    &#123; path: &#x27;tab1&#x27;, component: Tab1 &#125;,//也可以不写这条规则，而是把tab1的路由标签改为/right</span><br><span class="line">    &#123; path: &#x27;tab2&#x27;, component: Tab2 &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>默认子路由和重定向都可以展示出children里面的某一个子组件。</strong></p>
+</li>
+</ul>
+<h2 id="动态路由"><a href="#动态路由" class="headerlink" title="动态路由"></a>动态路由</h2><p>思考：有如下3个路由链接：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">router-link</span> <span class="attr">to</span>=<span class="string">&quot;/movie/1&quot;</span>&gt;</span>电影1<span class="tag">&lt;/<span class="name">router-link</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">router-link</span> <span class="attr">to</span>=<span class="string">&quot;/movie/2&quot;</span>&gt;</span>电影2<span class="tag">&lt;/<span class="name">router-link</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>定义如下3个路由规则：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;<span class="attr">path</span>: <span class="string">&#x27;/movie/1&#x27;</span>, <span class="attr">component</span>: <span class="title class_">Movie</span> &#125;</span><br><span class="line">&#123;<span class="attr">path</span>: <span class="string">&#x27;/movie/2&#x27;</span>, <span class="attr">component</span>: <span class="title class_">Movie</span> &#125;</span><br><span class="line">&#123;<span class="attr">path</span>: <span class="string">&#x27;/movie/3&#x27;</span>, <span class="attr">component</span>: <span class="title class_">Movie</span> &#125;</span><br></pre></td></tr></table></figure>
+<p><strong>缺点：路由规则的复用性差</strong></p>
+<ol>
+<li><p>动态路由的概念<br>动态路由指的是:把 Hash地址 中<strong>可变的部分</strong>定义为<strong>参数项</strong>，从而<strong>提高路由规则的复用性</strong>。<br>在vue-router中使用<strong>英文的冒号</strong>( <strong>:</strong> )来定义路由的参数项。示例代码如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 路由中的动态参数以︰进行声明，冒号后面的是动态参数的名称</span></span><br><span class="line">&#123; <span class="attr">path</span>: <span class="string">&#x27;/movie/:id&#x27;</span>, <span class="attr">component</span>: <span class="title class_">Movie</span> &#125;</span><br></pre></td></tr></table></figure>
+<p><strong>将多个路由规则，合并成了一个，提高了路由规则的复用性</strong><br><font color="red">注意：路由链接的跳转地址是不能出现冒号<code>:</code>的！<code>&lt;router-link to=&quot;/movie/1&quot;&gt;电影1&lt;/router-link&gt;</code></font></p>
+</li>
+<li><p>在组件中拿到动态参数项的值<br>  <code>this.$route</code>是路由的<strong>“参数对象”</strong><br>  <code>this.$router</code>是路由的<strong>“导航对象”</strong><br>  要想拿到上面movie的id值应该通过：<code>this.$route.params.id</code></p>
+</li>
+</ol>
+<h3 id="为路由规则开启prop传参"><a href="#为路由规则开启prop传参" class="headerlink" title="为路由规则开启prop传参"></a>为路由规则开启prop传参</h3><p>简化拿参数的方式。这种方式和<code>this.$route.params.id</code>是彼此独立的，想用哪个就用哪个</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// src/router/index.js</span></span><br><span class="line"><span class="comment">// 为当前这条路由规则开启props传参</span></span><br><span class="line">&#123; <span class="attr">path</span>: <span class="string">&#x27;/movie/:id&#x27;</span>, <span class="attr">component</span>: <span class="title class_">Movie</span>, <span class="attr">props</span>: <span class="literal">true</span> &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// movie.vue</span></span><br><span class="line"><span class="attr">props</span>:[<span class="string">&#x27;id&#x27;</span>] <span class="comment">// 这样就拿到了</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="拓展-query-和-fullPath"><a href="#拓展-query-和-fullPath" class="headerlink" title="拓展 query 和 fullPath"></a>拓展 query 和 fullPath</h3><ol>
+<li><p>在 hash 地址中，&#x2F; 后面的参数项，叫做 “路径参数”<br>在路由“参数对象”中，需要使用 <code>this.$route.params</code> 来访问路径参数</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">router-link</span> <span class="attr">to</span>=<span class="string">&quot;/movie/1&quot;</span>&gt;</span>电影1<span class="tag">&lt;/<span class="name">router-link</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">router-link</span> <span class="attr">to</span>=<span class="string">&quot;/movie/2&quot;</span>&gt;</span>电影2<span class="tag">&lt;/<span class="name">router-link</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在 hash 地址中，？后面的参数项，叫做 “查询参数”<br>在路由“参数对象”中，需要使用 <code>this.$route.query</code> 来访问查询参数</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">router-link</span> <span class="attr">to</span>=<span class="string">&quot;/movie/1&quot;</span>&gt;</span>电影1<span class="tag">&lt;/<span class="name">router-link</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">router-link</span> <span class="attr">to</span>=<span class="string">&quot;/movie/2?name=zs age=20&quot;</span>&gt;</span>电影2<span class="tag">&lt;/<span class="name">router-link</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在<code>this.$route</code>中，path只是路径部分; fullPath是完整的地址<br>  <code>/movie/2</code> 是 path 的值<br>  <code>/movie/2?name=zs age=20</code> 是 fullPath 的值</p>
+</li>
+</ol>
+<h2 id="路由导航"><a href="#路由导航" class="headerlink" title="路由导航"></a>路由导航</h2><p>导航就是跳转的意思，组件之间的切换，它专业的术语叫导航。</p>
+<h3 id="声明式导航-编程式导航"><a href="#声明式导航-编程式导航" class="headerlink" title="声明式导航 &amp; 编程式导航"></a>声明式导航 &amp; 编程式导航</h3><ul>
+<li><p>在浏览器中，<strong>点击链接</strong>实现导航的方式，叫做<strong>声明式导航</strong>。<br>例如：<br>普通网页中点击a链接、vue 项目中点击router-link都属于声明式导航</p>
+</li>
+<li><p>在浏览器中，<strong>调用API方法</strong>实现导航的方式，叫做<strong>编程式导航</strong>。<br>例如<br>普通网页中调用<code>location.href</code>跳转到新页面的方式，属于编程式导航</p>
+</li>
+</ul>
+<h4 id="vue-router-中的编程式导航API"><a href="#vue-router-中的编程式导航API" class="headerlink" title="vue-router 中的编程式导航API"></a>vue-router 中的编程式导航API</h4><p>vue-router(导航对象)提供了许多编程式导航的API，其中最常用的导航API分别是:</p>
+<ol>
+<li><p><code>this.$router.push(&#39;hash地址&#39;)</code><br>  跳转到指定 hash 地址，并<strong>增加</strong>一条历史记录</p>
+</li>
+<li><p><code>this.$router.replace(&#39;hash地址&#39;)</code><br>  跳转到指定的hash地址，并<strong>替换掉当前的</strong>历史记录</p>
+</li>
+<li><p><code>this.$router.go(数值n)</code><br>  n可以是正数也可以是负数，在浏览历史里面进行<strong>前进和后退</strong></p>
+</li>
+<li><p><code>$router.go</code>的简化用法<br>在实际开发中，一般只会前进和后退一层页面。因此 vue-router 提供了如下两个便捷方法:<br>  (1) <code>$router.back()</code>：在历史记录中，<strong>后退</strong>到上一个页面<br>  (2) <code>$router.forward()</code>：在历史记录中，<strong>前进</strong>到下一个页面</p>
+</li>
+</ol>
+<p><font color="red">注意：在行内使用编程式导航跳转的时候，this必须要省略，否则会报错！</font></p>
+<h3 id="路由导航守卫-–-控制路由的访问权限"><a href="#路由导航守卫-–-控制路由的访问权限" class="headerlink" title="路由导航守卫 – 控制路由的访问权限"></a>路由导航守卫 – 控制路由的访问权限</h3><p><strong>导航守卫</strong>可以<strong>控制路由的访问权限</strong>。</p>
+<p>假设规定，当前项目中，main这个后台主页只有登陆以后才允许被访问(前提)<br>怎么证明你有没有登陆————token<br>可以读你的localStorage，看里面有没有token值，如果有就认为你已经是登录了，没有就认为你没有登陆。</p>
+<p><img src="/tsukimiya.github.io/images/vue/%E5%AF%BC%E8%88%AA%E5%AE%88%E5%8D%AB.png" alt="image"></p>
+<ol>
+<li><p>全局前置守卫<br>  前置：比如从a跳到b，还没跳过去，就会触发守卫。<br>  每次发生路由的<strong>导航跳转</strong>时，都会触发<strong>全局前置守卫</strong>。因此，在全局前置守卫中，程序员可以<strong>对每个路由进行访问权限的控制</strong>:</p>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//创建路由实例对象</span></span><br><span class="line"><span class="keyword">const</span> router = <span class="keyword">new</span> <span class="title class_">VueRouter</span>(&#123; ... &#125;)</span><br><span class="line"><span class="comment">//调用路由实例对象的beforeEach方法，即可声明“全局前置守卫”</span></span><br><span class="line"><span class="comment">//每次发生路由导航跳转的时候，都会自动触发 fn 这个“回调函数”</span></span><br><span class="line">router.<span class="title function_">beforeEach</span>(fn)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>守卫方法的3个形参<br>  全局前置守卫的回调函数中接收3个形参，格式为:</p>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> router = <span class="keyword">new</span> <span class="title class_">VueRouter</span>(&#123; ... &#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 全局前置守卫</span></span><br><span class="line">router.<span class="title function_">beforeEach</span>(<span class="function">(<span class="params">to,<span class="keyword">from</span>,next</span>)=&gt;</span>&#123;</span><br><span class="line">  <span class="comment">// ro 是将要访问的路由的信息对象</span></span><br><span class="line">  <span class="comment">// from 是将要离开的路由的信息对象</span></span><br><span class="line">  <span class="comment">// next 是一个函数，调用next() 表示放行，允许这次路由导航</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>next函数的3种调用方式<br>具体使用哪一种，看自己的需求<br><img src="/tsukimiya.github.io/images/vue/next%E5%87%BD%E6%95%B0%E4%B8%89%E7%A7%8D%E8%B0%83%E7%94%A8%E6%96%B9%E5%BC%8F.png" alt="image"></p>
+</li>
+</ol>
+<ul>
+<li>全局前置守卫控制访问权限简单示例<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 为router实例对象，声明全局前置导航守卫</span></span><br><span class="line">router.<span class="title function_">beforeEach</span>(<span class="keyword">function</span>(<span class="params">to, <span class="keyword">from</span>, next</span>) &#123;</span><br><span class="line">  <span class="comment">// 分析：</span></span><br><span class="line">  <span class="comment">// 1. 要拿到用户将要访问的hash地址 </span></span><br><span class="line">  <span class="comment">// 2. 判断hash地址是否等于/main</span></span><br><span class="line">  <span class="keyword">if</span> (to.<span class="property">path</span> === <span class="string">&#x27;/main&#x27;</span>) &#123; <span class="comment">// 等于 /main ，证明需要登陆之后才能访问成功，</span></span><br><span class="line">    <span class="comment">// 需要读取 localStorage 中的 token值</span></span><br><span class="line">    <span class="keyword">const</span> token = <span class="variable language_">localStorage</span>.<span class="title function_">getItem</span>(<span class="string">&#x27;token&#x27;</span>)</span><br><span class="line">    <span class="keyword">if</span> (token) &#123;</span><br><span class="line">      <span class="title function_">next</span>() <span class="comment">// 有token值，则已登录 放行</span></span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="title function_">next</span>(<span class="string">&#x27;/login&#x27;</span>) <span class="comment">// 无 token值 则强制跳转到login登录页面</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123; </span><br><span class="line">    <span class="title function_">next</span>() <span class="comment">// 不等于则访问的不是后台主页,不需要登陆 直接放行 next()</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+vue的导航守卫中除了全局前置守卫之外，还有全局解析守卫、全局后置钩子、路由独享的守卫、组件内的守卫，共5种<br>其中，<strong>全局前置守卫的用法是最常见的</strong>，后面的几种后续会进行补充</li>
+</ul>
+<h2 id="案例练习"><a href="#案例练习" class="headerlink" title="案例练习"></a>案例练习</h2><ul>
+<li><p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1zq4y1p7ga?t=87.0&p=193">路由应用案例</a></p>
+<blockquote>
+<p>后台管理案例</p>
+</blockquote>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1zq4y1p7ga?p=204">黑马头条</a></p>
+<blockquote>
+<p>SPA单页面应用程序 移动端 简单案例<br>  实现下拉刷新、上拉加载更多功能、Vant组件库的使用</p>
+</blockquote>
+<p>  配置：Babel、Router、CSS Pre-processors、Linter &#x2F; Formatter、Vue 2.x<br>  选择路由模式 – Use history mode for router？ – N</p>
+<blockquote>
+<p>history mode for router 需要和后端配合使用，兼容性比较差<br>#开头的hash值所表示的路由，通用性更强，低级还是高级的浏览器都支持</p>
+</blockquote>
+<p>  css预处理器 – less<br>  ESLint – Standard config 标准配置<br>  Lint on save 在保存的时候进行格式的检查</p>
+<p>  项目结构：<br>  views文件夹</p>
+<blockquote>
+<p>如果某个组件，是通过路由进行动态展示和切换的，这种组件要放到views里面<br>  如果某个组件不是通过路由切换的，是一个可复用的组件，那么这个组件要放到components里面</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="Vant组件库"><a href="#Vant组件库" class="headerlink" title="Vant组件库"></a>Vant组件库</h3><p>轻量、可靠的移动端组件库<br><a target="_blank" rel="noopener" href="https://vant-ui.github.io/vant/v2/#/zh-CN/">Vant2官方文档</a>(适用于 Vue2 开发) <a target="_blank" rel="noopener" href="https://vant-ui.github.io/vant/#/zh-CN/">Vant4官方文档</a>(适用于 Vue3 开发)</p>
+<ol>
+<li><p>安装</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># Vue 3 项目，安装最新版 Vant：</span><br><span class="line">npm i vant -S</span><br><span class="line"></span><br><span class="line"># Vue 2 项目，安装 Vant 2：</span><br><span class="line">npm i vant@latest-v2 -S</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>导入组件<br>我们选择最便捷的方式 – 导入所有组件</p>
+<blockquote>
+<p>虽然官方推荐的做法是：自动按需引入组件。但是配起来太复杂了，成本太高了<br>引入所有组件会增加代码包体积，但是开发的时候我们怎么快怎么来，不用考虑体积的问题<br>在发布的时候，我们可以进行项目体积的优化，可以直接把Vant从项目里面抽出去</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// main.js</span></span><br><span class="line"><span class="keyword">import</span> <span class="title class_">Vue</span> <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="title class_">Vant</span> <span class="keyword">from</span> <span class="string">&#x27;vant&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="string">&#x27;vant/lib/index.css&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="title class_">Vue</span>.<span class="title function_">use</span>(<span class="title class_">Vant</span>);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用<br>查阅官方文档即可<br><a target="_blank" rel="noopener" href="https://vant-ui.github.io/vant/v2/#/zh-CN/">Vant2官方文档</a>(适用于 Vue2 开发)<br><a target="_blank" rel="noopener" href="https://vant-ui.github.io/vant/#/zh-CN/">Vant4官方文档</a>(适用于 Vue3 开发)<br><font color="red">注意：在使用Vant组件的时候，如果某个组件的某个属性默认值是false，希望把它改成true，直接把这个属性写上就可以了</font><br>如：<code>&lt;van-nav-bar title=&quot;标题&quot; fixed placeholder /&gt;</code><br>相当于<code>&lt;van-nav-bar title=&quot;标题&quot; :fixed=&#39;ture&#39; :placeholder=&#39;true&#39; /&gt;</code><br>这里给属性值类型是布尔值，所以要用v-bind绑定，否则是字符串</p>
+</li>
+<li><p><strong>覆盖Vant组件的样式</strong>： <a href="/tsukimiya.github.io/2024/04/24/Vue/4.Vue%E7%BB%84%E4%BB%B6%E4%B8%8E%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F#deep-%E6%A0%B7%E5%BC%8F%E7%A9%BF%E9%80%8F"><strong>&#x2F;deep&#x2F; 样式穿透</strong></a></p>
+<p> 还可以通过Vant组件库提供的定制主题，来直接改变组件的样式，这样在每个组件使用该组件都不需要再去修改。</p>
+ <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 在main.js中 引入全部样式</span></span><br><span class="line"><span class="keyword">import</span> <span class="string">&#x27;vant/lib/index.less&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// vue.config.js</span></span><br><span class="line"><span class="comment">// 这个文件是 vue-cli 创建出来的项目的配置文件</span></span><br><span class="line"><span class="comment">// 在vue.config.js 这个配置文件中，可以对整个项目的打包、构建进行全局性的配置</span></span><br><span class="line"><span class="keyword">const</span> &#123; defineConfig &#125; = <span class="built_in">require</span>(<span class="string">&#x27;@vue/cli-service&#x27;</span>)</span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = <span class="title function_">defineConfig</span>(&#123;</span><br><span class="line">  <span class="attr">transpileDependencies</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">css</span>: &#123;</span><br><span class="line">    <span class="attr">loaderOptions</span>: &#123;</span><br><span class="line">      <span class="attr">less</span>: &#123;</span><br><span class="line">        <span class="comment">// 若 less-loader 版本小于 6.0，请移除 lessOptions 这一级，直接配置选项。</span></span><br><span class="line">        <span class="attr">lessOptions</span>: &#123;</span><br><span class="line">          <span class="attr">modifyVars</span>: &#123;</span><br><span class="line">            <span class="comment">// 直接覆盖变量</span></span><br><span class="line">            <span class="comment">// 这里是覆盖了 NavBar 导航栏 的背景色</span></span><br><span class="line">            <span class="string">&#x27;nav-bar-background-color&#x27;</span>: <span class="string">&#x27;red&#x27;</span> <span class="comment">// #007bff</span></span><br><span class="line">            <span class="comment">// 或者可以通过 less 文件覆盖（文件路径为绝对路径）</span></span><br><span class="line">            <span class="comment">// hack: `true; @import &quot;your-less-file-path.less&quot;;`</span></span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p> 缺点：需要修改配置文件，必须重启打包服务器，太过麻烦，所以了解即可，实际开发不会这么使用<br> 而是通过 less 文件覆盖进行主题的定制：</p>
+ <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">hack</span>: <span class="string">`true; @import &quot;your-less-file-path.less&quot;;`</span></span><br></pre></td></tr></table></figure>
+<p> <strong>好处：不用重启打包服务器，直接改就能生效</strong></p>
+</li>
+</ol>
+<h3 id="通过less文件覆盖进行主题定制"><a href="#通过less文件覆盖进行主题定制" class="headerlink" title="通过less文件覆盖进行主题定制"></a>通过less文件覆盖进行主题定制</h3><p>如：在src目录下新建一个theme.less</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 在theme.less文件中，覆盖Vant官方的less变量值</span></span><br><span class="line"><span class="variable">@blue:</span> <span class="number">#007bff</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 覆盖 Navbar 的 less 样式</span></span><br><span class="line"><span class="variable">@nav-bar-background-color:</span> <span class="variable">@blue</span>;</span><br></pre></td></tr></table></figure>
+<p>然后配置vue.config.js文件</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 这个文件是 vue-cli 创建出来的项目的配置文件</span></span><br><span class="line"><span class="comment">// 在vue.config.js 这个配置文件中，可以对整个项目的打包、构建进行全局性的配置</span></span><br><span class="line"><span class="keyword">const</span> &#123; defineConfig &#125; = <span class="built_in">require</span>(<span class="string">&#x27;@vue/cli-service&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// webpack在进行打包的时候，底层用到了node .js</span></span><br><span class="line"><span class="comment">// 因此，在vue.config.js 配置文件中，可以导入并使用node.js中的核心模块</span></span><br><span class="line"><span class="keyword">const</span> path = <span class="built_in">require</span>(<span class="string">&#x27;path&#x27;</span>)</span><br><span class="line"><span class="keyword">const</span> themePath = path.<span class="title function_">join</span>(__dirname, <span class="string">&#x27;/src/theme.less&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = <span class="title function_">defineConfig</span>(&#123;</span><br><span class="line">  <span class="attr">transpileDependencies</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">css</span>: &#123;</span><br><span class="line">    <span class="attr">loaderOptions</span>: &#123;</span><br><span class="line">      <span class="attr">less</span>: &#123;</span><br><span class="line">        <span class="comment">// 若 less-loader 版本小于 6.0，请移除 lessOptions 这一级，直接配置选项。</span></span><br><span class="line">        <span class="attr">lessOptions</span>: &#123;</span><br><span class="line">          <span class="attr">modifyVars</span>: &#123;</span><br><span class="line">            <span class="comment">// 通过 less 文件覆盖（文件路径为绝对路径）</span></span><br><span class="line">            <span class="attr">hack</span>: <span class="string">`true; @import &quot;<span class="subst">$&#123;themePath&#125;</span>&quot;;`</span></span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="vue-config-js-配置文件"><a href="#vue-config-js-配置文件" class="headerlink" title="vue.config.js 配置文件"></a>vue.config.js 配置文件</h2><p>这个文件是 vue-cli 创建出来的项目的配置文件<br>在这个配置文件中，可以对整个项目的打包、构建进行全局性的配置</p>
+<p>项目开发完成之后，可以npm run build进行打包<br>最终项目里面会有个dist文件夹，里面有个index.html首页</p>
+<p>但是有个问题：我们直接进入dist目录，双击这个首页打开，是看不到效果的。<br>因为：默认情况下，我们运行npm run build打包生成的dist，里面的这些文件，只能发布到服务器上，通过http协议才可以正常被打开。而双击打开的是file协议，所以看不到效果</p>
+<p>如果想要看到效果，需要做一下打包发布的配置：<a target="_blank" rel="noopener" href="https://cli.vuejs.org/zh/config/#publicpath">vue.config.js-publicPath</a><br>在vue.config.js配置文件中设置publicPath为’.&#x2F;‘，再次打包文件，即可在文件夹中双击打开</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ...</span></span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = <span class="title function_">defineConfig</span>(&#123;</span><br><span class="line">  <span class="attr">transpileDependencies</span>: <span class="literal">true</span>,</span><br><span class="line">  <span class="attr">publicPath</span>: <span class="string">&#x27;./&#x27;</span>,</span><br><span class="line">  <span class="attr">css</span>: &#123;...&#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p><strong>publicPath</strong><br>部署应用包时的基本 URL。<br>默认情况下，Vue CLI 会假设你的应用是被部署在一个域名的根路径上，例如 <a target="_blank" rel="noopener" href="https://www.my-app.com/">https://www.my-app.com/</a><br><strong>如果应用被部署在一个子路径上</strong>，你就需要<strong>用这个选项指定这个子路径</strong>。例如，如果你的应用被部署在 <a target="_blank" rel="noopener" href="https://www.my-app.com/my-app/%EF%BC%8C%E5%88%99%E8%AE%BE%E7%BD%AE">https://www.my-app.com/my-app/，则设置</a> publicPath 为 &#x2F;my-app&#x2F; 。</p>
+<p>这个值也可以被设置为空字符串 (‘’) 或是相对路径 (‘.&#x2F;‘)，这样所有的资源都会被链接为相对路径，这样打出来的包可以被部署在任意路径，也可以用在类似 Cordova hybrid 应用的文件系统中。</p>
+<p>相对路径的 publicPath 有一些使用上的限制。在以下情况下，应当避免使用相对 publicPath:</p>
+<ul>
+<li>当使用基于 HTML5 history.pushState 的路由时；</li>
+<li>当使用 pages 选项构建多页面应用时。</li>
+</ul>
+</li>
+</ul>
+<h2 id="拓展"><a href="#拓展" class="headerlink" title="拓展"></a>拓展</h2><h3 id="hash地址注意点"><a href="#hash地址注意点" class="headerlink" title="hash地址注意点"></a>hash地址注意点</h3><p>hash地址里面字母都要是小写，<font color="red">url地址里面不要出现大写字符或字母</font>。<br>除非是一些 搜索关键字 可以出现大写</p>
+<h3 id="有权限的hash地址"><a href="#有权限的hash地址" class="headerlink" title="有权限的hash地址"></a>有权限的hash地址</h3><p>在导航守卫 – 全局前置守卫中<br>这个if是判断我们访问的是否是一个有权限的hash地址：<code>if (to.path === &#39;/main&#39;)</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">router.<span class="title function_">beforeEach</span>(<span class="keyword">function</span>(<span class="params">to, <span class="keyword">from</span>, next</span>) &#123;</span><br><span class="line">  <span class="keyword">if</span> (to.<span class="property">path</span> === <span class="string">&#x27;/main&#x27;</span>) &#123; </span><br><span class="line">    <span class="keyword">const</span> token = <span class="variable language_">localStorage</span>.<span class="title function_">getItem</span>(<span class="string">&#x27;token&#x27;</span>)</span><br><span class="line">    <span class="keyword">if</span> (token) &#123;</span><br><span class="line">      <span class="title function_">next</span>() </span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="title function_">next</span>(<span class="string">&#x27;/login&#x27;</span>) </span><br><span class="line">    &#125;</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123; </span><br><span class="line">    <span class="title function_">next</span>() </span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>如果我们项目中有多个页面，都需要访问权限，这一个判断肯定满足不了我们的需求<br>我们可以在后面加 或 <code>|</code>：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (to.<span class="property">path</span> === <span class="string">&#x27;/main&#x27;</span> || to.<span class="property">path</span> === <span class="string">&#x27;/home&#x27;</span> || to.<span class="property">path</span> === <span class="string">&#x27;/home/users&#x27;</span>)&#123;&#125;</span><br></pre></td></tr></table></figure>
+<p>但是条件会变的越来越长</p>
+<p>我们还可以通过数组：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> pathArr = [<span class="string">&#x27;home&#x27;</span>,<span class="string">&#x27;/home/users&#x27;</span>,<span class="string">&#x27;/home/rights&#x27;</span>]</span><br><span class="line"><span class="keyword">if</span> (pathArr.<span class="title function_">indexOf</span>(to.<span class="property">path</span>) !== -<span class="number">1</span>)&#123;...&#125;</span><br></pre></td></tr></table></figure>
+<p>后面有任何的地址，都可以放到数组里面去<br>如果觉得多了以后，数组也会变的特别长，可以把这个数组单独处理为js文件，需要的时候再导入过来。如：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// src/router/pathArr.js</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> [<span class="string">&#x27;home&#x27;</span>,<span class="string">&#x27;/home/users&#x27;</span>,<span class="string">&#x27;/home/rights&#x27;</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment">// src/router/index.js</span></span><br><span class="line"><span class="keyword">import</span> pathArr <span class="keyword">from</span> <span class="string">&#x27;@/router/pathArr.js&#x27;</span></span><br><span class="line">...</span><br><span class="line"><span class="comment">//不需再声明</span></span><br><span class="line">router.<span class="title function_">beforeEach</span>(<span class="keyword">function</span>(<span class="params">to,<span class="keyword">from</span>,next</span>)&#123;</span><br><span class="line">  <span class="keyword">if</span>(pathArr.<span class="title function_">indexOf</span>(to.<span class="property">path</span>)!=-<span class="number">1</span>)&#123;...&#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="使用meta属性进行权限处理"><a href="#使用meta属性进行权限处理" class="headerlink" title="使用meta属性进行权限处理"></a><font color="green">使用meta属性进行权限处理</font></h3><p><font color="red">可以配置meta属性，使用前置守卫进行判断是否需要进行权限处理，会方便很多</font></p>
+<ol>
+<li><p>配置 <code>meta</code> 属性<br>  在路由配置中，可以在每个路由的 <code>meta</code> 属性中指定需要进行权限处理的信息。例如:</p>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> router = <span class="keyword">new</span> <span class="title class_">VueRouter</span>(&#123;</span><br><span class="line">  <span class="attr">routes</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">path</span>: <span class="string">&#x27;/admin&#x27;</span>,</span><br><span class="line">      <span class="attr">component</span>: <span class="title class_">Admin</span>,</span><br><span class="line">      <span class="attr">meta</span>: &#123;</span><br><span class="line">        <span class="attr">requiresAuth</span>: <span class="literal">true</span>,</span><br><span class="line">        <span class="attr">roles</span>: [<span class="string">&#x27;admin&#x27;</span>] <span class="comment">// 用于指定可以访问特定路由的用户的角色</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="comment">// 其他路由...</span></span><br><span class="line">  ]</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>  在这个例子中，<code>/admin</code> 路由需要进行权限处理，只有具有 <code>admin</code> 角色的用户才能访问。</p>
+</li>
+<li><p>使用前置守卫<br>  在 Vue Router 中，使用 <code>beforeEach</code> 前置守卫来拦截导航并执行权限检查：</p>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">router.<span class="title function_">beforeEach</span>(<span class="function">(<span class="params">to, <span class="keyword">from</span>, next</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">if</span> (to.<span class="property">meta</span>.<span class="property">requiresAuth</span>) &#123;<span class="comment">// 检查是否需要进行权限处理</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="title function_">isAuthenticated</span>()) &#123;<span class="comment">// 检查用户是否已登录</span></span><br><span class="line">        <span class="keyword">if</span> (<span class="title function_">hasRequiredRoles</span>(to.<span class="property">meta</span>.<span class="property">roles</span>))&#123; <span class="comment">// 检查用户是否具有所需的权限</span></span><br><span class="line">          <span class="title function_">next</span>()<span class="comment">// 允许导航</span></span><br><span class="line">        &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">          <span class="title function_">next</span>(<span class="string">&#x27;/no-access&#x27;</span>) <span class="comment">// 无权限，重定向到无权限页面</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="title function_">next</span>(<span class="string">&#x27;/login&#x27;</span>)<span class="comment">// 未登录，重定向到登录页面</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="title function_">next</span>() <span class="comment">// 不需要权限处理，允许导航</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>  其中，isAuthenticated() 和 hasRequiredRoles() 是自定义函数，用于检查用户是否已登录以及是否具有所需的权限。</p>
+</li>
+</ol>
+<ul>
+<li><p><strong>isAuthenticated()函数 ：用于检查用户是否已登录</strong><br><strong>通常用于判断用户是否携带有效的 token</strong>。<br>实际应用中，可以根据自己的后端 API 设计来实现 isAuthenticated() 函数：</p>
+<ol>
+<li>从本地存储（如 localStorage 或 sessionStorage）中获取用户的 token。</li>
+<li>向后端 API 发送一个请求，携带用户的 token。</li>
+<li>后端 API 验证 token 的有效性。</li>
+<li>如果 token 有效，后端 API 返回成功响应。</li>
+<li>isAuthenticated() 函数返回 true，表示用户已登录。</li>
+<li>否则，isAuthenticated() 函数返回 false，表示用户未登录或 token 无效。<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">isAuthenticated</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> token = <span class="variable language_">localStorage</span>.<span class="title function_">getItem</span>(<span class="string">&#x27;token&#x27;</span>)<span class="comment">// 从本地存储中获取 token</span></span><br><span class="line">  <span class="keyword">if</span> (token) &#123;<span class="comment">// 如果 token 存在，向后端 API 发送请求</span></span><br><span class="line">    <span class="keyword">return</span> <span class="title function_">fetch</span>(<span class="string">&#x27;/api/auth/verify-token&#x27;</span>, &#123;</span><br><span class="line">      <span class="attr">method</span>: <span class="string">&#x27;POST&#x27;</span>,</span><br><span class="line">      <span class="attr">headers</span>: &#123;</span><br><span class="line">        <span class="string">&#x27;Authorization&#x27;</span>: <span class="string">`Bearer <span class="subst">$&#123;token&#125;</span>`</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">    .<span class="title function_">then</span>(<span class="function"><span class="params">res</span> =&gt;</span> res.<span class="title function_">json</span>())</span><br><span class="line">    .<span class="title function_">then</span>(<span class="function"><span class="params">data</span> =&gt;</span> &#123;  <span class="comment">// &#x27;data&#x27; 是一个 JavaScript 对象，包含从服务器接收到的 JSON 数据</span></span><br><span class="line">      <span class="keyword">if</span> (data.<span class="property">success</span>) &#123;<span class="comment">// 如果 token 有效，返回 true</span></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;<span class="comment">// 如果 token 无效，返回 false</span></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">    .<span class="title function_">catch</span>(<span class="function"><span class="params">err</span> =&gt;</span> &#123;<span class="comment">// 如果请求失败，返回 false</span></span><br><span class="line">      <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">    &#125;)</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;<span class="comment">// 如果 token 不存在，返回 false</span></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<code>.then(res =&gt; res.json())</code> 是 JavaScript Promise 链中的一个回调函数。<br>作用: 将服务器返回的 HTTP 响应对象 (res)————服务器响应的主体部分（JSON 字符串） 转换为一个纯 JavaScript 对象，并将其传递给下一个 .then() 回调函数。<br>注意：<br>只有当服务器响应的 Content-Type 头部设置为 <code>application/json</code> 时，<code>res.json()</code> 方法才能正常工作。<br>如果服务器响应的主体部分不是有效的 JSON 字符串，<code>res.json()</code> 方法会抛出一个错误。</li>
+</ol>
+</li>
+<li><p><strong>hasRequiredRoles() 函数用于检查用户是否具有访问特定路由所需的权限。</strong><br>它的实现方式取决于你的具体应用程序和后端 API 设计。<br>一种常见的方法：</p>
+<ol>
+<li>从本地存储（如 localStorage 或 sessionStorage）中获取用户的角色。</li>
+<li>将用户的角色与路由配置中指定的所需角色进行比较。</li>
+<li>如果用户具有所有必需的角色，则返回 true，表示用户具有访问权限。</li>
+<li>否则，返回 false，表示用户没有访问权限。<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">hasRequiredRoles</span>(<span class="params">requiredRoles</span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> userRoles = <span class="variable language_">localStorage</span>.<span class="title function_">getItem</span>(<span class="string">&#x27;roles&#x27;</span>)<span class="comment">// 从本地存储中获取用户的角色</span></span><br><span class="line">  <span class="comment">// 将用户的角色与所需的权限进行比较</span></span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; requiredRoles.<span class="property">length</span>; i++) &#123;</span><br><span class="line">    <span class="keyword">if</span> (!userRoles.<span class="title function_">includes</span>(requiredRoles[i])) &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="literal">true</span> <span class="comment">// 如果用户具有所有必需的角色，返回 true</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<p>另一种方法：<br>向后端 API 发送一个请求，携带用户的 token 和路由的所需角色。后端 API 检查用户的权限并返回一个响应，指示用户是否具有访问权限。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">hasRequiredRoles</span>(<span class="params">requiredRoles</span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> token = <span class="variable language_">localStorage</span>.<span class="title function_">getItem</span>(<span class="string">&#x27;token&#x27;</span>)<span class="comment">// 从本地存储中获取用户的 token</span></span><br><span class="line">  <span class="comment">// 向后端 API 发送请求</span></span><br><span class="line">  <span class="keyword">return</span> <span class="title function_">fetch</span>(<span class="string">&#x27;/api/auth/check-permissions&#x27;</span>, &#123;</span><br><span class="line">    <span class="attr">method</span>: <span class="string">&#x27;POST&#x27;</span>,</span><br><span class="line">    <span class="attr">headers</span>: &#123;</span><br><span class="line">      <span class="string">&#x27;Authorization&#x27;</span>: <span class="string">`Bearer <span class="subst">$&#123;token&#125;</span>`</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">body</span>: <span class="title class_">JSON</span>.<span class="title function_">stringify</span>(&#123;</span><br><span class="line">      <span class="attr">requiredRoles</span>: requiredRoles</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;)</span><br><span class="line">  .<span class="title function_">then</span>(<span class="function"><span class="params">res</span> =&gt;</span> res.<span class="title function_">json</span>())</span><br><span class="line">  .<span class="title function_">then</span>(<span class="function"><span class="params">data</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (data.<span class="property">success</span>) &#123;<span class="comment">// 如果用户具有访问权限，返回 true</span></span><br><span class="line">      <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">    &#125; <span class="keyword">else</span> &#123; <span class="comment">// 如果用户没有访问权限，返回 false</span></span><br><span class="line">      <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br><span class="line">  .<span class="title function_">catch</span>(<span class="function"><span class="params">err</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span> <span class="comment">// 如果请求失败，返回 false</span></span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="Less变量"><a href="#Less变量" class="headerlink" title="Less变量"></a>Less变量</h3><p><a target="_blank" rel="noopener" href="https://less.bootcss.com/">Less</a> 是一种可编程的样式语言。</p>
+<p><code>@</code>是在less语法里面，专门定义变量的一种格式<br>支持我们以编程的方式来写CSS代码</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">@width:</span> <span class="number">10px</span>;</span><br><span class="line"><span class="variable">@height:</span> <span class="variable">@width</span> + <span class="number">10px</span>;</span><br><span class="line"></span><br><span class="line"><span class="selector-id">#header</span>&#123;</span><br><span class="line">  <span class="attribute">width</span>: <span class="variable">@width</span>;</span><br><span class="line">  <span class="attribute">height</span>: <span class="variable">@height</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>编译为：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-id">#header</span>&#123;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">10px</span>;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">20px</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>请我一杯咖啡吧！</div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/tsukimiya.github.io/images/wechatpay.jpg" alt="Ayu 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/tsukimiya.github.io/images/alipay.jpg" alt="Ayu 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tsukimiya.github.io/tags/Vue/" rel="tag"># Vue</a>
+              <a href="/tsukimiya.github.io/tags/Vue2/" rel="tag"># Vue2</a>
+              <a href="/tsukimiya.github.io/tags/%E8%B7%AF%E7%94%B1/" rel="tag"># 路由</a>
+              <a href="/tsukimiya.github.io/tags/%E8%B7%AF%E7%94%B1%E9%87%8D%E5%AE%9A%E5%90%91/" rel="tag"># 路由重定向</a>
+              <a href="/tsukimiya.github.io/tags/%E8%B7%AF%E7%94%B1%E5%B5%8C%E5%A5%97/" rel="tag"># 路由嵌套</a>
+              <a href="/tsukimiya.github.io/tags/%E5%8A%A8%E6%80%81%E8%B7%AF%E7%94%B1/" rel="tag"># 动态路由</a>
+              <a href="/tsukimiya.github.io/tags/%E8%B7%AF%E7%94%B1%E5%AF%BC%E8%88%AA/" rel="tag"># 路由导航</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/tsukimiya.github.io/2024/05/01/Vue2/6.vue%E7%BB%84%E4%BB%B6%E9%AB%98%E7%BA%A7%E7%94%A8%E6%B3%95%20-%20%E5%8A%A8%E6%80%81%E7%BB%84%E4%BB%B6&%E6%8F%92%E6%A7%BD&%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8C%87%E4%BB%A4&ESlint/" rel="prev" title="vue组件高级用法 - 动态组件&插槽&自定义指令&ESlint">
+                  <i class="fa fa-angle-left"></i> vue组件高级用法 - 动态组件&插槽&自定义指令&ESlint
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/tsukimiya.github.io/2024/05/05/ES6/1.ES6%E6%A8%A1%E5%9D%97%E5%8C%96/" rel="next" title="ES6模块化">
+                  ES6模块化 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="waline"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Ayu</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">92k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">1:24</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="https://cdnjs.cloudflare.com/ajax/libs/ribbon.js/1.0.2/ribbon.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/tsukimiya.github.io/js/comments.js"></script><script src="/tsukimiya.github.io/js/utils.js"></script><script src="/tsukimiya.github.io/js/motion.js"></script><script src="/tsukimiya.github.io/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/tsukimiya.github.io/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+<script class="next-config" data-name="waline" type="application/json">{"lang":"zh-CN","enable":true,"serverURL":"https://waline.vercel.app","cssUrl":"https://unpkg.com/@waline/client@v2/dist/waline.css","commentCount":true,"pageview":false,"locale":{"placeholder":"Leave Something, message or money"},"emoji":["https://unpkg.com/@waline/emojis@1.0.1/tieba"],"meta":["nick","mail","link"],"requiredMeta":["nick"],"wordLimit":0,"login":"disable","pageSize":10,"el":"#waline","comment":true,"libUrl":"//unpkg.com/@waline/client@v2/dist/waline.js","path":"/tsukimiya.github.io/2024/05/02/Vue2/7.%E8%B7%AF%E7%94%B1%EF%BC%88vue-router%EF%BC%89/"}</script>
+<link rel="stylesheet" href="https://unpkg.com/@waline/client@v2/dist/waline.css">
+<script>
+document.addEventListener('page:loaded', () => {
+  NexT.utils.loadComments(CONFIG.waline.el).then(() =>
+    NexT.utils.getScript(CONFIG.waline.libUrl, { condition: window.Waline })
+  ).then(() => 
+    Waline.init(Object.assign({}, CONFIG.waline,{ el: document.querySelector(CONFIG.waline.el) }))
+  );
+});
+</script>
+
+</body>
+</html>

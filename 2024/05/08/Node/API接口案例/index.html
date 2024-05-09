@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.1.1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/tsukimiya.github.io/images/Study.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/tsukimiya.github.io/images/Study.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/tsukimiya.github.io/images/Study.ico">
+  <link rel="mask-icon" href="/tsukimiya.github.io/images/Study.ico" color="#222">
+
+<link rel="stylesheet" href="/tsukimiya.github.io/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Miniver:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"tsukimiyanano.github.io","root":"/tsukimiya.github.io/","images":"/tsukimiya.github.io/images","scheme":"Pisces","darkmode":true,"version":"8.19.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/tsukimiya.github.io/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true}}</script><script src="/tsukimiya.github.io/js/config.js"></script>
+
+    <meta name="description" content="API接口案例基于MySQL数据库 + Express对外提供用户列表的API接口服务  技术栈： 第三方包express、mysql2 ES6模块化 Promise async&#x2F;await   主要实现步骤 搭建项目的基本结构 创建基本的服务器 创建db数据库操作模块 创建user_ctrl 业务模块 创建user_router路由模块    实现 初始化包管理配置文件package.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="简单的API接口案例">
+<meta property="og:url" content="https://tsukimiyanano.github.io/tsukimiya.github.io/2024/05/08/Node/API%E6%8E%A5%E5%8F%A3%E6%A1%88%E4%BE%8B/index.html">
+<meta property="og:site_name" content="Ayu&#39;s Study Blog">
+<meta property="og:description" content="API接口案例基于MySQL数据库 + Express对外提供用户列表的API接口服务  技术栈： 第三方包express、mysql2 ES6模块化 Promise async&#x2F;await   主要实现步骤 搭建项目的基本结构 创建基本的服务器 创建db数据库操作模块 创建user_ctrl 业务模块 创建user_router路由模块    实现 初始化包管理配置文件package.">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-05-08T02:55:35.269Z">
+<meta property="article:modified_time" content="2024-05-08T04:32:46.316Z">
+<meta property="article:author" content="Ayu">
+<meta property="article:tag" content="Node.js">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://tsukimiyanano.github.io/tsukimiya.github.io/2024/05/08/Node/API%E6%8E%A5%E5%8F%A3%E6%A1%88%E4%BE%8B/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://tsukimiyanano.github.io/tsukimiya.github.io/2024/05/08/Node/API%E6%8E%A5%E5%8F%A3%E6%A1%88%E4%BE%8B/","path":"2024/05/08/Node/API接口案例/","title":"简单的API接口案例"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>简单的API接口案例 | Ayu's Study Blog</title>
+  
+
+
+
+
+
+
+
+<link rel="dns-prefetch" href="https://waline.vercel.app">
+  <noscript>
+    <link rel="stylesheet" href="/tsukimiya.github.io/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/tsukimiya.github.io/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Ayu's Study Blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">求求你给我一份工作吧，我什么都会做的`orz</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/tsukimiya.github.io/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tsukimiya.github.io/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/tsukimiya.github.io/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/tsukimiya.github.io/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-schedule"><a href="/tsukimiya.github.io/schedule/task.html" rel="section"><i class="fa fa-calendar fa-fw"></i>日程表</a></li><li class="menu-item menu-item-guestbook"><a href="/tsukimiya.github.io/guestbook/" rel="section"><i class="fa fa-book fa-fw"></i>guestbook</a></li><li class="menu-item menu-item-pulledpost"><a href="/tsukimiya.github.io/PulledPost/" rel="section"><i class="fa fa-heart fa-fw"></i>PulledPost</a></li><li class="menu-item menu-item-cuntom-page"><a href="/tsukimiya.github.io/custom" rel="section"><i class="fa fa-folder fa-fw"></i>Cuntom Page</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#API%E6%8E%A5%E5%8F%A3%E6%A1%88%E4%BE%8B"><span class="nav-number">1.</span> <span class="nav-text">API接口案例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0"><span class="nav-number">2.</span> <span class="nav-text">实现</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Ayu"
+      src="/tsukimiya.github.io/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Ayu</p>
+  <div class="site-description" itemprop="description">你们怎么能这么卷！！</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/tsukimiya.github.io/archives/">
+          <span class="site-state-item-count">17</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/tsukimiya.github.io/categories/">
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tsukimiya.github.io/tags/">
+        <span class="site-state-item-count">39</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="mailto:1832715838@qq.com" title="E-Mail → mailto:1832715838@qq.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://github.com/tsukimiyanano" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;tsukimiyanano" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://tsukimiyanano.github.io/tsukimiya.github.io/2024/05/08/Node/API%E6%8E%A5%E5%8F%A3%E6%A1%88%E4%BE%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/tsukimiya.github.io/images/avatar.jpg">
+      <meta itemprop="name" content="Ayu">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ayu's Study Blog">
+      <meta itemprop="description" content="你们怎么能这么卷！！">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="简单的API接口案例 | Ayu's Study Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          简单的API接口案例
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2024-05-08 10:55:35 / 修改时间：12:32:46" itemprop="dateCreated datePublished" datetime="2024-05-08T10:55:35+08:00">2024-05-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/tsukimiya.github.io/categories/Node-js/" itemprop="url" rel="index"><span itemprop="name">Node.js</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="far fa-comment"></i>
+    </span>
+    <span class="post-meta-item-text">Waline：</span>
+  
+    <a title="waline" href="/tsukimiya.github.io/2024/05/08/Node/API%E6%8E%A5%E5%8F%A3%E6%A1%88%E4%BE%8B/#waline" itemprop="discussionUrl">
+      <span class="post-comments-count waline-comment-count" data-path="/tsukimiya.github.io/2024/05/08/Node/API%E6%8E%A5%E5%8F%A3%E6%A1%88%E4%BE%8B/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2.2k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>2 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="API接口案例"><a href="#API接口案例" class="headerlink" title="API接口案例"></a>API接口案例</h2><p>基于<strong>MySQL数据库 + Express</strong>对外提供<strong>用户列表</strong>的API接口服务</p>
+<ol>
+<li>技术栈：<ul>
+<li>第三方包express、mysql2</li>
+<li>ES6模块化</li>
+<li>Promise</li>
+<li>async&#x2F;await</li>
+</ul>
+</li>
+<li>主要实现步骤<ol>
+<li>搭建项目的基本结构</li>
+<li>创建基本的服务器</li>
+<li>创建db数据库操作模块</li>
+<li>创建user_ctrl 业务模块</li>
+<li>创建user_router路由模块</li>
+</ol>
+</li>
+</ol>
+<h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><ol>
+<li><p>初始化包管理配置文件package.json —— <code>npm init -y</code></p>
+</li>
+<li><p>启用ES6模块化支持</p>
+<ul>
+<li>在package.json中声明<code>&quot;type&quot;: &quot;module&quot;</code></li>
+</ul>
+</li>
+<li><p>安装第三方依赖包</p>
+<ul>
+<li>运行<code>npm install express@4.17.1 mysql2@2.2.5</code></li>
+</ul>
+</li>
+<li><p>创建最基本的web服务器</p>
+ <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// app.js</span></span><br><span class="line"><span class="comment">//导入express模块</span></span><br><span class="line"><span class="keyword">import</span> express <span class="keyword">from</span> <span class="string">&#x27;express&#x27;</span></span><br><span class="line"><span class="comment">//创建express服务器实例</span></span><br><span class="line"><span class="keyword">const</span> app = <span class="title function_">express</span>()</span><br><span class="line"></span><br><span class="line"><span class="comment">//调用app.listen方法，指定端口号并启动web服务器</span></span><br><span class="line">app.<span class="title function_">listen</span>(<span class="number">8080</span>,<span class="function">()=&gt;</span>&#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;Express server running at http://127.0.0.1:8080&#x27;</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></li>
+<li><p>创建db数据库操作模块</p>
+ <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// db/index.js</span></span><br><span class="line"><span class="keyword">import</span> mysql <span class="keyword">from</span> <span class="string">&#x27;mysql2&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> pool = mysql.<span class="title function_">createPool</span>(&#123;</span><br><span class="line">  <span class="attr">host</span>: <span class="string">&#x27;127.0.0.1&#x27;</span>, <span class="comment">// 指定操作哪台电脑</span></span><br><span class="line">  <span class="attr">port</span>: <span class="number">3306</span>, <span class="comment">// 指定端口号，一般mysql数据库的端口号都是3306</span></span><br><span class="line">  <span class="attr">database</span>: <span class="string">&#x27;my_db_01&#x27;</span>,</span><br><span class="line">  <span class="attr">user</span>: <span class="string">&#x27;root&#x27;</span>,</span><br><span class="line">  <span class="attr">password</span>: <span class="string">&#x27;ayu123+&#x27;</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 如果导出pool，它不支持以promise API的形式来操作数据库</span></span><br><span class="line"><span class="comment">// 此时我们需要调用pool提供的.promise()，把返回值导出出去</span></span><br><span class="line"><span class="comment">// 外界拿到数据库的连接对象之后，就可以以Promise的方式来操作数据库</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> pool.<span class="title function_">promise</span>()</span><br></pre></td></tr></table></figure></li>
+<li><p>创建user_ctrl 业务模块</p>
+ <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// controller/user_ctrl.js</span></span><br><span class="line"><span class="keyword">import</span> db <span class="keyword">from</span> <span class="string">&#x27;../db/index.js&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用ES6的按需导出语法，将getALLUser语法导出出去</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">getAllUser</span>(<span class="params">req,res</span>)&#123;</span><br><span class="line">  <span class="comment">// 数组中，索引为0的那一项，是最终需要的数据，所以解构赋值出一个rows</span></span><br><span class="line">  <span class="keyword">const</span> [rows] = <span class="keyword">await</span> db.<span class="title function_">query</span>(<span class="string">&#x27;select id,username,nickname from users&#x27;</span>)</span><br><span class="line">  res.<span class="title function_">send</span>(&#123;</span><br><span class="line">    <span class="attr">status</span>: <span class="number">0</span>,</span><br><span class="line">    <span class="attr">messages</span>: <span class="string">&#x27;获取用户列表数据成功！&#x27;</span>,</span><br><span class="line">    <span class="attr">data</span>: rows,</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>创建user_router路由模块</p>
+ <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// router/user_router.js</span></span><br><span class="line"><span class="keyword">import</span> express <span class="keyword">from</span> <span class="string">&#x27;express&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123; getAllUser &#125; <span class="keyword">from</span> <span class="string">&#x27;../controller/user_ctrl.js&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> router = <span class="keyword">new</span> express.<span class="title class_">Router</span>()</span><br><span class="line">router.<span class="title function_">get</span>(<span class="string">&#x27;/user&#x27;</span>, getAllUser)</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> router</span><br><span class="line"></span><br><span class="line"><span class="comment">// 在app.js注册路由</span></span><br><span class="line"><span class="keyword">import</span> userRouter <span class="keyword">from</span> <span class="string">&#x27;./router/user_router.js&#x27;</span></span><br><span class="line">app.<span class="title function_">use</span>(<span class="string">&#x27;/api&#x27;</span>, userRouter)</span><br></pre></td></tr></table></figure></li>
+<li><p>使用try…catch捕获异常<br>当报错之后，使用catch进行处理，程序不会发生崩溃</p>
+ <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// controller/user_ctrl.js</span></span><br><span class="line"><span class="keyword">import</span> db <span class="keyword">from</span> <span class="string">&#x27;../db/index.js&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用ES6的按需导出语法，将getALLUser语法导出出去</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">getAllUser</span>(<span class="params">req,res</span>)&#123;</span><br><span class="line">  <span class="comment">// 数组中，索引为0的那一项，是最终需要的数据，所以解构赋值出一个rows</span></span><br><span class="line">  <span class="keyword">try</span>&#123;</span><br><span class="line">    <span class="keyword">const</span> [rows] = <span class="keyword">await</span> db.<span class="title function_">query</span>(<span class="string">&#x27;select id,username,nickname,xxx from users&#x27;</span>)</span><br><span class="line">    res.<span class="title function_">send</span>(&#123;</span><br><span class="line">      <span class="attr">status</span>: <span class="number">0</span>,</span><br><span class="line">      <span class="attr">messages</span>: <span class="string">&#x27;获取用户列表数据成功！&#x27;</span>,</span><br><span class="line">      <span class="attr">data</span>: rows,</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;<span class="keyword">catch</span>(err)&#123;</span><br><span class="line">    res.<span class="title function_">send</span>(&#123;</span><br><span class="line">      <span class="attr">status</span>: <span class="number">1</span>,</span><br><span class="line">      <span class="attr">messages</span>: <span class="string">&#x27;获取用户数据失败！&#x27;</span>,</span><br><span class="line">      <span class="attr">desc</span>: err.<span class="property">messages</span></span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>请我一杯咖啡吧！</div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/tsukimiya.github.io/images/wechatpay.jpg" alt="Ayu 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/tsukimiya.github.io/images/alipay.jpg" alt="Ayu 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tsukimiya.github.io/tags/Node-js/" rel="tag"># Node.js</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/tsukimiya.github.io/2024/05/08/ES6/5.%E5%AE%8F%E4%BB%BB%E5%8A%A1%E5%92%8C%E5%BE%AE%E4%BB%BB%E5%8A%A1/" rel="prev" title="宏任务和微任务">
+                  <i class="fa fa-angle-left"></i> 宏任务和微任务
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/tsukimiya.github.io/2024/05/08/vue3/1.vue3%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8/" rel="next" title="vue3基本使用">
+                  vue3基本使用 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="waline"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Ayu</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">92k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">1:24</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="https://cdnjs.cloudflare.com/ajax/libs/ribbon.js/1.0.2/ribbon.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/tsukimiya.github.io/js/comments.js"></script><script src="/tsukimiya.github.io/js/utils.js"></script><script src="/tsukimiya.github.io/js/motion.js"></script><script src="/tsukimiya.github.io/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/tsukimiya.github.io/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+<script class="next-config" data-name="waline" type="application/json">{"lang":"zh-CN","enable":true,"serverURL":"https://waline.vercel.app","cssUrl":"https://unpkg.com/@waline/client@v2/dist/waline.css","commentCount":true,"pageview":false,"locale":{"placeholder":"Leave Something, message or money"},"emoji":["https://unpkg.com/@waline/emojis@1.0.1/tieba"],"meta":["nick","mail","link"],"requiredMeta":["nick"],"wordLimit":0,"login":"disable","pageSize":10,"el":"#waline","comment":true,"libUrl":"//unpkg.com/@waline/client@v2/dist/waline.js","path":"/tsukimiya.github.io/2024/05/08/Node/API%E6%8E%A5%E5%8F%A3%E6%A1%88%E4%BE%8B/"}</script>
+<link rel="stylesheet" href="https://unpkg.com/@waline/client@v2/dist/waline.css">
+<script>
+document.addEventListener('page:loaded', () => {
+  NexT.utils.loadComments(CONFIG.waline.el).then(() =>
+    NexT.utils.getScript(CONFIG.waline.libUrl, { condition: window.Waline })
+  ).then(() => 
+    Waline.init(Object.assign({}, CONFIG.waline,{ el: document.querySelector(CONFIG.waline.el) }))
+  );
+});
+</script>
+
+</body>
+</html>

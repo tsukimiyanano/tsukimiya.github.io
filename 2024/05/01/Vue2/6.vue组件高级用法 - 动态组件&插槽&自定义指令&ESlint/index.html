@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.1.1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/tsukimiya.github.io/images/Study.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/tsukimiya.github.io/images/Study.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/tsukimiya.github.io/images/Study.ico">
+  <link rel="mask-icon" href="/tsukimiya.github.io/images/Study.ico" color="#222">
+
+<link rel="stylesheet" href="/tsukimiya.github.io/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Miniver:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"tsukimiyanano.github.io","root":"/tsukimiya.github.io/","images":"/tsukimiya.github.io/images","scheme":"Pisces","darkmode":true,"version":"8.19.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/tsukimiya.github.io/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true}}</script><script src="/tsukimiya.github.io/js/config.js"></script>
+
+    <meta name="description" content="目标:掌握keep-alive实现组件的缓存：keep-alive标签、include 属性能够使用插槽提高组件的复用性：slot标签、具名插槽、作用域插槽(接收数据并使用)、后备内容v-slot指令：把内容填充到指定名称的插槽中，只能被用在 组件components 或 template标签v-slot: 简写 # 如：&lt;template #title&gt;&lt;&#x2F;template&amp;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vue组件高级用法 - 动态组件&amp;插槽&amp;自定义指令&amp;ESlint">
+<meta property="og:url" content="https://tsukimiyanano.github.io/tsukimiya.github.io/2024/05/01/Vue2/6.vue%E7%BB%84%E4%BB%B6%E9%AB%98%E7%BA%A7%E7%94%A8%E6%B3%95%20-%20%E5%8A%A8%E6%80%81%E7%BB%84%E4%BB%B6&%E6%8F%92%E6%A7%BD&%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8C%87%E4%BB%A4&ESlint/index.html">
+<meta property="og:site_name" content="Ayu&#39;s Study Blog">
+<meta property="og:description" content="目标:掌握keep-alive实现组件的缓存：keep-alive标签、include 属性能够使用插槽提高组件的复用性：slot标签、具名插槽、作用域插槽(接收数据并使用)、后备内容v-slot指令：把内容填充到指定名称的插槽中，只能被用在 组件components 或 template标签v-slot: 简写 # 如：&lt;template #title&gt;&lt;&#x2F;template&amp;">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://tsukimiyanano.github.io/tsukimiya.github.io/images/vue/%E6%8F%92%E6%A7%BD.png">
+<meta property="article:published_time" content="2024-05-01T02:01:07.883Z">
+<meta property="article:modified_time" content="2024-05-09T06:27:29.258Z">
+<meta property="article:author" content="Ayu">
+<meta property="article:tag" content="Vue">
+<meta property="article:tag" content="Vue2">
+<meta property="article:tag" content="动态组件">
+<meta property="article:tag" content="插槽">
+<meta property="article:tag" content="自定义指令">
+<meta property="article:tag" content="ESLint">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://tsukimiyanano.github.io/tsukimiya.github.io/images/vue/%E6%8F%92%E6%A7%BD.png">
+
+
+<link rel="canonical" href="https://tsukimiyanano.github.io/tsukimiya.github.io/2024/05/01/Vue2/6.vue%E7%BB%84%E4%BB%B6%E9%AB%98%E7%BA%A7%E7%94%A8%E6%B3%95%20-%20%E5%8A%A8%E6%80%81%E7%BB%84%E4%BB%B6&%E6%8F%92%E6%A7%BD&%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8C%87%E4%BB%A4&ESlint/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://tsukimiyanano.github.io/tsukimiya.github.io/2024/05/01/Vue2/6.vue%E7%BB%84%E4%BB%B6%E9%AB%98%E7%BA%A7%E7%94%A8%E6%B3%95%20-%20%E5%8A%A8%E6%80%81%E7%BB%84%E4%BB%B6&%E6%8F%92%E6%A7%BD&%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8C%87%E4%BB%A4&ESlint/","path":"2024/05/01/Vue2/6.vue组件高级用法 - 动态组件&插槽&自定义指令&ESlint/","title":"vue组件高级用法 - 动态组件&插槽&自定义指令&ESlint"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>vue组件高级用法 - 动态组件&插槽&自定义指令&ESlint | Ayu's Study Blog</title>
+  
+
+
+
+
+
+
+
+<link rel="dns-prefetch" href="https://waline.vercel.app">
+  <noscript>
+    <link rel="stylesheet" href="/tsukimiya.github.io/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/tsukimiya.github.io/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Ayu's Study Blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">求求你给我一份工作吧，我什么都会做的`orz</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/tsukimiya.github.io/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tsukimiya.github.io/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/tsukimiya.github.io/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/tsukimiya.github.io/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-schedule"><a href="/tsukimiya.github.io/schedule/task.html" rel="section"><i class="fa fa-calendar fa-fw"></i>日程表</a></li><li class="menu-item menu-item-guestbook"><a href="/tsukimiya.github.io/guestbook/" rel="section"><i class="fa fa-book fa-fw"></i>guestbook</a></li><li class="menu-item menu-item-pulledpost"><a href="/tsukimiya.github.io/PulledPost/" rel="section"><i class="fa fa-heart fa-fw"></i>PulledPost</a></li><li class="menu-item menu-item-cuntom-page"><a href="/tsukimiya.github.io/custom" rel="section"><i class="fa fa-folder fa-fw"></i>Cuntom Page</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%A8%E6%80%81%E7%BB%84%E4%BB%B6%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-number">1.</span> <span class="nav-text">动态组件的使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%86%E8%A7%A3%E7%BB%84%E4%BB%B6-%E6%B3%A8%E5%86%8C%E5%90%8D%E7%A7%B0-%E5%92%8C-%E7%BB%84%E4%BB%B6%E5%A3%B0%E6%98%8E%E6%97%B6name-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">2.</span> <span class="nav-text">了解组件 注册名称 和 组件声明时name 的区别</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8F%92%E6%A7%BD%E7%9A%84%E4%BD%BF%E7%94%A8-%E9%BB%98%E8%AE%A4%E6%8F%92%E6%A7%BD%E3%80%81%E5%85%B7%E5%90%8D%E6%8F%92%E6%A7%BD%E3%80%81%E4%BD%9C%E7%94%A8%E5%9F%9F%E6%8F%92%E6%A7%BD"><span class="nav-number">3.</span> <span class="nav-text">插槽的使用(默认插槽、具名插槽、作用域插槽)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#v-slot%E6%8C%87%E4%BB%A4-%E2%80%93-%E7%AE%80%E5%86%99%EF%BC%9A"><span class="nav-number">3.1.</span> <span class="nav-text">v-slot指令  – 简写：#</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8F%92%E6%A7%BD%E7%9A%84%E9%BB%98%E8%AE%A4%E5%86%85%E5%AE%B9-%E5%90%8E%E5%A4%87%E5%86%85%E5%AE%B9"><span class="nav-number">3.2.</span> <span class="nav-text">插槽的默认内容&#x2F;后备内容</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B7%E5%90%8D%E6%8F%92%E6%A7%BD"><span class="nav-number">3.3.</span> <span class="nav-text">具名插槽</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%9C%E7%94%A8%E5%9F%9F%E6%8F%92%E6%A7%BD"><span class="nav-number">3.4.</span> <span class="nav-text">作用域插槽</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%9C%E7%94%A8%E5%9F%9F%E6%8F%92%E6%A7%BD%E7%9A%84%E8%A7%A3%E6%9E%84%E8%B5%8B%E5%80%BC"><span class="nav-number">3.4.1.</span> <span class="nav-text">作用域插槽的解构赋值</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8C%87%E4%BB%A4"><span class="nav-number">4.</span> <span class="nav-text">自定义指令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A7%81%E6%9C%89%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8C%87%E4%BB%A4"><span class="nav-number">4.1.</span> <span class="nav-text">私有自定义指令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%A8%E5%B1%80%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8C%87%E4%BB%A4"><span class="nav-number">4.2.</span> <span class="nav-text">全局自定义指令</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ESLint%E5%B7%A5%E5%85%B7"><span class="nav-number">5.</span> <span class="nav-text">ESLint工具</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ESLint-%E8%A7%84%E5%88%99"><span class="nav-number">5.1.</span> <span class="nav-text">ESLint 规则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A6%81%E7%94%A8%E6%9F%90%E8%A7%84%E5%88%99"><span class="nav-number">5.2.</span> <span class="nav-text">禁用某规则</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AEVSCode"><span class="nav-number">5.3.</span> <span class="nav-text">配置VSCode</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="nav-number">5.4.</span> <span class="nav-text">项目初始化</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8B%93%E5%B1%95"><span class="nav-number">6.</span> <span class="nav-text">拓展</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E4%BA%8B%E4%BB%B6%E4%BD%BF%E7%94%A8-event"><span class="nav-number">6.1.</span> <span class="nav-text">自定义事件使用$event</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E4%BA%8Emain-js%E4%B8%AD%E7%9A%84%E5%B0%8F%E6%8F%90%E7%A4%BA"><span class="nav-number">6.2.</span> <span class="nav-text">关于main.js中的小提示</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Ayu"
+      src="/tsukimiya.github.io/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Ayu</p>
+  <div class="site-description" itemprop="description">你们怎么能这么卷！！</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/tsukimiya.github.io/archives/">
+          <span class="site-state-item-count">17</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/tsukimiya.github.io/categories/">
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tsukimiya.github.io/tags/">
+        <span class="site-state-item-count">39</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="mailto:1832715838@qq.com" title="E-Mail → mailto:1832715838@qq.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://github.com/tsukimiyanano" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;tsukimiyanano" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://tsukimiyanano.github.io/tsukimiya.github.io/2024/05/01/Vue2/6.vue%E7%BB%84%E4%BB%B6%E9%AB%98%E7%BA%A7%E7%94%A8%E6%B3%95%20-%20%E5%8A%A8%E6%80%81%E7%BB%84%E4%BB%B6&%E6%8F%92%E6%A7%BD&%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8C%87%E4%BB%A4&ESlint/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/tsukimiya.github.io/images/avatar.jpg">
+      <meta itemprop="name" content="Ayu">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ayu's Study Blog">
+      <meta itemprop="description" content="你们怎么能这么卷！！">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="vue组件高级用法 - 动态组件&插槽&自定义指令&ESlint | Ayu's Study Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          vue组件高级用法 - 动态组件&插槽&自定义指令&ESlint
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-05-01 10:01:07" itemprop="dateCreated datePublished" datetime="2024-05-01T10:01:07+08:00">2024-05-01</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-05-09 14:27:29" itemprop="dateModified" datetime="2024-05-09T14:27:29+08:00">2024-05-09</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/tsukimiya.github.io/categories/Vue/" itemprop="url" rel="index"><span itemprop="name">Vue</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/tsukimiya.github.io/categories/Vue/Vue2/" itemprop="url" rel="index"><span itemprop="name">Vue2</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="far fa-comment"></i>
+    </span>
+    <span class="post-meta-item-text">Waline：</span>
+  
+    <a title="waline" href="/tsukimiya.github.io/2024/05/01/Vue2/6.vue%E7%BB%84%E4%BB%B6%E9%AB%98%E7%BA%A7%E7%94%A8%E6%B3%95%20-%20%E5%8A%A8%E6%80%81%E7%BB%84%E4%BB%B6&%E6%8F%92%E6%A7%BD&%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8C%87%E4%BB%A4&ESlint/#waline" itemprop="discussionUrl">
+      <span class="post-comments-count waline-comment-count" data-path="/tsukimiya.github.io/2024/05/01/Vue2/6.vue%E7%BB%84%E4%BB%B6%E9%AB%98%E7%BA%A7%E7%94%A8%E6%B3%95%20-%20%E5%8A%A8%E6%80%81%E7%BB%84%E4%BB%B6&%E6%8F%92%E6%A7%BD&%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8C%87%E4%BB%A4&ESlint/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>9.1k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>8 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><blockquote>
+<p>目标:<br>掌握keep-alive实现组件的缓存：keep-alive标签、include 属性<br>能够使用插槽提高组件的复用性：slot标签、具名插槽、<strong>作用域插槽</strong>(接收数据并使用)、后备内容<br><strong><code>v-slot</code>指令</strong>：<strong>把内容填充到指定名称的插槽中，只能被用在 组件components 或 template标签</strong><br><code>v-slot:</code> 简写 <code>#</code> 如：<code>&lt;template #title&gt;&lt;/template&gt;</code></p>
+</blockquote>
+<blockquote>
+<p>能够知道如何自定义指令：<br>私有自定义指令<code>directives: &#123; &#125;</code><br>全局自定义指令<code>Vue.directive()</code></p>
+</blockquote>
+<blockquote>
+<p>了解常见的ESLint语法规则、习惯在ESLint下进行开发<br>配置VSCode插件及设置，帮助我们规范代码格式，高效开发</p>
+</blockquote>
+<h2 id="动态组件的使用"><a href="#动态组件的使用" class="headerlink" title="动态组件的使用"></a>动态组件的使用</h2><p>动态组件指的是<strong>动态切换组件的显示与隐藏</strong>。实现不同组件的按需展示。</p>
+<ol>
+<li><p>如何实现动态组件的渲染<br> vue提供了一个内置的<code>component</code>组件，作用：组件的占位符。专门用来实现动态组件的渲染。示例代码如下:</p>
+ <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">data</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="comment">// 1．当前要渲染的组件名称</span></span><br><span class="line">    <span class="keyword">return</span> &#123; <span class="attr">comName</span>: <span class="string">&#x27;Left&#x27;</span> &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;! -- <span class="number">2</span>．通过is属性，动态指定要渲染的组件--&gt;</span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">component</span> <span class="attr">:is</span>=<span class="string">&quot;comName&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">component</span>&gt;</span></span></span><br><span class="line"></span><br><span class="line">&lt;!-- <span class="number">3</span>．点击按钮，动态切换组件的名称 --&gt;</span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">button</span> @<span class="attr">click</span>=<span class="string">&quot;comName = &#x27;Left&#x27;&quot;</span>&gt;</span>展示 Left 组件<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">button</span> @<span class="attr">click</span>=<span class="string">&quot;comName = &#x27;Right&#x27;&quot;</span>&gt;</span>展示 Right组件<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>内置标签keep-alive – 保持组件的状态</strong><br>每次切换组件都是上一个组件被销毁和下一个组件被创建-&gt;运行<br>如果再次创建同一个组件，它会重新初始化一遍数据，和上一个组件是没有关系的<br> 如果我们希望切换回来之后原来的数据状态还在，就可以使用<font color="red">keep-alive：防止组件被隐藏的时候被销毁</font></p>
+ <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;keep-alive&gt;</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">component</span> <span class="attr">:is</span>=<span class="string">&quot;comName&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">component</span>&gt;</span></span></span><br><span class="line">&lt;/keep-alive&gt;</span><br></pre></td></tr></table></figure>
+<p> 这样隐藏Left的时候不会移除这个组件，而是打上一个inactive标记(被缓存了)（未使用的、不活动的）<br> <font color="green">总结：keep-alive可以把内部的组件进行缓存，而不是销毁组件</font></p>
+</li>
+<li><p><strong>keep-alive 对应的生命周期函数</strong><br> 当组件<strong>被缓存</strong>时，会自动触发组件的<strong>deactivated</strong>生命周期函数。<br> 当组件<strong>被激活</strong>时，会自动触发组件的<strong>activated</strong>生命周期函数。</p>
+</li>
+<li><p><strong>keep-alive的include属性 – 指定哪些组件可以被缓存</strong><br> 只有名称匹配的组件会被缓存</p>
+ <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;keep-alive include=<span class="string">&quot;Left,Right&quot;</span>&gt;</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">component</span> <span class="attr">:is</span>=<span class="string">&quot;comName&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">component</span>&gt;</span></span></span><br><span class="line">&lt;/keep-alive&gt;</span><br></pre></td></tr></table></figure>
+<p> 除了include，还有个exclude属性，表示排除项<br> 注意：这两个属性不能同时使用</p>
+ <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;keep-alive exclude=<span class="string">&quot;&quot;</span>&gt;</span><br><span class="line">    <span class="language-xml"><span class="tag">&lt;<span class="name">component</span> <span class="attr">:is</span>=<span class="string">&quot;comName&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">component</span>&gt;</span></span></span><br><span class="line">&lt;/keep-alive&gt;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="了解组件-注册名称-和-组件声明时name-的区别"><a href="#了解组件-注册名称-和-组件声明时name-的区别" class="headerlink" title="了解组件 注册名称 和 组件声明时name 的区别"></a>了解组件 注册名称 和 组件声明时name 的区别</h2><p>如果在声明组件(定义组件模板结构)的时候，没有为组件指定 name 名称，则组件的名称默认就是“注册时候的名称”。当提供了name属性之后，组件的名称就是name属性的值。</p>
+<ul>
+<li><strong>对比</strong>(3、4 is my think):</li>
+</ul>
+<ol>
+<li>组件的“<strong>注册名称</strong>”的主要应用场景是: 以<strong>标签</strong>的形式，把注册好的组件，渲染和使用到页面结构之中</li>
+<li>组件声明时候的“<strong>name</strong>”名称的主要应用场景: <strong>结合keep-alive标签实现组件缓存功能</strong>;以及在<strong>调试工具</strong>中看到组件的 name <strong>名称</strong></li>
+<li>一般情况下，注册名称可以将name属性完全替代，不去注册name属性</li>
+<li><strong>name属性的独特应用场景：递归组件</strong>。指在组件的模板中，使用该组件自身的情况。(这样场景下，注册名称是替代不了name属性的)</li>
+</ol>
+<p>开发中，为了标准、方便，<strong>建议给每个组件起一个name名称</strong>。(虽然我还是不理解除了4的情况有什么必要)</p>
+<h2 id="插槽的使用-默认插槽、具名插槽、作用域插槽"><a href="#插槽的使用-默认插槽、具名插槽、作用域插槽" class="headerlink" title="插槽的使用(默认插槽、具名插槽、作用域插槽)"></a>插槽的使用(默认插槽、具名插槽、作用域插槽)</h2><p><strong>插槽</strong>（Slot）是vue为<strong>组件的封装者</strong>提供的能力。允许开发者在封装组件时，把<strong>不确定的、希望由用户指定的部分</strong>定义为插槽。</p>
+<p><font color="red">在组件的内容节点填写内容，然后把它给渲染出来</font><br><img src="/tsukimiya.github.io/images/vue/%E6%8F%92%E6%A7%BD.png" alt="image"></p>
+<h3 id="v-slot指令-–-简写："><a href="#v-slot指令-–-简写：" class="headerlink" title="v-slot指令  – 简写：#"></a>v-slot指令  – 简写：#</h3><p><strong>vue官方规定：每一个 slot 插槽，都要有一个 name 名称</strong><br>如果省略了 slot 的 name 属性，则有一个<strong>默认名称</strong>叫做 <strong>default</strong></p>
+<p>默认情况下，在使用组件的时候，提供的内容都会被填充到名字为default的插槽中</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">Left</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>这是在Left组件的内容区域，声明的p标签<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>这是第二个p标签<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">Left</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>只有一个插槽的话，name不写也可以</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">//Left组件</span><br><span class="line"><span class="tag">&lt;<span class="name">slot</span>&gt;</span><span class="tag">&lt;/<span class="name">slot</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><font color="green">如果要把内容填充到指定名称的插槽中，需要使用<code>v-slot：</code>这个指令</font><font color="red"> – 简写：#</font><br><font color="red">注意：v-slot指令，只能被用在 组件components 或 template标签</font><br>template是个虚拟的标签，只起到一个包裹性的作用，不会被渲染成任何真实的元素</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">Left</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">template</span> <span class="attr">v-slot:default</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">p</span>&gt;</span>这是在Left组件的内容区域，声明的p标签<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">p</span>&gt;</span>这是第二个p标签<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line">    //或</span><br><span class="line">    <span class="tag">&lt;<span class="name">template</span> #<span class="attr">default</span>&gt;</span>...<span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">Left</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// Left组件</span><br><span class="line"><span class="tag">&lt;<span class="name">slot</span> <span class="attr">name</span>=<span class="string">&quot;default&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">slot</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="插槽的默认内容-后备内容"><a href="#插槽的默认内容-后备内容" class="headerlink" title="插槽的默认内容&#x2F;后备内容"></a>插槽的默认内容&#x2F;后备内容</h3><p>官方的专业术语：后备内容</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// left组件</span><br><span class="line"><span class="tag">&lt;<span class="name">slot</span> <span class="attr">name</span>=<span class="string">&quot;default&quot;</span>&gt;</span><span class="tag">&lt;<span class="name">p</span>&gt;</span>这是default插槽的默认内容<span class="tag">&lt;/<span class="name">p</span>&gt;</span><span class="tag">&lt;/<span class="name">slot</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="具名插槽"><a href="#具名插槽" class="headerlink" title="具名插槽"></a>具名插槽</h3><p>带有名字的插槽就叫做具名插槽。</p>
+<p>它也是一个具名插槽，或者叫默认插槽</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">slot</span> <span class="attr">name</span>=<span class="string">&quot;default&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">slot</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="作用域插槽"><a href="#作用域插槽" class="headerlink" title="作用域插槽"></a>作用域插槽</h3><p>在预留插槽的时候，声明数据项。在使用的时候可以接收数据并使用：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// Left</span><br><span class="line"><span class="comment">&lt;!-- 在封装组件的时候，为预留的slot提供属性对应的值，这种用法叫做“作用域插槽” --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">slot</span> <span class="attr">name</span>=<span class="string">&quot;default&quot;</span> <span class="attr">msg</span>=<span class="string">&quot;hello vue.js&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">p</span>&gt;</span>这是default插槽的默认内容<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">slot</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>如果插槽没有声明数据项，则形参scope是个空对象<br><font color="green">接收数据的形参建议用 scope(作用域) 来命名</font></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">// app.vue</span><br><span class="line"><span class="tag">&lt;<span class="name">Left</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">template</span> #<span class="attr">default</span>=<span class="string">&quot;scope&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">p</span>&gt;</span>这是在Left组件的内容区域，声明的p标签<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">p</span>&gt;</span>这是第二个p标签 -- &#123;&#123; scope.msg &#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">Left</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="作用域插槽的解构赋值"><a href="#作用域插槽的解构赋值" class="headerlink" title="作用域插槽的解构赋值"></a>作用域插槽的解构赋值</h4><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">Left</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">template</span> #<span class="attr">default</span>=<span class="string">&quot;&#123; msg &#125;&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">p</span>&gt;</span>这是在Left组件的内容区域，声明的p标签<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">p</span>&gt;</span>这是第二个p标签 -- &#123;&#123; msg &#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">Left</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+<h2 id="自定义指令"><a href="#自定义指令" class="headerlink" title="自定义指令"></a>自定义指令</h2><blockquote>
+<p>vue允许开发者自定义指令</p>
+</blockquote>
+<p>vue中的自定义指令分为两类，分别是:</p>
+<ul>
+<li>私有自定义指令</li>
+<li>全局自定义指令</li>
+</ul>
+<h3 id="私有自定义指令"><a href="#私有自定义指令" class="headerlink" title="私有自定义指令"></a>私有自定义指令</h3><p>在每个vue 组件中，可以在 <strong>directives节点</strong>下声明<strong>私有自定义指令</strong>。示例代码如下:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">directives</span>: &#123;</span><br><span class="line">    <span class="attr">color</span>: &#123;</span><br><span class="line">        <span class="comment">//为绑定到的 HTML 元素设置红色的文字</span></span><br><span class="line">        <span class="title function_">bind</span>(<span class="params">el</span>)&#123; </span><br><span class="line">            <span class="comment">// 形参中的 el是绑定了此指令的、原生的DOM对象(固定的写法)</span></span><br><span class="line">            el.<span class="property">style</span>.<span class="property">color</span> = <span class="string">&#x27;red&#x27;</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 当指令第一次被绑定到元素上的时候，会立即触发bind方法</span></span><br><span class="line">&lt;<span class="title class_">Left</span> v-color&gt;&lt;/<span class="title class_">Left</span>&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>使用<code>binding.value</code>获取指令绑定的值</strong></li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">directives</span>: &#123;</span><br><span class="line">    <span class="attr">color</span>: &#123;</span><br><span class="line">        <span class="title function_">bind</span>(<span class="params">el,binding</span>)&#123; <span class="comment">//官方推荐用binding</span></span><br><span class="line">            el.<span class="property">style</span>.<span class="property">color</span> = binding.<span class="property">value</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;<span class="title class_">Left</span> v-color=<span class="string">&quot;&#x27;green&#x27;&quot;</span>&gt;&lt;/<span class="title class_">Left</span>&gt;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>update函数</strong><br><strong>bind</strong>函数<strong>只调用1次</strong>：当指令<strong>第一次绑定到元素时</strong>调用；当DOM更新时bind函数不会被触发。<br><strong>update</strong>函数会在<strong>每次DOM更新时被调用</strong>，绑定的时候不会触发：</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">directives</span>: &#123;</span><br><span class="line">    <span class="attr">color</span>: &#123;</span><br><span class="line">        <span class="title function_">bind</span>(<span class="params">el,binding</span>)&#123; </span><br><span class="line">            el.<span class="property">style</span>.<span class="property">color</span> = binding.<span class="property">value</span>;</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="comment">//每次DOM更新时被调用，绑定的时候不会触发</span></span><br><span class="line">        <span class="title function_">update</span>(<span class="params">el,binding</span>)&#123;</span><br><span class="line">          el.<span class="property">style</span>.<span class="property">color</span> = binding.<span class="property">value</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&lt;h1 v-color=<span class="string">&quot;color&quot;</span>&gt;<span class="variable constant_">APP</span>根组件&lt;/h1&gt;</span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">button</span> @<span class="attr">click</span>=<span class="string">&quot;color=&#x27;red&#x27;&quot;</span>&gt;</span>变成红色<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><strong>函数简写形式</strong><br>如果 bind 和 update 函数中的逻辑完全相同，则对象格式的自定义指令可以简写成函数格式:</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">directives</span>: &#123;</span><br><span class="line">    <span class="comment">// 在 bind 和 update 时，会触发相同的业务逻辑</span></span><br><span class="line">    <span class="title function_">color</span>(<span class="params">el,binding</span>) &#123;</span><br><span class="line">        el.<span class="property">style</span>.<span class="property">color</span> = binding.<span class="property">value</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="全局自定义指令"><a href="#全局自定义指令" class="headerlink" title="全局自定义指令"></a>全局自定义指令</h3><p>和定义过滤器filter一样</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 参数1: 字符串，表示全局自定义指令的名字</span></span><br><span class="line"><span class="comment">// 参数2: 对象，用来接收指令的参数值</span></span><br><span class="line"><span class="title class_">Vue</span>.<span class="title function_">directive</span>(<span class="string">&#x27;color&#x27;</span>,<span class="keyword">function</span>(<span class="params">el,binding</span>)&#123; <span class="comment">//简写形式</span></span><br><span class="line">    el.<span class="property">style</span>.<span class="property">color</span> = binding.<span class="property">value</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">//对象形式：</span></span><br><span class="line"><span class="title class_">Vue</span>.<span class="title function_">directive</span>(<span class="string">&#x27;color&#x27;</span>,&#123; <span class="comment">//简写形式</span></span><br><span class="line">    <span class="title function_">bind</span>(<span class="params">el,binding</span>)&#123; </span><br><span class="line">        el.<span class="property">style</span>.<span class="property">color</span> = binding.<span class="property">value</span>;</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="title function_">update</span>(<span class="params">el,binding</span>)&#123;</span><br><span class="line">        el.<span class="property">style</span>.<span class="property">color</span> = binding.<span class="property">value</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="ESLint工具"><a href="#ESLint工具" class="headerlink" title="ESLint工具"></a>ESLint工具</h2><p>可组装的JS和JSX检查工具 – 约束代码风格<br>在你的js代码里面 帮你发现问题，并且解决问题</p>
+<p>两个中文官网 <a target="_blank" rel="noopener" href="https://nodejs.cn/eslint/">官网1</a> <a target="_blank" rel="noopener" href="https://eslint.nodejs.cn/docs/latest/">官网2</a></p>
+<p>当在项目里面配置了ESLint以后，它就会去检查代码风格，有问题就会报错</p>
+<ul>
+<li><p>vscode 设置<br>缩进：设置 -  搜索 Editor:Tab Size 设置为2<br>保存：设置 - 文本编辑器 - 格式化 - Format on Save(保存时格式化文件) </p>
+</li>
+<li><p>使用ESLint – 创建新的vue项目<br>在选择预设的时候，加上一个Linter &#x2F; Formatter(默认被选上的)<br>然后后面的选项中就多了一项：选择要安装的ESLint的语法规范<br>选择倒数第二项 – Standard config 标准配置<br>然后选择：<br>Lint on save（ctrl s保存的时候进行检查）<br>Lint and fix on commit（提交代码的时候进行代码规范的检查，并且把检查到的问题自动修复）<br>只勾选第一项默认的就行，第二项不建议勾选。</p>
+</li>
+<li><p>ESLint配置文件 eslintrc.js<br>这里是定义的一些规则：</p>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">rules</span>: &#123;</span><br><span class="line">    <span class="comment">//固定格式 只在发布阶段会报一个黄色警告，开发阶段不会</span></span><br><span class="line">    <span class="string">&#x27;no-console&#x27;</span>: process.<span class="property">env</span>.<span class="property">NODE_ENV</span> === <span class="string">&#x27;production&#x27;</span> ? <span class="string">&#x27;warn&#x27;</span> : <span class="string">&#x27;off&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;no-debugger&#x27;</span>: process.<span class="property">env</span>.<span class="property">NODE_ENV</span> === <span class="string">&#x27;production&#x27;</span> ? <span class="string">&#x27;warn&#x27;</span> : <span class="string">&#x27;off&#x27;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>  我们可以去 <a target="_blank" rel="noopener" href="https://eslint.nodejs.cn/">官网</a> 的开发文档的规则参考部分来查看这些规则的作用：<br>  no-console 禁止使用console，no-debugger 禁止使用debugger</p>
+</li>
+</ul>
+<h3 id="ESLint-规则"><a href="#ESLint-规则" class="headerlink" title="ESLint 规则"></a>ESLint 规则</h3><p>不符合规则会报对应的错误，以及错误所在的行列数<br>具体报错规则可以去 <a target="_blank" rel="noopener" href="https://nodejs.cn/eslint/">ESLint 中文文档</a> 直接搜索</p>
+<ol>
+<li>不能出现连续的空行</li>
+<li>在文件的末尾必须要有空行</li>
+<li>不能有多余的空格</li>
+<li>字符串要用单引号</li>
+<li>对象和属性之间，需要有一个空格分隔</li>
+<li>要求或禁止末尾逗号</li>
+<li>在注释中的 <code>//</code> 或 <code>/*</code> 后强制使用一致的间距<blockquote>
+<p>&#x2F;&#x2F; 这里是正确注释，<code>//</code>后最少要有一个空格</p>
+</blockquote>
+</li>
+<li>强制一致的缩进（该缩进的要缩进，不该缩进的不能缩进）</li>
+<li><code>import</code>导入模块的语句必须声明在文件的顶部</li>
+<li>定义变量而没有使用会报错</li>
+<li>方法的形参之前需要保留一个空格<blockquote>
+<p>show () {} 括号前后都要有一个空格</p>
+</blockquote>
+</li>
+</ol>
+<h3 id="禁用某规则"><a href="#禁用某规则" class="headerlink" title="禁用某规则"></a>禁用某规则</h3><p>如果不想遵守某个规则，和ESLint反着来，可以禁止这个规则<br>在官方文档中，找到这个规则，会说明如何更改，直接复制想要更改的规则呢么的代码即可<br>配置如：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">rules</span>: &#123;</span><br><span class="line">    <span class="string">&#x27;no-console&#x27;</span>: process.<span class="property">env</span>.<span class="property">NODE_ENV</span> === <span class="string">&#x27;production&#x27;</span> ? <span class="string">&#x27;warn&#x27;</span> : <span class="string">&#x27;off&#x27;</span>,</span><br><span class="line">    <span class="string">&#x27;no-debugger&#x27;</span>: process.<span class="property">env</span>.<span class="property">NODE_ENV</span> === <span class="string">&#x27;production&#x27;</span> ? <span class="string">&#x27;warn&#x27;</span> : <span class="string">&#x27;off&#x27;</span>,</span><br><span class="line">    <span class="comment">// 在方法的形参 () 之前，是否必须有空格</span></span><br><span class="line">    <span class="comment">// always代表需要这个空格，不满足这个规则会报一个warn警告</span></span><br><span class="line">    <span class="string">&quot;space-before-function-paren&quot;</span>: [<span class="string">&quot;warn&quot;</span>, <span class="string">&quot;always&quot;</span>],</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注意：只要修改了配置文件，都需要重启服务器</p>
+<h3 id="配置VSCode"><a href="#配置VSCode" class="headerlink" title="配置VSCode"></a>配置VSCode</h3><p>我们不能保证写的代码完全符合ESLint的要求，所以可以装一些插件，在保存文件的时候自动对文件进行格式化。</p>
+<ul>
+<li><p>ESLint插件<br>装过之后需要再配置文件中加一下配置项：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 设置 -- settingsjson</span></span><br><span class="line"><span class="comment">// ESLint 插件的配置</span></span><br><span class="line"><span class="string">&quot;editor.codeActionsOnSave&quot;</span>: &#123;</span><br><span class="line">    <span class="comment">// 老师是这样的</span></span><br><span class="line">    <span class="string">&quot;source.fixAll&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="comment">// 搜的一个是这样</span></span><br><span class="line">    <span class="string">&quot;source.fixAll.eslint&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Prettier - Code formatter 插件<br>在<code>C:\Users\lenovo</code>目录下新建<code>.prettierrc</code>配置文件<br>填入 <code>&#123;&quot;semi&quot;: false, &quot;singleQuote&quot;: true, &quot;printWidth&quot;: 300, &quot;bracketSpacing&quot;: true&#125;</code><br>然后在vscode设置 – settings.json里面添加如下配置：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&quot;prettier.configPath&quot;</span>: <span class="string">&quot;C:\\Users\\lenovo\\.prettierrc&quot;</span>,</span><br><span class="line"><span class="string">&quot;eslint.alwaysShowStatus&quot;</span>: <span class="literal">true</span>,</span><br><span class="line"><span class="string">&quot;prettier.trailingComma&quot;</span>: <span class="string">&quot;none&quot;</span>,</span><br><span class="line"><span class="string">&quot;prettier.semi&quot;</span>: <span class="literal">false</span>,</span><br><span class="line"><span class="comment">// 每行文字个数超过此限制将会被迫换行</span></span><br><span class="line"><span class="string">&quot;prettier.printWidth&quot;</span>: <span class="number">300</span>,</span><br><span class="line"><span class="comment">// 使用单引号替换双引号</span></span><br><span class="line"><span class="string">&quot;prettier.singleQuote&quot;</span>: <span class="literal">true</span>,</span><br><span class="line"><span class="string">&quot;prettier.arrowParens&quot;</span>: <span class="string">&quot;avoid&quot;</span>,</span><br><span class="line"><span class="comment">// 设置vue文件中，HTML代码的格式化插件</span></span><br><span class="line"><span class="string">&quot;vetur.format.defaultFormatter.html&quot;</span>: <span class="string">&quot;js-beautify-html&quot;</span>,</span><br><span class="line"><span class="string">&quot;vetur.ignoreProjectWarning&quot;</span>: <span class="literal">true</span>,</span><br><span class="line"><span class="string">&quot;vetur.format.defaultFormatterOptions&quot;</span>: &#123;</span><br><span class="line">  <span class="string">&quot;js-beautify-html&quot;</span>: &#123;</span><br><span class="line">    <span class="string">&quot;wrap_attributes&quot;</span>: <span class="string">&quot;false&quot;</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="string">&quot;prettier&quot;</span>: &#123;</span><br><span class="line">    <span class="string">&quot;trailingComma&quot;</span>: <span class="string">&quot;none&quot;</span>,</span><br><span class="line">    <span class="string">&quot;semi&quot;</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="string">&quot;singleQuote&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="string">&quot;arrowParens&quot;</span>: <span class="string">&quot;avoid&quot;</span>,</span><br><span class="line">    <span class="string">&quot;printWidth&quot;</span>: <span class="number">300</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;,</span><br><span class="line"><span class="comment">// ESLint 插件的配置</span></span><br><span class="line"><span class="string">&quot;editor.codeActionsOnSave&quot;</span>: &#123;</span><br><span class="line">  <span class="string">&quot;source.fixAll&quot;</span>: <span class="literal">true</span></span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>注意点：</p>
+<ol>
+<li>开发哪个项目，就用vscode直接打开该项目目录(保证两个插件能够正常生效)</li>
+<li>在vue文件 – ctrl + s 能够格式化文件<blockquote>
+<p>前提：在.vue文件右键 – 选择“使用..格式化文档&#x2F;格式化文档的方式” – 点击 配置默认格式化程序，点击 Prettier 将其设置为默认值<br>问题：设置默认格式后保存出现逗号的，在setting.json文件中 通过ctrl+f 搜索找到editor.formatOnSave，将其注释就可以解决这个问题</p>
+</blockquote>
+</li>
+</ol>
+</li>
+</ul>
+<h3 id="项目初始化"><a href="#项目初始化" class="headerlink" title="项目初始化"></a><font color="red">项目初始化</font></h3><p>每次新建项目，如果开启了ESLint，一定要进行下面配置，便于我们开发：</p>
+<ol>
+<li>配置默认格式化程序为prettier<br> 在项目中，任意某文件中 右键 – 使用…格式化文档 – 配置默认格式化程序 – prettier</li>
+<li>ESLint配置文件添加配置以下两条规则： <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// .eslintrc.js</span></span><br><span class="line"><span class="attr">rules</span>: &#123;</span><br><span class="line">    <span class="comment">// 方法名 和 括号 之间不强制加空格</span></span><br><span class="line">    <span class="comment">// 注意这里none不是正确的值，应该是never！！！</span></span><br><span class="line">    <span class="string">&#x27;space-before-function-paren&#x27;</span>: [<span class="string">&#x27;warn&#x27;</span>, <span class="string">&#x27;never&#x27;</span>],</span><br><span class="line">    <span class="comment">// 组件名可以使用单个单词</span></span><br><span class="line">    <span class="string">&#x27;vue/multi-word-component-names&#x27;</span>: <span class="number">0</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><strong>关于不符合ESLint格式的显示标记问题</strong>，如果我们添加的规则，值的格式错误，或者输入的是没有的值，会不起作用。如none就不是正确的值。</p>
+</blockquote>
+</li>
+</ol>
+<h2 id="拓展"><a href="#拓展" class="headerlink" title="拓展"></a>拓展</h2><h3 id="自定义事件使用-event"><a href="#自定义事件使用-event" class="headerlink" title="自定义事件使用$event"></a>自定义事件使用$event</h3><p>内置变量<code>$event</code>，是在我们需要向绑定事件传递参数时候，用来接收事件对象e使用的<br><code>@click=&quot;add(1,$event)&quot; --- add(n,e)&#123;&#125;</code></p>
+<p><font color="green">只要自定义事件里面接收到的值被覆盖了，就可以考虑使用<code>$event</code></font></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;<span class="title class_">Count</span> @num-change=<span class="string">&quot;getNewNum(item,$event)&quot;</span>&gt;&lt;/<span class="title class_">Count</span>&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 这里的自定义事件</span></span><br><span class="line"><span class="title function_">getNewNum</span>(<span class="params">item,val</span>)&#123; </span><br><span class="line">    item.<span class="property">goods_count</span> = val;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="关于main-js中的小提示"><a href="#关于main-js中的小提示" class="headerlink" title="关于main.js中的小提示"></a>关于main.js中的小提示</h3><p>main.js的第四行：<br><code>Vue.config.productionTip = false</code><br>默认是false，改为true会在终端给出一个温馨提示：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">You are running Vue in development mode.</span><br><span class="line">Make sure to turn on production mode when deploying for production.</span><br><span class="line">See more tips at https://vuejs.org/guide/deployment.html</span><br></pre></td></tr></table></figure>
+<p>把这句代码删了就相当于是true</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>请我一杯咖啡吧！</div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/tsukimiya.github.io/images/wechatpay.jpg" alt="Ayu 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/tsukimiya.github.io/images/alipay.jpg" alt="Ayu 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tsukimiya.github.io/tags/Vue/" rel="tag"># Vue</a>
+              <a href="/tsukimiya.github.io/tags/Vue2/" rel="tag"># Vue2</a>
+              <a href="/tsukimiya.github.io/tags/%E5%8A%A8%E6%80%81%E7%BB%84%E4%BB%B6/" rel="tag"># 动态组件</a>
+              <a href="/tsukimiya.github.io/tags/%E6%8F%92%E6%A7%BD/" rel="tag"># 插槽</a>
+              <a href="/tsukimiya.github.io/tags/%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8C%87%E4%BB%A4/" rel="tag"># 自定义指令</a>
+              <a href="/tsukimiya.github.io/tags/ESLint/" rel="tag"># ESLint</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/tsukimiya.github.io/2024/04/30/Vue2/5.ref%E5%BC%95%E7%94%A8DOM%E5%85%83%E7%B4%A0%E5%92%8C%E7%BB%84%E4%BB%B6%E5%AE%9E%E4%BE%8B/" rel="prev" title="ref引用DOM元素和组件实例">
+                  <i class="fa fa-angle-left"></i> ref引用DOM元素和组件实例
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/tsukimiya.github.io/2024/05/02/Vue2/7.%E8%B7%AF%E7%94%B1%EF%BC%88vue-router%EF%BC%89/" rel="next" title="路由(vue-router)">
+                  路由(vue-router) <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="waline"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Ayu</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">92k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">1:24</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="https://cdnjs.cloudflare.com/ajax/libs/ribbon.js/1.0.2/ribbon.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/tsukimiya.github.io/js/comments.js"></script><script src="/tsukimiya.github.io/js/utils.js"></script><script src="/tsukimiya.github.io/js/motion.js"></script><script src="/tsukimiya.github.io/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/tsukimiya.github.io/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+<script class="next-config" data-name="waline" type="application/json">{"lang":"zh-CN","enable":true,"serverURL":"https://waline.vercel.app","cssUrl":"https://unpkg.com/@waline/client@v2/dist/waline.css","commentCount":true,"pageview":false,"locale":{"placeholder":"Leave Something, message or money"},"emoji":["https://unpkg.com/@waline/emojis@1.0.1/tieba"],"meta":["nick","mail","link"],"requiredMeta":["nick"],"wordLimit":0,"login":"disable","pageSize":10,"el":"#waline","comment":true,"libUrl":"//unpkg.com/@waline/client@v2/dist/waline.js","path":"/tsukimiya.github.io/2024/05/01/Vue2/6.vue%E7%BB%84%E4%BB%B6%E9%AB%98%E7%BA%A7%E7%94%A8%E6%B3%95%20-%20%E5%8A%A8%E6%80%81%E7%BB%84%E4%BB%B6&%E6%8F%92%E6%A7%BD&%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8C%87%E4%BB%A4&ESlint/"}</script>
+<link rel="stylesheet" href="https://unpkg.com/@waline/client@v2/dist/waline.css">
+<script>
+document.addEventListener('page:loaded', () => {
+  NexT.utils.loadComments(CONFIG.waline.el).then(() =>
+    NexT.utils.getScript(CONFIG.waline.libUrl, { condition: window.Waline })
+  ).then(() => 
+    Waline.init(Object.assign({}, CONFIG.waline,{ el: document.querySelector(CONFIG.waline.el) }))
+  );
+});
+</script>
+
+</body>
+</html>
