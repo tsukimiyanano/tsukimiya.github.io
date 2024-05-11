@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="icon" href="/tsukimiya.github.io/images/Study.ico">
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script> -->
+  <script src="js/pdf.3.11.174.min.js"></script>
+</head>
+<body>
+  <!-- 为 PDF 文件的预览创建一个 DOM 容器 -->
+  <div id="pdf-container" style="width: 100%; height: 800px;"></div>
+  <div class="describe">失败了</div>
+  <script>
+    // 设置worker源路径
+    // PDFJS.workerSrc = 'js/pdf.3.11.174.min.js';
+    pdfjsLib.workerSrc = 'js/pdf.worker.js';
+
+    // 加载 PDF 文件并渲染到创建的容器中
+    pdfjsLib.getDocument(' /tsukimiya.github.io/custom/pages/files/TS.pdf').promise.then(function (pdf) {
+        var container = document.getElementById('pdf-container');
+        var viewer = new pdfjsViewer.PDFViewer({
+          container: container
+        });
+        pdfjsLib.getDocument(' /tsukimiya.github.io/custom/pages/files/TS.pdf').promise.then(function (pdfDoc_) {
+          pdfDoc = pdfDoc_;
+          viewer.setDocument(pdfDoc);
+          viewer.currentPageNumber = 1;
+        });
+      });
+  </script>
+</body>
+</html>
