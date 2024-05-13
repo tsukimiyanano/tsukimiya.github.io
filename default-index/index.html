@@ -153,7 +153,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/tsukimiya.github.io/archives/">
-          <span class="site-state-item-count">19</span>
+          <span class="site-state-item-count">20</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -164,7 +164,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tsukimiya.github.io/tags/">
-        <span class="site-state-item-count">52</span>
+        <span class="site-state-item-count">57</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -189,6 +189,326 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://tsukimiyanano.github.io/tsukimiya.github.io/2024/05/13/vue3/4.vue3%E8%B7%AF%E7%94%B1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/tsukimiya.github.io/images/avatar.jpg">
+      <meta itemprop="name" content="Ayu">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ayu's Study Blog">
+      <meta itemprop="description" content="你们怎么能这么卷！！">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Ayu's Study Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/tsukimiya.github.io/2024/05/13/vue3/4.vue3%E8%B7%AF%E7%94%B1/" class="post-title-link" itemprop="url">vue3路由</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2024-05-13 10:50:57 / 修改时间：13:58:01" itemprop="dateCreated datePublished" datetime="2024-05-13T10:50:57+08:00">2024-05-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/tsukimiya.github.io/categories/Vue/" itemprop="url" rel="index"><span itemprop="name">Vue</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/tsukimiya.github.io/categories/Vue/Vue3/" itemprop="url" rel="index"><span itemprop="name">Vue3</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="far fa-comment"></i>
+    </span>
+    <span class="post-meta-item-text">Waline：</span>
+  
+    <a title="waline" href="/tsukimiya.github.io/2024/05/13/vue3/4.vue3%E8%B7%AF%E7%94%B1/#waline" itemprop="discussionUrl">
+      <span class="post-comments-count waline-comment-count" data-path="/tsukimiya.github.io/2024/05/13/vue3/4.vue3%E8%B7%AF%E7%94%B1/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>10k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>10 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <center style="margin:-30px 0 -60px;transform:translateY(-30px)">
+<a target="_blank" rel="noopener" href="https://router.vuejs.org/zh/introduction.html">Vue Router官方文档</a>
+</center>
+
+<h1 id="对路由的理解"><a href="#对路由的理解" class="headerlink" title="对路由的理解"></a>对路由的理解</h1><img src="/tsukimiya.github.io/images/vue3/路由的理解.png" alt="路由的理解" style="zoom:20%;border-radius:40px" /> 
+
+<h1 id="基本切换效果"><a href="#基本切换效果" class="headerlink" title="基本切换效果"></a>基本切换效果</h1><ul>
+<li><p><code>Vue3</code>中要使用<code>vue-router</code>的最新版本，目前是<code>4</code>版本。</p>
+</li>
+<li><p>路由配置文件代码如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;createRouter,createWebHistory&#125; <span class="keyword">from</span> <span class="string">&#x27;vue-router&#x27;</span></span><br><span class="line"><span class="keyword">import</span> <span class="title class_">Home</span> <span class="keyword">from</span> <span class="string">&#x27;@/pages/Home.vue&#x27;</span></span><br><span class="line"><span class="keyword">import</span> <span class="title class_">News</span> <span class="keyword">from</span> <span class="string">&#x27;@/pages/News.vue&#x27;</span></span><br><span class="line"><span class="keyword">import</span> <span class="title class_">About</span> <span class="keyword">from</span> <span class="string">&#x27;@/pages/About.vue&#x27;</span></span><br><span class="line"><span class="comment">// 创建路由器</span></span><br><span class="line"><span class="keyword">const</span> router = <span class="title function_">createRouter</span>(&#123;</span><br><span class="line">	<span class="attr">history</span>:<span class="title function_">createWebHistory</span>(),<span class="comment">// 路由器工作模式：hash模式/history模式</span></span><br><span class="line">	<span class="attr">routes</span>:[</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">path</span>:<span class="string">&#x27;/home&#x27;</span>,</span><br><span class="line">      <span class="attr">component</span>:<span class="title class_">Home</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">path</span>:<span class="string">&#x27;/news&#x27;</span>,</span><br><span class="line">      <span class="attr">component</span>:<span class="title class_">News</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">path</span>:<span class="string">&#x27;/about&#x27;</span>,</span><br><span class="line">      <span class="attr">component</span>:<span class="title class_">About</span></span><br><span class="line">    &#125;</span><br><span class="line">	]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> router</span><br></pre></td></tr></table></figure></li>
+</ul>
+<ul>
+<li><code>main.ts</code>代码如下：<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 引入路由器</span></span><br><span class="line"><span class="keyword">import</span> router <span class="keyword">from</span> <span class="string">&#x27;./router/index&#x27;</span> </span><br><span class="line"><span class="keyword">const</span> app = <span class="title function_">createApp</span>(<span class="title class_">App</span>) <span class="comment">// 创建一个应用</span></span><br><span class="line">app.<span class="title function_">use</span>(router) <span class="comment">// 使用路由器 </span></span><br><span class="line"></span><br><span class="line">app.<span class="title function_">mount</span>(<span class="string">&#x27;#app&#x27;</span>) <span class="comment">// 挂载整个应用到app容器中</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<ul>
+<li><p><code>App.vue</code>代码如下</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;app&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h2</span> <span class="attr">class</span>=<span class="string">&quot;title&quot;</span>&gt;</span>Vue路由测试<span class="tag">&lt;/<span class="name">h2</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 导航区 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;navigate&quot;</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">RouterLink</span> <span class="attr">to</span>=<span class="string">&quot;/home&quot;</span> <span class="attr">active-class</span>=<span class="string">&quot;active&quot;</span>&gt;</span>首页<span class="tag">&lt;/<span class="name">RouterLink</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">RouterLink</span> <span class="attr">to</span>=<span class="string">&quot;/news&quot;</span> <span class="attr">active-class</span>=<span class="string">&quot;active&quot;</span>&gt;</span>新闻<span class="tag">&lt;/<span class="name">RouterLink</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">RouterLink</span> <span class="attr">to</span>=<span class="string">&quot;/about&quot;</span> <span class="attr">active-class</span>=<span class="string">&quot;active&quot;</span>&gt;</span>关于<span class="tag">&lt;/<span class="name">RouterLink</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- 展示区 --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;main-content&quot;</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">RouterView</span>&gt;</span><span class="tag">&lt;/<span class="name">RouterView</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">lang</span>=<span class="string">&quot;ts&quot;</span> <span class="attr">setup</span> <span class="attr">name</span>=<span class="string">&quot;App&quot;</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">  <span class="keyword">import</span> &#123;<span class="title class_">RouterLink</span>,<span class="title class_">RouterView</span>&#125; <span class="keyword">from</span> <span class="string">&#x27;vue-router&#x27;</span>  </span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h1 id="两个注意点"><a href="#两个注意点" class="headerlink" title="两个注意点"></a>两个注意点</h1><blockquote>
+<ol>
+<li><p>路由组件通常存放在<code>pages</code> 或 <code>views</code>文件夹，一般组件通常存放在<code>components</code>文件夹。</p>
+</li>
+<li><p>通过点击导航，视觉效果上“消失” 了的路由组件，默认是被<strong>卸载</strong>掉的，需要的时候再去<strong>挂载</strong>。</p>
+</li>
+</ol>
+</blockquote>
+<h1 id="路由器工作模式"><a href="#路由器工作模式" class="headerlink" title="路由器工作模式"></a>路由器工作模式</h1><blockquote>
+<p>一般，后台管理项目，不需要考虑seo，直接用hash模式<br>前台项目，to C的，直接给客户用的，用history模式</p>
+</blockquote>
+<ol>
+<li><code>history</code>模式</li>
+</ol>
+<blockquote>
+<p>优点：<code>URL</code>更加美观，不带有<code>#</code>，更接近传统的网站<code>URL</code>。</p>
+<p>缺点：后期<strong>项目上线</strong>，<strong>需要服务端配合处理路径问题</strong>，否则刷新会有<code>404</code>错误。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> router = <span class="title function_">createRouter</span>(&#123;</span><br><span class="line">  	<span class="attr">history</span>:<span class="title function_">createWebHistory</span>(), <span class="comment">//history模式</span></span><br><span class="line">  	<span class="comment">/******/</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+</blockquote>
+<ol start="2">
+<li><code>hash</code>模式</li>
+</ol>
+<blockquote>
+<p>优点：兼容性更好，因为不需要服务器端处理路径。</p>
+<p>缺点：<code>URL</code>带有<code>#</code>不太美观，且在<code>SEO</code><strong>优化方面相对较差</strong>。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> router = <span class="title function_">createRouter</span>(&#123;</span><br><span class="line">  	<span class="attr">history</span>:<span class="title function_">createWebHashHistory</span>(), <span class="comment">//hash模式</span></span><br><span class="line">  	<span class="comment">/******/</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+</blockquote>
+<h1 id="to的两种写法"><a href="#to的两种写法" class="headerlink" title="to的两种写法"></a>to的两种写法</h1><p>字符串形式 和 <strong>对象形式</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 第一种：to的字符串写法 --&gt;</span><br><span class="line">&lt;router-link active-class=&quot;active&quot; to=&quot;/home&quot;&gt;主页&lt;/router-link&gt;</span><br><span class="line"></span><br><span class="line">&lt;!-- 第二种：to的对象写法 --&gt;</span><br><span class="line">&lt;router-link active-class=&quot;active&quot; :to=&quot;&#123;path:&#x27;/home&#x27;&#125;&quot;&gt;Home&lt;/router-link&gt;</span><br></pre></td></tr></table></figure>
+<p>大部分项目，不是这么写路由的，而是直接 <strong>遍历的动态路由</strong>，<strong>这个时候对象尤其重要的</strong></p>
+<h1 id="命名路由"><a href="#命名路由" class="headerlink" title="命名路由"></a>命名路由</h1><p>作用：可以简化路由跳转及传参（后面就讲）。</p>
+<p>给路由规则命名：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">routes</span>:[</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">name</span>:<span class="string">&#x27;zhuye&#x27;</span>,</span><br><span class="line">    <span class="attr">path</span>:<span class="string">&#x27;/home&#x27;</span>,</span><br><span class="line">    <span class="attr">component</span>:<span class="title class_">Home</span></span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">name</span>:<span class="string">&#x27;xinwen&#x27;</span>,</span><br><span class="line">    <span class="attr">path</span>:<span class="string">&#x27;/news&#x27;</span>,</span><br><span class="line">    <span class="attr">component</span>:<span class="title class_">News</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">name</span>:<span class="string">&#x27;guanyu&#x27;</span>,</span><br><span class="line">    <span class="attr">path</span>:<span class="string">&#x27;/about&#x27;</span>,</span><br><span class="line">    <span class="attr">component</span>:<span class="title class_">About</span></span><br><span class="line">  &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<p>跳转路由：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!--简化前：需要写完整的路径（to的字符串写法） --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">router-link</span> <span class="attr">to</span>=<span class="string">&quot;/news/detail&quot;</span>&gt;</span>跳转<span class="tag">&lt;/<span class="name">router-link</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!--简化后：直接通过名字跳转（to的对象写法配合name属性） --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">router-link</span> <span class="attr">:to</span>=<span class="string">&quot;&#123;name:&#x27;guanyu&#x27;&#125;&quot;</span>&gt;</span>跳转<span class="tag">&lt;/<span class="name">router-link</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="嵌套路由"><a href="#嵌套路由" class="headerlink" title="嵌套路由"></a>嵌套路由</h1><ol>
+<li><p>编写<code>News</code>的子路由：<code>Detail.vue</code></p>
+</li>
+<li><p>配置路由规则，使用<code>children</code>配置项：</p>
+ <figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> router = <span class="title function_">createRouter</span>(&#123;</span><br><span class="line">  <span class="attr">history</span>:<span class="title function_">createWebHistory</span>(),</span><br><span class="line">  <span class="attr">routes</span>:[</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">name</span>:<span class="string">&#x27;zhuye&#x27;</span>,</span><br><span class="line">      <span class="attr">path</span>:<span class="string">&#x27;/home&#x27;</span>,</span><br><span class="line">      <span class="attr">component</span>:<span class="title class_">Home</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">name</span>:<span class="string">&#x27;xinwen&#x27;</span>,</span><br><span class="line">      <span class="attr">path</span>:<span class="string">&#x27;/news&#x27;</span>,</span><br><span class="line">      <span class="attr">component</span>:<span class="title class_">News</span>,</span><br><span class="line">      <span class="attr">children</span>:[</span><br><span class="line">        &#123;</span><br><span class="line">          <span class="attr">name</span>:<span class="string">&#x27;xiang&#x27;</span>,</span><br><span class="line">          <span class="attr">path</span>:<span class="string">&#x27;detail&#x27;</span>,</span><br><span class="line">          <span class="attr">component</span>:<span class="title class_">Detail</span></span><br><span class="line">        &#125;</span><br><span class="line">      ]</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">name</span>:<span class="string">&#x27;guanyu&#x27;</span>,</span><br><span class="line">      <span class="attr">path</span>:<span class="string">&#x27;/about&#x27;</span>,</span><br><span class="line">      <span class="attr">component</span>:<span class="title class_">About</span></span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> router</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>跳转路由（记得要加完整路径）：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">router-link</span> <span class="attr">to</span>=<span class="string">&quot;/news/detail&quot;</span>&gt;</span>xxxx<span class="tag">&lt;/<span class="name">router-link</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 或 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">router-link</span> <span class="attr">:to</span>=<span class="string">&quot;&#123;path:&#x27;/news/detail&#x27;&#125;&quot;</span>&gt;</span>xxxx<span class="tag">&lt;/<span class="name">router-link</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>记得去<code>Home</code>组件中预留一个<code>&lt;router-view&gt;</code></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;news&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">nav</span> <span class="attr">class</span>=<span class="string">&quot;news-list&quot;</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">RouterLink</span> <span class="attr">v-for</span>=<span class="string">&quot;news in newsList&quot;</span> <span class="attr">:key</span>=<span class="string">&quot;news.id&quot;</span> <span class="attr">:to</span>=<span class="string">&quot;&#123;path:&#x27;/news/detail&#x27;&#125;&quot;</span>&gt;</span></span><br><span class="line">        &#123;&#123;news.name&#125;&#125;</span><br><span class="line">      <span class="tag">&lt;/<span class="name">RouterLink</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">nav</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;news-detail&quot;</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">RouterView</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+<h1 id="路由传参-动态路由"><a href="#路由传参-动态路由" class="headerlink" title="路由传参 &#x2F; 动态路由"></a>路由传参 &#x2F; 动态路由</h1><h2 id="query参数"><a href="#query参数" class="headerlink" title="query参数"></a>query参数</h2><ol>
+<li><p>传递参数</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 跳转并携带query参数（to的字符串写法） --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">router-link</span> <span class="attr">to</span>=<span class="string">&quot;/news/detail?a=1&amp;b=2&amp;content=欢迎你&quot;</span>&gt;</span></span><br><span class="line">	跳转</span><br><span class="line"><span class="tag">&lt;/<span class="name">router-link</span>&gt;</span></span><br><span class="line">				</span><br><span class="line"><span class="comment">&lt;!-- 跳转并携带query参数（to的对象写法） --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">RouterLink</span> </span></span><br><span class="line"><span class="tag">  <span class="attr">:to</span>=<span class="string">&quot;&#123;</span></span></span><br><span class="line"><span class="string"><span class="tag">    //name:&#x27;xiang&#x27;, //用name也可以跳转</span></span></span><br><span class="line"><span class="string"><span class="tag">    path:&#x27;/news/detail&#x27;,</span></span></span><br><span class="line"><span class="string"><span class="tag">    query:&#123;</span></span></span><br><span class="line"><span class="string"><span class="tag">      id:news.id,</span></span></span><br><span class="line"><span class="string"><span class="tag">      title:news.title,</span></span></span><br><span class="line"><span class="string"><span class="tag">      content:news.content</span></span></span><br><span class="line"><span class="string"><span class="tag">    &#125;</span></span></span><br><span class="line"><span class="string"><span class="tag">  &#125;&quot;</span></span></span><br><span class="line"><span class="tag">&gt;</span></span><br><span class="line">  &#123;&#123;news.title&#125;&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">RouterLink</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>接收参数：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;useRoute&#125; <span class="keyword">from</span> <span class="string">&#x27;vue-router&#x27;</span></span><br><span class="line"><span class="keyword">const</span> route = <span class="title function_">useRoute</span>()</span><br><span class="line"><span class="comment">// 打印query参数</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(route.<span class="property">query</span>)</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="params参数"><a href="#params参数" class="headerlink" title="params参数"></a>params参数</h2><blockquote>
+<p>用这种方式传参会被同事骂？因为它的字符串写法可读性很差？XDD<br>不过对象写法和query参数也没大差吧？而且开启路由传参也比较方便，为什么呢？<br>不过需要占位，这里也比query要麻烦，而且如果是可以不传的参数还要加？号</p>
+</blockquote>
+<ol>
+<li><p>传递参数</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 跳转并携带params参数（to的字符串写法） --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">RouterLink</span> <span class="attr">:to</span>=<span class="string">&quot;`/news/detail/001/新闻001/内容001`&quot;</span>&gt;</span>&#123;&#123;news.title&#125;&#125;<span class="tag">&lt;/<span class="name">RouterLink</span>&gt;</span></span><br><span class="line">				</span><br><span class="line"><span class="comment">&lt;!-- 跳转并携带params参数（to的对象写法） --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">RouterLink</span> </span></span><br><span class="line"><span class="tag">  <span class="attr">:to</span>=<span class="string">&quot;&#123;</span></span></span><br><span class="line"><span class="string"><span class="tag">    name:&#x27;xiang&#x27;, //用name跳转,不能用path，会报错</span></span></span><br><span class="line"><span class="string"><span class="tag">    params:&#123;</span></span></span><br><span class="line"><span class="string"><span class="tag">      id:news.id,</span></span></span><br><span class="line"><span class="string"><span class="tag">      title:news.title,</span></span></span><br><span class="line"><span class="string"><span class="tag">      content:news.title</span></span></span><br><span class="line"><span class="string"><span class="tag">    &#125;</span></span></span><br><span class="line"><span class="string"><span class="tag">  &#125;&quot;</span></span></span><br><span class="line"><span class="tag">&gt;</span></span><br><span class="line">  &#123;&#123;news.title&#125;&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">RouterLink</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>接收参数：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;useRoute&#125; <span class="keyword">from</span> <span class="string">&#x27;vue-router&#x27;</span></span><br><span class="line"><span class="keyword">const</span> route = <span class="title function_">useRoute</span>()</span><br><span class="line"><span class="comment">// 打印params参数</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(route.<span class="property">params</span>)</span><br></pre></td></tr></table></figure></li>
+</ol>
+<ul>
+<li>需要提前在路由规则占位 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">path</span>:<span class="string">&#x27;/news&#x27;</span>,</span><br><span class="line">  <span class="attr">component</span>: <span class="title class_">News</span>,</span><br><span class="line">  <span class="attr">children</span>:[</span><br><span class="line">    &#123;<span class="attr">name</span>:<span class="string">&#x27;xiang&#x27;</span>,<span class="attr">path</span>:<span class="string">&#x27;detail/:id/:title/:content&#x27;</span>,<span class="attr">component</span>: <span class="title class_">Detail</span>&#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>如果是可传可不传的参数，需要在规则中加？，否则会报错 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// content 可不传</span></span><br><span class="line"><span class="attr">children</span>:[</span><br><span class="line">  &#123;<span class="attr">name</span>:<span class="string">&#x27;xiang&#x27;</span>,<span class="attr">path</span>:<span class="string">&#x27;detail/:id/:title/:content?&#x27;</span>,<span class="attr">component</span>: <span class="title class_">Detail</span>&#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure></li>
+</ul>
+<blockquote>
+<p>备注1：传递<code>params</code>参数时，若使用<code>to</code>的对象写法，必须使用<code>name</code>配置项，不能用<code>path</code>。</p>
+<p>备注2：传递<code>params</code>参数时，需要提前在规则中占位。</p>
+</blockquote>
+<h1 id="路由的props配置"><a href="#路由的props配置" class="headerlink" title="路由的props配置"></a>路由的props配置</h1><p>作用：让路由组件更方便的收到参数（可以将路由参数作为<code>props</code>传给组件）<br>写法：params参数用 布尔值写法； query参数用 函数写法</p>
+<blockquote>
+<p>一般组件是直接写标签的，可以直接传递props<br>  路由组件(这里是Detail)都没有机会写标签，所以通过这种方式来传props</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">name</span>:<span class="string">&#x27;xiang&#x27;</span>,</span><br><span class="line">  <span class="attr">path</span>:<span class="string">&#x27;detail/:id/:title/:content&#x27;</span>, <span class="comment">// params参数的占位规则写法</span></span><br><span class="line">  <span class="attr">component</span>:<span class="title class_">Detail</span>, <span class="comment">// 这里就相当于 底层写了一个 &lt;Detail/&gt;</span></span><br><span class="line">  <span class="comment">// 下面的prop配置就相当于 &lt;Detail :id=?? :title=?? :content=?? /&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// 第一种写法：</span></span><br><span class="line">  <span class="comment">// props的布尔值写法，作用：把收到了每一组 params参数 ，作为props传给Detail组件</span></span><br><span class="line">  <span class="comment">// 只能处理params参数，也推荐params时候使用这种方式</span></span><br><span class="line">  <span class="comment">// props:true </span></span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 第二种写法：</span></span><br><span class="line">  <span class="comment">// props的函数写法，返回一个对象</span></span><br><span class="line">  <span class="comment">// 作用：把 返回的对象中 每一组key-value 作为 props 传给Detail组件</span></span><br><span class="line">  <span class="title function_">props</span>(<span class="params">route</span>)&#123; <span class="comment">// 可以随意命名，但都是route对象</span></span><br><span class="line">    <span class="keyword">return</span> route.<span class="property">query</span> <span class="comment">// 或params</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 第三种写法： （极少用）</span></span><br><span class="line">  <span class="comment">// props的对象写法，作用：把对象中的每一组key-value作为props传给Detail组件</span></span><br><span class="line">  <span class="comment">// props:&#123;a:1,b:2,c:3&#125;,  // 把参数写死了，没有意义，所以写的非常少</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="replace属性"><a href="#replace属性" class="headerlink" title="replace属性"></a>replace属性</h1><ol>
+<li><p>作用：控制路由跳转时操作浏览器历史记录的模式。</p>
+</li>
+<li><p>浏览器的历史记录有两种写入方式：分别为<code>push</code>和<code>replace</code>：</p>
+<ul>
+<li><code>push</code>是追加历史记录（默认值）。</li>
+<li><code>replace</code>是替换当前记录。（登陆页面应该会用这个）</li>
+</ul>
+</li>
+<li><p>开启<code>replace</code>模式：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">RouterLink</span> <span class="attr">replace</span>&gt;</span>News<span class="tag">&lt;/<span class="name">RouterLink</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+<h1 id="声明式导航-编程式导航"><a href="#声明式导航-编程式导航" class="headerlink" title="声明式导航&amp;编程式导航"></a>声明式导航&amp;编程式导航</h1><p>编程式路由导航：脱离<code>&lt;RouterLink&gt;</code>实现路由跳转 （<strong>开发常用</strong>）<br>路由组件的两个重要的属性：<code>$route</code>和<code>$router</code>变成了两个<code>hooks</code></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th align="center">声明式</th>
+<th align="center">编程式</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>导航到不同的位置</td>
+<td align="center"><code>&lt;router-link :to=&quot;...&quot;&gt;</code></td>
+<td align="center"><code>router.push(...)</code></td>
+</tr>
+<tr>
+<td>替换当前位置</td>
+<td align="center"><code>&lt;router-link :to=&quot;...&quot; replace&gt;</code></td>
+<td align="center"><code>router.replace(...)</code></td>
+</tr>
+<tr>
+<td>横跨历史</td>
+<td align="center"><center>\</center></td>
+<td align="center"><code>router.go(n)</code></td>
+</tr>
+</tbody></table>
+<ul>
+<li><code>router.go(n)</code>：横跨历史。采用一个整数作为参数，表示在历史堆栈中<strong>前进或后退多少步</strong>，类似于 <code>window.history.go(n)</code>。</li>
+<li><code>n = 1</code>时，等同于：<code>router.forward()</code></li>
+<li><code>n = -1</code>时，等同于：<code>router.back()</code></li>
+</ul>
+<blockquote>
+<p><code>router.push</code>、<code>router.replace</code> 和 <code>router.go</code> 是 <code>window.history.pushState</code>、<code>window.history.replaceState</code> 和 <code>window.history.go</code> 的翻版，它们确实模仿了 <code>window.history</code> 的 API。<br>值得一提的是，无论在创建路由器实例时传递什么 history 配置(history模式，和hash模式 的路由器工作模式)，Vue Router 的导航方法 (push、replace、go) 都能始终正常工作。</p>
+</blockquote>
+<p>应用场景：</p>
+<ol>
+<li>符合某些条件才跳转，不是说一点就跳转<blockquote>
+<p>到了10点整，自动跳到秒杀路由；只有登陆成功，自动跳转到个人中心</p>
+</blockquote>
+</li>
+<li>鼠标滑过一个东西跳转(不点)</li>
+<li>还有手机摇一摇跳转</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;useRoute,useRouter&#125; <span class="keyword">from</span> <span class="string">&#x27;vue-router&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> route = <span class="title function_">useRoute</span>()</span><br><span class="line"><span class="keyword">const</span> router = <span class="title function_">useRouter</span>()</span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(route.<span class="property">query</span>)</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(route.<span class="property">parmas</span>)</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(router.<span class="property">push</span>)</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(router.<span class="property">replace</span>)</span><br><span class="line"></span><br><span class="line">router.<span class="title function_">push</span>(<span class="string">&#x27;/news&#x27;</span>) <span class="comment">// to能咋写，push就能咋写 // 1. 字符串写法 2. 对象写法</span></span><br></pre></td></tr></table></figure>
+
+<p>点击button按钮进行路由跳转：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  <span class="language-xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;news&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="comment">&lt;!-- 导航区 --&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">ul</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">li</span> <span class="attr">v-for</span>=<span class="string">&quot;news in newsList&quot;</span> <span class="attr">:key</span>=<span class="string">&quot;news.id&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">button</span> @<span class="attr">click</span>=<span class="string">&quot;showNewsDetail(news)&quot;</span>&gt;</span>查看新闻<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        <span class="tag">&lt;<span class="name">RouterLink</span> <span class="attr">:to</span>=<span class="string">&quot;&#123;...&#125;&quot;</span>&gt;</span>&#123;&#123;news.title&#125;&#125;<span class="tag">&lt;/<span class="name">RouterLink</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="comment">&lt;!-- 展示区 --&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;news-content&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">RouterView</span>&gt;</span><span class="tag">&lt;/<span class="name">RouterView</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">script</span> <span class="attr">setup</span> <span class="attr">lang</span>=<span class="string">&quot;ts&quot;</span> <span class="attr">name</span>=<span class="string">&quot;News&quot;</span>&gt;</span><span class="language-javascript"></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  <span class="keyword">import</span> &#123;reactive&#125; <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  <span class="keyword">import</span> &#123;<span class="title class_">RouterView</span>,<span class="title class_">RouterLink</span>,useRouter&#125; <span class="keyword">from</span> <span class="string">&#x27;vue-router&#x27;</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  <span class="keyword">const</span> newsList = <span class="title function_">reactive</span>([...])</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  <span class="keyword">const</span> router = <span class="title function_">useRouter</span>()</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  <span class="comment">// 定义一个接口</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  interface <span class="title class_">NewsInter</span> &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    <span class="attr">id</span>:string,</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    <span class="attr">title</span>:string,</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    <span class="attr">content</span>:string</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  &#125;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  <span class="comment">// 直接写news会报错：参数news隐式具有any类型(就是不知道news是什么)</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  <span class="comment">// 如果想图方便简单，可以直接：news:any</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  <span class="keyword">function</span> <span class="title function_">showNewsDetail</span>(<span class="params">news:NewsInter</span>)&#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    router.<span class="title function_">replace</span>(&#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">      <span class="attr">name</span>:<span class="string">&#x27;xiang&#x27;</span>,</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">      <span class="attr">query</span>:&#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        <span class="attr">id</span>:news.<span class="property">id</span>,</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        <span class="attr">title</span>:news.<span class="property">title</span>,</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        <span class="attr">content</span>:news.<span class="property">content</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">      &#125;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    &#125;)</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  &#125;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+<p>在vue2中，编程式路由导航，如果重复跳转是报错的，但是vue3里面不会报错</p>
+<h1 id="重定向"><a href="#重定向" class="headerlink" title="重定向"></a>重定向</h1><p>作用：将特定的路径，重新定向到已有路由。</p>
+<ul>
+<li>具体编码：</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">path</span>:<span class="string">&#x27;/&#x27;</span>,</span><br><span class="line">    <span class="attr">redirect</span>:<span class="string">&#x27;/about&#x27;</span></span><br><span class="line">&#125;,</span><br><span class="line">&#123;</span><br><span class="line">  <span class="attr">path</span>:<span class="string">&#x27;/news&#x27;</span>,</span><br><span class="line">  <span class="attr">component</span>: <span class="title class_">News</span>,</span><br><span class="line">  <span class="attr">redirect</span>:<span class="string">&#x27;/news/detail&#x27;</span>, <span class="comment">// 嵌套子路由重定向</span></span><br><span class="line">  <span class="attr">children</span>:[</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">name</span>:<span class="string">&#x27;xiang&#x27;</span>,<span class="attr">path</span>:<span class="string">&#x27;detail/:id?/:title?/:content?&#x27;</span>,<span class="attr">component</span>: <span class="title class_">Detail</span>,</span><br><span class="line">      <span class="title function_">props</span>(<span class="params">route</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> route.<span class="property">params</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="路由进阶"><a href="#路由进阶" class="headerlink" title="路由进阶"></a>路由进阶</h1><p>导航守卫、路由元信息、路由懒加载、路由故障等等<br>参考<a target="_blank" rel="noopener" href="https://router.vuejs.org/zh/introduction.html">官方文档</a></p>
+<h2 id="导航守卫"><a href="#导航守卫" class="headerlink" title="导航守卫"></a>导航守卫</h2><p>vue-router 提供的导航守卫主要用来通过跳转或取消的方式守卫导航。这里有很多方式植入路由导航中：全局的，单个路由独享的，或者组件级的。</p>
+<ol>
+<li>全局前置守卫<br>  当一个导航触发时，全局前置守卫按照创建顺序调用。守卫是异步解析执行，此时<strong>导航在所有守卫 resolve(解析) 完之前一直处于等待中</strong>。<ul>
+<li>参数：<ul>
+<li>to: 即将要进入的目标</li>
+<li>from: 当前导航正要离开的路由<blockquote>
+<p>新版Vue Router移除了next参数，但仍支持使用，因为其是常见的错误来源<br>  确保 next 在任何给定的导航守卫中都被严格调用一次，否则钩子永远都不会被解析或报错。</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li>返回值：<ul>
+<li>false：取消导航，如果浏览器的 URL 改变了，URL 地址会重置到 from 路由对应的地址。</li>
+<li>一个路由地址：如同调用 router.push()，且可以传入诸如 replace: true 或 name: ‘home’ 之类的选项。<br>它会中断当前的导航，同时用相同的 from 创建一个新导航。</li>
+<li>如果什么都没有，undefined 或返回 true，则导航是有效的，并调用下一个导航守卫<blockquote>
+<p>即：<br>return  true 或 undefined(没有返回值默认 为un) ，正常跳转<br>return false，阻止跳转<br>return 字符串 或 对象 （就和router.push()传参一样，也即使和to传参一样）</p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// router/index.ts</span></span><br><span class="line"><span class="keyword">const</span> router = <span class="title function_">createRouter</span>(&#123; ... &#125;)</span><br><span class="line"></span><br><span class="line">router.<span class="title function_">beforeEach</span>(<span class="function">(<span class="params">to, <span class="keyword">from</span></span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;路由前置守卫&quot;</span>,to,<span class="keyword">from</span>);</span><br><span class="line">  <span class="keyword">if</span>(to.<span class="property">path</span> === <span class="string">&#x27;/about&#x27;</span>)&#123;</span><br><span class="line"></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;路由前置守卫触发，从about跳转到news/detail&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;/news/detail&#x27;</span> <span class="comment">// 字符串形式，值是path地址，将用户重定向到新闻</span></span><br><span class="line">    <span class="keyword">return</span> &#123; <span class="attr">name</span>: <span class="string">&#x27;news/detail&#x27;</span> &#125; <span class="comment">// 将用户重定向到新闻页面，对象形式</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;路由前置守卫触发，false取消当前的导航，不跳转&#x27;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span> </span><br><span class="line"></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;路由前置守卫触发，return 对象形式 并传参&#x27;</span>);</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      <span class="attr">name</span>: <span class="string">&#x27;xiang&#x27;</span>,</span><br><span class="line">      <span class="attr">params</span>:&#123;</span><br><span class="line">        <span class="attr">id</span>: <span class="string">&#x27;001&#x27;</span>,</span><br><span class="line">        <span class="attr">title</span>: <span class="string">&#x27;路由前置守卫跳转&#x27;</span>,</span><br><span class="line">        <span class="attr">content</span>:<span class="string">&#x27;跳转成功&#x27;</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>全局前置守卫</strong>是<strong>最常用</strong>的导航守卫，其余还有：全局解析守卫、全局后置钩子、路由独享的守卫、组件内的守卫等，具体使用查看<a target="_blank" rel="noopener" href="https://router.vuejs.org/zh/guide/advanced/navigation-guards.html">官方文档 - 导航守卫</a></p>
+</blockquote>
+<h2 id="完整的导航解析流程"><a href="#完整的导航解析流程" class="headerlink" title="完整的导航解析流程"></a><a target="_blank" rel="noopener" href="https://router.vuejs.org/zh/guide/advanced/navigation-guards.html#%E5%AE%8C%E6%95%B4%E7%9A%84%E5%AF%BC%E8%88%AA%E8%A7%A3%E6%9E%90%E6%B5%81%E7%A8%8B">完整的导航解析流程</a></h2><ol>
+<li>导航被触发。</li>
+<li>在失活的组件里调用 <code>beforeRouteLeave</code> 守卫。</li>
+<li>调用全局的 <code>beforeEach</code> 守卫。</li>
+<li>在重用的组件里调用 <code>beforeRouteUpdate</code> 守卫(2.2+)。</li>
+<li>在路由配置里调用 <code>beforeEnter</code>。</li>
+<li>解析异步路由组件。</li>
+<li>在被激活的组件里调用 <code>beforeRouteEnter</code>。</li>
+<li>调用全局的 <code>beforeResolve</code> 守卫(2.5+)。</li>
+<li>导航被确认。</li>
+<li>调用全局的 <code>afterEach</code> 钩子。</li>
+<li>触发 DOM 更新。</li>
+<li>调用 <code>beforeRouteEnter</code> 守卫中传给 <code>next</code> 的回调函数，创建好的组件实例会作为回调函数的参数传入。</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -2021,200 +2341,6 @@ EMOJI中文网(可搜索)：<a target="_blank" rel="noopener" href="https://www.
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://tsukimiyanano.github.io/tsukimiya.github.io/2024/05/06/ES6/2.Promise/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/tsukimiya.github.io/images/avatar.jpg">
-      <meta itemprop="name" content="Ayu">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Ayu's Study Blog">
-      <meta itemprop="description" content="你们怎么能这么卷！！">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Ayu's Study Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/tsukimiya.github.io/2024/05/06/ES6/2.Promise/" class="post-title-link" itemprop="url">Promise</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2024-05-06 11:15:34 / 修改时间：13:59:04" itemprop="dateCreated datePublished" datetime="2024-05-06T11:15:34+08:00">2024-05-06</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/tsukimiya.github.io/categories/JS/" itemprop="url" rel="index"><span itemprop="name">JS</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/tsukimiya.github.io/categories/JS/ES6/" itemprop="url" rel="index"><span itemprop="name">ES6</span></a>
-        </span>
-    </span>
-
-  
-  
-  <span class="post-meta-item">
-    
-    <span class="post-meta-item-icon">
-      <i class="far fa-comment"></i>
-    </span>
-    <span class="post-meta-item-text">Waline：</span>
-  
-    <a title="waline" href="/tsukimiya.github.io/2024/05/06/ES6/2.Promise/#waline" itemprop="discussionUrl">
-      <span class="post-comments-count waline-comment-count" data-path="/tsukimiya.github.io/2024/05/06/ES6/2.Promise/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>5.4k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>5 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="回调地狱"><a href="#回调地狱" class="headerlink" title="回调地狱"></a>回调地狱</h2><ol>
-<li><p>回调地狱<br>多层回调函数的相互嵌套，就形成了回调地狱。示例代码如:</p>
-<blockquote>
-<p>回调地狱更多导致的问题还是：<strong>难以阅读和维护</strong>，通常出现在异步操作中<br>其和递归问题导致的栈溢出还是不同的，两者是不同的问题</p>
-</blockquote>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">setTimeout</span>( <span class="function">() =&gt;</span>&#123; <span class="comment">//第1层回调函数</span></span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>( <span class="string">&#x27;延时1秒后输出&#x27;</span>)</span><br><span class="line">  </span><br><span class="line">  <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123; <span class="comment">//第2层回调函数</span></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;再延时2秒后输出&#x27;</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123; <span class="comment">//第3层回调函数</span></span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;再延时3秒后输出&#x27;</span>)</span><br><span class="line">    &#125;,<span class="number">3000</span>)</span><br><span class="line"></span><br><span class="line">  &#125;,<span class="number">2000</span>)</span><br><span class="line"></span><br><span class="line">&#125;,<span class="number">1000</span>)</span><br></pre></td></tr></table></figure>
-<p>回调地狱的缺点:<br>代码耦合性太强，牵一发而动全身，<strong>难以维护</strong><br>大量冗余的代码相互嵌套，代码的<strong>可读性变差</strong></p>
-</li>
-<li><p>如何解决<br>为了解决回调地狱的问题，ES6 (ECMAScript 2015)中新增了<strong>Promise</strong>的概念。</p>
-<blockquote>
-<p>解决回调地狱的方法包括使用 Promise、async&#x2F;await 等异步编程技术，以及使用函数式编程的方式来组织代码，使其更具可读性和可维护性。</p>
-</blockquote>
-</li>
-</ol>
-<h2 id="Promise基本概念"><a href="#Promise基本概念" class="headerlink" title="Promise基本概念"></a>Promise基本概念</h2><ol>
-<li><p><strong>Promise是一个构造函数</strong></p>
-<ul>
-<li>我们可以创建Promise 的实例 <code>const p = newPromise()</code></li>
-<li>new出来的Promise 实例对象，<strong>代表一个异步操作</strong></li>
-</ul>
-</li>
-<li><p><strong>Promise.prototype 上包含一个.then()方法</strong></p>
-<ul>
-<li>每一次new Promise()构造函数得到的实例对象，</li>
-<li>都可以<strong>通过原型链的方式</strong>访问到.then()方法，例如<code>p.then()</code></li>
-</ul>
-</li>
-<li><p><strong>.then()方法用来预先指定成功和失败的回调函数</strong></p>
-<ul>
-<li>p.then(<strong>成功的回调函数</strong>，<strong>失败的回调函数</strong>)</li>
-<li>p.then(result,&#x3D;&gt; {}, error &#x3D;&gt; {})</li>
-<li>调用.then()方法时，<strong>成功的回调函数是必选的</strong>、失败的回调函数是可选的</li>
-</ul>
-</li>
-</ol>
-<h2 id="基于-then-fs-异步的读取文件内容"><a href="#基于-then-fs-异步的读取文件内容" class="headerlink" title="基于 then-fs 异步的读取文件内容"></a>基于 then-fs 异步的读取文件内容</h2><ol>
-<li><p>基于回调函数按顺序读取文件内容<br>虽然可以保证文件的读取顺序，但是形成了一个回调地狱的问题<br><img src="/tsukimiya.github.io/images/ES6/%E5%9F%BA%E4%BA%8E%E5%9B%9E%E8%B0%83%E5%87%BD%E6%95%B0%E6%8C%89%E9%A1%BA%E5%BA%8F%E8%AF%BB%E5%8F%96%E6%96%87%E4%BB%B6%E5%86%85%E5%AE%B9.png" alt="img"></p>
-</li>
-<li><p>基于 then-fs 读取文件内容<br><strong>fs模块仅支持 以回调函数的方式 读取文件，不支持Promise的调用方式</strong>。因此，需要先安装 then-fs 第三方包，从而支持基于Promise的方式读取文件的内容： <code>npm install then-fs</code></p>
-</li>
-</ol>
-<ul>
-<li><strong>then-fs 的基本使用</strong><br>调用 then-fs 提供的<strong>readFile()<strong>方法，可以异步地读取文件的内容，</strong>它的返回值是 Promise 的实例对象</strong>。因此可以<strong>调用.then()方法</strong>为每个 Promise 异步操作指定<strong>成功</strong>和<strong>失败</strong>之后的回调函数。示例代码如下:<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 基于Promise的方式读取文件</span></span><br><span class="line"><span class="keyword">import</span> thenFs <span class="keyword">from</span> <span class="string">&#x27;then-fs&#x27;</span></span><br><span class="line"><span class="comment">// .then()中的失败回调是可选的，这里省略了</span></span><br><span class="line">thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/1.txt&#x27;</span>,<span class="string">&#x27;utf8&#x27;</span>).<span class="title function_">then</span>(<span class="function">(<span class="params">r1</span>)=&gt;</span>&#123;<span class="variable language_">console</span>.<span class="title function_">log</span>(r1);&#125;)</span><br><span class="line">thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/2.txt&#x27;</span>,<span class="string">&#x27;utf8&#x27;</span>).<span class="title function_">then</span>(<span class="function">(<span class="params">r2</span>)=&gt;</span>&#123;<span class="variable language_">console</span>.<span class="title function_">log</span>(r2);&#125;)</span><br><span class="line">thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/3.txt&#x27;</span>,<span class="string">&#x27;utf8&#x27;</span>).<span class="title function_">then</span>(<span class="function">(<span class="params">r3</span>)=&gt;</span>&#123;<span class="variable language_">console</span>.<span class="title function_">log</span>(r3);&#125;)</span><br></pre></td></tr></table></figure>
-当前只是异步的去读文件，<strong>无法保证文件的读取顺序</strong>，多次执行读取顺序不一</li>
-</ul>
-<h2 id="基于Promise按顺序读取文件的内容"><a href="#基于Promise按顺序读取文件的内容" class="headerlink" title="基于Promise按顺序读取文件的内容"></a>基于Promise按顺序读取文件的内容</h2><ul>
-<li><p><strong>.then方法的特性</strong><br>如果上一个.then()方法中<strong>返回了一个新的Promise实例对象</strong>，则可以通过下一个.then()继续进行处理。通过.then()方法的<strong>链式调用</strong>，就解决了回调地狱的问题。</p>
-</li>
-<li><p><strong>基于Promise</strong>按顺序读取文件的内容<br><strong>只要任何方法返回值是一个Promise实例对象，那就都可以继续调用.then()方法</strong></p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> thenFs <span class="keyword">from</span> <span class="string">&#x27;then-fs&#x27;</span></span><br><span class="line"></span><br><span class="line">thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/1.txt&#x27;</span>, <span class="string">&#x27;utf8&#x27;</span>)<span class="comment">// 返回值是Promise的实例对象</span></span><br><span class="line">  .<span class="title function_">then</span>(<span class="function">(<span class="params">r1</span>) =&gt;</span> &#123; <span class="comment">// 通过.then 为返回的promise实例指定成功之后的回调函数</span></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(r1)</span><br><span class="line">    <span class="keyword">return</span> thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/2.txt&#x27;</span>, <span class="string">&#x27;utf8&#x27;</span>)</span><br><span class="line">  &#125;).<span class="title function_">then</span>(<span class="function">(<span class="params">r2</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(r2)</span><br><span class="line">    <span class="keyword">return</span> thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/3.txt&#x27;</span>, <span class="string">&#x27;utf8&#x27;</span>)</span><br><span class="line">  &#125;).<span class="title function_">then</span>(<span class="function">(<span class="params">r3</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(r3)</span><br><span class="line">  &#125;)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>通过 .catch 捕获错误<br>在 Promise 的链式操作中如果发生了错误，可以使用Promise.prototype.catch方法进行捕获和处理:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> thenFs <span class="keyword">from</span> <span class="string">&#x27;then-fs&#x27;</span></span><br><span class="line"></span><br><span class="line">thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/11.txt&#x27;</span>, <span class="string">&#x27;utf8&#x27;</span>) <span class="comment">// 文件不存在</span></span><br><span class="line">  .<span class="title function_">then</span>(<span class="function">(<span class="params">r1</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(r1)</span><br><span class="line">    <span class="keyword">return</span> thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/2.txt&#x27;</span>, <span class="string">&#x27;utf8&#x27;</span>)</span><br><span class="line">  &#125;)</span><br><span class="line">  .<span class="title function_">then</span>(<span class="function">(<span class="params">r2</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(r2)</span><br><span class="line">    <span class="keyword">return</span> thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/3.txt&#x27;</span>, <span class="string">&#x27;utf8&#x27;</span>)</span><br><span class="line">  &#125;)</span><br><span class="line">  .<span class="title function_">then</span>(<span class="function">(<span class="params">r3</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(r3)</span><br><span class="line">  &#125;)</span><br><span class="line">  .<span class="title function_">catch</span>(<span class="function">(<span class="params">err</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(err.<span class="property">message</span>)</span><br><span class="line">  &#125;) <span class="comment">// 只返回错误，没有读取的文件内容</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>如果不希望前面的错误导致后续的.then无法正常执行，<strong>可以将.catch的调用提前</strong>：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> thenFs <span class="keyword">from</span> <span class="string">&#x27;then-fs&#x27;</span></span><br><span class="line"></span><br><span class="line">thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/11.txt&#x27;</span>, <span class="string">&#x27;utf8&#x27;</span>)</span><br><span class="line">  .<span class="title function_">catch</span>(<span class="function">(<span class="params">err</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(err.<span class="property">message</span>)</span><br><span class="line">  &#125;)</span><br><span class="line">  .<span class="title function_">then</span>(<span class="function">(<span class="params">r1</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(r1)</span><br><span class="line">    <span class="keyword">return</span> thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/2.txt&#x27;</span>, <span class="string">&#x27;utf8&#x27;</span>)</span><br><span class="line">  &#125;)</span><br><span class="line">  .<span class="title function_">then</span>(<span class="function">(<span class="params">r2</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(r2)</span><br><span class="line">    <span class="keyword">return</span> thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/3.txt&#x27;</span>, <span class="string">&#x27;utf8&#x27;</span>)</span><br><span class="line">  &#125;)</span><br><span class="line">  .<span class="title function_">then</span>(<span class="function">(<span class="params">r3</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(r3)</span><br><span class="line">  &#125;) <span class="comment">// 先打印错误，然后打印读取内容，r1为undefined，r2r3读取成功</span></span><br></pre></td></tr></table></figure></li>
-</ul>
-<h2 id="Promise-all-方法"><a href="#Promise-all-方法" class="headerlink" title="Promise.all()方法"></a>Promise.all()方法</h2><p>Promise.all()方法会发起并行的Promise异步操作，等<strong>所有的异步操作全部结束后</strong>才会执行下一步的.then操作（等待机制）。示例代码如下:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> thenFs <span class="keyword">from</span> <span class="string">&#x27;then-fs&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> promiseArr = [</span><br><span class="line">  thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/1.txt&#x27;</span>, <span class="string">&#x27;utf8&#x27;</span>), </span><br><span class="line">  thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/2.txt&#x27;</span>, <span class="string">&#x27;utf8&#x27;</span>), </span><br><span class="line">  thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/3.txt&#x27;</span>, <span class="string">&#x27;utf8&#x27;</span>)</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="title class_">Promise</span>.<span class="title function_">all</span>(promiseArr).<span class="title function_">then</span>(<span class="function"><span class="params">result</span> =&gt;</span>&#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(result); <span class="comment">// [ &#x27;111&#x27;, &#x27;222&#x27;, &#x27;333&#x27; ]</span></span><br><span class="line">&#125;)</span><br><span class="line">.<span class="title function_">catch</span>(<span class="function"><span class="params">err</span>=&gt;</span>&#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(err.<span class="property">message</span>);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-<p>Promise示例的顺序，就是最终拿到的结果的顺序。如果有一个文件读取错误，所有数据都拿不到</p>
-<h2 id="Promise-race-方法"><a href="#Promise-race-方法" class="headerlink" title="Promise.race() 方法"></a>Promise.race() 方法</h2><p>Promise.race()方法会发起并行的Promise异步操作，<strong>只要任何一个异步操作完成，就立即执行下一步的.then操作</strong>（赛跑机制）。示例代码如下:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> thenFs <span class="keyword">from</span> <span class="string">&#x27;then-fs&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> promiseArr = [</span><br><span class="line">  thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/1.txt&#x27;</span>, <span class="string">&#x27;utf8&#x27;</span>), </span><br><span class="line">  thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/2.txt&#x27;</span>, <span class="string">&#x27;utf8&#x27;</span>), </span><br><span class="line">  thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/3.txt&#x27;</span>, <span class="string">&#x27;utf8&#x27;</span>)</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="title class_">Promise</span>.<span class="title function_">race</span>(promiseArr).<span class="title function_">then</span>(<span class="function"><span class="params">result</span> =&gt;</span>&#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(result);</span><br><span class="line">&#125;)</span><br><span class="line">.<span class="title function_">catch</span>(<span class="function"><span class="params">err</span>=&gt;</span>&#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(err.<span class="property">message</span>);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-<p>只会拿到一个文件的读取结果，读取最快的那个，无法保证读取的文件是哪个</p>
-<h2 id="基于Promise封装异步读文件的方法"><a href="#基于Promise封装异步读文件的方法" class="headerlink" title="基于Promise封装异步读文件的方法"></a>基于Promise封装异步读文件的方法</h2><ul>
-<li><p>方法的封装要求:</p>
-<ol>
-<li>方法的名称要定义为getFile</li>
-<li>方法接收一个形参fpath，表示要读取的文件的路径</li>
-<li>方法的返回值为Promise 实例对象</li>
-</ol>
-</li>
-<li><p>getFile方法的基本定义</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">getFile</span>(<span class="params">fpath</span>)&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Promise</span>()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>注意：<strong>new Promise()</strong> 只是创建了一个<strong>形式上的异步操作</strong></p>
-</li>
-<li><p><strong>创建具体的异步操作</strong><br>如果想要创建具体的异步操作，则需要在new Promise()构造函数期间，<strong>传递一个function函数，将具体的<br>异步操作定义到function函数内部</strong>。示例代码如下:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> fs <span class="keyword">from</span> <span class="string">&#x27;fs&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">getFile</span>(<span class="params">fpath</span>)&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">    fs.<span class="title function_">readFile</span>(fpath,<span class="string">&#x27;utf-8&#x27;</span>,<span class="function">(<span class="params">err,dataStr</span>)=&gt;</span>&#123; &#125;)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>获取.then的两个实参<br>通过.then()指定的成功和失败的回调函数，可以在 function的形参中 进行接收，示例代码如下:<br><img src="/tsukimiya.github.io/images/ES6/%E8%8E%B7%E5%8F%96.then%E7%9A%84%E4%B8%A4%E4%B8%AA%E5%AE%9E%E5%8F%82.png" alt="img"></p>
-</li>
-<li><p>调用 resolve 和 reject 回调函数<br>Promise<strong>异步操作的结果</strong>，可以调用 <strong>resolve</strong> 或 <strong>reject</strong> 回调函数进行处理。示例代码如下:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> fs <span class="keyword">from</span> <span class="string">&#x27;fs&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">getFile</span>(<span class="params">fpath</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="keyword">function</span> (<span class="params">resolve,reject</span>) &#123;</span><br><span class="line">    fs.<span class="title function_">readFile</span>(fpath, <span class="string">&#x27;utf-8&#x27;</span>, <span class="function">(<span class="params">err, dataStr</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">if</span>(err) <span class="keyword">return</span> <span class="title function_">reject</span>(err) <span class="comment">// 发生错误</span></span><br><span class="line">      <span class="title function_">resolve</span>(dataStr) <span class="comment">// 读取成功</span></span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_">getFile</span>(<span class="string">&#x27;./files/1.txt&#x27;</span>).<span class="title function_">then</span>(<span class="function">(<span class="params">r1</span>)=&gt;</span>&#123;<span class="variable language_">console</span>.<span class="title function_">log</span>(r1)&#125;,<span class="function">(<span class="params">err</span>)=&gt;</span>&#123;<span class="variable language_">console</span>.<span class="title function_">log</span>(err.<span class="property">message</span>);&#125;)</span><br><span class="line"><span class="comment">// 失败的回调函数可以省略不写，可以用catch进行捕获</span></span><br><span class="line"><span class="title function_">getFile</span>(<span class="string">&#x27;./files/1.txt&#x27;</span>).<span class="title function_">then</span>(<span class="function">(<span class="params">r1</span>)=&gt;</span>&#123;<span class="variable language_">console</span>.<span class="title function_">log</span>(r1)&#125;).<span class="title function_">catch</span>(<span class="function">(<span class="params">err</span>)=&gt;</span>&#123;<span class="variable language_">console</span>.<span class="title function_">log</span>(err.<span class="property">message</span>)&#125;)</span><br></pre></td></tr></table></figure></li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
     <span class="page-number current">1</span><a class="page-number" href="/tsukimiya.github.io/default-index/page/2/">2</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/tsukimiya.github.io/default-index/page/2/"><i class="fa fa-angle-right"></i></a>
   </nav>
@@ -2238,13 +2364,13 @@ EMOJI中文网(可搜索)：<a target="_blank" rel="noopener" href="https://www.
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">126k</span>
+    <span title="站点总字数">136k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">1:54</span>
+    <span title="站点阅读时长">2:04</span>
   </span>
 </div>
 <div class="busuanzi-count">
