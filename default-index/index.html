@@ -226,9 +226,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2024-05-13 10:50:57 / 修改时间：13:58:01" itemprop="dateCreated datePublished" datetime="2024-05-13T10:50:57+08:00">2024-05-13</time>
+      <time title="创建时间：2024-05-13 10:50:57" itemprop="dateCreated datePublished" datetime="2024-05-13T10:50:57+08:00">2024-05-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-05-14 12:28:05" itemprop="dateModified" datetime="2024-05-14T12:28:05+08:00">2024-05-14</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -473,7 +479,7 @@
 </ul>
 </li>
 </ol>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// router/index.ts</span></span><br><span class="line"><span class="keyword">const</span> router = <span class="title function_">createRouter</span>(&#123; ... &#125;)</span><br><span class="line"></span><br><span class="line">router.<span class="title function_">beforeEach</span>(<span class="function">(<span class="params">to, <span class="keyword">from</span></span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;路由前置守卫&quot;</span>,to,<span class="keyword">from</span>);</span><br><span class="line">  <span class="keyword">if</span>(to.<span class="property">path</span> === <span class="string">&#x27;/about&#x27;</span>)&#123;</span><br><span class="line"></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;路由前置守卫触发，从about跳转到news/detail&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;/news/detail&#x27;</span> <span class="comment">// 字符串形式，值是path地址，将用户重定向到新闻</span></span><br><span class="line">    <span class="keyword">return</span> &#123; <span class="attr">name</span>: <span class="string">&#x27;news/detail&#x27;</span> &#125; <span class="comment">// 将用户重定向到新闻页面，对象形式</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;路由前置守卫触发，false取消当前的导航，不跳转&#x27;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span> </span><br><span class="line"></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;路由前置守卫触发，return 对象形式 并传参&#x27;</span>);</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      <span class="attr">name</span>: <span class="string">&#x27;xiang&#x27;</span>,</span><br><span class="line">      <span class="attr">params</span>:&#123;</span><br><span class="line">        <span class="attr">id</span>: <span class="string">&#x27;001&#x27;</span>,</span><br><span class="line">        <span class="attr">title</span>: <span class="string">&#x27;路由前置守卫跳转&#x27;</span>,</span><br><span class="line">        <span class="attr">content</span>:<span class="string">&#x27;跳转成功&#x27;</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// router/index.ts</span></span><br><span class="line"><span class="keyword">const</span> router = <span class="title function_">createRouter</span>(&#123; ... &#125;)</span><br><span class="line"></span><br><span class="line">router.<span class="title function_">beforeEach</span>(<span class="function">(<span class="params">to, <span class="keyword">from</span></span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;路由前置守卫&quot;</span>,to,<span class="keyword">from</span>);</span><br><span class="line">  <span class="keyword">if</span>(to.<span class="property">path</span> === <span class="string">&#x27;/about&#x27;</span>)&#123;</span><br><span class="line"></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;路由前置守卫触发，从about跳转到news/detail&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;/news/detail&#x27;</span> <span class="comment">// 字符串形式，值是path地址，将用户重定向到新闻</span></span><br><span class="line">    <span class="keyword">return</span> &#123; <span class="attr">name</span>: <span class="string">&#x27;news/detail&#x27;</span> &#125; <span class="comment">// 将用户重定向到新闻页面，对象形式</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;路由前置守卫触发，false取消当前的导航，不跳转&#x27;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span> </span><br><span class="line"></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;路由前置守卫触发，return 对象形式 并传参&#x27;</span>);</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      <span class="attr">name</span>: <span class="string">&#x27;xiang&#x27;</span>,</span><br><span class="line">      <span class="attr">params</span>:&#123;</span><br><span class="line">        <span class="attr">id</span>: <span class="string">&#x27;001&#x27;</span>,</span><br><span class="line">        <span class="attr">title</span>: <span class="string">&#x27;路由前置守卫跳转&#x27;</span>,</span><br><span class="line">        <span class="attr">content</span>:<span class="string">&#x27;跳转成功&#x27;</span> </span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
 
 <blockquote>
 <p><strong>全局前置守卫</strong>是<strong>最常用</strong>的导航守卫，其余还有：全局解析守卫、全局后置钩子、路由独享的守卫、组件内的守卫等，具体使用查看<a target="_blank" rel="noopener" href="https://router.vuejs.org/zh/guide/advanced/navigation-guards.html">官方文档 - 导航守卫</a></p>
@@ -1467,7 +1473,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-05-11 10:56:32" itemprop="dateModified" datetime="2024-05-11T10:56:32+08:00">2024-05-11</time>
+      <time title="修改时间：2024-05-14 12:40:50" itemprop="dateModified" datetime="2024-05-14T12:40:50+08:00">2024-05-14</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1568,17 +1574,21 @@
 <li><strong>面试</strong>：<br><strong>组件通信、响应式相关API……</strong></li>
 </ul>
 <h2 id="升级"><a href="#升级" class="headerlink" title="升级"></a>升级</h2><ul>
-<li>组合式API —— setup语法糖 —— 弱化this<blockquote>
+<li><p>组合式API —— setup语法糖 —— <strong>弱化this</strong></p>
+<blockquote>
 <p>因为vue3里面，在setup语法糖中几乎不去碰this，所以完全可以写<strong>箭头函数</strong>(箭头函数的this指向定义箭头函数时所在上下文的this，而普通函数this指向取决于函数的调用上下文)</p>
 </blockquote>
 </li>
-<li>子组件的标签<ol>
-<li>可以写多个(vue2只能写一个)</li>
-<li>写法：<code>&lt;Person/&gt;</code>，必须是自闭合标签的写法，否则会报错<blockquote>
+<li><p>子组件的标签</p>
+<ol>
+<li><strong>可以写多个</strong>(vue2只能写一个)</li>
+<li>写法：<code>&lt;Person/&gt;</code>，<strong>支持自闭合标签的写法</strong>，也支持双标签写法<blockquote>
 <p>vue2是双标签写法<code>&lt;Person&gt;&lt;/Person&gt;</code></p>
 </blockquote>
 </li>
 </ol>
+</li>
+<li><p>根标签<br>vue3里面，<strong>根标签不是必须的</strong>，在template标签里可以有多个子级标签</p>
 </li>
 </ul>
 <h2 id="vue-devtools调试工具"><a href="#vue-devtools调试工具" class="headerlink" title="vue-devtools调试工具"></a><strong>vue-devtools调试工具</strong></h2><p>vue-devtools有 vue2.x 和 vue3.x(带Beta标记的版本) 两个版本，<strong>不能交叉使用</strong>!<br>如何安装：<a target="_blank" rel="noopener" href="https://juejin.cn/post/7125983116396593165">掘金</a>、<a target="_blank" rel="noopener" href="https://blog.csdn.net/ashin8032/article/details/122600345">CSDN</a></p>
@@ -2084,9 +2094,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2024-05-07 13:11:33 / 修改时间：23:01:02" itemprop="dateCreated datePublished" datetime="2024-05-07T13:11:33+08:00">2024-05-07</time>
+      <time title="创建时间：2024-05-07 13:11:33" itemprop="dateCreated datePublished" datetime="2024-05-07T13:11:33+08:00">2024-05-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-05-13 22:21:02" itemprop="dateModified" datetime="2024-05-13T22:21:02+08:00">2024-05-13</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -2119,14 +2135,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>2.1k</span>
+      <span>3.1k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>2 分钟</span>
+      <span>3 分钟</span>
     </span>
 </div>
 
@@ -2145,20 +2161,29 @@
 <li><strong>将表情符号复制并粘贴到Markdown格式的文本中</strong> <font color="red">推荐</font></li>
 <li>直接使用表情符号的Unicode编码，格式：<code>&amp;#x[Unicode编码];</code><br>例如，😊的 Unicode 编码是 U+1F60A —— 对应的 HTML 实体编码是 <code>&amp;#x1F60A;</code><br>直接在md文件的文本内容里面输入HTML实体编码即可<code>&amp;#x1F60A;</code>&#x1F60A;</li>
 </ol>
-<p>Tip: 如果您使用的是静态网站生成器，请确保将HTML页面编码为UTF-8。</p>
+<p>Tip1: 如果您使用的是静态网站生成器，请确保将HTML页面编码为UTF-8。<br>Tip2: 千万不要去折腾什么插件了！不需要插件！没错，就是我折腾了好久卸载了</p>
 <ul>
-<li>附上可供使用的工具：<br>在线工具-Emoji表情符号(可搜索)：<a target="_blank" rel="noopener" href="https://www.toolhelper.cn/Encoding/Emoji">https://www.toolhelper.cn/Encoding/Emoji</a> <font color="red">推荐</font><blockquote>
+<li><p>附上可供使用的工具：<br>Windows 10周年更新内置的 <strong>Emoji键盘</strong> <code>win + .</code>快捷键唤出 <font color="red">推荐👍</font></p>
+<p>在线工具-Emoji表情符号(可搜索)：<a target="_blank" rel="noopener" href="https://www.toolhelper.cn/Encoding/Emoji">https://www.toolhelper.cn/Encoding/Emoji</a> <font color="red">推荐</font></p>
+<blockquote>
 <p>最推荐，附有表情说明，及其Unicode编码</p>
 </blockquote>
-Emoji大全(可搜索)：<a target="_blank" rel="noopener" href="https://emoji6.com/emojiall/">https://emoji6.com/emojiall/</a> <font color="green">推荐</font><blockquote>
+<p>Emoji大全(可搜索)：<a target="_blank" rel="noopener" href="https://emoji6.com/emojiall/">https://emoji6.com/emojiall/</a> <font color="green">推荐</font></p>
+<blockquote>
 <p>可备用</p>
 </blockquote>
-EMOJI中文网(可搜索)：<a target="_blank" rel="noopener" href="https://www.emojiall.com/zh-hans">https://www.emojiall.com/zh-hans</a><blockquote>
+<p>EMOJI中文网(可搜索)：<a target="_blank" rel="noopener" href="https://www.emojiall.com/zh-hans">https://www.emojiall.com/zh-hans</a></p>
+<blockquote>
 <p>速度有点慢，东西也太多了，不太好用</p>
 </blockquote>
 </li>
+<li><p><a target="_blank" rel="noopener" href="https://markdown.com.cn/extended-syntax/emoji.html">Markdown 官方教程 - Markdown 使用 Emoji 表情</a></p>
+<blockquote>
+<p>发现MD还有官网，官方教程中有提到复制粘贴的方法</p>
+</blockquote>
+</li>
 </ul>
-<h3 id="原理："><a href="#原理：" class="headerlink" title="原理："></a>原理：</h3><p>因为<strong>emoji表情符号也是Unicode字符的一种</strong>。</p>
+<h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><p>因为<strong>emoji表情符号也是Unicode字符的一种</strong>。</p>
 <ol>
 <li><p><strong>Markdown文件显示的原理</strong><br>像 VSCode 中通过插件预览 Markdown 文件的功能，以及其他类似的 Markdown 预览功能，通常也是<strong>通过 Markdown 渲染引擎生成的 HTML 页面</strong>来实现的。</p>
 </li>
@@ -2167,35 +2192,51 @@ EMOJI中文网(可搜索)：<a target="_blank" rel="noopener" href="https://www.
 <li><p>Hexo渲染的HTML页面显示emoji<br>Hexo依赖于 hexo-renderer-marked 渲染引擎来解析 Markdown 文本，和vscode中预览是一样的原理，只是使用的渲染器不同而已</p>
 </li>
 </ol>
-<blockquote>
-<p>关于一些探究性的内容放在下面，有兴趣可以一读</p>
-</blockquote>
-<h2 id="关于在hexo中如何使用emoji的问题"><a href="#关于在hexo中如何使用emoji的问题" class="headerlink" title="关于在hexo中如何使用emoji的问题"></a>关于在hexo中如何使用emoji的问题</h2><p>因为之前从未在md使用过emoji，突然有想要使用的念头，于是在不太了解的情况下试图找到方法。于是导致产生了一系列的问题。</p>
+<h2 id="hexo中使用emoji的问题"><a href="#hexo中使用emoji的问题" class="headerlink" title="hexo中使用emoji的问题"></a>hexo中使用emoji的问题</h2><p>因为之前从未在md使用过emoji，突然有想要使用的念头，于是在不太了解的情况下试图找到方法。于是导致产生了一系列的问题。</p>
 <ol>
-<li><strong>误解</strong><br>由于一些误解性的信息导向，以至于我一度以为Hexo不支持使用emoji<ul>
-<li>vscode是支持 </li>
+<li><p><strong>误解</strong><br>由于一些误解性的信息导向，以至于我一度以为Hexo不支持使用emoji</p>
+<ul>
+<li><p>vscode的Markdown Preview Enhanced插件是支持emoji的</p>
+</li>
+<li><p>在搜索引擎搜索，hexo中使用emoji表情，很多都是这样说：</p>
+<ul>
+<li>Hexo 默认的 Markdown 渲染器是 hexo-renderer-marked，这个渲染器不支持 emoji 表情。</li>
 <li>Hexo 默认的 markdown 渲染引擎不支持将 Github emoji 渲染到静态的 html 页面中</li>
 </ul>
+<p>然后教你安装 hexo-filter-github-emojis 插件，并启用配置</p>
 </li>
-</ol>
-<p>但是，他们几乎都是在说 使用 <a target="_blank" rel="noopener" href="https://markdown.com.cn/extended-syntax/emoji.html"><strong>表情符号简码</strong></a> 的方式来 在Hexo中使用Emoji</p>
+</ul>
+<p> 但是，他们几乎都是在说 使用 <a target="_blank" rel="noopener" href="https://markdown.com.cn/extended-syntax/emoji.html"><strong>表情符号简码</strong></a> 的方式来 在Hexo中使用Emoji</p>
 <blockquote>
 <p>表情符号简码，通过键入表情符号短代码来插入表情符号，如：<code>:smile:</code>、<code>:punch:</code></p>
 </blockquote>
-<p>期间想到了也许可以通过使用base64来解决这个问题</p>
-<p>问题来了，在html页面如何使用emoji表情？</p>
-<p>js如何使用emoji？<br><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/328516890">https://zhuanlan.zhihu.com/p/328516890</a></p>
-<p>对于表情符号，GitHub Markdown支持使用特定的简码来直接显示表情。当你在Markdown文本中使用表情符号的简码时，GitHub会自动将其解析并替换为对应的表情符号图像，从而在文档中显示出来。</p>
-<p>这种自动替换是GitHub的一个特性，使得Markdown文本中的表情符号可以直观地显示出来，增强了文档的可读性和趣味性。</p>
-<ul>
-<li>Hexo中使用emoji表情<blockquote>
-<p>可以参考这三篇<br>  <a target="_blank" rel="noopener" href="https://blog.xaoxu.cn/archives/hexo-use-emoji">https://blog.xaoxu.cn/archives/hexo-use-emoji</a><br>  苏苏的小屋，这个博客值得学习一下<br>  <a target="_blank" rel="noopener" href="https://luckysusu.top/post/hexo_emoji.html">https://luckysusu.top/post/hexo_emoji.html</a><br>  <a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/2065824">https://cloud.tencent.com/developer/article/2065824</a></p>
-</blockquote>
 </li>
+<li><p>配置并使用 <code>hexo-filter-github-emojis</code> 插件<br> 在参考了这三篇文章之后，卸载了原渲染器插件，安装了<code>hexo-renderer-markdown-it</code>并添加了如下配置：</p>
+<blockquote>
+<p>参考文章 <a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/2065824">文章1 - 22.8</a>、<a target="_blank" rel="noopener" href="https://luckysusu.top/post/hexo_emoji.html">文章2 - 23.10</a>、<a target="_blank" rel="noopener" href="https://blog.xaoxu.cn/archives/hexo-use-emoji">文章3 - 21.8</a><br> 文章2的苏苏的小屋博客做的不错，不过有点花过头了XD</p>
+</blockquote>
+ <figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Markdown-it config</span></span><br><span class="line"><span class="comment">## markdown 渲染引擎配置，默认是hexo-renderer-marked，这个插件渲染速度更快，且有新特性</span></span><br><span class="line"><span class="comment">## 因为不能支持原来的全局资源文件夹，引用图片，没找到解决的方法，故不使用，还是原配好啊</span></span><br><span class="line"><span class="comment">## Docs: https://github.com/celsomiranda/hexo-renderer-markdown-it/wiki</span></span><br><span class="line"><span class="attr">markdown:</span></span><br><span class="line">  <span class="attr">render:</span></span><br><span class="line">    <span class="attr">html:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">xhtmlOut:</span> <span class="literal">false</span></span><br><span class="line">    <span class="attr">breaks:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">linkify:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">typographer:</span> <span class="literal">true</span></span><br><span class="line">    <span class="attr">quotes:</span> <span class="string">&#x27;“”‘’&#x27;</span></span><br><span class="line">  <span class="attr">plugins:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">markdown-it-abbr</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">markdown-it-footnote</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">markdown-it-ins</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">markdown-it-sub</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">markdown-it-sup</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">markdown-it-emoji</span>  <span class="comment"># add emoji</span></span><br></pre></td></tr></table></figure>
+<p> 然后发现，博客上发布的文章基本没有什么变化，样式上渲染的算是接受度很好，我一度想着会不会样式会变的太大，还得花事件去修整，这里算是放了大心。<br> 再然后，我发现页面上的图片引用都失效了！！！</p>
+</li>
+<li><p>图片引用的问题<br> 似乎是更换的插件不支持<strong>全局资源文件夹引用</strong>，但是又因为文章的链接索引有日期在，想要通过相对路径引用到就需要好多..&#x2F;，如果每次都要这么干绝对受不了，且一定会有更好的办法<br> 然后各种搜索，各种尝试，下载了好几个插件，设置什么的，但是都没有解决这个问题。<br> 折腾许久未果，果断卸载了<code>hexo-filter-github-emojis</code> 插件，重装回原来的<code>hexo-renderer-marked</code>插件<br> 于是，问题又变回了：如何使用emoji的问题</p>
+<p> 期间想到了也许可以通过使用base64来解决这个问题，因为图片是可以转成base64格式的字符串的，那么emoji应该也可以，那么有没有一些在线，将emoji及其base64格式的字符整理的网页呢？</p>
+<p> 但是搜索并没有找到什么现有可用的一些这样的东西，甚至找不到相关的文章</p>
+<blockquote>
+<p>github还真有这样一个项目！<a target="_blank" rel="noopener" href="https://github.com/watson/base64-emoji">base64-emoji</a></p>
+</blockquote>
+<p> 不过后来知道了，才知道，emoji本身其实是一种unicode字符，并不是图片，所以并不应该转换成base64，而是可以直接使用的，也许因此才没有相关文章。</p>
+<blockquote>
+<p>不过一些表情包，emoji就是图片，也是因此才会更加误以为emoji其实也是一些小图片吧(如搜狗输入法上自带的，有的还是存在C盘哪里的？忘记了。才发现搜狗如果输入一些关键字，就会出现对应的emoji，选择它会把图片放到md的同目录下，并添加到md上)</p>
+</blockquote>
+<p> 最后，在各种尝试下，终于得出了使用emoji的方法，也即是文章开头的方法</p>
+</li>
+</ol>
+<ul>
+<li>那么问题来了，在html页面如何使用emoji表情？js如何使用emoji？ <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/328516890">参考一篇文章</a></li>
 </ul>
-<p>Markdown 官方教程 - Markdown 使用 Emoji 表情<br><a target="_blank" rel="noopener" href="https://markdown.com.cn/extended-syntax/emoji.html">https://markdown.com.cn/extended-syntax/emoji.html</a></p>
-<p>参考页面<br><a target="_blank" rel="noopener" href="https://www.unicode.org/emoji/charts/full-emoji-list.html#1f44a">https://www.unicode.org/emoji/charts/full-emoji-list.html#1f44a</a><br><a target="_blank" rel="noopener" href="https://juejin.cn/post/7021360477221421069">https://juejin.cn/post/7021360477221421069</a><br><a target="_blank" rel="noopener" href="https://www.toolhelper.cn/Encoding/Emoji">https://www.toolhelper.cn/Encoding/Emoji</a><br><a target="_blank" rel="noopener" href="https://www.toolhelper.cn/Encoding/Emoji">https://www.toolhelper.cn/Encoding/Emoji</a></p>
 <h2 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h2><h3 id="hexo引入图片的全局资源文件夹引用"><a href="#hexo引入图片的全局资源文件夹引用" class="headerlink" title="hexo引入图片的全局资源文件夹引用"></a>hexo引入图片的全局资源文件夹引用</h3><p><code>![img](/images/vue/组件生命周期.png)</code><br>该格式会被渲染器解析为img元素渲染到页面上<br>[]里的值会被解析为img元素的alt属性，即如果找不到图片会显示为img这个字符串<br>()里的则会解析为img元素的src属性</p>
+<h3 id="表情符号简码"><a href="#表情符号简码" class="headerlink" title="表情符号简码"></a>表情符号简码</h3><p>对于表情符号，GitHub Markdown支持使用特定的简码来直接显示表情。当你在Markdown文本中使用表情符号的简码时，GitHub会自动将其解析并替换为对应的表情符号图像，从而在文档中显示出来。</p>
+<p>这种自动替换是GitHub的一个特性，使得Markdown文本中的表情符号可以直观地显示出来，增强了文档的可读性和趣味性。</p>
 
       
     </div>
@@ -2364,13 +2405,13 @@ EMOJI中文网(可搜索)：<a target="_blank" rel="noopener" href="https://www.
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">136k</span>
+    <span title="站点总字数">137k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">2:04</span>
+    <span title="站点阅读时长">2:05</span>
   </span>
 </div>
 <div class="busuanzi-count">
