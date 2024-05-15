@@ -34,12 +34,9 @@
 <meta property="og:image" content="https://tsukimiyanano.github.io/tsukimiya.github.io/images/vue3/%E8%87%AA%E5%8A%A8%E8%A1%A5%E5%85%85value.png">
 <meta property="og:image" content="https://tsukimiyanano.github.io/tsukimiya.github.io/images/vue3/computed.gif">
 <meta property="article:published_time" content="2024-05-12T03:18:00.135Z">
-<meta property="article:modified_time" content="2024-05-12T11:50:41.210Z">
+<meta property="article:modified_time" content="2024-05-14T13:47:29.530Z">
 <meta property="article:author" content="Ayu">
 <meta property="article:tag" content="Vue">
-<meta property="article:tag" content="侦听器">
-<meta property="article:tag" content="计算属性">
-<meta property="article:tag" content="生命周期">
 <meta property="article:tag" content="Vue3">
 <meta property="article:tag" content="组合式API">
 <meta property="article:tag" content="setup语法糖">
@@ -47,8 +44,11 @@
 <meta property="article:tag" content="reactive">
 <meta property="article:tag" content="toRefs">
 <meta property="article:tag" content="computed">
+<meta property="article:tag" content="计算属性">
 <meta property="article:tag" content="watch">
+<meta property="article:tag" content="侦听器">
 <meta property="article:tag" content="props">
+<meta property="article:tag" content="生命周期">
 <meta property="article:tag" content="hooks">
 <meta property="article:tag" content="mixin设计模式">
 <meta name="twitter:card" content="summary">
@@ -177,7 +177,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/tsukimiya.github.io/archives/">
-          <span class="site-state-item-count">20</span>
+          <span class="site-state-item-count">21</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -188,7 +188,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tsukimiya.github.io/tags/">
-        <span class="site-state-item-count">57</span>
+        <span class="site-state-item-count">58</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -251,9 +251,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2024-05-12 11:18:00 / 修改时间：19:50:41" itemprop="dateCreated datePublished" datetime="2024-05-12T11:18:00+08:00">2024-05-12</time>
+      <time title="创建时间：2024-05-12 11:18:00" itemprop="dateCreated datePublished" datetime="2024-05-12T11:18:00+08:00">2024-05-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-05-14 21:47:29" itemprop="dateModified" datetime="2024-05-14T21:47:29+08:00">2024-05-14</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -560,7 +566,7 @@
 <figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  <span class="language-xml"><span class="tag">&lt;<span class="name">Person</span> <span class="attr">:list</span>=<span class="string">&quot;persons&quot;</span>/&gt;</span></span></span><br><span class="line">&lt;/template&gt;</span><br><span class="line">  </span><br><span class="line">&lt;script lang=&quot;ts&quot; setup name=&quot;App&quot;&gt;</span><br><span class="line">  import Person from &#x27;./components/Person.vue&#x27;</span><br><span class="line">  import &#123;reactive&#125; from &#x27;vue&#x27;</span><br><span class="line">  // 最新的规范，为了与值做区分，导入的类型要加type</span><br><span class="line">  import &#123;type Persons&#125; from &#x27;./types&#x27;</span><br><span class="line">  </span><br><span class="line">  // 虽然let persons&lt;Persons&gt; = reactive([...])这样写没有报错，但是这种写法并没有使得规范生效</span><br><span class="line">  // reactive对象，是支持泛型的</span><br><span class="line">  let persons = reactive&lt;Persons&gt;([</span><br><span class="line">   &#123;id:&#x27;e98219e12&#x27;,name:&#x27;张三&#x27;,age:18&#125;,</span><br><span class="line">   &#123;id:&#x27;e98219e13&#x27;,name:&#x27;李四&#x27;,age:19&#125;,</span><br><span class="line">   &#123;id:&#x27;e98219e14&#x27;,name:&#x27;王五&#x27;,age:20,x:9&#125;</span><br><span class="line">  ])</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
 
 <p><code>Person.vue</code>中代码：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  <span class="language-xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;person&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">ul</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">li</span> <span class="attr">v-for</span>=<span class="string">&quot;item in list&quot;</span> <span class="attr">:key</span>=<span class="string">&quot;item.id&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        &#123;&#123;item.name&#125;&#125;--&#123;&#123;item.age&#125;&#125;</span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">&lt;/template&gt;</span><br><span class="line">  </span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">script</span> <span class="attr">lang</span>=<span class="string">&quot;ts&quot;</span> <span class="attr">setup</span> <span class="attr">name</span>=<span class="string">&quot;Person&quot;</span>&gt;</span><span class="language-javascript"></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"><span class="comment">// 新版vue3似乎也内置了defineProps和withDefaults,不需要引入</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"><span class="comment">//defineXXX，这种的一般都属于宏函数，在vue3里面不用引入</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"><span class="keyword">import</span> &#123;defineProps&#125; <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"><span class="keyword">import</span> &#123;type <span class="title class_">PersonInter</span>&#125; <span class="keyword">from</span> <span class="string">&#x27;@/types&#x27;</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  </span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"><span class="comment">// 第一种写法：仅接收</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"><span class="comment">// defineProps返回值是一个Proxy对象，包含所有你接收的东西</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"><span class="comment">// defineProps参数必须是字符串的数组，命名必须和传入的值保持一致(否则为undefined)</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"><span class="comment">// const props = defineProps([&#x27;list&#x27;])</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  </span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"><span class="comment">// 第二种写法：接收+限制类型（而且还是个必要传的值）</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"><span class="comment">// defineProps&lt;&#123;list:Persons&#125;&gt;()</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  </span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"><span class="comment">// 第三种写法：接收+限制类型+指定默认值+限制必要性</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"><span class="keyword">let</span> props = <span class="title function_">withDefaults</span>(defineProps&lt;&#123;list?:<span class="title class_">Persons</span>&#125;&gt;(),&#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  <span class="attr">list</span>:<span class="function">()=&gt;</span>[&#123;<span class="attr">id</span>:<span class="string">&#x27;asdasg01&#x27;</span>,<span class="attr">name</span>:<span class="string">&#x27;小猪佩奇&#x27;</span>,<span class="attr">age</span>:<span class="number">18</span>&#125;]</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">&#125;)</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"><span class="comment">// vue2中直接把props属性定义为对象类型default:xxx，就很简单</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"><span class="variable language_">console</span>.<span class="title function_">log</span>(props)</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  <span class="language-xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;person&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">ul</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">li</span> <span class="attr">v-for</span>=<span class="string">&quot;item in list&quot;</span> <span class="attr">:key</span>=<span class="string">&quot;item.id&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        &#123;&#123;item.name&#125;&#125;--&#123;&#123;item.age&#125;&#125;</span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">&lt;/template&gt;</span><br><span class="line">  </span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">script</span> <span class="attr">lang</span>=<span class="string">&quot;ts&quot;</span> <span class="attr">setup</span> <span class="attr">name</span>=<span class="string">&quot;Person&quot;</span>&gt;</span><span class="language-javascript"></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"><span class="comment">// 新版vue3似乎也内置了defineProps和withDefaults,不需要引入</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"><span class="comment">//defineXXX，这种的一般都属于宏函数，在vue3里面不用引入</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"><span class="keyword">import</span> &#123;defineProps&#125; <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"><span class="keyword">import</span> &#123;type <span class="title class_">PersonInter</span>&#125; <span class="keyword">from</span> <span class="string">&#x27;@/types&#x27;</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  </span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"><span class="comment">// 第一种写法：仅接收</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"><span class="comment">// defineProps返回值是一个Proxy对象，包含所有你接收的东西</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"><span class="comment">// defineProps参数必须是字符串的数组，命名必须和传入的值保持一致(否则为undefined)</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"><span class="keyword">const</span> props = <span class="title function_">defineProps</span>([<span class="string">&#x27;list&#x27;</span>])</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  </span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"><span class="comment">// 第二种写法：接收+限制类型（而且还是个必要传的值）</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"><span class="keyword">const</span> props = defineProps&lt;&#123;<span class="attr">list</span>:<span class="title class_">Persons</span>&#125;&gt;()</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  </span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"><span class="comment">// 第三种写法：接收+限制类型+指定默认值+限制必要性</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"><span class="keyword">let</span> props = <span class="title function_">withDefaults</span>(defineProps&lt;&#123;list?:<span class="title class_">Persons</span>&#125;&gt;(),&#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  <span class="attr">list</span>:<span class="function">()=&gt;</span>[&#123;<span class="attr">id</span>:<span class="string">&#x27;asdasg01&#x27;</span>,<span class="attr">name</span>:<span class="string">&#x27;小猪佩奇&#x27;</span>,<span class="attr">age</span>:<span class="number">18</span>&#125;]</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">&#125;)</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"><span class="comment">// vue2中直接把props属性定义为对象类型default:xxx，就很简单</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"><span class="variable language_">console</span>.<span class="title function_">log</span>(props)</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
 
 </blockquote>
 <h1 id="生命周期"><a href="#生命周期" class="headerlink" title="生命周期"></a>生命周期</h1><ul>
@@ -666,9 +672,6 @@
 
           <div class="post-tags">
               <a href="/tsukimiya.github.io/tags/Vue/" rel="tag"># Vue</a>
-              <a href="/tsukimiya.github.io/tags/%E4%BE%A6%E5%90%AC%E5%99%A8/" rel="tag"># 侦听器</a>
-              <a href="/tsukimiya.github.io/tags/%E8%AE%A1%E7%AE%97%E5%B1%9E%E6%80%A7/" rel="tag"># 计算属性</a>
-              <a href="/tsukimiya.github.io/tags/%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/" rel="tag"># 生命周期</a>
               <a href="/tsukimiya.github.io/tags/Vue3/" rel="tag"># Vue3</a>
               <a href="/tsukimiya.github.io/tags/%E7%BB%84%E5%90%88%E5%BC%8FAPI/" rel="tag"># 组合式API</a>
               <a href="/tsukimiya.github.io/tags/setup%E8%AF%AD%E6%B3%95%E7%B3%96/" rel="tag"># setup语法糖</a>
@@ -676,8 +679,11 @@
               <a href="/tsukimiya.github.io/tags/reactive/" rel="tag"># reactive</a>
               <a href="/tsukimiya.github.io/tags/toRefs/" rel="tag"># toRefs</a>
               <a href="/tsukimiya.github.io/tags/computed/" rel="tag"># computed</a>
+              <a href="/tsukimiya.github.io/tags/%E8%AE%A1%E7%AE%97%E5%B1%9E%E6%80%A7/" rel="tag"># 计算属性</a>
               <a href="/tsukimiya.github.io/tags/watch/" rel="tag"># watch</a>
+              <a href="/tsukimiya.github.io/tags/%E4%BE%A6%E5%90%AC%E5%99%A8/" rel="tag"># 侦听器</a>
               <a href="/tsukimiya.github.io/tags/props/" rel="tag"># props</a>
+              <a href="/tsukimiya.github.io/tags/%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/" rel="tag"># 生命周期</a>
               <a href="/tsukimiya.github.io/tags/hooks/" rel="tag"># hooks</a>
               <a href="/tsukimiya.github.io/tags/mixin%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/" rel="tag"># mixin设计模式</a>
           </div>
@@ -725,13 +731,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">137k</span>
+    <span title="站点总字数">143k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">2:05</span>
+    <span title="站点阅读时长">2:10</span>
   </span>
 </div>
 <div class="busuanzi-count">

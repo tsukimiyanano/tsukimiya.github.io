@@ -153,7 +153,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/tsukimiya.github.io/archives/">
-          <span class="site-state-item-count">20</span>
+          <span class="site-state-item-count">21</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -164,7 +164,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tsukimiya.github.io/tags/">
-        <span class="site-state-item-count">57</span>
+        <span class="site-state-item-count">58</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -189,6 +189,216 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://tsukimiyanano.github.io/tsukimiya.github.io/2024/05/14/vue3/5.Pinia/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/tsukimiya.github.io/images/avatar.jpg">
+      <meta itemprop="name" content="Ayu">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ayu's Study Blog">
+      <meta itemprop="description" content="你们怎么能这么卷！！">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Ayu's Study Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/tsukimiya.github.io/2024/05/14/vue3/5.Pinia/" class="post-title-link" itemprop="url">Pinia - 符合直觉的Vue.js状态管理库</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2024-05-14 17:15:31 / 修改时间：17:30:55" itemprop="dateCreated datePublished" datetime="2024-05-14T17:15:31+08:00">2024-05-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/tsukimiya.github.io/categories/Vue/" itemprop="url" rel="index"><span itemprop="name">Vue</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/tsukimiya.github.io/categories/Vue/Vue3/" itemprop="url" rel="index"><span itemprop="name">Vue3</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="far fa-comment"></i>
+    </span>
+    <span class="post-meta-item-text">Waline：</span>
+  
+    <a title="waline" href="/tsukimiya.github.io/2024/05/14/vue3/5.Pinia/#waline" itemprop="discussionUrl">
+      <span class="post-comments-count waline-comment-count" data-path="/tsukimiya.github.io/2024/05/14/vue3/5.Pinia/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>6.1k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>6 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>集中式状态(数据)管理，把需要共享的数据交给pinia管理</p>
+<h1 id="准备一个效果"><a href="#准备一个效果" class="headerlink" title="准备一个效果"></a>准备一个效果</h1><img src="/tsukimiya.github.io/images/vue3/pinia_example.gif" alt="pinia_example" style="zoom:30%;border:3px solid" /> 
+
+<h1 id="搭建-pinia-环境"><a href="#搭建-pinia-环境" class="headerlink" title="搭建 pinia 环境"></a>搭建 pinia 环境</h1><p>第一步：<code>npm install pinia</code></p>
+<p>第二步：操作<code>src/main.ts</code></p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; createApp &#125; <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span></span><br><span class="line"><span class="keyword">import</span> <span class="title class_">App</span> <span class="keyword">from</span> <span class="string">&#x27;./App.vue&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/* 引入createPinia，用于创建pinia */</span></span><br><span class="line"><span class="keyword">import</span> &#123; createPinia &#125; <span class="keyword">from</span> <span class="string">&#x27;pinia&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/* 创建pinia */</span></span><br><span class="line"><span class="keyword">const</span> pinia = <span class="title function_">createPinia</span>()</span><br><span class="line"><span class="keyword">const</span> app = <span class="title function_">createApp</span>(<span class="title class_">App</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">/* 使用插件 / 安装pinia */</span> </span><br><span class="line">app.<span class="title function_">use</span>(pinia)</span><br><span class="line">app.<span class="title function_">mount</span>(<span class="string">&#x27;#app&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>此时开发者工具中已经有了<code>pinia</code>选项</p>
+<img src="/tsukimiya.github.io/images/vue3/pinia.png" style="zoom:80%;border:1px solid black;border-radius:10px" />
+
+<h1 id="存储-读取数据"><a href="#存储-读取数据" class="headerlink" title="存储+读取数据"></a>存储+读取数据</h1><ol>
+<li><p><code>Store</code>是一个保存：<strong>状态</strong>、<strong>业务逻辑</strong> 的实体，每个组件都可以<strong>读取</strong>、<strong>写入</strong>它。</p>
+</li>
+<li><p>它有三个概念：<code>state</code>、<code>getter</code>、<code>action</code>，相当于组件中的： <code>data</code>、 <code>computed</code> 和 <code>methods</code>。</p>
+</li>
+<li><p>具体编码：<code>src/store/count.ts</code></p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 引入defineStore用于创建store</span></span><br><span class="line"><span class="keyword">import</span> &#123;defineStore&#125; <span class="keyword">from</span> <span class="string">&#x27;pinia&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 定义并暴露一个store</span></span><br><span class="line"><span class="comment">// 推荐和定义hooks一样用use命名</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> useCountStore = <span class="title function_">defineStore</span>(<span class="string">&#x27;count&#x27;</span>,&#123;</span><br><span class="line">  <span class="comment">// 动作</span></span><br><span class="line">  <span class="attr">actions</span>:&#123;&#125;,</span><br><span class="line">  <span class="comment">// 状态</span></span><br><span class="line">  <span class="title function_">state</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      <span class="attr">sum</span>:<span class="number">6</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="comment">// 计算</span></span><br><span class="line">  <span class="attr">getters</span>:&#123;&#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>具体编码：<code>src/store/talk.ts</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 引入defineStore用于创建store</span></span><br><span class="line"><span class="keyword">import</span> &#123;defineStore&#125; <span class="keyword">from</span> <span class="string">&#x27;pinia&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 定义并暴露一个store</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> useTalkStore = <span class="title function_">defineStore</span>(<span class="string">&#x27;talk&#x27;</span>,&#123;</span><br><span class="line">  <span class="comment">// 动作</span></span><br><span class="line">  <span class="attr">actions</span>:&#123;&#125;,</span><br><span class="line">  <span class="comment">// 状态</span></span><br><span class="line">  <span class="title function_">state</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      <span class="attr">talkList</span>:[</span><br><span class="line">        &#123;<span class="attr">id</span>:<span class="string">&#x27;yuysada01&#x27;</span>,<span class="attr">content</span>:<span class="string">&#x27;你今天有点怪，哪里怪？怪好看的！&#x27;</span>&#125;,</span><br><span class="line">     		&#123;<span class="attr">id</span>:<span class="string">&#x27;yuysada02&#x27;</span>,<span class="attr">content</span>:<span class="string">&#x27;草莓、蓝莓、蔓越莓，你想我了没？&#x27;</span>&#125;,</span><br><span class="line">        &#123;<span class="attr">id</span>:<span class="string">&#x27;yuysada03&#x27;</span>,<span class="attr">content</span>:<span class="string">&#x27;心里给你留了一块地，我的死心塌地&#x27;</span>&#125;</span><br><span class="line">      ]</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="comment">// 计算</span></span><br><span class="line">  <span class="attr">getters</span>:&#123;&#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>组件中使用<code>state</code>中的数据</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  <span class="language-xml"><span class="tag">&lt;<span class="name">h2</span>&gt;</span>当前求和为：&#123;&#123; sumStore.sum &#125;&#125;<span class="tag">&lt;/<span class="name">h2</span>&gt;</span></span></span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">script</span> <span class="attr">setup</span> <span class="attr">lang</span>=<span class="string">&quot;ts&quot;</span> <span class="attr">name</span>=<span class="string">&quot;Count&quot;</span>&gt;</span><span class="language-javascript"></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  <span class="comment">// 引入对应的useXxxxxStore	</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  <span class="keyword">import</span> &#123;useSumStore&#125; <span class="keyword">from</span> <span class="string">&#x27;@/store/sum&#x27;</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  </span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  <span class="comment">// 调用useXxxxxStore得到对应的store</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  <span class="keyword">const</span> sumStore = <span class="title function_">useSumStore</span>()</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  <span class="comment">// 虽然sumStore里面的sum是个ObjectRefImpl对象，但是这里，不能.value，会报错</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  <span class="comment">// 如let obj = reactive(&#123;a:1,b:1,c:ref(9)&#125;)，</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  <span class="comment">// 这里的c就应该直接obj.c，而不能加.value，因为外面已经帮我们处理好了</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  <span class="variable language_">console</span>.<span class="title function_">log</span>(sumStore.<span class="property">sum</span>) <span class="comment">// 直接拿</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  <span class="variable language_">console</span>.<span class="title function_">log</span>(sumStore.<span class="property">$state</span>.<span class="property">sum</span>) <span class="comment">// 也可以这样，但是没必要</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">	<span class="language-xml"><span class="tag">&lt;<span class="name">ul</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">li</span> <span class="attr">v-for</span>=<span class="string">&quot;talk in talkStore.talkList&quot;</span> <span class="attr">:key</span>=<span class="string">&quot;talk.id&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      &#123;&#123; talk.content &#125;&#125;</span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">  <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span></span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">script</span> <span class="attr">setup</span> <span class="attr">lang</span>=<span class="string">&quot;ts&quot;</span> <span class="attr">name</span>=<span class="string">&quot;Count&quot;</span>&gt;</span><span class="language-javascript"></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  <span class="keyword">import</span> axios <span class="keyword">from</span> <span class="string">&#x27;axios&#x27;</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  <span class="keyword">import</span> &#123;useTalkStore&#125; <span class="keyword">from</span> <span class="string">&#x27;@/store/talk&#x27;</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  <span class="keyword">const</span> talkStore = <span class="title function_">useTalkStore</span>()</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br></pre></td></tr></table></figure></li>
+</ol>
+<h1 id="修改数据-三种方式"><a href="#修改数据-三种方式" class="headerlink" title="修改数据(三种方式)"></a>修改数据(三种方式)</h1><ol>
+<li><p>第一种修改方式，<strong>直接修改</strong>(vuex中不允许直接修改，要借助mutation)</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">countStore.<span class="property">sum</span> = <span class="number">666</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>第二种修改方式：<strong>批量修改</strong></p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">countStore.$patch(&#123;</span><br><span class="line">  <span class="attr">sum</span>:<span class="number">999</span>,</span><br><span class="line">  <span class="attr">school</span>:<span class="string">&#x27;atguigu&#x27;</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>第三种修改方式：借助<code>action</code>修改（<code>action</code>中可以编写一些业务逻辑）</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; defineStore &#125; <span class="keyword">from</span> <span class="string">&#x27;pinia&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> useCountStore = <span class="title function_">defineStore</span>(<span class="string">&#x27;count&#x27;</span>, &#123;</span><br><span class="line">  <span class="comment">/*************/</span></span><br><span class="line">  <span class="attr">actions</span>: &#123;</span><br><span class="line">    <span class="comment">//加</span></span><br><span class="line">    <span class="title function_">increment</span>(<span class="params">value:number</span>) &#123;</span><br><span class="line">      <span class="keyword">if</span> (<span class="variable language_">this</span>.<span class="property">sum</span> &lt; <span class="number">10</span>) &#123;</span><br><span class="line">        <span class="comment">//操作countStore中的sum</span></span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">sum</span> += value</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="comment">//减</span></span><br><span class="line">    <span class="title function_">decrement</span>(<span class="params">value:number</span>)&#123;</span><br><span class="line">      <span class="keyword">if</span>(<span class="variable language_">this</span>.<span class="property">sum</span> &gt; <span class="number">1</span>)&#123;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">sum</span> -= value</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="comment">/*************/</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>组件中调用<code>action</code>即可</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 使用countStore</span></span><br><span class="line"><span class="keyword">const</span> countStore = <span class="title function_">useCountStore</span>()</span><br><span class="line"></span><br><span class="line"><span class="comment">// 调用对应action</span></span><br><span class="line">countStore.<span class="title function_">incrementOdd</span>(n.<span class="property">value</span>)</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h1 id="storeToRefs"><a href="#storeToRefs" class="headerlink" title="storeToRefs"></a>storeToRefs</h1><blockquote>
+<p>在组件中，我们每次使用store里的值，都需要在模版中如<code>&#123;&#123;countStore.sum&#125;&#125;</code>,每次使用都需要前面这一大长串。于是我们可以想到解构赋值:<br><code>const &#123; sum, school &#125; = countStore</code> ，但是这样数据就失去了响应式！<br>虽然可以借助<code>toRefs：const &#123; sum, school &#125; = Refs(countStore)</code><br>但是我们打印一下这个<code>Refs(countStore)</code>，可以发现它把整个store里面所有的属性(数据和方法)都打成了<strong>ref</strong>，虽然实现了，但是<strong>代价有点大</strong><br>所以，我们可以使用 —— <code>storeToRefs</code></p>
+</blockquote>
+<ul>
+<li><p>借助<code>storeToRefs</code>将<code>store</code>中的数据转为<code>ref</code>对象，方便在模板中使用。</p>
+</li>
+<li><p>注意：<code>pinia</code>提供的<code>storeToRefs</code><strong>只会将数据做转换</strong>，不会对方法进行ref包裹；而<code>Vue</code>的<code>toRefs</code>会转换<code>store</code>中所有数据。</p>
+</li>
+<li><p>所取属性的数据类型：</p>
+<ul>
+<li>基本类型需要包裹，脚本文件中.value使用</li>
+<li><strong>对象类型</strong>可以直接解构出来(还是响应式的)，也可以包裹(脚本文件中.value使用)<br>直接解构：<code>const &#123; talkList &#125; = talkStore</code>，然后直接talkList使用<br>包裹解构：<code>const &#123; talkList &#125; = storeToRefs(talkStore)</code>，在脚本文件中需要<code>talkList.value</code>使用</li>
+</ul>
+<blockquote>
+<p>和toRefs基本一致？</p>
+</blockquote>
+</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">	<span class="language-xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;count&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">		<span class="tag">&lt;<span class="name">h2</span>&gt;</span>当前求和为：&#123;&#123;sum&#125;&#125;<span class="tag">&lt;/<span class="name">h2</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">	<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">script</span> <span class="attr">setup</span> <span class="attr">lang</span>=<span class="string">&quot;ts&quot;</span> <span class="attr">name</span>=<span class="string">&quot;Count&quot;</span>&gt;</span><span class="language-javascript"></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  <span class="keyword">import</span> &#123; useCountStore &#125; <span class="keyword">from</span> <span class="string">&#x27;@/store/count&#x27;</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  <span class="comment">/* 引入storeToRefs */</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  <span class="keyword">import</span> &#123; storeToRefs &#125; <span class="keyword">from</span> <span class="string">&#x27;pinia&#x27;</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">	<span class="comment">/* 得到countStore */</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  <span class="keyword">const</span> countStore = <span class="title function_">useCountStore</span>()</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  <span class="comment">/* 使用storeToRefs转换countStore，随后解构 */</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  <span class="keyword">const</span> &#123;sum&#125; = <span class="title function_">storeToRefs</span>(countStore)</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h1 id="getters"><a href="#getters" class="headerlink" title="getters"></a>getters</h1><ol>
+<li><p>概念：当<code>state</code>中的数据，需要经过处理后再使用时，可以使用<code>getters</code>配置。</p>
+</li>
+<li><p>追加<code>getters</code>配置。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 引入defineStore用于创建store</span></span><br><span class="line"><span class="keyword">import</span> &#123;defineStore&#125; <span class="keyword">from</span> <span class="string">&#x27;pinia&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 定义并暴露一个store</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> useCountStore = <span class="title function_">defineStore</span>(<span class="string">&#x27;count&#x27;</span>,&#123;</span><br><span class="line">  <span class="comment">// 动作</span></span><br><span class="line">  <span class="attr">actions</span>:&#123;</span><br><span class="line">    <span class="comment">/************/</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="comment">// 状态</span></span><br><span class="line">  <span class="title function_">state</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      <span class="attr">sum</span>:<span class="number">1</span>,</span><br><span class="line">      <span class="attr">school</span>:<span class="string">&#x27;atguigu&#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="comment">// 计算</span></span><br><span class="line">  <span class="attr">getters</span>:&#123;</span><br><span class="line">   <span class="comment">// 如果不用this，这里就可以写成 箭头函数</span></span><br><span class="line">    <span class="attr">bigSum</span>:(state):<span class="function"><span class="params">number</span> =&gt;</span> state.<span class="property">sum</span> *<span class="number">10</span>,</span><br><span class="line">    <span class="title function_">upperSchool</span>():string&#123;</span><br><span class="line">     <span class="comment">// this就是store</span></span><br><span class="line">      <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">school</span>.<span class="title function_">toUpperCase</span>()</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">printThis</span>:<span class="function">()=&gt;</span><span class="variable language_">this</span>, <span class="comment">// 得到的是undefined</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>组件中读取数据：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123;increment,decrement&#125; = countStore</span><br><span class="line"><span class="keyword">let</span> &#123;sum,school,bigSum,upperSchool&#125; = <span class="title function_">storeToRefs</span>(countStore)</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h1 id="subscribe"><a href="#subscribe" class="headerlink" title="$subscribe"></a>$subscribe</h1><p>通过 store 的 <code>$subscribe()</code> 方法侦听 <code>state</code> 及其变化</p>
+<ul>
+<li>mutate：本次修改的信息</li>
+<li>state：真正的数据</li>
+</ul>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 组件中</span></span><br><span class="line">talkStore.$subscribe(<span class="function">(<span class="params">mutate,state</span>)=&gt;</span>&#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;LoveTalk&#x27;</span>,mutate,state)</span><br><span class="line">  <span class="variable language_">localStorage</span>.<span class="title function_">setItem</span>(<span class="string">&#x27;talk&#x27;</span>,<span class="title class_">JSON</span>.<span class="title function_">stringify</span>(talkList.<span class="property">value</span>))</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">state</span>(<span class="params"></span>)&#123;</span><br><span class="line">  <span class="keyword">return</span> &#123;</span><br><span class="line">    <span class="comment">// as 是断言，能取出来的字符串</span></span><br><span class="line">    <span class="comment">// 第一次是null，应该给个空数组默认值</span></span><br><span class="line">    <span class="attr">talkList</span>: <span class="title class_">JSON</span>.<span class="title function_">parse</span>(<span class="variable language_">localStorage</span>.<span class="title function_">getItem</span>(<span class="string">&#x27;talkList&#x27;</span>) <span class="keyword">as</span> string) || []</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="store组合式写法"><a href="#store组合式写法" class="headerlink" title="store组合式写法"></a>store组合式写法</h1><blockquote>
+<p>就和setup语法糖很像</p>
+</blockquote>
+<ul>
+<li><p>数据直接用ref、reactive去定义</p>
+</li>
+<li><p>直接写函数，就是actions函数</p>
+</li>
+<li><p>getters直接写computed</p>
+</li>
+<li><p><strong>必须return出去</strong></p>
+</li>
+<li><p><strong>缺点</strong>：页面数据多的时候，一堆return</p>
+</li>
+<li><p><strong>优点</strong>：不用写那么多层次和结构，清晰一点，易于维护</p>
+<blockquote>
+<p>选项式优点：易于理解和迁移，与传统的Vuex风格相似<br>缺点：代码量增加，不够简洁，尤其是在大型项目中</p>
+</blockquote>
+</li>
+</ul>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;defineStore&#125; <span class="keyword">from</span> <span class="string">&#x27;pinia&#x27;</span></span><br><span class="line"><span class="keyword">import</span> axios <span class="keyword">from</span> <span class="string">&#x27;axios&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123;nanoid&#125; <span class="keyword">from</span> <span class="string">&#x27;nanoid&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123;reactive&#125; <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> useTalkStore = <span class="title function_">defineStore</span>(<span class="string">&#x27;talk&#x27;</span>,<span class="function">()=&gt;</span>&#123;</span><br><span class="line">  <span class="comment">// talkList就是state</span></span><br><span class="line">  <span class="keyword">const</span> talkList = <span class="title function_">reactive</span>(</span><br><span class="line">    <span class="title class_">JSON</span>.<span class="title function_">parse</span>(<span class="variable language_">localStorage</span>.<span class="title function_">getItem</span>(<span class="string">&#x27;talkList&#x27;</span>) <span class="keyword">as</span> <span class="built_in">string</span>) || []</span><br><span class="line">  )</span><br><span class="line"></span><br><span class="line">  <span class="comment">// getATalk函数相当于action</span></span><br><span class="line">  <span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">getATalk</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="comment">// 发请求，下面这行的写法是：连续解构赋值+重命名</span></span><br><span class="line">    <span class="keyword">let</span> &#123;<span class="attr">data</span>:&#123;<span class="attr">content</span>:title&#125;&#125; = <span class="keyword">await</span> axios.<span class="title function_">get</span>(<span class="string">&#x27;https://api.uomg.com/api/rand.qinghua?format=json&#x27;</span>)</span><br><span class="line">    <span class="comment">// 把请求回来的字符串，包装成一个对象</span></span><br><span class="line">    <span class="keyword">let</span> obj = &#123;<span class="attr">id</span>:<span class="title function_">nanoid</span>(),title&#125;</span><br><span class="line">    <span class="comment">// 放到数组中</span></span><br><span class="line">    talkList.<span class="title function_">unshift</span>(obj)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> &#123;talkList,getATalk&#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -552,9 +762,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2024-05-12 11:18:00 / 修改时间：19:50:41" itemprop="dateCreated datePublished" datetime="2024-05-12T11:18:00+08:00">2024-05-12</time>
+      <time title="创建时间：2024-05-12 11:18:00" itemprop="dateCreated datePublished" datetime="2024-05-12T11:18:00+08:00">2024-05-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-05-14 21:47:29" itemprop="dateModified" datetime="2024-05-14T21:47:29+08:00">2024-05-14</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -855,7 +1071,7 @@
 <figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  <span class="language-xml"><span class="tag">&lt;<span class="name">Person</span> <span class="attr">:list</span>=<span class="string">&quot;persons&quot;</span>/&gt;</span></span></span><br><span class="line">&lt;/template&gt;</span><br><span class="line">  </span><br><span class="line">&lt;script lang=&quot;ts&quot; setup name=&quot;App&quot;&gt;</span><br><span class="line">  import Person from &#x27;./components/Person.vue&#x27;</span><br><span class="line">  import &#123;reactive&#125; from &#x27;vue&#x27;</span><br><span class="line">  // 最新的规范，为了与值做区分，导入的类型要加type</span><br><span class="line">  import &#123;type Persons&#125; from &#x27;./types&#x27;</span><br><span class="line">  </span><br><span class="line">  // 虽然let persons&lt;Persons&gt; = reactive([...])这样写没有报错，但是这种写法并没有使得规范生效</span><br><span class="line">  // reactive对象，是支持泛型的</span><br><span class="line">  let persons = reactive&lt;Persons&gt;([</span><br><span class="line">   &#123;id:&#x27;e98219e12&#x27;,name:&#x27;张三&#x27;,age:18&#125;,</span><br><span class="line">   &#123;id:&#x27;e98219e13&#x27;,name:&#x27;李四&#x27;,age:19&#125;,</span><br><span class="line">   &#123;id:&#x27;e98219e14&#x27;,name:&#x27;王五&#x27;,age:20,x:9&#125;</span><br><span class="line">  ])</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
 
 <p><code>Person.vue</code>中代码：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  <span class="language-xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;person&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">ul</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">li</span> <span class="attr">v-for</span>=<span class="string">&quot;item in list&quot;</span> <span class="attr">:key</span>=<span class="string">&quot;item.id&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        &#123;&#123;item.name&#125;&#125;--&#123;&#123;item.age&#125;&#125;</span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">&lt;/template&gt;</span><br><span class="line">  </span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">script</span> <span class="attr">lang</span>=<span class="string">&quot;ts&quot;</span> <span class="attr">setup</span> <span class="attr">name</span>=<span class="string">&quot;Person&quot;</span>&gt;</span><span class="language-javascript"></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"><span class="comment">// 新版vue3似乎也内置了defineProps和withDefaults,不需要引入</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"><span class="comment">//defineXXX，这种的一般都属于宏函数，在vue3里面不用引入</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"><span class="keyword">import</span> &#123;defineProps&#125; <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"><span class="keyword">import</span> &#123;type <span class="title class_">PersonInter</span>&#125; <span class="keyword">from</span> <span class="string">&#x27;@/types&#x27;</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  </span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"><span class="comment">// 第一种写法：仅接收</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"><span class="comment">// defineProps返回值是一个Proxy对象，包含所有你接收的东西</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"><span class="comment">// defineProps参数必须是字符串的数组，命名必须和传入的值保持一致(否则为undefined)</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"><span class="comment">// const props = defineProps([&#x27;list&#x27;])</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  </span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"><span class="comment">// 第二种写法：接收+限制类型（而且还是个必要传的值）</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"><span class="comment">// defineProps&lt;&#123;list:Persons&#125;&gt;()</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  </span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"><span class="comment">// 第三种写法：接收+限制类型+指定默认值+限制必要性</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"><span class="keyword">let</span> props = <span class="title function_">withDefaults</span>(defineProps&lt;&#123;list?:<span class="title class_">Persons</span>&#125;&gt;(),&#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  <span class="attr">list</span>:<span class="function">()=&gt;</span>[&#123;<span class="attr">id</span>:<span class="string">&#x27;asdasg01&#x27;</span>,<span class="attr">name</span>:<span class="string">&#x27;小猪佩奇&#x27;</span>,<span class="attr">age</span>:<span class="number">18</span>&#125;]</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">&#125;)</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"><span class="comment">// vue2中直接把props属性定义为对象类型default:xxx，就很简单</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"><span class="variable language_">console</span>.<span class="title function_">log</span>(props)</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  <span class="language-xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;person&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">ul</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;<span class="name">li</span> <span class="attr">v-for</span>=<span class="string">&quot;item in list&quot;</span> <span class="attr">:key</span>=<span class="string">&quot;item.id&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">        &#123;&#123;item.name&#125;&#125;--&#123;&#123;item.age&#125;&#125;</span></span><br><span class="line"><span class="language-xml">      <span class="tag">&lt;/<span class="name">li</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">&lt;/template&gt;</span><br><span class="line">  </span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">script</span> <span class="attr">lang</span>=<span class="string">&quot;ts&quot;</span> <span class="attr">setup</span> <span class="attr">name</span>=<span class="string">&quot;Person&quot;</span>&gt;</span><span class="language-javascript"></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"><span class="comment">// 新版vue3似乎也内置了defineProps和withDefaults,不需要引入</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"><span class="comment">//defineXXX，这种的一般都属于宏函数，在vue3里面不用引入</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"><span class="keyword">import</span> &#123;defineProps&#125; <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"><span class="keyword">import</span> &#123;type <span class="title class_">PersonInter</span>&#125; <span class="keyword">from</span> <span class="string">&#x27;@/types&#x27;</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  </span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"><span class="comment">// 第一种写法：仅接收</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"><span class="comment">// defineProps返回值是一个Proxy对象，包含所有你接收的东西</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"><span class="comment">// defineProps参数必须是字符串的数组，命名必须和传入的值保持一致(否则为undefined)</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"><span class="keyword">const</span> props = <span class="title function_">defineProps</span>([<span class="string">&#x27;list&#x27;</span>])</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  </span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"><span class="comment">// 第二种写法：接收+限制类型（而且还是个必要传的值）</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"><span class="keyword">const</span> props = defineProps&lt;&#123;<span class="attr">list</span>:<span class="title class_">Persons</span>&#125;&gt;()</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  </span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"><span class="comment">// 第三种写法：接收+限制类型+指定默认值+限制必要性</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"><span class="keyword">let</span> props = <span class="title function_">withDefaults</span>(defineProps&lt;&#123;list?:<span class="title class_">Persons</span>&#125;&gt;(),&#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  <span class="attr">list</span>:<span class="function">()=&gt;</span>[&#123;<span class="attr">id</span>:<span class="string">&#x27;asdasg01&#x27;</span>,<span class="attr">name</span>:<span class="string">&#x27;小猪佩奇&#x27;</span>,<span class="attr">age</span>:<span class="number">18</span>&#125;]</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">&#125;)</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"><span class="comment">// vue2中直接把props属性定义为对象类型default:xxx，就很简单</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"><span class="variable language_">console</span>.<span class="title function_">log</span>(props)</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
 
 </blockquote>
 <h1 id="生命周期"><a href="#生命周期" class="headerlink" title="生命周期"></a>生命周期</h1><ul>
@@ -1224,7 +1440,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-05-09 18:35:41" itemprop="dateModified" datetime="2024-05-09T18:35:41+08:00">2024-05-09</time>
+      <time title="修改时间：2024-05-14 13:43:14" itemprop="dateModified" datetime="2024-05-14T13:43:14+08:00">2024-05-14</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -1340,7 +1556,7 @@
 </li>
 </ul>
 <h3 id="Mutation"><a href="#Mutation" class="headerlink" title="Mutation"></a>Mutation</h3><blockquote>
-<p>在组件中，虽然可以<code>this.$store.state.count = 1</code>直接修改全局的数据，且不报错，但是在Vuex中，它<strong>不允许组件直接去修改Store的数据</strong>，而是推荐使用Mutation</p>
+<p>在组件中，虽然可以<code>this.$store.state.count = 1</code>直接修改全局的数据，且不报错，<br>但是在Vuex中，它<font color="red"><strong>不允许组件直接去修改Store的数据</strong></font>，而是推荐使用Mutation</p>
 </blockquote>
 <p>Mutation用于变更Store中的数据。<br>通过这种方式虽然操作稍微繁琐一些，但是<strong>可以集中监控所有数据的变化</strong></p>
 <blockquote>
@@ -2102,7 +2318,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-05-13 22:21:02" itemprop="dateModified" datetime="2024-05-13T22:21:02+08:00">2024-05-13</time>
+      <time title="修改时间：2024-05-14 13:17:15" itemprop="dateModified" datetime="2024-05-14T13:17:15+08:00">2024-05-14</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -2234,7 +2450,7 @@
 <ul>
 <li>那么问题来了，在html页面如何使用emoji表情？js如何使用emoji？ <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/328516890">参考一篇文章</a></li>
 </ul>
-<h2 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h2><h3 id="hexo引入图片的全局资源文件夹引用"><a href="#hexo引入图片的全局资源文件夹引用" class="headerlink" title="hexo引入图片的全局资源文件夹引用"></a>hexo引入图片的全局资源文件夹引用</h3><p><code>![img](/images/vue/组件生命周期.png)</code><br>该格式会被渲染器解析为img元素渲染到页面上<br>[]里的值会被解析为img元素的alt属性，即如果找不到图片会显示为img这个字符串<br>()里的则会解析为img元素的src属性</p>
+<h2 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h2><h3 id="hexo全局资源文件夹引用"><a href="#hexo全局资源文件夹引用" class="headerlink" title="hexo全局资源文件夹引用"></a>hexo全局资源文件夹引用</h3><p><code>![img](/images/vue/组件生命周期.png)</code><br>该格式会被渲染器解析为img元素渲染到页面上<br>[]里的值会被解析为img元素的alt属性，即如果找不到图片会显示为img这个字符串<br>()里的则会解析为img元素的src属性</p>
 <h3 id="表情符号简码"><a href="#表情符号简码" class="headerlink" title="表情符号简码"></a>表情符号简码</h3><p>对于表情符号，GitHub Markdown支持使用特定的简码来直接显示表情。当你在Markdown文本中使用表情符号的简码时，GitHub会自动将其解析并替换为对应的表情符号图像，从而在文档中显示出来。</p>
 <p>这种自动替换是GitHub的一个特性，使得Markdown文本中的表情符号可以直观地显示出来，增强了文档的可读性和趣味性。</p>
 
@@ -2255,135 +2471,8 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://tsukimiyanano.github.io/tsukimiya.github.io/2024/05/06/ES6/3.async-await/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/tsukimiya.github.io/images/avatar.jpg">
-      <meta itemprop="name" content="Ayu">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Ayu's Study Blog">
-      <meta itemprop="description" content="你们怎么能这么卷！！">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Ayu's Study Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/tsukimiya.github.io/2024/05/06/ES6/3.async-await/" class="post-title-link" itemprop="url">async/await</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2024-05-06 14:00:55" itemprop="dateCreated datePublished" datetime="2024-05-06T14:00:55+08:00">2024-05-06</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-05-07 22:28:05" itemprop="dateModified" datetime="2024-05-07T22:28:05+08:00">2024-05-07</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/tsukimiya.github.io/categories/JS/" itemprop="url" rel="index"><span itemprop="name">JS</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/tsukimiya.github.io/categories/JS/ES6/" itemprop="url" rel="index"><span itemprop="name">ES6</span></a>
-        </span>
-    </span>
-
-  
-  
-  <span class="post-meta-item">
-    
-    <span class="post-meta-item-icon">
-      <i class="far fa-comment"></i>
-    </span>
-    <span class="post-meta-item-text">Waline：</span>
-  
-    <a title="waline" href="/tsukimiya.github.io/2024/05/06/ES6/3.async-await/#waline" itemprop="discussionUrl">
-      <span class="post-comments-count waline-comment-count" data-path="/tsukimiya.github.io/2024/05/06/ES6/3.async-await/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>1.4k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="什么是-async-await"><a href="#什么是-async-await" class="headerlink" title="什么是 async &#x2F; await"></a>什么是 async &#x2F; await</h2><p><strong>async&#x2F;await</strong> 是 <strong>ES8</strong>(ECMAScript 2017)引入的新语法，用来<strong>简化Promise异步操作</strong>。在async&#x2F;await出现之前，开发者只能通过<strong>链式.then()的方式</strong>处理Promise异步操作。示例代码如下:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> thenFs <span class="keyword">from</span> <span class="string">&#x27;then-fs&#x27;</span></span><br><span class="line"></span><br><span class="line">thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/1.txt&#x27;</span>, <span class="string">&#x27;utf8&#x27;</span>)<span class="comment">// 返回值是Promise的实例对象</span></span><br><span class="line">  .<span class="title function_">then</span>(<span class="function">(<span class="params">r1</span>) =&gt;</span> &#123; <span class="comment">// 通过.then 为返回的promise实例指定成功之后的回调函数</span></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(r1)</span><br><span class="line">    <span class="keyword">return</span> thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/2.txt&#x27;</span>, <span class="string">&#x27;utf8&#x27;</span>)</span><br><span class="line">  &#125;).<span class="title function_">then</span>(<span class="function">(<span class="params">r2</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(r2)</span><br><span class="line">    <span class="keyword">return</span> thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/3.txt&#x27;</span>, <span class="string">&#x27;utf8&#x27;</span>)</span><br><span class="line">  &#125;).<span class="title function_">then</span>(<span class="function">(<span class="params">r3</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(r3)</span><br><span class="line">  &#125;)</span><br></pre></td></tr></table></figure>
-<p>.then链式调用的<strong>优点</strong>：解决了回调地狱的问题<br>.then链式调用的<strong>缺点</strong>：代码冗余、阅读性差、不易理解</p>
-<h2 id="async-await-的基本使用"><a href="#async-await-的基本使用" class="headerlink" title="async &#x2F; await 的基本使用"></a>async &#x2F; await 的基本使用</h2><p>使用async&#x2F; await简化 Promise异步操作的示例代码如下:</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> thenFs <span class="keyword">from</span> <span class="string">&#x27;then-fs&#x27;</span></span><br><span class="line"><span class="comment">// 按顺序读取文件 1 2 3 的内容</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">getAllFile</span>(<span class="params"></span>)&#123;</span><br><span class="line">  <span class="comment">// 如果不加await，它的返回值就是Promise实例，加了await，返回值就是最终读取到的文件中的内容</span></span><br><span class="line">  <span class="keyword">const</span> r1 = <span class="keyword">await</span> thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/1.txt&#x27;</span>,<span class="string">&#x27;utf-8&#x27;</span>)</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(r1) <span class="comment">// 111</span></span><br><span class="line">  <span class="keyword">const</span> r2 = <span class="keyword">await</span> thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/2.txt&#x27;</span>, <span class="string">&#x27;utf-8&#x27;</span>)</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(r2) <span class="comment">// 222</span></span><br><span class="line">  <span class="keyword">const</span> r3 = <span class="keyword">await</span> thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/3.txt&#x27;</span>, <span class="string">&#x27;utf-8&#x27;</span>)</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(r3) <span class="comment">// 333</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_">getAllFile</span>()</span><br></pre></td></tr></table></figure>
-<p>如果<strong>某个方法的返回值是个Promise实例对象</strong>，那么我们就可以在前面<strong>用await</strong>来进行<strong>修饰</strong>，修饰完毕之后，这个<strong>返回值就不再是Promise实例</strong>，而是<strong>变成一个真正的值</strong>。<br>而且需要注意：<font color='red'>如果这个方法内部用到了await，那么这个方法必须被async来修饰</font></p>
-<h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><ol>
-<li><font color='green'>如果在 function 中使用了 await ，则 function <strong>必须</strong>被 async 修饰</font></li>
-<li><font color='green'>在 async 方法中，<strong>第一个 await 之前的代码会同步执行</strong>，await之后的代码会异步执行</font><br>最终输出的顺序：A、B、C、111 222 333、D<br>碰到第一个await，主线程就退出了方法执行，立马输出了C，当1 2 3异步读取完成之后就按顺序输出，最后异步的输出了D<br><img src="/tsukimiya.github.io/images/ES6/async%E6%96%B9%E6%B3%95%E6%89%A7%E8%A1%8C%E9%A1%BA%E5%BA%8F.png" alt="async/await方法执行顺序"></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/tsukimiya.github.io/default-index/page/2/">2</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/tsukimiya.github.io/default-index/page/2/"><i class="fa fa-angle-right"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/tsukimiya.github.io/default-index/page/2/">2</a><a class="page-number" href="/tsukimiya.github.io/default-index/page/3/">3</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/tsukimiya.github.io/default-index/page/2/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 </div>
@@ -2405,13 +2494,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">137k</span>
+    <span title="站点总字数">143k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">2:05</span>
+    <span title="站点阅读时长">2:10</span>
   </span>
 </div>
 <div class="busuanzi-count">
