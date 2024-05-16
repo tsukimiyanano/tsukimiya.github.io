@@ -20,17 +20,17 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"tsukimiyanano.github.io","root":"/tsukimiya.github.io/","images":"/tsukimiya.github.io/images","scheme":"Pisces","darkmode":true,"version":"8.19.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/tsukimiya.github.io/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true}}</script><script src="/tsukimiya.github.io/js/config.js"></script>
 
-    <meta name="description" content="目标：使用Vue指令完成页面结构的渲染使用Vue调试工具辅助Vue的开发   掌握Vue的两个特性：数据驱动视图、双向数据绑定    掌握Vue的底层原理 MVVM – model数据源、view视图&#x2F;页面结构、viewmodel vue实例    掌握Vue六大类指令的使用    vue2指令新学到的东西：    事件绑定指令中的：参数问题、$event、事件修饰符、按键修饰符">
+    <meta name="description" content="目标：使用Vue指令完成页面结构的渲染使用Vue调试工具辅助Vue的开发   掌握Vue的两个特性：数据驱动视图、双向数据绑定    掌握Vue的底层原理 MVVM – model数据源、view视图&#x2F;页面结构、viewmodel vue实例    掌握Vue六大类指令的使用    vue2指令新学到的东西：    属性绑定指令中的：对象写法    事件绑定指令中的：参数问题、$eve">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Vue2 基本使用 &amp; 常用指令">
 <meta property="og:url" content="https://tsukimiyanano.github.io/tsukimiya.github.io/2024/04/20/Vue2/2.vue2%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8&%E5%B8%B8%E7%94%A8%E6%8C%87%E4%BB%A4/index.html">
 <meta property="og:site_name" content="Ayu&#39;s Study Blog">
-<meta property="og:description" content="目标：使用Vue指令完成页面结构的渲染使用Vue调试工具辅助Vue的开发   掌握Vue的两个特性：数据驱动视图、双向数据绑定    掌握Vue的底层原理 MVVM – model数据源、view视图&#x2F;页面结构、viewmodel vue实例    掌握Vue六大类指令的使用    vue2指令新学到的东西：    事件绑定指令中的：参数问题、$event、事件修饰符、按键修饰符">
+<meta property="og:description" content="目标：使用Vue指令完成页面结构的渲染使用Vue调试工具辅助Vue的开发   掌握Vue的两个特性：数据驱动视图、双向数据绑定    掌握Vue的底层原理 MVVM – model数据源、view视图&#x2F;页面结构、viewmodel vue实例    掌握Vue六大类指令的使用    vue2指令新学到的东西：    属性绑定指令中的：对象写法    事件绑定指令中的：参数问题、$eve">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://tsukimiyanano.github.io/tsukimiya.github.io/images/vue/MVVM%E7%A4%BA%E6%84%8F%E5%9B%BE.png">
 <meta property="og:image" content="https://tsukimiyanano.github.io/tsukimiya.github.io/images/vue/MVVM%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86.png">
 <meta property="article:published_time" content="2024-04-20T04:51:08.735Z">
-<meta property="article:modified_time" content="2024-05-11T09:37:23.180Z">
+<meta property="article:modified_time" content="2024-05-15T05:14:43.201Z">
 <meta property="article:author" content="Ayu">
 <meta property="article:tag" content="Vue">
 <meta property="article:tag" content="Vue2">
@@ -160,7 +160,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/tsukimiya.github.io/archives/">
-          <span class="site-state-item-count">21</span>
+          <span class="site-state-item-count">22</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -242,7 +242,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-05-11 17:37:23" itemprop="dateModified" datetime="2024-05-11T17:37:23+08:00">2024-05-11</time>
+      <time title="修改时间：2024-05-15 13:14:43" itemprop="dateModified" datetime="2024-05-15T13:14:43+08:00">2024-05-15</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -286,7 +286,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>7.6k</span>
+      <span>7.7k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -307,7 +307,7 @@
 <p>目标：<br>使用Vue指令完成页面结构的渲染<br>使用Vue调试工具辅助Vue的开发</p>
 </blockquote>
 <blockquote>
-<p><strong>掌握Vue的两个特性：数据驱动视图、双向数据绑定<br>    掌握Vue的底层原理 MVVM – model数据源、view视图&#x2F;页面结构、viewmodel vue实例<br>    掌握Vue六大类指令的使用</strong><br>    vue2指令新学到的东西：<br>    事件绑定指令中的：<a href="#param">参数问题</a>、<a href="#event">$event</a>、<a href="#modifier">事件修饰符</a>、<a href="#keyModifier">按键修饰符</a><br>    双向绑定指令中的：<a href="#v-model">v-model修饰符</a><br>    条件渲染指令中的：<a href="#if">v-if配套的v-else指令</a><br>    列表渲染指令中的：<a href="#key">key属性绑定</a></p>
+<p><strong>掌握Vue的两个特性：数据驱动视图、双向数据绑定<br>    掌握Vue的底层原理 MVVM – model数据源、view视图&#x2F;页面结构、viewmodel vue实例<br>    掌握Vue六大类指令的使用</strong><br>    vue2指令新学到的东西：<br>    属性绑定指令中的：<a href="#obj">对象写法</a><br>    事件绑定指令中的：<a href="#param">参数问题</a>、<a href="#event">$event</a>、<a href="#modifier">事件修饰符</a>、<a href="#keyModifier">按键修饰符</a><br>    双向绑定指令中的：<a href="#v-model">v-model修饰符</a><br>    条件渲染指令中的：<a href="#if">v-if配套的v-else指令</a><br>    列表渲染指令中的：<a href="#key">key属性绑定</a></p>
 </blockquote>
 <blockquote>
 <p>vscode插件推荐：Volar、Vue VSCode Snippets。 <a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_40808668/article/details/134277604">简单说明</a>(CSDN)</p>
@@ -358,6 +358,9 @@
 <blockquote>
 <p>在vue提供的<strong>模版渲染语法中</strong>，除了支持绑定简单的数据值之外，还<font color="green">支持JS表达式的运算</font><br> 但是<font color="green">只能写简单的JS表达式，不能写if等复杂的JS语句</font>，如字符串拼接等：<br> <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#123;number + <span class="number">1</span>&#125;&#125;、&#123;&#123;ok?<span class="string">&#x27;YES&#x27;</span>:<span class="string">&#x27;NO&#x27;</span>&#125;&#125;、&#123;&#123;msg.<span class="title function_">split</span>(<span class="string">&#x27;&#x27;</span>).<span class="title function_">reserve</span>().<span class="title function_">join</span>(<span class="string">&#x27;&#x27;</span>)&#125;&#125;<span class="comment">//反转字符串</span></span><br></pre></td></tr></table></figure></p>
 </blockquote>
+<ul>
+<li><font id="obj" color="red">v-bind的<strong>对象写法</strong></font><br> <code>&lt;xxx v-bind=&quot;&#123;x:100,y:200&#125;&quot;/&gt;</code> 等同于：<code>&lt;xxx :x=&quot;100&quot; :y=&quot;200&quot;/&gt;</code></li>
+</ul>
 </li>
 <li><p>事件绑定指令：<code>v-on</code> &#x2F; <code>@</code></p>
 <blockquote>
@@ -582,13 +585,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">143k</span>
+    <span title="站点总字数">158k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">2:10</span>
+    <span title="站点阅读时长">2:23</span>
   </span>
 </div>
 <div class="busuanzi-count">
