@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>航空历史 - 航空文化馆</title>
+    <link rel="shortcut icon" sizes="512x512" href="./imgs/logo1.png" type="image/x-icon">
+    <link rel="stylesheet" href="./css/reset.css">
+    <link rel="stylesheet" href="./css/aerospace_history.css">
+</head>
+
+<body>
+    <div class="container" id="zua">
+        <!-- 头部 -->
+        <div class="header">
+            <!-- logo，搜索，导航栏 -->
+            <div class="logo">
+                <a href="./index.html">
+                    <img class="logo1" src="./imgs/logo1.png" alt="">
+                    <img class="logo2" src="./imgs/logo2.png" alt="">
+                </a>
+            </div>
+            <a class="search" href="./search.html"><img @click="search" src="./imgs/搜索.svg" alt=""></a>
+            <div class="nav">
+                <ul>
+                    <a href="./index.html"><li>首页</li></a>
+                    <a href="./aerospace_history.html">
+                        <li>
+                            航空历史
+                            <div class="current"></div>
+                        </li>
+                    </a>
+                    <a href="./main_model.html"><li>重要机型</li></a>
+                    <a href="./China_aerospace.html"><li>中国航空</li></a>
+                    <a href="./aerospace_figures.html"><li>航空英模</li></a>
+                    <a href="./university_history.html"><li>航院校史</li></a>
+                    <div class="slider"></div>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 中间内容 -->
+        <div class="content">
+            <div class="main">
+                <div class="major">
+                    <div class="title">功炳天疆，世界航空大事记</div>
+                    <ul>
+                        <li>1903年12月17日，莱特兄弟制作的“飞行者1号”试飞成功。</li>
+                        <li>1909年11月16日，第一家商业性民用航空运输公司—德国航空运输有限公司成立。</li>
+                        <li>1919年6月25日，第一架全金店客机德国容克公司的F13首春。</li>
+                        <li>1927年5月20日，飞行探险家林白成为飞越大西洋世界第一人。</li>
+                        <li>1938年6月26日，第一架实用直升机FW61首飞。</li>
+                        <li>1942年7月，世界第一种实用性项气式飞机Me262首飞成功。</li>
+                        <li>1947年10月14日，耶格尔首次实现突磁春障飞行。</li>
+                        <li>1956年9月27日，阿普特首次突破“热障”飞行。</li>
+                        <li>1968年12月31日，超声速客机用-144首飞成功。</li>
+                        <li>1970年1月22日，世界最大宽体客机波音747首航。</li>
+                        <li>1999年3月21日，人类首次乘坐热气球完成不向断环球飞行。</li>
+                        <li>2016年7月6日，全球最大太阳能动力飞机“阳光动力2号”完成环球飞行。</li>
+                        <li>2018年3月16日，波音738MAX7完成首飞。</li>
+                        <li>……</li>
+                    </ul>
+                </div>
+                <div class="exploration">
+                    <div class="title">飞行的探索时期</div>
+                    <div class="wing">
+                        <div class="subtitle">人类对飞行的最初探索</div>
+                        <p class="detail">
+                            中世纪妃，欧洲不断有人对飞行作出勇敢的尝试，她们以羽毛制翅膀，从高地跳下，试图模仿鸟的飞行，但多以失败告经。在很长的一段时间内，人类对飞行的探索进展缓慢，文艺复兴时期的莱品纳多·达芬奇关于飞行的研究成果直至9世纪后期才为后人发现，对航空业的发展未起到应有的作用，
+                        </p>
+                    </div>
+                    <div class="balloon">
+                        <div class="subtitle">气球飞行成功</div>
+                        <p class="detail">
+                            中国早在五代时用（公元907一980年）就使用过原始的热气球（孔明灯）。1783年，法国人象哥尔赛兄弟首次制造成功载人气球，引起轰动。同年11月21日，F.P.罗齐埃与M.达尔朗愿乘坐松气球、在约1000米高空上飞行2分钟，约12公里，这是人类第一次乘却空器的空中航行。
+                            法国物理学家燕理运用热气球原理。用涂以檐胶的鞋制成氢气球。改变了人们委气球飞行的方式。1786年1月7日，法国人市朗夏尔等人乘氢气球自英国多佛起飞井飞越英吉利海峡，到达法国。此后，自18世纪未至19世纪初，气球开始广泛用于军事、体育运动和科学实验。
+                        </p>
+                    </div>
+                    <div class="airship">
+                        <div class="subtitle">飞艇的兴衰</div>
+                        <p class="detail">
+                            最华的飞艇是法国人亨利·吉法尔于1852年制成的气囊形如雪茄，下是吊龙，上装蒸汽机作为动力，带动3叶蝶旋桨，并有方向蛇。1800年，德国的费进南·冯·齐伯林妇鬲制臧硬式飞艇，井于1909年创立德国航空运指有限公司，在法兰克福、巴登、杜塞多夫之间定期载客飞行，这就是最军的室中定斯航线。
+                            一战前后是飞艇发展的同盛时期。德国建立齐柏林飞艇队，用于海上巡逻、远程轰炸及空运恶军事活动，进多次对伦摹进行聂炸。1837年5月，兴登堡号飞艇由于尾黄失火蔓斑全骶，造感37人死亡，飞艇的新业肌行至此结束。
+                        </p>
+                        <div class="box">
+                            <img style="width: 235px" src="./images/a_history/飞艇1.png" alt="">
+                            <img style="width: 235px" src="./images/a_history/飞艇2.png" alt="">
+                        </div>
+                    </div>
+                    <div class="firstPlane">
+                        <div class="subtitle">对飞机的探索和试验</div>
+                        <p class="detail">
+                            人类利用轻于空气的航室器成功玉行的同时，许多航空先软对重于空气的航空器也在进行探索和试验:1809年，英国人乔治·凯利提出“全邵问题是如何应用足以抵抗空气阻力的动力来使翼面支持一定的重量”。揭示动力飞行的基本原理。1891年，德国人李林达尔首创骨团机。1903年12月17日，莱特兄弟制装的旁一架飞机“飞行者1号”在美由北卡莱罗纳州试飞成功，买现了人类第一次重于空气飞行器的有动力飞行。
+                        </p>
+                        <div class="box">
+                            <div>
+                                <img style="width: 120px" src="./images/a_history/莱特兄弟.png" alt="">
+                                <p>莱特兄弟</p>
+                            </div>
+                            <div>
+                                <img style="width: 350px" src="./images/a_history/第一架飞机.png" alt="">
+                                <p>莱特兄弟制造的第一架飞机“飞行者1号”</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="piston">
+                    <div class="title">活塞发动机飞行时期</div>
+                    <div class="evolve">
+                        <div class="subtitle">飞机飞行成功和初步进展</div>
+                        <p class="detail">
+                            20世纪初，欧洲各国也在积极从事飞机的研究。1909年7月25日，法国人路易斯·布莱里奥驾驶自己设计的“布莱里奥”Xl号单翼机，首次飞越了英吉利海峡，在37分钟内飞行约40公里，这是最早的飞机国际飞行。
+                            1913年2月25日，俄国人伊戈尔·伊万诺维奇·西科尔斯基设计的大型飞机“俄罗斯勇士”号首次飞行成功，此后在第一次世界大战中被改进为“伊利亚·穆罗梅茨”重型轰炸机。
+                        </p>
+                        <div class="box">
+                            <div>
+                                <img style="width: 300px" src="./images/a_history/初步进展1.png" alt="">
+                                <p>1901年,北卡罗策纳州飞行员正在试鹫滑翔机</p>
+                            </div>
+                            <div>
+                                <img style="width: 300px" src="./images/a_history/初步进展2.png" alt="">
+                                <p>1908年,法国的滑翔翼飞机</p>
+                            </div>
+                            <div>
+                                <img style="width: 350px" src="./images/a_history/初步进展3.png" alt="">
+                                <p style="width: 320px;margin: 0 auto;">1909年7月,法国航空先驱路葛斯·布莱里奥特坐在自己的飞机上留影</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="subtitle">飞机在第一次世界大战中的应用</div>
+                        <p class="detail">
+                            第一次世界大战爆发后，飞机开始大规模用于军事目的，并从最初单纯用于侦查，逐渐发展出用于驱逐敌机的驱逐机，以及轰炸机和强击机等。
+                            第一次世界大战肯定了飞机在军事上的优势，战争由平面向立体转化。1917年10月11日，英国皇家飞行团成立,次年发展为英国皇家空军，这也是世界上第一支独立的空军。
+                        </p>
+                    </div>
+                    <div>
+                        <div class="subtitle">飞机民用运输的创建</div>
+                        <p class="detail">
+                            一战后，大批飞行员退役,过剩的军用飞机被大量转至民用领域，民用航空运输得以发展。德国首先在1919年2月建立国内航线，同年8月，英法建立了国际定期空中客运航线,逐步形成航空运输网。1920年，英国亨德利-佩奇公司制造出能载12名乘客的双发动机旅客机。20世纪30年代,为提高飞行速度,更为先进的波音247、DC-3客机先后问世。
+                        </p>
+                        <div class="box">
+                            <div>
+                                <img style="width: 480px" src="./images/a_history/民用1.png" alt="">
+                                <p>波音247客机</p>
+                            </div>
+                            <div>
+                                <img style="width: 480px" src="./images/a_history/民用2.png" alt="">
+                                <p>20世纪20年代。民航爆炸增长时期的道格拉斯DC-3飞机</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="subtitle">航空科学技术的进步</div>
+                        <p class="detail">
+                            从20世纪初至第二次世界大战期间,空气动力学发展迅速。1904年,德国物理学家路德维希·普朗特首先提出了边界层概念，并在1908年建造了世界第一个回流式风洞。1918年苏联创建中央流体动力研究院，英、法等国也相继成立航空科学研究机构。
+                            在此期间，飞机设计得以改良，现代客机的主要特征逐渐体现。1933年后,双翼机逐渐被单翼机替代。30年代末,美国的星型气冷活塞式发动机得到广泛使用，民航飞机已普遍采用无线电导航。直升机和旋翼机在两次大战之间获得改进，到1939年渐趋成熟。
+                        </p>
+                        <div class="box">
+                            <div>
+                                <img style="width: 320px" src="./images/a_history/科学进步1.png" alt="">
+                                <p>1917年,史密森学会公开展示飞行原理</p>
+                            </div>
+                            <div>
+                                <img style="width: 320px" src="./images/a_history/科学进步2.png" alt="">
+                                <p>1929年2月5日,美囿研制的无线电接收装置</p>
+                            </div>
+                            <div>
+                                <img style="width: 320px" src="./images/a_history/科学进步3.png" alt="">
+                                <p>1930年,克利夫兰第一台无线电装置控制塔</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="subtitle">第二次世界大战中的军用飞机</div>
+                        <p class="detail">
+                            第二次世界大战中,空军已成为重要的军种，参战飞机数量大,种类多。德国的Me108，英国的“隐风”和“喷火”，苏联的米格-3，美国的P-47、P-51都是二战期间非常有名的战斗机。
+                            此外,二战期间的明星机型还包括以装甲牲能好、火力强闻名的苏联伊尔-2强击机，以及腑冲轰炸时可以发出尖锐喘声霞慑对手的德国容克公司的J87轰炸机二战中,最重、最大的作战飞机是美国的四发动机勇型轰炸机日-29“超级空中垫”，1845年8月8日、9日，分别在日本广岛、长喷投下原子弹,加速了二战结束
+                        </p>
+                    </div>
+
+                </div>
+
+                <div class="jet">
+                    <div class="title">喷气飞机时期</div>
+                    <div>
+                        <div class="subtitle">喷气飞机的诞生和突破音障</div>
+                        <p class="detail">
+                            二十世纪30年代后期，活塞发动机螺旋桨飞机的性能已经接近极限,要想继续提升X行器的性能,必须有更先进的动力系统、在这种情况下,涡驼喷气发动机和喷气飞机应运而生。德国汉斯·冯·奥海因在1937年3月研制成功HeS-3B轴流式圜气发动机。1938年8月27日装有此发动机的He一178飞机试飞成功,成为世界上第一架成功飞行的喷气飞机。1947年10月14日，美国X一1火箭试验研究机在12800米高空达到1078公里/时的速度，标志着人类正式进入超声速飞行时代。
+                        </p>
+                    </div>
+                    <div>
+                        <div class="subtitle">喷气军用飞机的发展</div>
+                        <p class="detail">
+                            1959年，美国研制的高超声速研究机X-15实现首次动力飞行，解决了困扰已久的热障问题。80年代，变后掠机翼和垂直起落技术大大提升飞机综合性能，美国研制的F-111成为世界第一种投入实用的变后掠机冀飞机。
+                        </p>
+                        <div class="box">
+                            <div>
+                                <img style="width: 480px" src="./images/a_history/军用发展1.png" alt="">
+                                <p></p>
+                            </div>
+                            <div>
+                                <img style="width: 480px" src="./images/a_history/军用发展2.png" alt="">
+                                <p></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="subtitle">喷气民航飞机的发展</div>
+                        <p class="detail">
+                            第一架纯涡轮喷气发动机的民航客机是英国的“替星”号，于1952年5月2日投入使用。此后苏联研制的图104、美国的波音707、DC-8和康维尔880/990，成为第一代喷气民航机的代表。1958年10月26日，波音707客机正式投入使用，开启了民航发展的新时代。
+                        </p>
+                        <div class="box">
+                            <div>
+                                <img style="width: 480px" src="./images/a_history/民航发展1.png" alt="">
+                                <p>1942年10月，C-47运输机的安装现场</p>
+                            </div>
+                            <div>
+                                <img style="width: 480px" src="./images/a_history/民航发展2.png" alt="">
+                                <p>1969年3月，加利福尼亚航空公司的第一代波音737客机</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="influence">
+                    <div class="title">军事理论对航空发展的影响</div>
+                    <p class="detail">
+                        20世纪80年代初，以美苏为代表的国家,开始探索航空装备、航空技术的信息化进程,“空地一体战”战略已具雏形,并影响至今。
+                    </p>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- 页脚 -->
+        <div class="footer">
+            <div class="infos">
+                <div class="info">
+                    <p class="copyright">Copyright@2024 航空文化馆</p>
+                    <p class="address">地址：河南郑州郑东新区文苑西路15号</p>
+                    <p class="school">所属：郑州航空工业管理学院 龙子湖校区</p>
+                </div>
+                <div class="info middle">
+                    <p class="mail">联系方式：xxxxxxx.@xx.com</p>
+                    <p class="links">相关链接：
+                        <a href="https://zua.edu.cn/" target="_blank">学校官网</a>
+                    </p>
+                </div>
+                <div class="info codes">
+                    <!-- <div class="code">
+                                    <img src="./imgs/wx.png" alt="">
+                                    <span>微信公众号</span>
+                                </div> -->
+                    <div class="code">
+                        <img src="./imgs/wx.png" alt="">
+                        <span>微信公众号</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

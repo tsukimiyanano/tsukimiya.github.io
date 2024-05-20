@@ -1,0 +1,388 @@
+/* 让三个大盒子垂直充满浏览器视口，中间部分高度自动适应 */
+.autoContentHeight {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    justify-content: space-between; 
+}
+/* 头部开始 */
+.container .header {
+    /* 设置固定的高度 */
+    flex-basis: 80px;
+    flex-shrink: 0;
+    width: 100%;
+    height: 80px;
+    background-color: #0e58a6;
+}
+
+.container .header .logo {
+    width: 400px;
+    height: 80px;
+    /* background-color: aliceblue; */
+    position: relative;
+    border-top-right-radius: 50px;
+    border-bottom-right-radius: 50px;
+}
+
+.container .header .logo .logo1 {
+    width: 80px;
+    height: 80px;
+    position: absolute;
+    left: 50px;
+    cursor: pointer;
+    display: block;
+}
+
+.container .header .logo .logo2 {
+    height: 55px;
+    position: absolute;
+    left: 130px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    display: block;
+}
+
+/* 导航开始 */
+
+.container .header .nav ul {
+    /* background-color: #fff; */
+    width: 550px;
+    height: 80px;
+    margin: -80px auto;
+    display: flex;
+    justify-content: space-between;
+    line-height: 80px;
+    color: #fff;
+    font-size: 17px;
+    position: relative;
+}
+
+.container .header .nav ul li {
+    position: relative;
+    /* background-color: red; */
+    z-index: 1;
+}
+
+.container .header .nav ul li .current {
+    position: absolute;
+    /* width: 15px; */
+    /* height: 15px; */
+    /* background-color: #fff; */
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    border-bottom: 9px solid #fff;
+    border-left: 9px solid transparent;
+    border-right: 9px solid transparent;
+}
+
+.container .header .nav ul .slider {
+    width: 95px;
+    width: 80px;
+    height: 80px;
+    background-color: rgb(0, 115, 255);
+    border-radius: 4px;
+    position: absolute;
+    /* top: 20px; */
+    left: -22px;
+    transition: all ease 0.4s;
+    /* animation: 2s ease-in-out waves infinite; */
+    /* display: none; */
+    opacity: 0;
+}
+
+.container .header .nav ul a:nth-child(1):hover~.slider {
+    opacity: 1;
+    width: 80px;
+    left: -22px;
+}
+
+.container .header .nav ul a:nth-child(2):hover~.slider {
+    opacity: 1;
+    width: 95px;
+    left: 55px;
+}
+
+.container .header .nav ul a:nth-child(3):hover~.slider {
+    opacity: 1;
+    left: 158px;
+    width: 95px;
+}
+
+.container .header .nav ul a:nth-child(4):hover~.slider {
+    opacity: 1;
+    left: 261px;
+    width: 95px;
+}
+
+.container .header .nav ul a:nth-child(5):hover~.slider {
+    opacity: 1;
+    left: 364px;
+    width: 95px;
+}
+
+.container .header .nav ul a:nth-child(6):hover~.slider {
+    opacity: 1;
+    left: 468px;
+    width: 95px;
+}
+
+/* 导航结束 */
+
+
+/* 搜索开始 */
+
+/* 搜索图标 */
+.container .header .search img {
+    width: 35px;
+    height: 35px;
+    position: absolute;
+    top: 25px;
+    right: 140px;
+    transform: scale(.8);
+    z-index: 100;
+    opacity: .9;
+}
+
+.container .header .search img:hover {
+    transform: scale(.9);
+    cursor: pointer;
+    transition: all, 0s;
+}
+
+/* 搜索结束 */
+/* 头部结束 */
+
+/* 中间部分开始 */
+.container .content {
+    flex: 1;
+    width: 100%;
+    /* background-color: rgb(227, 210, 187, .1); */
+    background: linear-gradient(#fff, 80%, #a3c7f4);
+    background: linear-gradient(#fff, 80%, #bbdff7);
+}
+
+.container .content .main {
+    width: 1200px;
+    margin: 0 auto;
+    padding: 45px 0;
+    /* background-color: aqua; */
+}
+
+/* 搜索框部分开始 */
+.container .content .main .search-wrap {
+    width: 1200px;
+    height: 60px;
+    border: 1px solid #0073ff;
+    border-radius: 50px;
+    font-size: 18px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.container .content .main .search-wrap ul {
+    width: 110px;
+    height: fit-content;
+    position: relative;
+    text-align: center;
+    line-height: 60px;
+    margin-left: 25px;
+    background-color: #fff;
+    color: #686868;
+    z-index: 100;
+}
+
+.container .content .main .search-wrap ul li {
+    width: 110px;
+    height: 60px;
+    border-bottom: 1px solid #000;
+    border-left: 1px solid #000;
+    border-right: 1px solid #000;
+    box-sizing: border-box;
+    cursor: pointer;
+    background-color: #fff;
+    display: none;
+}
+
+.container .content .main .search-wrap ul li:hover {
+    background-color: #cbe3ff;
+    background-color: rgb(0, 115, 255, .3);
+}
+
+.container .content .main .search-wrap ul li:nth-child(1) {
+    display: block;
+    border-bottom: none;
+    border: none;
+}
+
+.container .content .main .search-wrap ul li:nth-child(1):hover {
+    background-color: transparent;
+    background-color: white;
+}
+
+.container .content .main .search-wrap ul:hover li {
+    display: block;
+}
+
+.container .content .main .search-wrap ul .expand {
+    border-left: 6px solid #0073ff;
+    border-top: 7px solid transparent;
+    border-bottom: 7px solid transparent;
+    position: absolute;
+    left: -5px;
+    top: 30px;
+    transform: translateY(-50%);
+    transform-origin: 50% 50%;
+    transition: all .3s;
+}
+
+.container .content .main .search-wrap ul:hover .expand {
+    transform-origin: 50% 50%;
+    transform: translateY(-50%) rotateZ(90deg);
+}
+
+.container .content .main .search-wrap input {
+    height: 60px;
+    width: 1000px;
+    background-color: transparent;
+    font-size: 18px;
+    /* background-color: red; */
+    padding-left: 10px;
+}
+
+.container .content .main .search-wrap img {
+    width: 30px;
+    height: 30px;
+    /* background-color: #0073ff; */
+    margin: 18px 20px;
+    cursor: pointer;
+}
+
+/* 搜索框部分结束 */
+
+
+/* 搜索结果部分开始 */
+.container .content .main .results {
+    /* background-color: #ffd2d2; */
+    width: 100%;
+    min-height: 400px;
+    padding: 50px 0;
+}
+.container .content .main .results .sum{
+    font-size: 16px;
+    margin: -10px 0 20px;
+}
+.container .content .main .results .sum span{
+    color: #07428a;
+}
+.container .content .main .results .result{
+    /* background-color: rgb(135, 206, 235,.4); */
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #0073ff;
+    position: relative;
+}
+.container .content .main .results .result a{
+    display: inline-block;
+    width: fit-content;
+    height: fit-content;
+}
+.container .content .main .results .result .title{
+    color: #07428a;
+    font-size: 25px;
+    font-weight: bold;
+    font-family: monospace;
+    border-left: 4px solid #0073ff;
+    padding-left: 10px;
+    width: fit-content;
+    margin: 0 0 25px;
+}
+.container .content .main .results .result  .text{
+    font-family: monospace;
+    font-size: 18px;
+    /* background-color: #f5cfcf; */
+    line-height: 24px;
+    text-indent: 2em;
+}
+.container .content .main .results .result .mark{
+    font-family: monospace;
+    font-size: 16px;
+    color: #0073ff;
+    position: absolute;
+    bottom: 15px;
+    right: 10px;
+    text-decoration: underline;
+}
+
+/* 搜索结果部分结束 */
+
+/* 回到顶部开始 */
+.container .content .main .toTop{
+    position: fixed;
+    bottom: 100px;
+    right: 50px;
+    border-radius: 50%;
+    width: fit-content;
+    height: fit-content;
+    cursor: pointer;
+    display: none;
+}
+.container .content .main .toTop img{
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    box-shadow: #0073ff 0 0 5px;
+    transform: rotate(-45deg);
+}
+/* 回到顶部结束 */
+
+/* 中间部分结束 */
+
+
+/* 页脚开始 */
+.container .footer {
+    width: 100%;
+    height: 140px;
+    background-color: #0e559f;
+    color: #fff;
+    font-size: 14px;
+    /* position: fixed;bottom: 0; */
+}
+
+.container .footer .infos {
+    width: 1200px;
+    height: 140px;
+    /* background-color: rgb(255, 255, 255, .2); */
+    margin: 0 auto;
+    padding: 20px 0;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
+}
+
+.container .footer .infos .info {
+    /* background-color: #a3c7f4; */
+    width: 300px;
+}
+
+.container .footer .infos .info p {
+    /* background-color: red; */
+    margin: 10px 0;
+}
+
+.container .footer .infos .codes .code {
+    width: 80px;
+    height: 90px;
+    float: right;
+    text-align: center;
+    margin: 0 10px;
+}
+
+.container .footer .infos .codes img {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 5px;
+}
+
+/* 页脚结束 */

@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>航空英模 - 航空文化馆</title>
+    <link rel="shortcut icon" sizes="512x512" href="./imgs/logo1.png" type="image/x-icon">
+    <link rel="stylesheet" href="./css/reset.css">
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" type="text/css" href="css/default.css">
+    <style>
+        /* 头部开始 */
+        .container .header {
+            width: 100%;
+            height: 80px;
+            background-color: #0e58a6;
+        }
+
+        .container .header .logo {
+            width: 400px;
+            height: 80px;
+            /* background-color: aliceblue; */
+            position: relative;
+            border-top-right-radius: 50px;
+            border-bottom-right-radius: 50px;
+        }
+
+        .container .header .logo .logo1 {
+            width: 80px;
+            height: 80px;
+            position: absolute;
+            left: 50px;
+            cursor: pointer;
+            display: block;
+        }
+
+        .container .header .logo .logo2 {
+            height: 55px;
+            position: absolute;
+            left: 130px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            display: block;
+        }
+
+        /* 导航开始 */
+
+        .container .header .nav ul {
+            /* background-color: #fff; */
+            width: 550px;
+            height: 80px;
+            margin: -80px auto;
+            display: flex;
+            justify-content: space-between;
+            line-height: 80px;
+            color: #fff;
+            font-size: 17px;
+            position: relative;
+        }
+
+        .container .header .nav ul li {
+            position: relative;
+            /* background-color: red; */
+            z-index: 1;
+        }
+
+        .container .header .nav ul li .current {
+            position: absolute;
+            /* width: 15px; */
+            /* height: 15px; */
+            /* background-color: #fff; */
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            border-bottom: 9px solid #fff;
+            border-left: 9px solid transparent;
+            border-right: 9px solid transparent;
+        }
+
+        .container .header .nav ul .slider {
+            width: 95px;
+            height: 80px;
+            background-color: rgb(0, 115, 255);
+            border-radius: 4px;
+            position: absolute;
+            /* top: 20px; */
+            left: 364px;
+            transition: all ease 0.4s;
+            /* animation: 2s ease-in-out waves infinite; */
+        }
+
+        .container .header .nav ul a:nth-child(1):hover~.slider {
+            width: 80px;
+            left: -22px;
+        }
+
+        .container .header .nav ul a:nth-child(2):hover~.slider {
+            width: 95px;
+            left: 55px;
+        }
+
+        .container .header .nav ul a:nth-child(3):hover~.slider {
+            left: 158px;
+            width: 95px;
+        }
+
+        .container .header .nav ul a:nth-child(4):hover~.slider {
+            left: 261px;
+            width: 95px;
+        }
+
+        .container .header .nav ul a:nth-child(5):hover~.slider {
+            left: 364px;
+            width: 95px;
+        }
+
+        .container .header .nav ul a:nth-child(6):hover~.slider {
+            left: 468px;
+            width: 95px;
+        }
+
+        /* 导航结束 */
+
+
+        /* 搜索开始 */
+
+        /* 搜索图标 */
+        .container .header .search img {
+            width: 35px;
+            height: 35px;
+            position: absolute;
+            top: 25px;
+            right: 140px;
+            transform: scale(.8);
+            z-index: 100;
+            opacity: .9;
+        }
+
+        .container .header .search img:hover {
+            transform: scale(.9);
+            cursor: pointer;
+            transition: all, 0s;
+        }
+
+        /* 搜索结束 */
+        /* 头部结束 */
+
+        /* 中间部分开始 */
+        .container .content {
+            width: 100%;
+            /* background-color: rgb(227, 210, 187, .1); */
+            background: linear-gradient(#fff, 80%, #a3c7f4);
+            background: linear-gradient(#fff, 80%, #bbdff7);
+        }
+
+        .container .content .main {
+            width: 1200px;
+            margin: 0 auto;
+            padding: 45px 0;
+            /* background-color: aqua; */
+        }
+
+        /* 中间部分结束 */
+
+
+        /* 页脚开始 */
+        .container .footer {
+            width: 100%;
+            height: 140px;
+            background-color: #0e559f;
+            color: #fff;
+            font-size: 14px;
+        }
+
+        .container .footer .infos {
+            width: 1200px;
+            height: 140px;
+            /* background-color: rgb(255, 255, 255, .2); */
+            margin: 0 auto;
+            padding: 20px 0;
+            box-sizing: border-box;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .container .footer .infos .info {
+            /* background-color: #a3c7f4; */
+            width: 300px;
+        }
+
+        .container .footer .infos .info p {
+            /* background-color: red; */
+            margin: 10px 0;
+        }
+
+        .container .footer .infos .codes .code {
+            width: 80px;
+            height: 90px;
+            float: right;
+            text-align: center;
+            margin: 0 10px;
+        }
+
+        .container .footer .infos .codes img {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 5px;
+        }
+
+        /* 页脚结束 */
+    </style>
+    <style type="text/css">
+        #gallery-wrapper {
+            position: relative;
+            max-width: 100%;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        img.thumb {
+            width: 100%;
+            max-width: 100%;
+            height: auto;
+        }
+
+        .white-panel {
+            position: absolute;
+            background: white;
+            border-radius: 5px;
+            box-shadow: 0px 1px 2px rgba(0, 0, 0, 0.3);
+            padding: 10px;
+        }
+
+        .white-panel h1 {
+            font-size: 1em;
+            color: #A92733;
+            color: #07428a;
+        }
+
+        .white-panel:hover {
+            box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.5);
+            margin-top: -5px;
+            -webkit-transition: all 0.3s ease-in-out;
+            -moz-transition: all 0.3s ease-in-out;
+            -o-transition: all 0.3s ease-in-out;
+            transition: all 0.3s ease-in-out;
+        }
+
+        .white-panel p {
+            color: #414141;
+            text-indent: 2em;
+            font-size: 15px;
+            line-height: 22px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container" id="figures">
+        <!-- 头部 -->
+        <div class="header">
+            <!-- logo，搜索，导航栏 -->
+            <div class="logo">
+                <a href="./index.html">
+                    <img class="logo1" src="./imgs/logo1.png" alt="">
+                    <img class="logo2" src="./imgs/logo2.png" alt="">
+                </a>
+            </div>
+            <a class="search" href="./search.html"><img src="./imgs/搜索.svg" alt=""></a>
+            <div class="nav">
+                <ul>
+                    <a href="./index.html"><li>首页</li></a>
+                    <a href="./aerospace_history.html"><li>航空历史</li></a>
+                    <a href="./main_model.html"><li>重要机型</li></a>
+                    <a href="./China_aerospace.html"><li>中国航空</li></a>
+                    <a href="./aerospace_figures.html"><li>航空英模<div class="current"></div></li></a>
+                    <a href="./university_history.html"><li>航院校史</li></a>
+                    <div class="slider"></div>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 中间内容 -->
+        <div class="content">
+            <div class="main">
+                <section id="gallery-wrapper">
+                    <article class="white-panel" v-for="item in figures">
+                        <img :src="'images/figures/' + item.imgName" class="thumb">
+                        <h1>{{item.title}}</h1>
+                        <p v-for="item in item.text">{{item}}</p>
+                    </article>
+                </section>
+            </div>
+        </div>
+
+
+        <!-- 页脚 -->
+        <div class="footer">
+            <div class="infos">
+                <div class="info">
+                    <p class="copyright">Copyright@2024 航空文化馆</p>
+                    <p class="address">地址：河南郑州郑东新区文苑西路15号</p>
+                    <p class="school">所属：郑州航空工业管理学院 龙子湖校区</p>
+                </div>
+                <div class="info middle">
+                    <p class="mail">联系方式：xxxxxxx.@xx.com</p>
+                    <p class="links">相关链接：
+                        <a href="https://zua.edu.cn/" target="_blank">学校官网</a>
+                    </p>
+                </div>
+                <div class="info codes">
+                    <!-- <div class="code">
+                                    <img src="./imgs/wx.png" alt="">
+                                    <span>微信公众号</span>
+                                </div> -->
+                    <div class="code">
+                        <img src="./imgs/wx.png" alt="">
+                        <span>微信公众号</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="./js/jquery.min.js"></script>
+    <script src="js/pinterest_grid.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $("#gallery-wrapper").pinterest_grid({
+                no_columns: 3,
+                padding_x: 10,
+                padding_y: 10,
+                margin_bottom: 50,
+                single_column_breakpoint: 700
+            });
+
+        });
+    </script>
+    <script src="./js/aerospace_figures.js"></script>
+</body>
+
+</html>

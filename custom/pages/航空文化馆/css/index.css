@@ -1,0 +1,1013 @@
+/* 头部开始 */
+.container .header {
+    width: 100%;
+    height: 80px;
+    background-color: #0e58a6;
+    /* background-color: rgba(14, 88, 166, .4); */
+    /* background-color: rgba(0, 18, 62, 0.4); */
+    /* background-color: rgb(0, 0, 0, .3); */
+}
+
+.container .header .logo {
+    width: 400px;
+    height: 80px;
+    /* background-color: aliceblue; */
+    position: relative;
+    border-top-right-radius: 50px;
+    border-bottom-right-radius: 50px;
+}
+
+.container .header .logo .logo1 {
+    width: 80px;
+    height: 80px;
+    position: absolute;
+    left: 50px;
+    cursor: pointer;
+    display: block;
+}
+
+.container .header .logo .logo2 {
+    height: 55px;
+    position: absolute;
+    left: 130px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    display: block;
+}
+
+/* 导航开始 */
+
+.container .header .nav ul {
+    /* background-color: #fff; */
+    width: 550px;
+    height: 80px;
+    margin: -80px auto;
+    display: flex;
+    justify-content: space-between;
+    line-height: 80px;
+    color: #fff;
+    font-size: 17px;
+    position: relative;
+}
+
+.container .header .nav ul li {
+    position: relative;
+    /* background-color: red; */
+    z-index: 1;
+}
+
+.container .header .nav ul li .current {
+    position: absolute;
+    /* width: 15px; */
+    /* height: 15px; */
+    /* background-color: #fff; */
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    border-bottom: 9px solid #fff;
+    border-left: 9px solid transparent;
+    border-right: 9px solid transparent;
+}
+
+.container .header .nav ul .slider {
+    width: 95px;
+    width: 80px;
+    height: 80px;
+    background-color: rgb(0, 115, 255);
+    border-radius: 4px;
+    position: absolute;
+    /* top: 20px; */
+    left: -22px;
+    transition: all ease 0.3s;
+    /* animation: 2s ease-in-out waves infinite; */
+}
+
+.container .header .nav ul a:nth-child(1):hover~.slider {
+    left: -22px;
+}
+
+.container .header .nav ul a:nth-child(2):hover~.slider {
+    width: 95px;
+    left: 55px;
+}
+
+.container .header .nav ul a:nth-child(3):hover~.slider {
+    left: 158px;
+    width: 95px;
+}
+
+.container .header .nav ul a:nth-child(4):hover~.slider {
+    left: 261px;
+    width: 95px;
+}
+
+.container .header .nav ul a:nth-child(5):hover~.slider {
+    left: 364px;
+    width: 95px;
+}
+
+.container .header .nav ul a:nth-child(6):hover~.slider {
+    left: 468px;
+    width: 95px;
+}
+
+/* 导航结束 */
+
+
+/* 搜索开始 */
+
+/* 搜索图标 */
+.container .header .search img {
+    width: 35px;
+    height: 35px;
+    position: absolute;
+    top: 25px;
+    right: 140px;
+    transform: scale(.8);
+    z-index: 100;
+    opacity: .9;
+}
+
+.container .header .search img:hover {
+    transform: scale(.9);
+    cursor: pointer;
+    transition: all, 0s;
+}
+
+/* 搜索结束 */
+/* 轮播图开始 */
+.container .banner {
+    width: 100%;
+    height: 800px;
+    height: 720px;
+    position: relative;
+}
+
+.container .banner img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: -100;
+    transition: all, 1s;
+}
+
+.container .banner .dots {
+    /* background-color: rgb(254, 12, 12, .5); */
+    height: 25px;
+    width: 200px;
+    margin: 0 auto;
+    transform: translateY(650px);
+    display: flex;
+    justify-content: space-around;
+    /* 左右间隔相同 */
+    align-items: center;
+    /* 上下居中 */
+}
+
+.container .banner .dots .dot {
+    width: 10px;
+    height: 10px;
+    background-color: #2e77c5;
+    display: inline-block;
+    border-radius: 50%;
+    transition: all, 1s;
+}
+
+.container .banner .dots .dot:hover {
+    background-color: #00b3ff;
+    border: 1px solid rgb(255, 255, 255, .5);
+    transition: background-color, 0.1s;
+}
+
+.container .banner .dots .show {
+    width: 35px;
+    height: 35px;
+    background-color: transparent;
+    background-image: url(../imgs/飞行2.svg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    /* fill: #2e77c5; */
+}
+
+/* 轮播图结束 */
+
+
+
+/* 头部结束 */
+
+
+/* 中间部分开始 */
+.container .content {
+    width: 100%;
+    /* background-color: rgb(227, 210, 187, .1); */
+    background: linear-gradient(#fff, 80%, #a3c7f4);
+    background: linear-gradient(#fff, 80%, #bbdff7);
+}
+
+.container .content .main {
+    width: 1200px;
+    margin: 0 auto;
+    /* background-color: rgb(202, 247, 232); */
+    /* height: 800px; */
+}
+
+/* 开放时间开始 */
+.container .content .main .open_hours {
+    width: 100%;
+    height: 90px;
+    background-color: rgb(255, 255, 255);
+    text-align: center;
+    padding: 10px;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+}
+
+.container .content .main .open_hours .title {
+    font-size: 20px;
+}
+
+.container .content .main .open_hours hr {
+    background-color: #0073ff;
+    height: 1px;
+    border: none;
+}
+
+.container .content .main .open_hours .time {
+    line-height: 25px;
+}
+
+.container .content .main .open_hours .time .open {
+    font-size: 25px;
+    font-family: monospace;
+    font-weight: bold;
+    color: #07428a;
+}
+
+/* 开放时间结束 */
+
+/* 四个点击板块开始 */
+.container .content .main .infos {
+    width: 1200px;
+    height: 400px;
+    /* background-color: rgb(240, 225, 206, .3); */
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+/* 浮现信息的方块开始 */
+.container .content .main .infos .info {
+    width: 4px;
+    height: 4px;
+    background-color: #0073ff;
+    z-index: 100;
+    border-radius: 50%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    transform: translate(-50%, -50%);
+    /* 动画执行共0.8s，0.56s的位置移动到页面中央，开始展开 */
+    /* animation: fixInfo .8s linear 0s forwards; */
+    font-size: 0;
+    opacity: 0;
+}
+
+/* 动画执行,前60%时间，移动至页面中央，后40%时间展开 */
+@keyframes fixInfo {
+    from {
+        opacity: 1;
+    }
+
+    60% {
+        width: 4px;
+        height: 4px;
+        top: 50%;
+        left: 50%;
+        font-size: 0;
+        background-color: #0073ff;
+    }
+
+    61% {
+        width: 4px;
+        height: 4px;
+        top: 50%;
+        left: 50%;
+        border-radius: 0%;
+        font-size: 0;
+        background-color: #0073ff;
+    }
+
+    to {
+        width: 900px;
+        height: 600px;
+        top: 50%;
+        left: 50%;
+        border-radius: 0%;
+        font-size: 16px;
+        background: linear-gradient(#fff, 80%, #bbdff7);
+        opacity: 1;
+    }
+}
+
+.container .content .main .infos .info .box {
+    opacity: 0;
+    /* 延迟0.72s之后以0.08s的速度opacity 0->1 */
+    /* animation: makeShow .8s linear 0s forwards; */
+}
+
+@keyframes makeShow {
+    to {
+        opacity: 1;
+    }
+}
+
+.container .content .main .infos .info .title {
+    font-size: 18px;
+    font-family: monospace;
+    font-weight: bold;
+    color: #07428a;
+    /* background-color: antiquewhite; */
+    width: 250px;
+    border-left: 2px solid #0073ff;
+    padding: 4px;
+    margin: 10px 0;
+}
+
+.container .content .main .infos .info .details {
+    width: 90%;
+    height: 520px;
+    margin: 0 auto;
+    /* background-color: #00b3ff; */
+    border: 1px solid #0073ff;
+    line-height: 30px;
+    padding: 15px 30px;
+    box-sizing: border-box;
+    text-indent: 2em;
+}
+
+.container .content .main .infos .notice .details {
+    padding: 15px 20px 15px 55px;
+    text-indent: -2em;
+}
+
+/* 预约表单开始 */
+.container .content .main .infos .order .note {
+    /* background-color: #ff0000; */
+    width: 474px;
+    position: absolute;
+    top: 20px;
+    right: 0px;
+    color: #4d4d4d;
+}
+
+.container .content .main .infos .order .details {
+    padding: 8px 30px;
+    font-size: 14px;
+    text-indent: 0%;
+}
+
+.container .content .main .infos .order .noteBox {
+    padding: 15px 30px;
+    font-size: 16px;
+    display: block;
+}
+
+.container .content .main .infos .order .noteBox .openForm {
+    width: 100px;
+    height: 50px;
+    background-color: #0073ff;
+    opacity: 0.5;
+    cursor: pointer;
+    line-height: 50px;
+    text-align: center;
+    border-radius: 5px;
+    color: #fff;
+    margin: 10px 0;
+}
+
+.container .content .main .infos .order .noteBox .openForm:hover {
+    opacity: 0.7;
+}
+
+.container .content .main .infos .order .formBox {
+    display: none;
+    opacity: 0;
+    animation: makeShow .5s linear 0s forwards;
+}
+
+.container .content .main .infos .order .details .notes {
+    writing-mode: vertical-lr;
+    text-orientation: upright;
+    color: #4d4d4d;
+    font-size: 13px;
+}
+
+.container .content .main .infos .order .details .left {
+    float: left;
+}
+
+.container .content .main .infos .order .details .right {
+    float: right;
+}
+
+.container .content .main .infos .order .details form {
+    max-width: 350px;
+    margin: 0 auto;
+}
+
+.container .content .main .infos .order .details form label span {
+    color: red;
+}
+
+.container .content .main .infos .order .details form input,
+.container .content .main .infos .order .details form select {
+    border: 1px solid #0073ff;
+    /* border-color: #ff0000; */
+    width: 100%;
+    padding: 8px;
+    margin: 0px 0px;
+    display: inline-block;
+    box-sizing: border-box;
+}
+
+.container .content .main .infos .order .details form button {
+    background-color: #0073ff;
+    color: white;
+    padding: 10px 15px;
+    margin: 10px 0;
+    cursor: pointer;
+    width: 100%;
+}
+
+.container .content .main .infos .order .details form button:hover {
+    opacity: 0.8;
+}
+
+/* 预约表单结束 */
+
+.cover {
+    width: 100%;
+    height: 100%;
+    background-color: rgb(0, 0, 0, .2);
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: none;
+}
+
+/* 浮现信息的方块结束 */
+
+.container .content .main .infos .infoPart {
+    width: 140px;
+    height: 140px;
+    border: 1px solid #0073ff;
+    border-radius: 50%;
+    position: relative;
+    transition: all 0.3s;
+    opacity: 0;
+    /* animation: infoSlide .5s linear 0s forwards; */
+}
+
+@keyframes infoSlide {
+    from {
+        opacity: 0;
+        transform: translateY(150px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0px);
+    }
+}
+
+.container .content .main .infos .infoPart span {
+    display: block;
+    position: absolute;
+    top: 200px;
+    left: 35px;
+}
+
+.container .content .main .infos .infoPart .border-ex {
+    display: block;
+    width: 140px;
+    height: 140px;
+    border: 1px solid #0073ff;
+    border-radius: 50%;
+    position: absolute;
+}
+
+.container .content .main .infos .infoPart .border-ex .line {
+    width: 90px;
+    height: 3px;
+    background-color: #0073ff;
+    position: absolute;
+    top: -70px;
+    left: 20px;
+}
+
+.container .content .main .infos .infoPart .border-ex .scaleBox {
+    width: fit-content;
+    height: fit-content;
+    background-color: rgb(212, 100, 100, .1);
+    transform: scale(0.7);
+    transition: all, 0.3s;
+    position: relative;
+}
+
+.container .content .main .infos .infoPart .border-ex .planet img {
+    width: 50px;
+    height: 50px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    /* transform: translate3d(-50%, -50%, 0); */
+    animation: rotateReserve 10s linear 0s infinite;
+}
+
+/* 旋转球体部分开始 */
+.container .content .main .infos .infoPart .border-ex .planet {
+    border-radius: 70%;
+    border: 30px solid transparent;
+    background-clip: padding-box, border-box;
+    background-origin: padding-box, border-box;
+    background-image: linear-gradient(to right, rgb(255, 255, 255, .2), rgb(255, 255, 255, .2)), linear-gradient(90deg, rgb(87, 138, 239, .8), rgba(201, 218, 253, 0.3));
+    width: 360px;
+    height: 360px;
+    perspective: 300px;
+    transform-style: preserve-3d;
+    /* transform: rotateZ(23deg) rotateX(120deg) rotateZ(0deg); */
+    animation: rotateSelf 10s linear 0s infinite;
+    margin: -130px -145px;
+}
+
+
+.container .content .main .infos .infoPart .border-ex .planet:hover {
+    cursor: pointer;
+    animation-play-state: paused;
+}
+
+.container .content .main .infos .infoPart .border-ex .planet:hover img {
+    animation-play-state: paused;
+    /* animation: scaleShow 1s linear 0s; */
+}
+
+@keyframes rotateSelf {
+    from {
+        transform: rotateZ(23deg) rotateX(120deg) rotateZ(0deg);
+    }
+
+    to {
+        transform: rotateZ(23deg) rotateX(120deg) rotateZ(360deg);
+    }
+}
+
+@keyframes rotateReserve {
+    from {
+        transform: translate3d(-50%, -50%, 0) rotateZ(0deg) rotateX(-120deg) rotateZ(-23deg) translate3d(4px, -6px, 0);
+    }
+
+    to {
+        transform: translate3d(-50%, -50%, 0) rotateZ(-360deg) rotateX(-120deg) rotateZ(-23deg) translate3d(4px, -6px, 0);
+    }
+}
+
+@keyframes scaleShow {
+    from {
+        transform: translate3d(-50%, -50%, 0);
+    }
+
+    to {
+        transform: translate3d(-50%, -50%, 0) translateZ(50px) rotate(3);
+    }
+}
+
+.container .content .main .infos .infoPart .border-ex .planet div {
+    width: 4px;
+    height: 4px;
+    background-color: #0073ff;
+    background: linear-gradient(#bad4f4, #0073ff);
+    box-shadow: 2px 1px 1px #0073ff;
+    position: absolute;
+    top: 180px;
+    left: 180px;
+    border-radius: 50%;
+}
+
+/* 旋转球体部分结束 */
+
+/* 四个点击板块结束 */
+
+
+
+
+/* 航空文化板块开始 */
+.container .content .main .cultures {
+    width: 100%;
+    height: 400px;
+    margin-top: 50px;
+    /* background-color: #f6f8fb; */
+    /* background: linear-gradient(#fff, 80%, #6aacfd); */
+    overflow: hidden;
+}
+
+.container .content .main .cultures .title {
+    font-size: 18px;
+    font-family: monospace;
+    font-weight: bold;
+    color: #07428a;
+    /* background-color: antiquewhite; */
+    width: 80px;
+    border-left: 2px solid #0073ff;
+    padding: 4px;
+    margin: 10px 0;
+}
+
+.container .content .main .cultures ul {
+    position: relative;
+    /* background-color: aqua; */
+    width: 3200px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    /* transform: translateX(-400px); */
+    transition: all 1s;
+}
+
+.container .content .main .cultures ul li {
+    width: 350px;
+    height: 200px;
+    position: relative;
+    text-align: center;
+    margin: 20px;
+    opacity: .8;
+}
+
+.container .content .main .cultures ul .current {
+    transform: scale(1.1);
+    opacity: 1;
+}
+
+.container .content .main .cultures ul .current span {
+    opacity: 1;
+}
+
+.container .content .main .cultures ul li a {
+    width: 350px;
+    height: 200px;
+    display: block;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.container .content .main .cultures ul li img {
+    width: 350px;
+    height: 200px;
+}
+
+.container .content .main .cultures ul li img:hover {
+    transform: scale(1.1);
+    transition: all 0.5s;
+}
+
+.container .content .main .cultures ul li span {
+    display: inline-block;
+    padding: 5px;
+    background-color: rgb(0, 0, 0, .3);
+    width: 100%;
+    height: 30px;
+    box-sizing: border-box;
+    border-radius: 0 0 10px 10px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    color: #fff;
+    opacity: 0;
+}
+
+.container .content .main .cultures .show .sign {
+    width: 280px;
+    margin: 0 auto;
+    /* background-color: #0073ff; */
+    display: flex;
+    justify-content: space-around;
+}
+
+.container .content .main .cultures .show .sign img {
+    width: 40px;
+    height: 40px;
+    transform: rotate(-45deg);
+    cursor: pointer;
+}
+
+/* 航空文化板块结束 */
+
+
+
+
+/* 航空谱系图开始 */
+.container .content .main .Genealogy {
+    width: 100%;
+    height: 680px;
+    margin-top: -50px;
+    /* background-color: red; */
+}
+
+.container .content .main .Genealogy .title {
+    font-size: 18px;
+    font-family: monospace;
+    font-weight: bold;
+    color: #07428a;
+    /* background-color: antiquewhite; */
+    width: 80px;
+    border-left: 2px solid #0073ff;
+    padding: 4px;
+    margin: 10px 0;
+}
+
+.container .content .main .Genealogy .show {
+    border: 1px solid #0073ff;
+    width: 100%;
+    height: 600px;
+    overflow: hidden;
+}
+
+.container .content .main .Genealogy .show img {
+    height: 100%;
+    cursor: all-scroll;
+    margin-left: -85px;
+    /* transition: all .3s; */
+}
+
+
+/* 航空谱系图结束 */
+/* 中间部分结束 */
+
+
+
+
+/* 留言框板块开始 */
+.container .content .msg {
+    width: 900px;
+    height: 600px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 16px;
+    background: linear-gradient(#fff, 80%, #bbdff7);
+    opacity: 0;
+    z-index: -50;
+    transition: all .5s;
+}
+
+.container .content .msg .title {
+    font-size: 18px;
+    font-family: monospace;
+    font-weight: bold;
+    color: #07428a;
+    /* background-color: antiquewhite; */
+    width: 250px;
+    border-left: 2px solid #0073ff;
+    padding: 4px;
+    margin: 10px 0;
+}
+
+.container .content .msg .send {
+    font-size: 18px;
+    font-family: monospace;
+    /* font-weight: bold; */
+    color: #fff;
+    background-color: #327ad2;
+    width: 60px;
+    height: 30px;
+    text-align: center;
+    line-height: 30px;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    opacity: 0.8;
+}
+
+.container .content .msg .send:hover {
+    opacity: 1;
+}
+
+.container .content .msg .details {
+    width: 90%;
+    height: 520px;
+    margin: 0 auto;
+    /* background-color: #00b3ff; */
+    border: 1px solid #0073ff;
+    line-height: 30px;
+    /* box-sizing: border-box; */
+}
+
+.container .content .msg .details textarea {
+    width: 810px;
+    height: 520px;
+    resize: none;
+    box-sizing: border-box;
+    font-size: 16px;
+    padding: 10px;
+    line-height: 25px;
+    background-color: transparent;
+}
+
+.container .content .msgCover {
+    width: 100%;
+    height: 100%;
+    background-color: rgb(0, 0, 0, .2);
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: none;
+}
+
+/* 留言框板块结束 */
+
+/* 留言飞机板块开始 */
+/* 飞机的整体高度大概在133px，我的视口宽度1692 */
+.container .plane {
+    perspective: 2000px;
+    background-color: rgba(248, 143, 38, 0.2);
+    /* margin: 200px; */
+    margin: 9vw 3vw;
+    margin: 4vw 2vw;
+    /* margin: 13.6vw; */
+    position: fixed;
+    width: 0px;
+    height: 0px;
+    /* bottom: -30px; */
+    /* bottom: -1.8vw; */
+    bottom: 0vw;
+    transform-origin: 0% 100%;
+    /* transform: scale(0.1); */
+}
+
+.container .plane .box {
+    perspective: 2000px;
+    /* perspective: 1.18vw; */
+    width: 0px;
+    height: 0px;
+    position: fixed;
+    background-color: rgb(86, 170, 243);
+    transform-origin: 500px 50%;
+    transform-origin: 29.4vw 50%;
+    transform: rotateY(-10deg) scale(1);
+    /* bottom的值是飞机的高度，让飞机定位于plane的左下角 */
+    /* 然后plane在视口大小变化的时候左下角是不动的，保证飞机的相对位置在左下角 */
+    bottom: 7.86vw;
+    z-index: -100;
+    /* transform: rotate(-15deg) translate3d(310vw, -120vh, -600vw); */
+}
+
+@keyframes fly {
+    50% {
+        perspective: 500px;
+        /* perspective: 29.4vw; */
+        transform: rotate(-0deg) translate3d(0px, 0, 0px);
+    }
+
+    85% {
+        opacity: 1;
+    }
+
+    100% {
+        perspective: 4000px;
+        /* perspective: 235vw; */
+        /* transform: rotate(-15deg) translate3d(4000px,-1000px,-10000px); */
+        /* transform: rotate(-15deg) translate3d(250vw, -100vh, -600vw); */
+        /* transform: rotate(-15deg) translate3d(300vw, -100vh, -600vw); */
+        transform: rotate(-15deg) translate3d(310vw, -120vh, -600vw);
+        opacity: 0;
+    }
+}
+
+.container .plane .box .test {
+    width: 150px;
+    height: 75px;
+    background: linear-gradient(to bottom left, transparent 50%, rgb(0, 187, 255) 50%);
+    border-bottom: 1px solid red;
+    border-left: 1.5px solid red;
+    box-sizing: border-box;
+    transform-origin: 100% 100%;
+    margin-top: 75px;
+    position: relative;
+}
+
+.container .plane .box .ap {
+    margin-top: -70px;
+    transform: rotateX(60deg) rotateY(0deg) rotateZ(-50deg);
+    z-index: 3;
+}
+
+.container .plane .box .bp {
+    transform: translateY(-150px) rotateX(-120deg) rotateY(0deg) rotateZ(60deg);
+    z-index: 5;
+}
+
+.container .plane .box .cp {
+    transform: translateY(-300px) rotateX(60deg) rotateY(0deg) rotateZ(-50deg) rotateX(100deg);
+    z-index: 1;
+}
+
+.container .plane .box .dp {
+    transform: translateY(-300px) translateY(-150px) rotateX(-120deg) rotateY(0deg) rotateZ(60deg) rotateX(-100deg);
+    z-index: 2;
+}
+
+@keyframes rotateap {
+    to {
+        transform: rotateX(60deg) rotateY(0deg) rotateZ(-50deg) rotateZ(-15deg) rotateY(10deg);
+    }
+}
+
+@keyframes rotatebp {
+    to {
+        transform: translateY(-150px) rotateX(-120deg) rotateY(0deg) rotateZ(75deg) rotateY(-10deg);
+    }
+}
+
+@keyframes rotatecp {
+    to {
+        transform: translateY(-300px) rotateX(60deg) rotateY(0deg) rotateZ(-65deg) rotateY(10deg) rotateX(100.7deg);
+    }
+}
+
+@keyframes rotatedp {
+    to {
+        transform: translateY(-450px) rotateX(-120deg) rotateY(0deg) rotateZ(75deg) rotateY(-10deg) rotateX(-100.7deg);
+    }
+}
+
+.container .plane .box .test span {
+    display: block;
+    position: relative;
+    transform: rotate(90deg) translateX(40px);
+    transform-origin: 0 0;
+    width: fit-content;
+    height: fit-content;
+    margin: 0 auto;
+    font-size: 25px;
+    color: aliceblue;
+}
+
+/* 留言飞机板块结束 */
+
+
+
+
+
+
+
+
+
+/* 页脚开始 */
+.container .footer {
+    width: 100%;
+    height: 140px;
+    background-color: #0e559f;
+    color: #fff;
+    font-size: 14px;
+}
+
+.container .footer .infos {
+    width: 1200px;
+    height: 140px;
+    /* background-color: rgb(255, 255, 255, .2); */
+    margin: 0 auto;
+    padding: 20px 0;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
+}
+
+.container .footer .infos .info {
+    /* background-color: #a3c7f4; */
+    width: 300px;
+}
+
+.container .footer .infos .info p {
+    /* background-color: red; */
+    margin: 10px 0;
+}
+
+.container .footer .infos .codes .code {
+    width: 80px;
+    height: 90px;
+    float: right;
+    text-align: center;
+    margin: 0 10px;
+}
+
+.container .footer .infos .codes img {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 5px;
+}
+
+/* 页脚结束 */

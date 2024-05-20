@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>航空文化馆</title>
+    <link rel="shortcut icon" sizes="512x512" href="./imgs/logo1.png" type="image/x-icon">
+    <link rel="stylesheet" href="./css/reset.css">
+    <link rel="stylesheet" href="./css/index.css">
+</head>
+
+<body>
+    <div class="container" id="zua">
+        <!-- 头部 轮播图 -->
+        <div class="header">
+            <!-- logo，搜索，导航栏 -->
+            <div class="logo">
+                <a href="./index.html">
+                    <img class="logo1" src="./imgs/logo1.png" alt="">
+                    <img class="logo2" src="./imgs/logo2.png" alt="">
+                </a>
+            </div>
+            <a class="search" href="./search.html"><img @click="search" src="./imgs/搜索.svg" alt=""></a>
+            <div class="nav">
+                <ul>
+                    <a href="./index.html"><li>首页</li></a>
+                    <a href="./aerospace_history.html"><li>航空历史</li></a>
+                    <a href="./main_model.html"><li>重要机型</li></a>
+                    <a href="./China_aerospace.html"><li>中国航空</li></a>
+                    <a href="./aerospace_figures.html"><li>航空英模</li></a>
+                    <a href="./university_history.html"><li>航院校史</li></a>
+                    <div class="slider"></div>
+                </ul>
+            </div>
+        </div>
+        <div class="banner">
+            <img :src="'./imgs/航空文化馆' +item+'.png'" v-for="(item,index) in [1,2,3,4,5,6,7]" alt="">
+
+            <div class="dots">
+                <div class="dot" @click="dotsClick" v-for="(item,index) in [1,2,3,4,5,6,7]"></div>
+            </div>
+        </div>
+
+        <!-- 内容 -->
+        <div class="content">
+            <!-- 主要信息，开放时间， -->
+            <div class="main">
+                <div class="open_hours">
+                    <span class="title">开放时间</span>
+                    <hr>
+                    <span class="time">
+                        <span class="open">固定开放日 每周四下午 2:40--5:30</span> <br>
+                        其他时间参观需要提前二个工作日预约
+                    </span>
+                </div>
+                <div class="infos">
+                    <!-- 字符设置无法选中 -->
+                    <!-- 以下三个部分需要跳转新页面 -->
+                    <div class="infoPart" v-for="(item,index) in infosList">
+                        <div class="border-ex">
+                            <div class="line"></div>
+                            <div class="scaleBox">
+                                <div class="planet" @click="infoPartClick">
+                                    <img :src="'./imgs/' + item + '.svg'" alt="">
+                                    <div class="center"></div>
+                                    <div class="center2"></div>
+                                    <div class="cicle1" v-for="(item,index) in cicle"></div>
+                                    <div class="cicle2" v-for="(item,index) in cicle"></div>
+                                    <div class="cicle3" v-for="(item,index) in cicle"></div>
+                                    <div class="cicle4" v-for="(item,index) in cicle"></div>
+                                    <div class="cicle5" v-for="(item,index) in cicle"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <span>{{item}}</span>
+                    </div>
+                    <div class="info order">
+                        <div class="box">
+                            <div class="title">参观预约</div>
+                            <!-- <div class="title">航空文化馆团体预约申请表</div> -->
+                            <!-- <div class="note">填写完毕后请联系航空文化馆负责人：13608630331（微信同名）</div> -->
+                            <div class="note"></div>
+                            <div class="details noteBox">
+                                <div class="openForm" @click="toggleForm">预约申请表</div>
+                                <ul>
+                                    <li>1、15人以上可团体预约。</li>
+                                    <li>2、15人及15人一下固定开放日（每周四下午）参观。</li>
+                                    <li>3、团体预约需有校内承接单位。</li>
+                                    <li>4、若预约时间讲解员（讲解员为学生志愿者）全部有课，参观团体可自行参观。</li>
+                                    <li>5、如在预约时间15分钟内不能如约到达，航空文化馆有权取消预约。</li>
+                                    <li>6、预约需要提前2个工作日。</li>
+                                </ul>
+                            </div>
+                            <div class="details formBox">
+                                <p class="notes left">1、15人以上可团体预约。</p>
+                                <p class="notes left">2、15人及15人一下固定开放日（每周四下午）参观。</p>
+                                <p class="notes left">3、团体预约需有校内承接单位。</p>
+
+                                <p class="notes right">6、预约需要提前2个工作日。</p>
+                                <p class="notes right">5、如在预约时间15分钟内不能如约到达，航空文化馆有权取消预约。</p>
+                                <p class="notes right">4、若预约时间讲解员（讲解员为学生志愿者）全部有课，参观团体可自行参观。</p>
+                                <form id="visitForm" action="javascipt:;" method="post" @submit.prevent="validateForm">
+                                    <label for="unit"><span>*</span>参观单位（校内）</label>
+                                    <input type="text" id="unit" name="unit">
+
+                                    <label for="contact"><span>*</span>联系人</label>
+                                    <input type="text" id="contact" name="contact">
+
+                                    <label for="phone"><span>*</span>联系人电话</label>
+                                    <input type="tel" id="phone" name="phone" pattern="[0-9]{11}">
+
+                                    <label for="numVisitors"><span>*</span>参观人数</label>
+                                    <input type="number" id="numVisitors" name="numVisitors" min="16">
+
+                                    <label for="guide"><span>*</span>是否需要讲解员</label>
+                                    <select id="guide" name="guide">
+                                        <option value="yes">是</option>
+                                        <option value="no">否</option>
+                                    </select>
+
+                                    <label for="date"><span>*</span>日期</label>
+                                    <input type="date" id="date" name="date">
+
+                                    <label for="time"><span>*</span>预约时间 (时:分)</label>
+                                    <input type="time" id="time" name="time">
+
+                                    <button type="submit">预约</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="info notice">
+                        <div class="box">
+                            <div class="title">航空文化馆入馆参观须知</div>
+                            <div class="details">
+                                <ul>
+                                    <li>一、参观者要注意仪表，穿拖鞋、背心、酗酒或精神障碍者谢绝入内。未成年人须在监护人陪伴下入馆参观。</li>
+                                    <li>二、严禁携带易燃、易爆、有毒、有害、腐蚀性、管制械具等物品入馆;请勿携带气球、水枪、遥控汽车等儿童玩具及儿童车辆入馆;请勿携带轮滑、轮式鞋、滑冰鞋、滑板等入馆;请勿带宠物入馆。
+                                    </li>
+                                    <li>三、请自觉遵守参观秩序，服从工作人员引导，按照路线进行参观。请将手机设置为静音，不得拥挤、奔跑、嬉戏、喧哗，不得私自进入非参观区域。</li>
+                                    <li>四、请保持环境卫生。请勿在馆内饮食、吸烟、吐痰、乱丢垃圾;请勿躺卧、脱鞋、乱贴乱画、随意触摸或踩踏设施。损坏设施者将追究其经济责任或法律责任。</li>
+                                    <li>五、馆内体验设施有刺激场景或震动感，年老体弱者及患有心脏病、高血压、腰椎病、颈椎病等疾病者不能参加体验。请参观者根据自身状况慎重选择体验项目，并严格按照设备操作规程和工作人员的引导进行操作，违者造成的一切不良后果自行承担。
+                                    </li>
+                                    <li>六、如遇到特殊情况或突发事件，请按我馆示意图安全疏散或在工作人员引导下有序撤离，避免发生拥挤踩踏。</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="info">
+                        <div class="box">
+                            <div class="title">展馆介绍</div>
+                            <div class="details">
+                                <ul>
+                                    <li>航空文化馆位于郑州航空工业管理学院龙子湖校区，在校图书馆北侧，2018年8月建成，并于同年9月12日举行开馆仪式进入试运行。总面积为2095平方米。</li>
+                                    <li>航空文化馆是中原地区首个航空类文化馆，宣传航空文化，科普航空知识。</li>
+                                    <li>航空文化馆是集航空科普、航空历史、航空文化与航空体验为一体的综合性开放式文化展馆，由航空工业发展成就、服务航空经济社会发展及校史校情三大展区构成，具有鲜明的航空特色和航空文化内涵，是该校着力打造的“航空特色”校园文化标志性名片。
+                                    </li>
+                                    <li>航空文化馆不仅面向校内师生和学生家长开放，还将作为‘科普教育基地’和‘爱国主义教育基地’对外开放。</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="info">
+                        <div class="box">
+                            <div class="title">展馆内容</div>
+                            <div class="details">
+                                <ul>
+                                    <li>航空文化馆以“服务教学、展示航空、突显特色、打造名片”为主题，分航空工业发展成就展、服务航空经济社会发展成绩展、校史校情展等三个主展区，展示丰富的、具有航空科普性质的知识和珍贵史料。
+                                    </li>
+                                    <li>其中，第一展厅中央摆放的歼—15舰载机1：2模型被誉为是航空文化馆的“镇馆之宝”。作为航空文化馆体量最大的展品，通过展示歼—15舰载机，让参观者零距离感知我国航空工业发展的成就，也向歼—15舰载机工程总指挥——航空英模罗阳表示敬意。
+                                    </li>
+                                    <li>第二展厅模拟飞行体验区利用VR效果、球幕影院3D技术和三维动画影片营造“沉浸式”的飞行体验，通过人机互动带领参观者融入飞行场景，进入缤纷的航空和飞行世界，以增加场馆的互动性、参与性和趣味性。
+                                    </li>
+                                    <li>第三展厅放置了高科技数字互动技术作支撑的校友电子签名墙及校友查询系统。</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="cultures">
+                    <div class="title" title="航空航天">AEROSPACE</div>
+                    <ul>
+                        <li :class="index==cultureShow?'current':''" v-for="(item,index) in cultureList">
+                            <a :href="'./' + jumpAd[index] + '.html'">
+                                <img :src="'./imgs/' + item + '.png'" alt="">
+                            </a>
+                            <span>{{item}}</span>
+                        </li>
+                    </ul>
+                    <div class="show">
+                        <div class="sign">
+                            <img v-for="item in [1,2,3,4,5]"
+                                :src="'./imgs/飞机' +(item==(cultureShow>5?cultureShow-5:cultureShow)?2:'')+  '.svg'"
+                                alt="">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="Genealogy">
+                    <div class="title" title="世界航空谱系">GENEALOGY</div>
+                    <div class="show">
+                        <img src="./imgs/航空谱系.png" alt="">
+                    </div>
+                </div>
+            </div>
+            <!-- 视频云参观 Video Cloud Tour -->
+            <div class="cloud_tour"></div>
+            <!-- 航空文化专题 轮播图 -->
+            <div class="aviation_theme"></div>
+            <!-- 留言msg -->
+            <div class="msg">
+                <div class="title">留言</div>
+                <div class="send" @click="msgSend">发送</div>
+                <div class="details">
+                    <textarea></textarea>
+                </div>
+            </div>
+            <!-- 留言框的遮罩 -->
+            <div class="msgCover" @click="msgCancel"></div>
+        </div>
+        <!-- 页脚 -->
+        <div class="footer">
+            <div class="infos">
+                <div class="info">
+                    <p class="copyright">Copyright@2024 航空文化馆</p>
+                    <p class="address">地址：河南郑州郑东新区文苑西路15号</p>
+                    <p class="school">所属：郑州航空工业管理学院 龙子湖校区</p>
+                </div>
+                <div class="info middle">
+                    <p class="mail">联系方式：xxxxxxx.@xx.com</p>
+                    <p class="links">相关链接：
+                        <a href="https://zua.edu.cn/" target="_blank">学校官网</a>
+                    </p>
+                </div>
+                <div class="info codes">
+                    <!-- <div class="code">
+                        <img src="./imgs/wx.png" alt="">
+                        <span>微信公众号</span>
+                    </div> -->
+                    <div class="code">
+                        <img src="./imgs/wx.png" alt="">
+                        <span>微信公众号</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 信息框的遮罩 -->
+        <div class="cover" @click="coverClick"></div>
+        <!-- 纸飞机 -->
+        <div class="plane">
+            <div class="box">
+                <div class="test ap"><span>留</span></div>
+                <div class="test bp"><span>言</span></div>
+                <div class="test cp"></div>
+                <div class="test dp"></div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- 引入Vue，Ajax，jQuery -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="./js/jquery.min.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script> -->
+    <!-- <script src="https://cdn.staticfile.net/vue/3.3.4/vue.cjs.min.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script src="./js/index.js"></script>
+</body>
+
+</html>

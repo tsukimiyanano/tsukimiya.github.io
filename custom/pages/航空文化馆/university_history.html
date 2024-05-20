@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>航院校史 - 航空文化馆</title>
+    <link rel="shortcut icon" sizes="512x512" href="./imgs/logo1.png" type="image/x-icon">
+    <link rel="stylesheet" href="./css/reset.css">
+    <style>
+        /* 头部开始 */
+        .container .header {
+            width: 100%;
+            height: 80px;
+            background-color: #0e58a6;
+        }
+
+        .container .header .logo {
+            width: 400px;
+            height: 80px;
+            /* background-color: aliceblue; */
+            position: relative;
+            border-top-right-radius: 50px;
+            border-bottom-right-radius: 50px;
+        }
+
+        .container .header .logo .logo1 {
+            width: 80px;
+            height: 80px;
+            position: absolute;
+            left: 50px;
+            cursor: pointer;
+            display: block;
+        }
+
+        .container .header .logo .logo2 {
+            height: 55px;
+            position: absolute;
+            left: 130px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            display: block;
+        }
+
+        /* 导航开始 */
+
+        .container .header .nav ul {
+            /* background-color: #fff; */
+            width: 550px;
+            height: 80px;
+            margin: -80px auto;
+            display: flex;
+            justify-content: space-between;
+            line-height: 80px;
+            color: #fff;
+            font-size: 17px;
+            position: relative;
+        }
+
+        .container .header .nav ul li {
+            position: relative;
+            /* background-color: red; */
+            z-index: 1;
+        }
+
+        .container .header .nav ul li .current {
+            position: absolute;
+            /* width: 15px; */
+            /* height: 15px; */
+            /* background-color: #fff; */
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            border-bottom: 9px solid #fff;
+            border-left: 9px solid transparent;
+            border-right: 9px solid transparent;
+        }
+
+        .container .header .nav ul .slider {
+            width: 95px;
+            height: 80px;
+            background-color: rgb(0, 115, 255);
+            border-radius: 4px;
+            position: absolute;
+            /* top: 20px; */
+            left: 468px;
+            transition: all ease 0.4s;
+            /* animation: 2s ease-in-out waves infinite; */
+        }
+
+        .container .header .nav ul a:nth-child(1):hover~.slider {
+            width: 80px;
+            left: -22px;
+        }
+
+        .container .header .nav ul a:nth-child(2):hover~.slider {
+            width: 95px;
+            left: 55px;
+        }
+
+        .container .header .nav ul a:nth-child(3):hover~.slider {
+            left: 158px;
+            width: 95px;
+        }
+
+        .container .header .nav ul a:nth-child(4):hover~.slider {
+            left: 261px;
+            width: 95px;
+        }
+
+        .container .header .nav ul a:nth-child(5):hover~.slider {
+            left: 364px;
+            width: 95px;
+        }
+
+        .container .header .nav ul a:nth-child(6):hover~.slider {
+            left: 468px;
+            width: 95px;
+        }
+
+        /* 导航结束 */
+
+
+        /* 搜索开始 */
+
+        /* 搜索图标 */
+        .container .header .search img {
+            width: 35px;
+            height: 35px;
+            position: absolute;
+            top: 25px;
+            right: 140px;
+            transform: scale(.8);
+            z-index: 100;
+            opacity: .9;
+        }
+
+        .container .header .search img:hover {
+            transform: scale(.9);
+            cursor: pointer;
+            transition: all, 0s;
+        }
+
+        /* 搜索结束 */
+        /* 头部结束 */
+
+        /* 中间部分开始 */
+        .container .content {
+            width: 100%;
+            /* background-color: rgb(227, 210, 187, .1); */
+            background: linear-gradient(#fff, 80%, #a3c7f4);
+            background: linear-gradient(#fff, 80%, #bbdff7);
+        }
+
+        .container .content .main {
+            width: 1000px;
+            margin: 0 auto;
+            padding: 45px 0;
+        }
+
+        .container .content .main p {
+            line-height: 24px;
+            font-family: monospace;
+            font-size: 16px;
+        }
+
+        .container .content .main .end {
+            text-align: right;
+        }
+
+        /* 中间部分结束 */
+
+
+        /* 页脚开始 */
+        .container .footer {
+            width: 100%;
+            height: 140px;
+            background-color: #0e559f;
+            color: #fff;
+            font-size: 14px;
+        }
+
+        .container .footer .infos {
+            width: 1200px;
+            height: 140px;
+            /* background-color: rgb(255, 255, 255, .2); */
+            margin: 0 auto;
+            padding: 20px 0;
+            box-sizing: border-box;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .container .footer .infos .info {
+            /* background-color: #a3c7f4; */
+            width: 300px;
+        }
+
+        .container .footer .infos .info p {
+            /* background-color: red; */
+            margin: 10px 0;
+        }
+
+        .container .footer .infos .codes .code {
+            width: 80px;
+            height: 90px;
+            float: right;
+            text-align: center;
+            margin: 0 10px;
+        }
+
+        .container .footer .infos .codes img {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 5px;
+        }
+
+        /* 页脚结束 */
+    </style>
+</head>
+
+<body>
+    <div class="container" id="zua">
+        <!-- 头部 -->
+        <div class="header">
+            <!-- logo，搜索，导航栏 -->
+            <div class="logo">
+                <a href="./index.html">
+                    <img class="logo1" src="./imgs/logo1.png" alt="">
+                    <img class="logo2" src="./imgs/logo2.png" alt="">
+                </a>
+            </div>
+            <a class="search" href="./search.html"><img @click="search" src="./imgs/搜索.svg" alt=""></a>
+            <div class="nav">
+                <ul>
+                    <a href="./index.html"><li>首页</li></a>
+                    <a href="./aerospace_history.html"><li>航空历史</li></a>
+                    <a href="./main_model.html"><li>重要机型</li></a>
+                    <a href="./China_aerospace.html"><li>中国航空</li></a>
+                    <a href="./aerospace_figures.html"><li>航空英模</li></a>
+                    <a href="./university_history.html"><li>航院校史<div class="current"></div></li></a>
+                    <div class="slider"></div>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 中间内容 -->
+        <div class="content">
+            <div class="main">
+                <p class="text">
+                    &nbsp;&nbsp;郑州航空工业管理学院坐落在中国历史文化名城郑州市，地处华北平原南部，北临黄河，西依嵩山，交通便捷，是河南省唯一一所具有鲜明航空特色的全日制普通本科院校。
+                    <br>
+                    &nbsp;&nbsp;学校始建于1949年，与共和国同龄，时称平原省立财经学校。1964年全国16所航空学校调整，更名郑州航空工业学校，1978年升格为郑州航空工业管理专科学校，1984年升格为郑州航空工业管理学院（本科），1989年获得学士学位授予权。先后隶属于航空工业部、航空航天工业部、中国航空工业总公司。1999年，学校隶属关系发生转变，由中国航空工业总公司主管转变为中央与地方共建，日常管理以河南省为主的办学体制。2009年，通过硕士单位立项建设评审，2013年，获批硕士学位授予单位。2017年，入选国家中西部高校基础能力建设工程规划高校。2017年12月，成为河南省人民政府与中国民用航空局共建高校，进入省部共建高校行列。2020年，入选河南省特色骨干学科建设高校。2021年，获批成为河南省博士学位一般立项建设单位。
+                    <br>
+                    &nbsp;&nbsp;学校秉承“严谨、求实、开拓、进取”之校训，坚持“德育首位，教学中心，质量至上，育人为本”的办学理念，坚持面向航空航天产业、面向区域经济社会发展，坚持“办强航空航天类工科、办精传统经管类学科，构建以航空航天工科为主，多学科协调发展”的学科专业建设思路，确立了在航空工业管理和技术应用研究领域中的较强优势。
+                    <br>
+                    &nbsp;&nbsp;学校占地1700余亩，建筑面积109万平方米，实验场所面积10.6万平方米。固定资产总值18.11亿多元，教学科研仪器设备总值3.8亿元。图书馆现有藏书263.8万册，电子图书58.03万册，电子期刊149.63万册，纸本期刊622种，中外文数据库36个。
+                    <br>
+                    &nbsp;&nbsp;学校有工、管、文、理、经、法、艺、教八大学科门类。下设19个教学院（部），1个书院，1个中外合作办学机构——南乌拉尔学院，1个继续教育学院。现有7个一级硕士学位授权点，15个专业硕士学位授权点，2个省特色骨干学科群，1个省特需急需特色骨干学科群，3个省重点一级学科，4个省重点二级学科。现有65个本科招生专业，其中国家级特色专业3个，省级特色专业9个；国家级一流本科专业建设点13个，省级一流本科专业建设点12个，省级专业综合改革试点9个；国家级一流本科课程11门，省级一流本科课程72门。两项成果获高等教育（本科）国家级教学成果奖二等奖。
+                    <br>
+                    &nbsp;&nbsp;学校面向全国31个省（区、市）招生，普通本科专业在河南省全部纳入一本批次招生，现有全日制本科生、研究生、留学生26120人。现有教职工2126人，其中副高级以上职称645人，具有博士学位的教师627人。教育部新世纪优秀人才1人，享受国务院特殊津贴专家7人，全国优秀教师4人，全国师德先进个人1人，全国高校辅导员年度人物1人，享受省政府特殊津贴专家2人，省学术技术带头人8人，省教学名师14人，省优秀教师15人，省师德先进个人7人，省先进教育工作者2人，省文明教师21人，省教育厅学术技术带头人59人，省高校青年骨干教师90人。
+                    <br>
+                    &nbsp;&nbsp;学校现有省级科研实验平台43个，其中国家地方联合工程研究中心1个，省重点实验室2个，省国际联合实验室2个，省协同创新中心2个，省工程研究中心16个，省外籍科学家工作室2个，省工业设计中心1个，省创新协同平台2个，省创新实验室1个，省产业融合创新中心1个，省级研究中心3个，省软科学研究基地1个，省级人文社科重点研究基地3个，河南省十大新型品牌智库1个、河南省特色智库1个，河南省科技智库研究基地1个，河南省高等学校科技成果转化和技术转移基地1个，省级中华优秀传统文化传承基地1个，省级思政教学特色化研究中心1个。建立了无人机研究院、大数据科学研究院等跨学科科研平台。
+                    <br>
+                    &nbsp;&nbsp;学校注重国际交流与合作，先后与美国、英国、法国、德国、波兰、韩国、坦桑尼亚等30多个国家的73所大学建立了友好合作关系，开展了多形式、深层次、宽领域的国际交流与合作。与英国高地与群岛大学、波兰华沙人文社科大学举办本科层次中外合作办学项目，实现了学校在中外合作办学领域项目和机构全覆盖；与坦桑尼亚多多马大学合作建立孔子学院，荣获全球“先进孔子学院”“公共外交工作先进单位”“中坦友好使者奖”等称号；建成省内首家法语联盟“郑州法语联盟”、ICAO/FIATA空运危险品培训分中心。
+                    <br>
+                    &nbsp;&nbsp;学校培养符合新时代要求、理想信念坚定、理论基础扎实、实践能力突出、具有创新意识和创新能力的高素质复合型人才，是航空航天产业和区域经济社会发展的重要人才培养基地。近三年在中国国际“互联网+”大学生创新创业大赛、“挑战杯”全国大学生课外学术科技作品竞赛和“挑战杯”大学生创业计划竞赛中斩获国家级奖项19项，省级奖项221项。获批国家级和省级大学生创新创业训练计划163项。在全国大学生数学建模竞赛、全国大学生机械创新设计大赛等单项学科竞赛中获得省级以上奖励2000余项。郑航众创空间入选国家级众创空间备案名单，获批河南省首批创新创业教育实践基地建设高校，获批省级职业技能等级认定中心。
+                    <br>
+                    &nbsp;&nbsp;建校以来，为国家培养20万余名各级各类人才。广大校友服务于航空航天、地方经济社会发展各个领域，做出了突出贡献，涌现出一批杰出代表，如河南省人大常委会原副主任徐济超，空军总后勤部原副部长张世杰，中国社会科学院学部委员杨圣明，中国航空工业集团公司原党组成员、副总经理、总会计师顾惠忠，中国石油天然气集团公司、中国航天科工集团公司原总会计师、党组成员刘跃珍，中国商用飞机有限责任公司原总会计师田民，国家国防科工局原副局长、国防科技工业科技委副主任张建华，中国西电集团有限公司原副总经理、总会计师赫连明利，中央纪委国家监委驻水利部纪检监察组组长、水利部党组成员王新哲，中国融通资产管理集团有限公司党组成员、总会计师李耀，中国电子科技集团有限公司党组成员、总会计师都本正等。
+                    <br>
+                    &nbsp;&nbsp;近年来，学校荣获“全国民族团结进步模范集体”“河南省本科院校综合实力20强”“新中国成立70周年河南高等教育十大杰出贡献单位”“新中国成立70周年河南最具国内就业竞争力的高校”“河南高等教育十大榜样示范高校”“河南高等教育质量社会满意院校”“河南综合实力20强领军高校”“河南高等教育综合实力20强高校”“河南省首批新时代依法治校示范校”“河南省文明校园”“省级平安校园”“河南省学分制管理示范高校”“河南省国际化特色高校建设单位”“河南高校招生就业工作示范单位”“河南最具就业竞争力示范院校”等荣誉。
+                    <br>
+                    &nbsp;&nbsp;学校高举中国特色社会主义伟大旗帜，坚持以习近平新时代中国特色社会主义思想为指导，全面贯彻党的教育方针，落实立德树人根本任务，坚持转型发展、特色发展、创新发展战略，坚持“1357”工作思路，锐意进取，勇毅前行，为早日建成特色鲜明、结构合理、创新开放、协调发展的高水平航空航天大学再谱新章！
+                </p>
+                <p class="end">
+                    （以上数据截至2023年11月7日）
+                </p>
+            </div>
+        </div>
+
+
+        <!-- 页脚 -->
+        <div class="footer">
+            <div class="infos">
+                <div class="info">
+                    <p class="copyright">Copyright@2024 航空文化馆</p>
+                    <p class="address">地址：河南郑州郑东新区文苑西路15号</p>
+                    <p class="school">所属：郑州航空工业管理学院 龙子湖校区</p>
+                </div>
+                <div class="info middle">
+                    <p class="mail">联系方式：xxxxxxx.@xx.com</p>
+                    <p class="links">相关链接：
+                        <a href="https://zua.edu.cn/" target="_blank">学校官网</a>
+                    </p>
+                </div>
+                <div class="info codes">
+                    <!-- <div class="code">
+                                    <img src="./imgs/wx.png" alt="">
+                                    <span>微信公众号</span>
+                                </div> -->
+                    <div class="code">
+                        <img src="./imgs/wx.png" alt="">
+                        <span>微信公众号</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

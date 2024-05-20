@@ -1,0 +1,323 @@
+/* 头部开始 */
+.container .header {
+    width: 100%;
+    height: 80px;
+    background-color: #0e58a6;
+}
+
+.container .header .logo {
+    width: 400px;
+    height: 80px;
+    /* background-color: aliceblue; */
+    position: relative;
+    border-top-right-radius: 50px;
+    border-bottom-right-radius: 50px;
+}
+
+.container .header .logo .logo1 {
+    width: 80px;
+    height: 80px;
+    position: absolute;
+    left: 50px;
+    cursor: pointer;
+    display: block;
+}
+
+.container .header .logo .logo2 {
+    height: 55px;
+    position: absolute;
+    left: 130px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    display: block;
+}
+
+/* 导航开始 */
+
+.container .header .nav ul {
+    /* background-color: #fff; */
+    width: 550px;
+    height: 80px;
+    margin: -80px auto;
+    display: flex;
+    justify-content: space-between;
+    line-height: 80px;
+    color: #fff;
+    font-size: 17px;
+    position: relative;
+}
+
+.container .header .nav ul li {
+    position: relative;
+    /* background-color: red; */
+    z-index: 1;
+}
+
+.container .header .nav ul li .current {
+    position: absolute;
+    /* width: 15px; */
+    /* height: 15px; */
+    /* background-color: #fff; */
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    border-bottom: 9px solid #fff;
+    border-left: 9px solid transparent;
+    border-right: 9px solid transparent;
+}
+
+.container .header .nav ul .slider {
+    width: 95px;
+    height: 80px;
+    background-color: rgb(0, 115, 255);
+    border-radius: 4px;
+    position: absolute;
+    /* top: 20px; */
+    left: 55px;
+    transition: all ease 0.4s;
+    /* animation: 2s ease-in-out waves infinite; */
+}
+
+.container .header .nav ul a:nth-child(1):hover~.slider {
+    width: 80px;
+    left: -22px;
+}
+
+.container .header .nav ul a:nth-child(2):hover~.slider {
+    width: 95px;
+    left: 55px;
+}
+
+.container .header .nav ul a:nth-child(3):hover~.slider {
+    left: 158px;
+    width: 95px;
+}
+
+.container .header .nav ul a:nth-child(4):hover~.slider {
+    left: 261px;
+    width: 95px;
+}
+
+.container .header .nav ul a:nth-child(5):hover~.slider {
+    left: 364px;
+    width: 95px;
+}
+
+.container .header .nav ul a:nth-child(6):hover~.slider {
+    left: 468px;
+    width: 95px;
+}
+
+/* 导航结束 */
+
+
+/* 搜索开始 */
+
+/* 搜索图标 */
+.container .header .search img {
+    width: 35px;
+    height: 35px;
+    position: absolute;
+    top: 25px;
+    right: 140px;
+    transform: scale(.8);
+    z-index: 100;
+    opacity: .9;
+}
+
+.container .header .search img:hover {
+    transform: scale(.9);
+    cursor: pointer;
+    transition: all, 0s;
+}
+
+/* 搜索结束 */
+/* 头部结束 */
+
+/* 中间部分开始 */
+.container .content {
+    width: 100%;
+    /* background-color: rgb(227, 210, 187, .1); */
+    background: linear-gradient(#fff, 80%, #a3c7f4);
+    background: linear-gradient(#fff, 80%, #bbdff7);
+}
+
+.container .content .main {
+    width: 1000px;
+    margin: 0 auto;
+    padding: 45px 0;
+}
+
+/* 相同样式部分开始 */
+/* 大标题 */
+.container .content .main .title {
+    font-size: 25px;
+    color: #07428a;
+    font-weight: bolder;
+    border-left: 7px solid #07428a;
+    padding-left: 15px;
+    margin-bottom: 10px;
+    line-height: 25px;
+    margin-bottom: 15px;
+}
+
+/* 副标题 */
+.container .content .main .subtitle {
+    font-size: 20px;
+    color: #fff;
+    font-weight: bold;
+    padding: 5px 15px;
+    background-color: rgb(0, 187, 255);
+    width: fit-content;
+    height: fit-content;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    margin-top: 10px;
+}
+
+/* 文字段落 */
+.container .content .main .detail {
+    color: #4b4b4b;
+    text-indent: 2em;
+    margin: 20px 0;
+    line-height: 25px;
+}
+
+/* 图片小标题 */
+.container .content .main .box {
+    text-align: center;
+    font-size: 14px;
+    color: #4b4b4b;
+    display: flex;
+    justify-content: space-between;
+    margin: 15px 0;
+}
+
+/* 相同样式部分结束 */
+
+/* 航空大事件部分开始 */
+.container .content .main .major {
+    width: 1000px;
+}
+
+.container .content .main .major ul li {
+    width: 1000px;
+    height: 30px;
+    color: #fff;
+    line-height: 30px;
+    text-indent: 2em;
+    position: relative;
+}
+
+.container .content .main .major ul li::before {
+    content: "";
+    width: 4px;
+    height: 4px;
+    background-color: rgb(255, 255, 255);
+    position: absolute;
+    top: 50%;
+    left: 20px;
+    transform: translateY(-50%);
+    border-radius: 50%;
+}
+
+.container .content .main .major ul li:nth-child(2n) {
+    background-color: #2e6db9;
+}
+
+.container .content .main .major ul li:nth-child(2n+1) {
+    background-color: rgb(0, 187, 255);
+}
+
+.container .content .main .major ul li:last-child::before {
+    width: 0;
+    height: 0;
+}
+
+/* 航空大事件部分结束 */
+
+/* 飞行的探索时期开始 */
+.container .content .main .exploration {
+    margin-top: 40px;
+    position: relative;
+}
+
+.container .content .main .exploration .wing {
+    width: 480px;
+}
+
+.container .content .main .exploration .balloon {
+    width: 480px;
+    position: absolute;
+    right: 0;
+    top: 25px;
+}
+
+.container .content .main .exploration .airship {
+    width: 480px;
+}
+
+.container .content .main .exploration .firstPlane {
+    width: 480px;
+    position: absolute;
+    right: 0;
+    top: 340px;
+}
+
+/* 飞行的探索时期结束 */
+
+/* 活塞发动机飞行时期开始 */
+.container .content .main .piston {
+    margin-top: 50px;
+}
+
+/* 活塞发动机飞行时期结束 */
+/* 中间部分结束 */
+
+
+/* 页脚开始 */
+.container .footer {
+    width: 100%;
+    height: 140px;
+    background-color: #0e559f;
+    color: #fff;
+    font-size: 14px;
+}
+
+.container .footer .infos {
+    width: 1200px;
+    height: 140px;
+    /* background-color: rgb(255, 255, 255, .2); */
+    margin: 0 auto;
+    padding: 20px 0;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: space-between;
+}
+
+.container .footer .infos .info {
+    /* background-color: #a3c7f4; */
+    width: 300px;
+}
+
+.container .footer .infos .info p {
+    /* background-color: red; */
+    margin: 10px 0;
+}
+
+.container .footer .infos .codes .code {
+    width: 80px;
+    height: 90px;
+    float: right;
+    text-align: center;
+    margin: 0 10px;
+}
+
+.container .footer .infos .codes img {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 5px;
+}
+
+/* 页脚结束 */
