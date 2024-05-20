@@ -153,18 +153,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/tsukimiya.github.io/archives/">
-          <span class="site-state-item-count">22</span>
+          <span class="site-state-item-count">25</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/tsukimiya.github.io/categories/">
-        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-count">10</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tsukimiya.github.io/tags/">
-        <span class="site-state-item-count">58</span>
+        <span class="site-state-item-count">64</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -189,6 +189,553 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://tsukimiyanano.github.io/tsukimiya.github.io/2024/05/18/vue3/8.vue3%E6%96%B0%E7%BB%84%E4%BB%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/tsukimiya.github.io/images/avatar.jpg">
+      <meta itemprop="name" content="Ayu">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ayu's Study Blog">
+      <meta itemprop="description" content="你们怎么能这么卷！！">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Ayu's Study Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/tsukimiya.github.io/2024/05/18/vue3/8.vue3%E6%96%B0%E7%BB%84%E4%BB%B6/" class="post-title-link" itemprop="url">vue3新组件</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2024-05-18 21:11:12 / 修改时间：21:12:19" itemprop="dateCreated datePublished" datetime="2024-05-18T21:11:12+08:00">2024-05-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/tsukimiya.github.io/categories/Vue/" itemprop="url" rel="index"><span itemprop="name">Vue</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/tsukimiya.github.io/categories/Vue/Vue3/" itemprop="url" rel="index"><span itemprop="name">Vue3</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="far fa-comment"></i>
+    </span>
+    <span class="post-meta-item-text">Waline：</span>
+  
+    <a title="waline" href="/tsukimiya.github.io/2024/05/18/vue3/8.vue3%E6%96%B0%E7%BB%84%E4%BB%B6/#waline" itemprop="discussionUrl">
+      <span class="post-comments-count waline-comment-count" data-path="/tsukimiya.github.io/2024/05/18/vue3/8.vue3%E6%96%B0%E7%BB%84%E4%BB%B6/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2.4k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>2 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="Teleport"><a href="#Teleport" class="headerlink" title="Teleport"></a>Teleport</h2><ul>
+<li>什么是Teleport？—— Teleport 是一种能够将我们的<strong>组件html结构</strong>移动到指定位置的技术。</li>
+</ul>
+<p>场景：<br>点击button按钮，会出现弹窗，我们想要弹窗fixed定位出现在视口中央位置<br>如果我们给父元素添加了一个filter滤镜样式，会发现定位失效了，它变成了相对父元素的定位，但是又不能删掉filter，这个时候，就可以用teleport</p>
+<blockquote>
+<p>当然，影响这个position: fixed的不仅仅有filter</p>
+</blockquote>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">// to的意思是，modal弹出来的时候，塞到哪里去</span><br><span class="line"><span class="tag">&lt;<span class="name">teleport</span> <span class="attr">to</span>=<span class="string">&#x27;body&#x27;</span> &gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;modal&quot;</span> <span class="attr">v-show</span>=<span class="string">&quot;isShow&quot;</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">h2</span>&gt;</span>我是一个弹窗<span class="tag">&lt;/<span class="name">h2</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">p</span>&gt;</span>我是弹窗中的一些内容<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">button</span> @<span class="attr">click</span>=<span class="string">&quot;isShow = false&quot;</span>&gt;</span>关闭弹窗<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">teleport</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>最终，在页面呈现的时候，modal元素会从App里面出来，被放到主页面最下面，，而且它的逻辑不会拎出去</p>
+<h2 id="Suspense"><a href="#Suspense" class="headerlink" title="Suspense"></a>Suspense</h2><ul>
+<li>等待异步组件时渲染一些额外内容，让应用有更好的用户体验 </li>
+<li>使用步骤： <ul>
+<li>异步引入组件</li>
+<li>使用<code>Suspense</code>包裹组件，并配置好<code>default</code> 与 <code>fallback</code></li>
+</ul>
+</li>
+<li>使用场景：子组件在setup里面写了着异步任务，并且异步任务所提供的数据需要使用，想让它网速慢的时候也能呈现一些东西，就可以用Suspense</li>
+</ul>
+<figure class="highlight tsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; defineAsyncComponent,<span class="title class_">Suspense</span> &#125; <span class="keyword">from</span> <span class="string">&quot;vue&quot;</span>;</span><br><span class="line"><span class="keyword">const</span> <span class="title class_">Child</span> = <span class="title function_">defineAsyncComponent</span>(<span class="function">()=&gt;</span><span class="keyword">import</span>(<span class="string">&#x27;./Child.vue&#x27;</span>))</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;app&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">h3</span>&gt;</span>我是App组件<span class="tag">&lt;/<span class="name">h3</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">Suspense</span>&gt;</span> // 底层是用插槽实现的</span><br><span class="line">          <span class="tag">&lt;<span class="name">template</span> <span class="attr">v-slot:default</span>&gt;</span> // 异步任务OK了才出现</span><br><span class="line">            <span class="tag">&lt;<span class="name">Child</span>/&gt;</span></span><br><span class="line">          <span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">template</span> <span class="attr">v-slot:fallback</span>&gt;</span> // 异步任务没有做完的时候出现</span><br><span class="line">            <span class="tag">&lt;<span class="name">h3</span>&gt;</span>加载中.......<span class="tag">&lt;/<span class="name">h3</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">Suspense</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>react路由懒加载时候 就是用suspense包裹 fallback定义loading</p>
+</blockquote>
+<h2 id="全局API转移到应用对象"><a href="#全局API转移到应用对象" class="headerlink" title="全局API转移到应用对象"></a>全局API转移到应用对象</h2><blockquote>
+<p>这些都是vue2的一些全局API，vue3转移到了app实例对象身上（vue3里面是没有Vue构造函数的）<br>原来的<code>Vue.xxx</code>都变成了<code>app.xxx</code></p>
+</blockquote>
+<ul>
+<li><code>app.component</code>：注册全局组件<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// main.ts</span></span><br><span class="line"><span class="keyword">import</span> <span class="title class_">Hello</span> <span class="keyword">from</span> <span class="string">&#x27;./hello.vue&#x27;</span></span><br><span class="line">app.<span class="title function_">component</span>(<span class="string">&#x27;Hello&#x27;</span>,<span class="title class_">Hello</span>)</span><br></pre></td></tr></table></figure></li>
+<li><code>app.config</code>：配置对象<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// main.ts</span></span><br><span class="line"><span class="comment">// 比如这个,x在任意组件都是可用的</span></span><br><span class="line"><span class="comment">// 不过不推荐使用这个globalProperties，污染全局</span></span><br><span class="line">app.<span class="property">config</span>.<span class="property">globalProperties</span>.<span class="property">x</span> = <span class="number">99</span></span><br><span class="line"><span class="comment">// 不过在使用的时候会爆红，不过不会报错，因为组件文件里没有x</span></span><br><span class="line"><span class="comment">// 可以配置如下来解决： // vue文档有</span></span><br><span class="line">declare <span class="variable language_">module</span> <span class="string">&#x27;vue&#x27;</span> &#123;</span><br><span class="line">  interface <span class="title class_">ComponentCustomProperties</span>&#123;</span><br><span class="line">    <span class="attr">x</span>:number</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><code>app.directive</code>：注册全局指令<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">app.<span class="title function_">directive</span>(<span class="string">&#x27;beauty&#x27;</span>,<span class="function">(<span class="params">element,&#123;value&#125;</span>)=&gt;</span>&#123;</span><br><span class="line">  element.<span class="property">innerText</span> += value</span><br><span class="line">  element.<span class="property">style</span>.<span class="property">color</span> = <span class="string">&#x27;green&#x27;</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">&lt;h2 v-beauty=<span class="string">&quot;啊啊啊啊&quot;</span>&gt;好开心&lt;<span class="regexp">/h2&gt; /</span>/ 使用 --- 页面显示 黄色的 好开心啊啊啊啊</span><br></pre></td></tr></table></figure></li>
+<li><code>app.mount</code>：挂载应用</li>
+<li><code>app.unmount</code>：卸载<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// main.ts</span></span><br><span class="line"><span class="built_in">setTimeout</span>(<span class="function">()=&gt;</span>&#123;</span><br><span class="line">  app.<span class="title function_">unmount</span>() <span class="comment">// 2s后，页面没了</span></span><br><span class="line">&#125;,<span class="number">2000</span>)</span><br></pre></td></tr></table></figure></li>
+<li><code>app.use</code>：安装插件</li>
+</ul>
+<h2 id="其他-Vue3的非兼容性改变"><a href="#其他-Vue3的非兼容性改变" class="headerlink" title="其他 - Vue3的非兼容性改变"></a>其他 - <font color="red">Vue3的非兼容性改变</font></h2><blockquote>
+<p>意思是：Vue3里面，做了哪些和Vue2里面不一样的 &#x2F;&#x2F; <a target="_blank" rel="noopener" href="https://v3-migration.vuejs.org/zh/breaking-changes/">vue官方文档 - 从vue2迁移</a><br>也就是 ———— <strong>Vue2 和 Vue3的区别</strong>，所有人都得知道！</p>
+</blockquote>
+<ul>
+<li><p>过渡类名 <code>v-enter</code> 修改为 <code>v-enter-from</code>、过渡类名 <code>v-leave</code> 修改为 <code>v-leave-from</code>。</p>
+</li>
+<li><p><code>keyCode</code> 作为 <code>v-on</code> 修饰符的支持。</p>
+<blockquote>
+<p>vue2中可以@keyup.13，vue3中不允许了</p>
+</blockquote>
+</li>
+<li><p><code>v-model</code> 指令在组件上的使用已经被重新设计，替换掉了 <code>v-bind.sync。</code></p>
+<blockquote>
+<p>vue2中可以 :a.sync&#x3D;’sum’，vue3中整合到v-model里了</p>
+</blockquote>
+</li>
+<li><p><code>v-if</code> 和 <code>v-for</code> 在同一个元素身上使用时的优先级发生了变化。</p>
+<blockquote>
+<p>vue2中，v-if和v-for不可以用在一个标签上，因为v-for优先级更高<br>  vue3中，可以在同一个元素使用，并且v-if的优先级提的更高了</p>
+</blockquote>
+</li>
+<li><p>移除了<code>$on</code>、<code>$off</code> 和 <code>$once</code> 实例方法。</p>
+</li>
+<li><p>移除了过滤器 <code>filter</code>。</p>
+</li>
+<li><p>移除了<code>$children</code> 实例 <code>propert</code>。</p>
+<p>……</p>
+</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://tsukimiyanano.github.io/tsukimiya.github.io/2024/05/18/vue3/7.vue3%E5%85%B6%E4%BB%96API/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/tsukimiya.github.io/images/avatar.jpg">
+      <meta itemprop="name" content="Ayu">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ayu's Study Blog">
+      <meta itemprop="description" content="你们怎么能这么卷！！">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Ayu's Study Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/tsukimiya.github.io/2024/05/18/vue3/7.vue3%E5%85%B6%E4%BB%96API/" class="post-title-link" itemprop="url">vue3其它 API</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2024-05-18 21:06:29 / 修改时间：21:08:53" itemprop="dateCreated datePublished" datetime="2024-05-18T21:06:29+08:00">2024-05-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/tsukimiya.github.io/categories/Vue/" itemprop="url" rel="index"><span itemprop="name">Vue</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/tsukimiya.github.io/categories/Vue/Vue3/" itemprop="url" rel="index"><span itemprop="name">Vue3</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="far fa-comment"></i>
+    </span>
+    <span class="post-meta-item-text">Waline：</span>
+  
+    <a title="waline" href="/tsukimiya.github.io/2024/05/18/vue3/7.vue3%E5%85%B6%E4%BB%96API/#waline" itemprop="discussionUrl">
+      <span class="post-comments-count waline-comment-count" data-path="/tsukimiya.github.io/2024/05/18/vue3/7.vue3%E5%85%B6%E4%BB%96API/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>3.5k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>3 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <blockquote>
+<p>使用场景不是很多，了解一下常用的</p>
+</blockquote>
+<h1 id="shallowRef-与-shallowReactive"><a href="#shallowRef-与-shallowReactive" class="headerlink" title="shallowRef 与 shallowReactive"></a>shallowRef 与 shallowReactive</h1><p>作用：提升性能</p>
+<h2 id="shallowRef"><a href="#shallowRef" class="headerlink" title="shallowRef"></a><code>shallowRef</code></h2><ol>
+<li><p>作用：创建一个响应式数据，但<strong>只对顶层属性进行响应式处理</strong>。</p>
+<blockquote>
+<p>如果是对象类型的数据，不再关注对象内部的属性，只关注对象整体(地址值是否变化)</p>
+</blockquote>
+</li>
+<li><p>用法：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> myVar = <span class="title function_">shallowRef</span>(initialValue);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>特点：只跟踪引用值的变化，不关心值内部的属性变化。</p>
+</li>
+<li><p>应用场景：只关心对象是否被整体替换，如服务器承诺每次返回的都是一个新的对象。</p>
+<blockquote>
+<p><strong>这个时候</strong>用shallowRef<strong>效率更高</strong>一些</p>
+</blockquote>
+</li>
+</ol>
+<h2 id="shallowReactive"><a href="#shallowReactive" class="headerlink" title="shallowReactive"></a><code>shallowReactive</code></h2><ol>
+<li><p>作用：创建一个<strong>浅层响应式</strong>对象，只会使对象的最顶层属性变成响应式的，对象内部的嵌套属性则不会变成响应式的</p>
+<blockquote>
+<p>属性值为非对象的，保持响应式 </p>
+</blockquote>
+</li>
+<li><p>用法：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> myObj = <span class="title function_">shallowReactive</span>(&#123; ... &#125;);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>特点：对象的顶层属性是响应式的，但嵌套对象的属性不是。</p>
+</li>
+</ol>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><blockquote>
+<p>通过使用 <a target="_blank" rel="noopener" href="https://cn.vuejs.org/api/reactivity-advanced.html#shallowref"><code>shallowRef()</code></a> 和 <a target="_blank" rel="noopener" href="https://cn.vuejs.org/api/reactivity-advanced.html#shallowreactive"><code>shallowReactive()</code></a> 来<strong>绕开深度响应</strong>。浅层式 <code>API</code> 创建的状态只在其顶层是响应式的，对所有深层的对象不会做任何处理，避免了对每一个内部属性做响应式所带来的性能成本，这使得属性的访问变得更快，可<strong>提升性能</strong>。</p>
+</blockquote>
+<h1 id="readonly-与-shallowReadonly"><a href="#readonly-与-shallowReadonly" class="headerlink" title="readonly 与 shallowReadonly"></a>readonly 与 shallowReadonly</h1><p><strong>作用：保护数据</strong></p>
+<blockquote>
+<p>readonly用的更多一点</p>
+</blockquote>
+<h2 id="readonly"><a href="#readonly" class="headerlink" title="readonly"></a><strong><code>readonly</code></strong></h2><ol>
+<li><p>作用：用于创建一个对象的<strong>深只读副本</strong>。 &#x2F;&#x2F; 维护住关联关系，会跟着源对象变化</p>
+</li>
+<li><p>用法：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> original = <span class="title function_">reactive</span>(&#123; ... &#125;);</span><br><span class="line"><span class="keyword">const</span> readOnlyCopy = <span class="title function_">readonly</span>(original); <span class="comment">// 参数只接收一个响应式对象</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>特点：</p>
+<ul>
+<li>对象的所有嵌套属性都将变为只读。<blockquote>
+<p>不过修改源对象，生成的对象也会同步修改(但是不能直接修改生成的只读对象)</p>
+</blockquote>
+</li>
+<li>任何尝试修改这个对象的操作都会被阻止（在开发模式下，还会在控制台中发出警告）。</li>
+</ul>
+</li>
+<li><p>应用场景：</p>
+<ul>
+<li>创建不可变的状态快照。</li>
+<li>保护全局状态或配置不被修改。</li>
+</ul>
+</li>
+</ol>
+<h2 id="shallowReadonly"><a href="#shallowReadonly" class="headerlink" title="shallowReadonly"></a><strong><code>shallowReadonly</code></strong></h2><ol>
+<li><p>作用：与 <code>readonly</code> 类似，但只作用于对象的顶层属性。</p>
+<blockquote>
+<p>只处理浅层次的只读</p>
+</blockquote>
+</li>
+<li><p>用法：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> original = <span class="title function_">reactive</span>(&#123; ... &#125;);</span><br><span class="line"><span class="keyword">const</span> shallowReadOnlyCopy = <span class="title function_">shallowReadonly</span>(original);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>特点：</p>
+<ul>
+<li><p>只将对象的顶层属性设置为只读，对象内部的嵌套属性仍然是可变的。</p>
+</li>
+<li><p>适用于只需保护对象顶层属性的场景。</p>
+</li>
+</ul>
+</li>
+</ol>
+<h1 id="toRaw-与-markRaw"><a href="#toRaw-与-markRaw" class="headerlink" title="toRaw 与 markRaw"></a>toRaw 与 markRaw</h1><h2 id="toRaw"><a href="#toRaw" class="headerlink" title="toRaw"></a><code>toRaw</code></h2><ol>
+<li><p>作用：用于获取一个响应式对象的原始对象， <code>toRaw</code> 返回的对象不再是响应式的，不会触发视图更新。<br>对原始对象修改，toRaw的对象也会同步修改</p>
+<blockquote>
+<p>官网描述：这是一个可以用于临时读取而不引起代理访问&#x2F;跟踪开销，或是写入而不触发更改的特殊方法。<strong>不建议保存对原始对象的持久引用，请谨慎使用</strong>。</p>
+</blockquote>
+<blockquote>
+<p>何时使用？ —— 在需要将响应式对象传递给非 <code>Vue</code> 的库或外部系统时，使用 <code>toRaw</code> 可以<strong>确保它们收到的是普通对象</strong></p>
+</blockquote>
+</li>
+<li><p>具体编码：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; reactive,toRaw,markRaw,isReactive &#125; <span class="keyword">from</span> <span class="string">&quot;vue&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* toRaw */</span></span><br><span class="line"><span class="comment">// 响应式对象</span></span><br><span class="line"><span class="keyword">let</span> person = <span class="title function_">reactive</span>(&#123;<span class="attr">name</span>:<span class="string">&#x27;tony&#x27;</span>,<span class="attr">age</span>:<span class="number">18</span>&#125;)</span><br><span class="line"><span class="comment">// 原始对象</span></span><br><span class="line"><span class="keyword">let</span> rawPerson = <span class="title function_">toRaw</span>(person)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/* markRaw */</span></span><br><span class="line"><span class="keyword">let</span> citysd = <span class="title function_">markRaw</span>([</span><br><span class="line">  &#123;<span class="attr">id</span>:<span class="string">&#x27;asdda01&#x27;</span>,<span class="attr">name</span>:<span class="string">&#x27;北京&#x27;</span>&#125;,</span><br><span class="line">  &#123;<span class="attr">id</span>:<span class="string">&#x27;asdda02&#x27;</span>,<span class="attr">name</span>:<span class="string">&#x27;上海&#x27;</span>&#125;,</span><br><span class="line">  &#123;<span class="attr">id</span>:<span class="string">&#x27;asdda03&#x27;</span>,<span class="attr">name</span>:<span class="string">&#x27;天津&#x27;</span>&#125;,</span><br><span class="line">  &#123;<span class="attr">id</span>:<span class="string">&#x27;asdda04&#x27;</span>,<span class="attr">name</span>:<span class="string">&#x27;重庆&#x27;</span>&#125;</span><br><span class="line">])</span><br><span class="line"><span class="comment">// 根据原始对象citys去创建响应式对象citys2 —— 创建失败，因为citys被markRaw标记了</span></span><br><span class="line"><span class="keyword">let</span> citys2 = <span class="title function_">reactive</span>(citys)</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title function_">isReactive</span>(person))</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title function_">isReactive</span>(rawPerson))</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title function_">isReactive</span>(citys))</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title function_">isReactive</span>(citys2))</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="markRaw"><a href="#markRaw" class="headerlink" title="markRaw"></a><code>markRaw</code></h2><ol>
+<li><p>作用：标记一个对象，使其<strong>永远不会</strong>变成响应式的。</p>
+<blockquote>
+<p>例如使用<code>mockjs</code>等第三方库时，为了防止误把<code>第三方库</code>变为响应式对象，可以使用 <code>markRaw</code> 去标记<code>mockjs</code>&#x2F;<code>第三方库</code></p>
+<blockquote>
+<p>如果误把mockjs变成响应式对象，会导致对里面任何一个小属性的修改都会被vue发现，有一定效率上的问题<br>mockjs 后端的接口还没有出现的时候，我们可以借助mockjs库去模拟接口</p>
+</blockquote>
+</blockquote>
+</li>
+<li><p>编码：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* markRaw */</span></span><br><span class="line"><span class="keyword">let</span> citys = <span class="title function_">markRaw</span>([</span><br><span class="line">  &#123;<span class="attr">id</span>:<span class="string">&#x27;asdda01&#x27;</span>,<span class="attr">name</span>:<span class="string">&#x27;北京&#x27;</span>&#125;,</span><br><span class="line">  &#123;<span class="attr">id</span>:<span class="string">&#x27;asdda02&#x27;</span>,<span class="attr">name</span>:<span class="string">&#x27;上海&#x27;</span>&#125;,</span><br><span class="line">  &#123;<span class="attr">id</span>:<span class="string">&#x27;asdda03&#x27;</span>,<span class="attr">name</span>:<span class="string">&#x27;天津&#x27;</span>&#125;,</span><br><span class="line">  &#123;<span class="attr">id</span>:<span class="string">&#x27;asdda04&#x27;</span>,<span class="attr">name</span>:<span class="string">&#x27;重庆&#x27;</span>&#125;</span><br><span class="line">])</span><br><span class="line"><span class="comment">// 根据原始对象citys去创建响应式对象citys2 —— 创建失败，因为citys被markRaw标记了</span></span><br><span class="line"><span class="keyword">let</span> citys2 = <span class="title function_">reactive</span>(citys)</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h1 id="customRef-自定义Ref"><a href="#customRef-自定义Ref" class="headerlink" title="customRef&#x2F;自定义Ref"></a>customRef&#x2F;自定义Ref</h1><blockquote>
+<p>公司一般会 <strong>把自定义Ref封装成一个hooks</strong></p>
+</blockquote>
+<p>作用：创建一个<strong>自定义的</strong><code>ref</code>，并对其依赖项跟踪和更新触发进行逻辑控制。</p>
+<blockquote>
+<p>其实就是在原生ref基础上，加上自己的一些逻辑(比如延迟1s再更新数据)</p>
+</blockquote>
+<p><strong>核心</strong>：如何理解<code>track()</code>和<code>trigger()</code></p>
+<ul>
+<li>track()：监视msg的更新，<strong>一旦变化就更新页面</strong><blockquote>
+<p>页面模板中，是取的msg的值，触发的是get</p>
+</blockquote>
+</li>
+<li>trigger(): 通知Vue数据msg变化了(于是就会更新页面)<blockquote>
+<p>msg被修改，就会触发set的调用</p>
+</blockquote>
+</li>
+</ul>
+<p>实现防抖效果（<code>useSumRef.ts</code>）：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;customRef &#125; <span class="keyword">from</span> <span class="string">&quot;vue&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">function</span>(<span class="params">initValue:<span class="built_in">string</span>,delay:<span class="built_in">number</span></span>)&#123;</span><br><span class="line">  <span class="keyword">let</span> msg = <span class="title function_">customRef</span>(<span class="function">(<span class="params">track,trigger</span>)=&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> <span class="attr">timer</span>:<span class="built_in">number</span></span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      <span class="title function_">get</span>(<span class="params"></span>)&#123;</span><br><span class="line">        <span class="title function_">track</span>() <span class="comment">// 告诉Vue数据msg很重要，要对msg持续关注，一旦变化就更新页面(监视msg的更新)</span></span><br><span class="line">        <span class="keyword">return</span> initValue</span><br><span class="line">      &#125;,</span><br><span class="line">      <span class="title function_">set</span>(<span class="params">value</span>)&#123;</span><br><span class="line">        <span class="built_in">clearTimeout</span>(timer)</span><br><span class="line">        timer = <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">          initValue = value</span><br><span class="line">          <span class="title function_">trigger</span>() <span class="comment">//通知Vue数据msg变化了</span></span><br><span class="line">        &#125;, delay);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;) </span><br><span class="line">  <span class="keyword">return</span> &#123;msg&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>组件中使用：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  <span class="language-xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;app&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">h3</span>&gt;</span>我是App组件<span class="tag">&lt;/<span class="name">h3</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">h3</span>&gt;</span>&#123;&#123;msg&#125;&#125;<span class="tag">&lt;/<span class="name">h3</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">v-model</span>=<span class="string">&quot;msg&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> useSumRef <span class="keyword">from</span> <span class="string">&quot;@/hooks/useSumRef&quot;</span>;</span><br><span class="line"><span class="keyword">let</span> &#123;msg&#125; = <span class="title function_">useSumRef</span>(<span class="string">&#x27;123&#x27;</span>,<span class="number">500</span>) <span class="comment">// msg初始值为&#x27;123&#x27;, 500毫秒后才更新页面</span></span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://tsukimiyanano.github.io/tsukimiya.github.io/2024/05/18/uni-app/view%E6%A0%87%E7%AD%BE%E6%8A%A5%E7%BA%A2%E4%BF%A1%E6%81%AF/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/tsukimiya.github.io/images/avatar.jpg">
+      <meta itemprop="name" content="Ayu">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ayu's Study Blog">
+      <meta itemprop="description" content="你们怎么能这么卷！！">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Ayu's Study Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/tsukimiya.github.io/2024/05/18/uni-app/view%E6%A0%87%E7%AD%BE%E6%8A%A5%E7%BA%A2%E4%BF%A1%E6%81%AF/" class="post-title-link" itemprop="url">vscode开发uniapp小程序，text、view标签报红错误提示</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2024-05-18 20:04:24 / 修改时间：20:38:21" itemprop="dateCreated datePublished" datetime="2024-05-18T20:04:24+08:00">2024-05-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/tsukimiya.github.io/categories/uni-app/" itemprop="url" rel="index"><span itemprop="name">uni-app</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="far fa-comment"></i>
+    </span>
+    <span class="post-meta-item-text">Waline：</span>
+  
+    <a title="waline" href="/tsukimiya.github.io/2024/05/18/uni-app/view%E6%A0%87%E7%AD%BE%E6%8A%A5%E7%BA%A2%E4%BF%A1%E6%81%AF/#waline" itemprop="discussionUrl">
+      <span class="post-comments-count waline-comment-count" data-path="/tsukimiya.github.io/2024/05/18/uni-app/view%E6%A0%87%E7%AD%BE%E6%8A%A5%E7%BA%A2%E4%BF%A1%E6%81%AF/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>836</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>1 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="1-问题描述"><a href="#1-问题描述" class="headerlink" title="1.问题描述"></a>1.问题描述</h2><p><img src="/tsukimiya.github.io/images/uniapp/%E6%A0%87%E7%AD%BE%E6%8A%A5%E7%BA%A2.png" alt="标签报红"></p>
+<h2 id="2-解决方案"><a href="#2-解决方案" class="headerlink" title="2.解决方案"></a><font color="violet">2.解决方案</font></h2><p>添加 @uni-helper&#x2F;uni-app-types 的类型依赖，然后在 tsconfig 里配置一下。</p>
+<blockquote>
+<p>亲测有效</p>
+</blockquote>
+<p>安装依赖</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i -D @uni-helper/uni-app-types</span><br></pre></td></tr></table></figure>
+
+<p>在 tsconfig.json 配置</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">&quot;vueCompilerOptions&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;plugins&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;@uni-helper/uni-app-types/volar-plugin&quot;</span><span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="3-另外一种解决方案"><a href="#3-另外一种解决方案" class="headerlink" title="3.另外一种解决方案"></a>3.另外一种解决方案</h2><p>直接使用div标签替换view标签，span标签替换text标签。这样就不会报错了。<br>uniapp会帮我们把div和span转换成view和text。</p>
+<blockquote>
+<p>uni-app官方文档中明确说明：</p>
+<ul>
+<li>小程序平台如果使用 <code>&lt;div&gt;</code> ，编译时会被转换为 <code>&lt;view&gt;</code>。</li>
+<li>App平台 Vue2 项目在节点非常多时可以尝试使用 <code>&lt;div&gt;</code> 替换 <code>&lt;view&gt;</code> 以提升渲染性能。</li>
+</ul>
+<p>地址：<a target="_blank" rel="noopener" href="https://uniapp.dcloud.io/component/view?id=view">https://uniapp.dcloud.io/component/view?id=view</a></p>
+</blockquote>
+<p>不过，还是推荐使用<code>&lt;view&gt;</code>和<code>&lt;text&gt;</code>，因为它们是平台原生支持的，符合小程序的开发规范。具有较高可读性，也更能保证多端兼容。</p>
+<blockquote>
+<p>view和text是uni-app为了保持多端一致性而提供的原生组件，它们分别对应于微信小程序、H5以及其他小程序平台的原生视图容器和文本显示元素。使用它们可以确保你的应用在不同平台（如微信小程序、H5、App等）有一致的表现和性能。</p>
+</blockquote>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a target="_blank" rel="noopener" href="https://segmentfault.com/q/1010000044860981?utm_source=sf-similar-question">https://segmentfault.com/q/1010000044860981?utm_source=sf-similar-question</a></p>
+<p><a target="_blank" rel="noopener" href="https://segmentfault.com/q/1010000044527776?utm_source=sf-similar-question">https://segmentfault.com/q/1010000044527776?utm_source=sf-similar-question</a></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -2094,7 +2641,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-05-16 17:39:51" itemprop="dateModified" datetime="2024-05-16T17:39:51+08:00">2024-05-16</time>
+      <time title="修改时间：2024-05-18 21:13:10" itemprop="dateModified" datetime="2024-05-18T21:13:10+08:00">2024-05-18</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -2213,459 +2760,12 @@
 </li>
 <li><p>setup语法糖底层弄了async<br>可以直接在<code>&lt;scrpit setup&gt;&lt;/scrpit&gt;</code>中写await：<code>let xxx = await axios.get(&#39;xxxx&#39;)</code></p>
 <blockquote>
-<p>但是在组件中使用了异步任务，组件内容就无法正常显示了，必须在父组件中，包裹一个Suspense元素</p>
+<p>但是在组件中使用了异步任务，组件内容就无法正常显示了，必须在父组件中，包裹一个<a href="/tsukimiya.github.io/2024/05/18/vue3/8.vue3%E6%96%B0%E7%BB%84%E4%BB%B6/#Suspense">Suspense元素</a></p>
 </blockquote>
 </li>
 </ul>
 <h2 id="vue-devtools调试工具"><a href="#vue-devtools调试工具" class="headerlink" title="vue-devtools调试工具"></a><strong>vue-devtools调试工具</strong></h2><p>vue-devtools有 vue2.x 和 vue3.x(带Beta标记的版本) 两个版本，<strong>不能交叉使用</strong>!<br>如何安装：<a target="_blank" rel="noopener" href="https://juejin.cn/post/7125983116396593165">掘金</a>、<a target="_blank" rel="noopener" href="https://blog.csdn.net/ashin8032/article/details/122600345">CSDN</a></p>
 <p>但是，<strong>vite</strong>似乎<strong>集成了vue-devtools</strong>，不需要在浏览器安装插件，在创建项目的时候配置上 该调试工具即可使用。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://tsukimiyanano.github.io/tsukimiya.github.io/2024/05/08/Node/API%E6%8E%A5%E5%8F%A3%E6%A1%88%E4%BE%8B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/tsukimiya.github.io/images/avatar.jpg">
-      <meta itemprop="name" content="Ayu">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Ayu's Study Blog">
-      <meta itemprop="description" content="你们怎么能这么卷！！">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Ayu's Study Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/tsukimiya.github.io/2024/05/08/Node/API%E6%8E%A5%E5%8F%A3%E6%A1%88%E4%BE%8B/" class="post-title-link" itemprop="url">简单的API接口案例</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2024-05-08 10:55:35 / 修改时间：12:32:46" itemprop="dateCreated datePublished" datetime="2024-05-08T10:55:35+08:00">2024-05-08</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/tsukimiya.github.io/categories/Node-js/" itemprop="url" rel="index"><span itemprop="name">Node.js</span></a>
-        </span>
-    </span>
-
-  
-  
-  <span class="post-meta-item">
-    
-    <span class="post-meta-item-icon">
-      <i class="far fa-comment"></i>
-    </span>
-    <span class="post-meta-item-text">Waline：</span>
-  
-    <a title="waline" href="/tsukimiya.github.io/2024/05/08/Node/API%E6%8E%A5%E5%8F%A3%E6%A1%88%E4%BE%8B/#waline" itemprop="discussionUrl">
-      <span class="post-comments-count waline-comment-count" data-path="/tsukimiya.github.io/2024/05/08/Node/API%E6%8E%A5%E5%8F%A3%E6%A1%88%E4%BE%8B/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>2.2k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>2 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="API接口案例"><a href="#API接口案例" class="headerlink" title="API接口案例"></a>API接口案例</h2><p>基于<strong>MySQL数据库 + Express</strong>对外提供<strong>用户列表</strong>的API接口服务</p>
-<ol>
-<li>技术栈：<ul>
-<li>第三方包express、mysql2</li>
-<li>ES6模块化</li>
-<li>Promise</li>
-<li>async&#x2F;await</li>
-</ul>
-</li>
-<li>主要实现步骤<ol>
-<li>搭建项目的基本结构</li>
-<li>创建基本的服务器</li>
-<li>创建db数据库操作模块</li>
-<li>创建user_ctrl 业务模块</li>
-<li>创建user_router路由模块</li>
-</ol>
-</li>
-</ol>
-<h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><ol>
-<li><p>初始化包管理配置文件package.json —— <code>npm init -y</code></p>
-</li>
-<li><p>启用ES6模块化支持</p>
-<ul>
-<li>在package.json中声明<code>&quot;type&quot;: &quot;module&quot;</code></li>
-</ul>
-</li>
-<li><p>安装第三方依赖包</p>
-<ul>
-<li>运行<code>npm install express@4.17.1 mysql2@2.2.5</code></li>
-</ul>
-</li>
-<li><p>创建最基本的web服务器</p>
- <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// app.js</span></span><br><span class="line"><span class="comment">//导入express模块</span></span><br><span class="line"><span class="keyword">import</span> express <span class="keyword">from</span> <span class="string">&#x27;express&#x27;</span></span><br><span class="line"><span class="comment">//创建express服务器实例</span></span><br><span class="line"><span class="keyword">const</span> app = <span class="title function_">express</span>()</span><br><span class="line"></span><br><span class="line"><span class="comment">//调用app.listen方法，指定端口号并启动web服务器</span></span><br><span class="line">app.<span class="title function_">listen</span>(<span class="number">8080</span>,<span class="function">()=&gt;</span>&#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;Express server running at http://127.0.0.1:8080&#x27;</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></li>
-<li><p>创建db数据库操作模块</p>
- <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// db/index.js</span></span><br><span class="line"><span class="keyword">import</span> mysql <span class="keyword">from</span> <span class="string">&#x27;mysql2&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> pool = mysql.<span class="title function_">createPool</span>(&#123;</span><br><span class="line">  <span class="attr">host</span>: <span class="string">&#x27;127.0.0.1&#x27;</span>, <span class="comment">// 指定操作哪台电脑</span></span><br><span class="line">  <span class="attr">port</span>: <span class="number">3306</span>, <span class="comment">// 指定端口号，一般mysql数据库的端口号都是3306</span></span><br><span class="line">  <span class="attr">database</span>: <span class="string">&#x27;my_db_01&#x27;</span>,</span><br><span class="line">  <span class="attr">user</span>: <span class="string">&#x27;root&#x27;</span>,</span><br><span class="line">  <span class="attr">password</span>: <span class="string">&#x27;ayu123+&#x27;</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 如果导出pool，它不支持以promise API的形式来操作数据库</span></span><br><span class="line"><span class="comment">// 此时我们需要调用pool提供的.promise()，把返回值导出出去</span></span><br><span class="line"><span class="comment">// 外界拿到数据库的连接对象之后，就可以以Promise的方式来操作数据库</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> pool.<span class="title function_">promise</span>()</span><br></pre></td></tr></table></figure></li>
-<li><p>创建user_ctrl 业务模块</p>
- <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// controller/user_ctrl.js</span></span><br><span class="line"><span class="keyword">import</span> db <span class="keyword">from</span> <span class="string">&#x27;../db/index.js&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用ES6的按需导出语法，将getALLUser语法导出出去</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">getAllUser</span>(<span class="params">req,res</span>)&#123;</span><br><span class="line">  <span class="comment">// 数组中，索引为0的那一项，是最终需要的数据，所以解构赋值出一个rows</span></span><br><span class="line">  <span class="keyword">const</span> [rows] = <span class="keyword">await</span> db.<span class="title function_">query</span>(<span class="string">&#x27;select id,username,nickname from users&#x27;</span>)</span><br><span class="line">  res.<span class="title function_">send</span>(&#123;</span><br><span class="line">    <span class="attr">status</span>: <span class="number">0</span>,</span><br><span class="line">    <span class="attr">messages</span>: <span class="string">&#x27;获取用户列表数据成功！&#x27;</span>,</span><br><span class="line">    <span class="attr">data</span>: rows,</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>创建user_router路由模块</p>
- <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// router/user_router.js</span></span><br><span class="line"><span class="keyword">import</span> express <span class="keyword">from</span> <span class="string">&#x27;express&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123; getAllUser &#125; <span class="keyword">from</span> <span class="string">&#x27;../controller/user_ctrl.js&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> router = <span class="keyword">new</span> express.<span class="title class_">Router</span>()</span><br><span class="line">router.<span class="title function_">get</span>(<span class="string">&#x27;/user&#x27;</span>, getAllUser)</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> router</span><br><span class="line"></span><br><span class="line"><span class="comment">// 在app.js注册路由</span></span><br><span class="line"><span class="keyword">import</span> userRouter <span class="keyword">from</span> <span class="string">&#x27;./router/user_router.js&#x27;</span></span><br><span class="line">app.<span class="title function_">use</span>(<span class="string">&#x27;/api&#x27;</span>, userRouter)</span><br></pre></td></tr></table></figure></li>
-<li><p>使用try…catch捕获异常<br>当报错之后，使用catch进行处理，程序不会发生崩溃</p>
- <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// controller/user_ctrl.js</span></span><br><span class="line"><span class="keyword">import</span> db <span class="keyword">from</span> <span class="string">&#x27;../db/index.js&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用ES6的按需导出语法，将getALLUser语法导出出去</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">getAllUser</span>(<span class="params">req,res</span>)&#123;</span><br><span class="line">  <span class="comment">// 数组中，索引为0的那一项，是最终需要的数据，所以解构赋值出一个rows</span></span><br><span class="line">  <span class="keyword">try</span>&#123;</span><br><span class="line">    <span class="keyword">const</span> [rows] = <span class="keyword">await</span> db.<span class="title function_">query</span>(<span class="string">&#x27;select id,username,nickname,xxx from users&#x27;</span>)</span><br><span class="line">    res.<span class="title function_">send</span>(&#123;</span><br><span class="line">      <span class="attr">status</span>: <span class="number">0</span>,</span><br><span class="line">      <span class="attr">messages</span>: <span class="string">&#x27;获取用户列表数据成功！&#x27;</span>,</span><br><span class="line">      <span class="attr">data</span>: rows,</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;<span class="keyword">catch</span>(err)&#123;</span><br><span class="line">    res.<span class="title function_">send</span>(&#123;</span><br><span class="line">      <span class="attr">status</span>: <span class="number">1</span>,</span><br><span class="line">      <span class="attr">messages</span>: <span class="string">&#x27;获取用户数据失败！&#x27;</span>,</span><br><span class="line">      <span class="attr">desc</span>: err.<span class="property">messages</span></span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://tsukimiyanano.github.io/tsukimiya.github.io/2024/05/08/ES6/5.%E5%AE%8F%E4%BB%BB%E5%8A%A1%E5%92%8C%E5%BE%AE%E4%BB%BB%E5%8A%A1/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/tsukimiya.github.io/images/avatar.jpg">
-      <meta itemprop="name" content="Ayu">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Ayu's Study Blog">
-      <meta itemprop="description" content="你们怎么能这么卷！！">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Ayu's Study Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/tsukimiya.github.io/2024/05/08/ES6/5.%E5%AE%8F%E4%BB%BB%E5%8A%A1%E5%92%8C%E5%BE%AE%E4%BB%BB%E5%8A%A1/" class="post-title-link" itemprop="url">宏任务和微任务</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2024-05-08 09:53:37 / 修改时间：12:46:31" itemprop="dateCreated datePublished" datetime="2024-05-08T09:53:37+08:00">2024-05-08</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/tsukimiya.github.io/categories/JS/" itemprop="url" rel="index"><span itemprop="name">JS</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/tsukimiya.github.io/categories/JS/ES6/" itemprop="url" rel="index"><span itemprop="name">ES6</span></a>
-        </span>
-    </span>
-
-  
-  
-  <span class="post-meta-item">
-    
-    <span class="post-meta-item-icon">
-      <i class="far fa-comment"></i>
-    </span>
-    <span class="post-meta-item-text">Waline：</span>
-  
-    <a title="waline" href="/tsukimiya.github.io/2024/05/08/ES6/5.%E5%AE%8F%E4%BB%BB%E5%8A%A1%E5%92%8C%E5%BE%AE%E4%BB%BB%E5%8A%A1/#waline" itemprop="discussionUrl">
-      <span class="post-comments-count waline-comment-count" data-path="/tsukimiya.github.io/2024/05/08/ES6/5.%E5%AE%8F%E4%BB%BB%E5%8A%A1%E5%92%8C%E5%BE%AE%E4%BB%BB%E5%8A%A1/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>852</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="什么是宏任务和微任务"><a href="#什么是宏任务和微任务" class="headerlink" title="什么是宏任务和微任务"></a>什么是宏任务和微任务</h2><p>JavaScript把异步任务又做了进一步的划分，异步任务又分为两类，分别是:</p>
-<ol>
-<li>宏任务( macrotask)<ul>
-<li>异步Ajax请求、</li>
-<li>setTimeout、setlnterval、</li>
-<li>文件操作</li>
-<li>其它宏任务</li>
-</ul>
-</li>
-<li>微任务( microtask)<ul>
-<li>Promise.then、.catch和.finally</li>
-<li>process.nextTick</li>
-<li>其它微任务</li>
-</ul>
-</li>
-</ol>
-<p><img src="/tsukimiya.github.io/images/ES6/%E5%AE%8F%E4%BB%BB%E5%8A%A1%E5%92%8C%E5%BE%AE%E4%BB%BB%E5%8A%A1.png" alt="宏任务和微任务"></p>
-<h2 id="划分依据"><a href="#划分依据" class="headerlink" title="划分依据"></a>划分依据</h2><p>异步任务是根据<strong>任务的触发时机</strong>和<strong>任务队列的不同</strong>来分为宏任务和微任务的。下面是它们的依据：</p>
-<ol>
-<li><p><strong>触发时机</strong>：</p>
-<ul>
-<li><strong>宏任务（Macro Task）</strong>：宏任务是由 JavaScript 引擎外部的任务触发的，比如 DOM 事件（如点击事件、鼠标移动事件）、<code>setTimeout</code>、<code>setInterval</code>、网络请求等。宏任务代表着一个独立的、顺序执行的任务单元，它们会被放入宏任务队列中等待执行。</li>
-<li><strong>微任务（Micro Task）</strong>：微任务是在当前任务执行完成之后立即执行的任务，它们一般是由 JavaScript 引擎内部触发的，比如 Promise 的状态改变、<code>queueMicrotask</code> 函数等。微任务的执行时机是在当前宏任务执行结束、事件循环进入下一次循环之前。</li>
-</ul>
-</li>
-<li><p><strong>任务队列</strong>：</p>
-<ul>
-<li><strong>宏任务队列</strong>：宏任务队列中存放着各种宏任务，包括了 DOM 事件、定时器、I&#x2F;O 操作等。在事件循环的每一轮中，只有一个宏任务会被执行。</li>
-<li><strong>微任务队列</strong>：微任务队列中存放着微任务，它们的执行顺序是按照它们进入队列的顺序执行的。在每个宏任务执行结束后，会检查并执行所有的微任务，直到微任务队列为空。</li>
-</ul>
-</li>
-</ol>
-<p>因此，异步任务是根据触发时机和任务队列的不同而被分为宏任务和微任务的。这种分化使得 JavaScript 引擎能够灵活地处理异步任务，并根据执行上下文的情况来调度它们的执行顺序。</p>
-<h2 id="执行顺序"><a href="#执行顺序" class="headerlink" title="执行顺序"></a>执行顺序</h2><p>宏任务和微任务是交替执行的。<br>在 JavaScript 中，<strong>执行完同步任务后</strong>，<strong>会先检查是否存在微任务</strong>，如果存在，则先执行微任务队列中的所有微任务。执行完所有微任务后，再去执行宏任务队列中的任务。<br><img src="/tsukimiya.github.io/images/ES6/%E5%AE%8F%E4%BB%BB%E5%8A%A1%E5%BE%AE%E4%BB%BB%E5%8A%A1%E6%89%A7%E8%A1%8C%E9%A1%BA%E5%BA%8F.png" alt="宏任务微任务执行顺序"></p>
-<ul>
-<li><p>场景举例<br><img src="/tsukimiya.github.io/images/ES6/%E5%9C%BA%E6%99%AF.png" alt="场景"></p>
-</li>
-<li><p>练习<br>new Promise 是同步任务，其调用的.then是微任务<br><img src="/tsukimiya.github.io/images/ES6/%E7%BB%83%E4%B9%A02.png" alt="练习2"></p>
-</li>
-<li><p>练习<br><img src="/tsukimiya.github.io/images/ES6/%E7%BB%83%E4%B9%A03.png" alt="练习3"></p>
-</li>
-</ul>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://tsukimiyanano.github.io/tsukimiya.github.io/2024/05/07/ES6/4.EventLoop/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/tsukimiya.github.io/images/avatar.jpg">
-      <meta itemprop="name" content="Ayu">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Ayu's Study Blog">
-      <meta itemprop="description" content="你们怎么能这么卷！！">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Ayu's Study Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/tsukimiya.github.io/2024/05/07/ES6/4.EventLoop/" class="post-title-link" itemprop="url">EventLoop</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2024-05-07 22:51:35" itemprop="dateCreated datePublished" datetime="2024-05-07T22:51:35+08:00">2024-05-07</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-05-08 09:52:57" itemprop="dateModified" datetime="2024-05-08T09:52:57+08:00">2024-05-08</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/tsukimiya.github.io/categories/JS/" itemprop="url" rel="index"><span itemprop="name">JS</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/tsukimiya.github.io/categories/JS/ES6/" itemprop="url" rel="index"><span itemprop="name">ES6</span></a>
-        </span>
-    </span>
-
-  
-  
-  <span class="post-meta-item">
-    
-    <span class="post-meta-item-icon">
-      <i class="far fa-comment"></i>
-    </span>
-    <span class="post-meta-item-text">Waline：</span>
-  
-    <a title="waline" href="/tsukimiya.github.io/2024/05/07/ES6/4.EventLoop/#waline" itemprop="discussionUrl">
-      <span class="post-comments-count waline-comment-count" data-path="/tsukimiya.github.io/2024/05/07/ES6/4.EventLoop/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>558</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="JS的单线程"><a href="#JS的单线程" class="headerlink" title="JS的单线程"></a>JS的单线程</h2><p>JS是一门<strong>单线程执行</strong>的编程语言。同一事件只能做一件事情。</p>
-<p>JS的执行线程<br>↓<br>任务1 → 任务2 → 任务3 → 任务N（待执行的任务队列）</p>
-<p>单线程执行队列的问题：<br>如果<strong>前一个任务非常耗时</strong>，则后续的任务就不得不一直等待，从而导致<strong>程序假死</strong>的问题。</p>
-<h2 id="同步任务和异步任务"><a href="#同步任务和异步任务" class="headerlink" title="同步任务和异步任务"></a>同步任务和异步任务</h2><p>为了防止某个<strong>耗时任务</strong>导致<strong>程序假死</strong>的问题，JavaScript把待执行的任务分为了两类:</p>
-<ol>
-<li>同步任务 (synchronous)<ul>
-<li>又叫做<strong>非耗时任务</strong>，指的是在主线程上排队执行的那些任务</li>
-<li>只有前一个任务执行完毕，才能执行后一个任务</li>
-</ul>
-</li>
-<li>异步任务 (asynchronous)<ul>
-<li>又叫做<strong>耗时任务</strong>，异步任务由JavaScript<strong>委托给宿主环境</strong>进行执行</li>
-<li>当异步任务执行完成后，会<strong>通知JavaScript主线程</strong>执行异步任务的<strong>回调函数</strong><blockquote>
-<p>宿主环境就是JS的执行环境，在浏览器里面运行JS，浏览器就是JS的宿主环境，在Node.js…</p>
-</blockquote>
-</li>
-</ul>
-</li>
-</ol>
-<h2 id="同步任务和异步任务的执行过程"><a href="#同步任务和异步任务的执行过程" class="headerlink" title="同步任务和异步任务的执行过程"></a>同步任务和异步任务的执行过程</h2><p><img src="/tsukimiya.github.io/images/ES6/js%E6%89%A7%E8%A1%8C%E8%BF%87%E7%A8%8B.png" alt="js执行过程"></p>
-<h2 id="EventLoop的基本概念"><a href="#EventLoop的基本概念" class="headerlink" title="EventLoop的基本概念"></a>EventLoop的基本概念</h2><p><strong>JavaScript主线程从“任务队列”中读取异步任务的回调函数，放到执行栈中依次执行</strong>。这个过程是循环不断的，所以整个的这种运行机<br>制又称为<strong>EventLoop</strong>(事件循环)。</p>
-<ul>
-<li><p>练习<br><img src="/tsukimiya.github.io/images/ES6/%E7%BB%83%E4%B9%A0.png" alt="练习"></p>
-</li>
-<li><p>分享文章<br>面试必问之 JS 事件循环(Event Loop)，看这一篇足够(<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/580956436">https://zhuanlan.zhihu.com/p/580956436</a>)</p>
-</li>
-</ul>
 
       
     </div>
@@ -2707,13 +2807,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">158k</span>
+    <span title="站点总字数">164k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">2:23</span>
+    <span title="站点阅读时长">2:29</span>
   </span>
 </div>
 <div class="busuanzi-count">

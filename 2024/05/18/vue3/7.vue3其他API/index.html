@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.1.1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/tsukimiya.github.io/images/Study.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/tsukimiya.github.io/images/Study.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/tsukimiya.github.io/images/Study.ico">
+  <link rel="mask-icon" href="/tsukimiya.github.io/images/Study.ico" color="#222">
+
+<link rel="stylesheet" href="/tsukimiya.github.io/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Miniver:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"tsukimiyanano.github.io","root":"/tsukimiya.github.io/","images":"/tsukimiya.github.io/images","scheme":"Pisces","darkmode":true,"version":"8.19.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/tsukimiya.github.io/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true}}</script><script src="/tsukimiya.github.io/js/config.js"></script>
+
+    <meta name="description" content="使用场景不是很多，了解一下常用的  shallowRef 与 shallowReactive作用：提升性能 shallowRef 作用：创建一个响应式数据，但只对顶层属性进行响应式处理。  如果是对象类型的数据，不再关注对象内部的属性，只关注对象整体(地址值是否变化)   用法： 1let myVar &#x3D; shallowRef(initialValue);  特点：只跟踪引用值的变化，不关心值内">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vue3其它 API">
+<meta property="og:url" content="https://tsukimiyanano.github.io/tsukimiya.github.io/2024/05/18/vue3/7.vue3%E5%85%B6%E4%BB%96API/index.html">
+<meta property="og:site_name" content="Ayu&#39;s Study Blog">
+<meta property="og:description" content="使用场景不是很多，了解一下常用的  shallowRef 与 shallowReactive作用：提升性能 shallowRef 作用：创建一个响应式数据，但只对顶层属性进行响应式处理。  如果是对象类型的数据，不再关注对象内部的属性，只关注对象整体(地址值是否变化)   用法： 1let myVar &#x3D; shallowRef(initialValue);  特点：只跟踪引用值的变化，不关心值内">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-05-18T13:06:29.455Z">
+<meta property="article:modified_time" content="2024-05-18T13:08:53.568Z">
+<meta property="article:author" content="Ayu">
+<meta property="article:tag" content="Vue">
+<meta property="article:tag" content="Vue3">
+<meta property="article:tag" content="API">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://tsukimiyanano.github.io/tsukimiya.github.io/2024/05/18/vue3/7.vue3%E5%85%B6%E4%BB%96API/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://tsukimiyanano.github.io/tsukimiya.github.io/2024/05/18/vue3/7.vue3%E5%85%B6%E4%BB%96API/","path":"2024/05/18/vue3/7.vue3其他API/","title":"vue3其它 API"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>vue3其它 API | Ayu's Study Blog</title>
+  
+
+
+
+
+
+
+
+<link rel="dns-prefetch" href="https://waline.vercel.app">
+  <noscript>
+    <link rel="stylesheet" href="/tsukimiya.github.io/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/tsukimiya.github.io/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Ayu's Study Blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">求求你给我一份工作吧，我什么都会做的`orz</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/tsukimiya.github.io/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tsukimiya.github.io/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/tsukimiya.github.io/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/tsukimiya.github.io/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-schedule"><a href="/tsukimiya.github.io/schedule/task.html" rel="section"><i class="fa fa-calendar fa-fw"></i>日程表</a></li><li class="menu-item menu-item-guestbook"><a href="/tsukimiya.github.io/guestbook/" rel="section"><i class="fa fa-book fa-fw"></i>guestbook</a></li><li class="menu-item menu-item-pulledpost"><a href="/tsukimiya.github.io/PulledPost/" rel="section"><i class="fa fa-heart fa-fw"></i>PulledPost</a></li><li class="menu-item menu-item-cuntom-page"><a href="/tsukimiya.github.io/custom" rel="section"><i class="fa fa-folder fa-fw"></i>Cuntom Page</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#shallowRef-%E4%B8%8E-shallowReactive"><span class="nav-number">1.</span> <span class="nav-text">shallowRef 与 shallowReactive</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#shallowRef"><span class="nav-number">1.1.</span> <span class="nav-text">shallowRef</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#shallowReactive"><span class="nav-number">1.2.</span> <span class="nav-text">shallowReactive</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">1.3.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#readonly-%E4%B8%8E-shallowReadonly"><span class="nav-number">2.</span> <span class="nav-text">readonly 与 shallowReadonly</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#readonly"><span class="nav-number">2.1.</span> <span class="nav-text">readonly</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#shallowReadonly"><span class="nav-number">2.2.</span> <span class="nav-text">shallowReadonly</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#toRaw-%E4%B8%8E-markRaw"><span class="nav-number">3.</span> <span class="nav-text">toRaw 与 markRaw</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#toRaw"><span class="nav-number">3.1.</span> <span class="nav-text">toRaw</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#markRaw"><span class="nav-number">3.2.</span> <span class="nav-text">markRaw</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#customRef-%E8%87%AA%E5%AE%9A%E4%B9%89Ref"><span class="nav-number">4.</span> <span class="nav-text">customRef&#x2F;自定义Ref</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Ayu"
+      src="/tsukimiya.github.io/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Ayu</p>
+  <div class="site-description" itemprop="description">你们怎么能这么卷！！</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/tsukimiya.github.io/archives/">
+          <span class="site-state-item-count">25</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/tsukimiya.github.io/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tsukimiya.github.io/tags/">
+        <span class="site-state-item-count">64</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="mailto:1832715838@qq.com" title="E-Mail → mailto:1832715838@qq.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://github.com/tsukimiyanano" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;tsukimiyanano" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://tsukimiyanano.github.io/tsukimiya.github.io/2024/05/18/vue3/7.vue3%E5%85%B6%E4%BB%96API/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/tsukimiya.github.io/images/avatar.jpg">
+      <meta itemprop="name" content="Ayu">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ayu's Study Blog">
+      <meta itemprop="description" content="你们怎么能这么卷！！">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="vue3其它 API | Ayu's Study Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          vue3其它 API
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2024-05-18 21:06:29 / 修改时间：21:08:53" itemprop="dateCreated datePublished" datetime="2024-05-18T21:06:29+08:00">2024-05-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/tsukimiya.github.io/categories/Vue/" itemprop="url" rel="index"><span itemprop="name">Vue</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/tsukimiya.github.io/categories/Vue/Vue3/" itemprop="url" rel="index"><span itemprop="name">Vue3</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="far fa-comment"></i>
+    </span>
+    <span class="post-meta-item-text">Waline：</span>
+  
+    <a title="waline" href="/tsukimiya.github.io/2024/05/18/vue3/7.vue3%E5%85%B6%E4%BB%96API/#waline" itemprop="discussionUrl">
+      <span class="post-comments-count waline-comment-count" data-path="/tsukimiya.github.io/2024/05/18/vue3/7.vue3%E5%85%B6%E4%BB%96API/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>3.5k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>3 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><blockquote>
+<p>使用场景不是很多，了解一下常用的</p>
+</blockquote>
+<h1 id="shallowRef-与-shallowReactive"><a href="#shallowRef-与-shallowReactive" class="headerlink" title="shallowRef 与 shallowReactive"></a>shallowRef 与 shallowReactive</h1><p>作用：提升性能</p>
+<h2 id="shallowRef"><a href="#shallowRef" class="headerlink" title="shallowRef"></a><code>shallowRef</code></h2><ol>
+<li><p>作用：创建一个响应式数据，但<strong>只对顶层属性进行响应式处理</strong>。</p>
+<blockquote>
+<p>如果是对象类型的数据，不再关注对象内部的属性，只关注对象整体(地址值是否变化)</p>
+</blockquote>
+</li>
+<li><p>用法：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> myVar = <span class="title function_">shallowRef</span>(initialValue);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>特点：只跟踪引用值的变化，不关心值内部的属性变化。</p>
+</li>
+<li><p>应用场景：只关心对象是否被整体替换，如服务器承诺每次返回的都是一个新的对象。</p>
+<blockquote>
+<p><strong>这个时候</strong>用shallowRef<strong>效率更高</strong>一些</p>
+</blockquote>
+</li>
+</ol>
+<h2 id="shallowReactive"><a href="#shallowReactive" class="headerlink" title="shallowReactive"></a><code>shallowReactive</code></h2><ol>
+<li><p>作用：创建一个<strong>浅层响应式</strong>对象，只会使对象的最顶层属性变成响应式的，对象内部的嵌套属性则不会变成响应式的</p>
+<blockquote>
+<p>属性值为非对象的，保持响应式 </p>
+</blockquote>
+</li>
+<li><p>用法：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> myObj = <span class="title function_">shallowReactive</span>(&#123; ... &#125;);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>特点：对象的顶层属性是响应式的，但嵌套对象的属性不是。</p>
+</li>
+</ol>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><blockquote>
+<p>通过使用 <a target="_blank" rel="noopener" href="https://cn.vuejs.org/api/reactivity-advanced.html#shallowref"><code>shallowRef()</code></a> 和 <a target="_blank" rel="noopener" href="https://cn.vuejs.org/api/reactivity-advanced.html#shallowreactive"><code>shallowReactive()</code></a> 来<strong>绕开深度响应</strong>。浅层式 <code>API</code> 创建的状态只在其顶层是响应式的，对所有深层的对象不会做任何处理，避免了对每一个内部属性做响应式所带来的性能成本，这使得属性的访问变得更快，可<strong>提升性能</strong>。</p>
+</blockquote>
+<h1 id="readonly-与-shallowReadonly"><a href="#readonly-与-shallowReadonly" class="headerlink" title="readonly 与 shallowReadonly"></a>readonly 与 shallowReadonly</h1><p><strong>作用：保护数据</strong></p>
+<blockquote>
+<p>readonly用的更多一点</p>
+</blockquote>
+<h2 id="readonly"><a href="#readonly" class="headerlink" title="readonly"></a><strong><code>readonly</code></strong></h2><ol>
+<li><p>作用：用于创建一个对象的<strong>深只读副本</strong>。 &#x2F;&#x2F; 维护住关联关系，会跟着源对象变化</p>
+</li>
+<li><p>用法：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> original = <span class="title function_">reactive</span>(&#123; ... &#125;);</span><br><span class="line"><span class="keyword">const</span> readOnlyCopy = <span class="title function_">readonly</span>(original); <span class="comment">// 参数只接收一个响应式对象</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>特点：</p>
+<ul>
+<li>对象的所有嵌套属性都将变为只读。<blockquote>
+<p>不过修改源对象，生成的对象也会同步修改(但是不能直接修改生成的只读对象)</p>
+</blockquote>
+</li>
+<li>任何尝试修改这个对象的操作都会被阻止（在开发模式下，还会在控制台中发出警告）。</li>
+</ul>
+</li>
+<li><p>应用场景：</p>
+<ul>
+<li>创建不可变的状态快照。</li>
+<li>保护全局状态或配置不被修改。</li>
+</ul>
+</li>
+</ol>
+<h2 id="shallowReadonly"><a href="#shallowReadonly" class="headerlink" title="shallowReadonly"></a><strong><code>shallowReadonly</code></strong></h2><ol>
+<li><p>作用：与 <code>readonly</code> 类似，但只作用于对象的顶层属性。</p>
+<blockquote>
+<p>只处理浅层次的只读</p>
+</blockquote>
+</li>
+<li><p>用法：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> original = <span class="title function_">reactive</span>(&#123; ... &#125;);</span><br><span class="line"><span class="keyword">const</span> shallowReadOnlyCopy = <span class="title function_">shallowReadonly</span>(original);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>特点：</p>
+<ul>
+<li><p>只将对象的顶层属性设置为只读，对象内部的嵌套属性仍然是可变的。</p>
+</li>
+<li><p>适用于只需保护对象顶层属性的场景。</p>
+</li>
+</ul>
+</li>
+</ol>
+<h1 id="toRaw-与-markRaw"><a href="#toRaw-与-markRaw" class="headerlink" title="toRaw 与 markRaw"></a>toRaw 与 markRaw</h1><h2 id="toRaw"><a href="#toRaw" class="headerlink" title="toRaw"></a><code>toRaw</code></h2><ol>
+<li><p>作用：用于获取一个响应式对象的原始对象， <code>toRaw</code> 返回的对象不再是响应式的，不会触发视图更新。<br>对原始对象修改，toRaw的对象也会同步修改</p>
+<blockquote>
+<p>官网描述：这是一个可以用于临时读取而不引起代理访问&#x2F;跟踪开销，或是写入而不触发更改的特殊方法。<strong>不建议保存对原始对象的持久引用，请谨慎使用</strong>。</p>
+</blockquote>
+<blockquote>
+<p>何时使用？ —— 在需要将响应式对象传递给非 <code>Vue</code> 的库或外部系统时，使用 <code>toRaw</code> 可以<strong>确保它们收到的是普通对象</strong></p>
+</blockquote>
+</li>
+<li><p>具体编码：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; reactive,toRaw,markRaw,isReactive &#125; <span class="keyword">from</span> <span class="string">&quot;vue&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* toRaw */</span></span><br><span class="line"><span class="comment">// 响应式对象</span></span><br><span class="line"><span class="keyword">let</span> person = <span class="title function_">reactive</span>(&#123;<span class="attr">name</span>:<span class="string">&#x27;tony&#x27;</span>,<span class="attr">age</span>:<span class="number">18</span>&#125;)</span><br><span class="line"><span class="comment">// 原始对象</span></span><br><span class="line"><span class="keyword">let</span> rawPerson = <span class="title function_">toRaw</span>(person)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/* markRaw */</span></span><br><span class="line"><span class="keyword">let</span> citysd = <span class="title function_">markRaw</span>([</span><br><span class="line">  &#123;<span class="attr">id</span>:<span class="string">&#x27;asdda01&#x27;</span>,<span class="attr">name</span>:<span class="string">&#x27;北京&#x27;</span>&#125;,</span><br><span class="line">  &#123;<span class="attr">id</span>:<span class="string">&#x27;asdda02&#x27;</span>,<span class="attr">name</span>:<span class="string">&#x27;上海&#x27;</span>&#125;,</span><br><span class="line">  &#123;<span class="attr">id</span>:<span class="string">&#x27;asdda03&#x27;</span>,<span class="attr">name</span>:<span class="string">&#x27;天津&#x27;</span>&#125;,</span><br><span class="line">  &#123;<span class="attr">id</span>:<span class="string">&#x27;asdda04&#x27;</span>,<span class="attr">name</span>:<span class="string">&#x27;重庆&#x27;</span>&#125;</span><br><span class="line">])</span><br><span class="line"><span class="comment">// 根据原始对象citys去创建响应式对象citys2 —— 创建失败，因为citys被markRaw标记了</span></span><br><span class="line"><span class="keyword">let</span> citys2 = <span class="title function_">reactive</span>(citys)</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title function_">isReactive</span>(person))</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title function_">isReactive</span>(rawPerson))</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title function_">isReactive</span>(citys))</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="title function_">isReactive</span>(citys2))</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="markRaw"><a href="#markRaw" class="headerlink" title="markRaw"></a><code>markRaw</code></h2><ol>
+<li><p>作用：标记一个对象，使其<strong>永远不会</strong>变成响应式的。</p>
+<blockquote>
+<p>例如使用<code>mockjs</code>等第三方库时，为了防止误把<code>第三方库</code>变为响应式对象，可以使用 <code>markRaw</code> 去标记<code>mockjs</code>&#x2F;<code>第三方库</code></p>
+<blockquote>
+<p>如果误把mockjs变成响应式对象，会导致对里面任何一个小属性的修改都会被vue发现，有一定效率上的问题<br>mockjs 后端的接口还没有出现的时候，我们可以借助mockjs库去模拟接口</p>
+</blockquote>
+</blockquote>
+</li>
+<li><p>编码：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* markRaw */</span></span><br><span class="line"><span class="keyword">let</span> citys = <span class="title function_">markRaw</span>([</span><br><span class="line">  &#123;<span class="attr">id</span>:<span class="string">&#x27;asdda01&#x27;</span>,<span class="attr">name</span>:<span class="string">&#x27;北京&#x27;</span>&#125;,</span><br><span class="line">  &#123;<span class="attr">id</span>:<span class="string">&#x27;asdda02&#x27;</span>,<span class="attr">name</span>:<span class="string">&#x27;上海&#x27;</span>&#125;,</span><br><span class="line">  &#123;<span class="attr">id</span>:<span class="string">&#x27;asdda03&#x27;</span>,<span class="attr">name</span>:<span class="string">&#x27;天津&#x27;</span>&#125;,</span><br><span class="line">  &#123;<span class="attr">id</span>:<span class="string">&#x27;asdda04&#x27;</span>,<span class="attr">name</span>:<span class="string">&#x27;重庆&#x27;</span>&#125;</span><br><span class="line">])</span><br><span class="line"><span class="comment">// 根据原始对象citys去创建响应式对象citys2 —— 创建失败，因为citys被markRaw标记了</span></span><br><span class="line"><span class="keyword">let</span> citys2 = <span class="title function_">reactive</span>(citys)</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h1 id="customRef-自定义Ref"><a href="#customRef-自定义Ref" class="headerlink" title="customRef&#x2F;自定义Ref"></a>customRef&#x2F;自定义Ref</h1><blockquote>
+<p>公司一般会 <strong>把自定义Ref封装成一个hooks</strong></p>
+</blockquote>
+<p>作用：创建一个<strong>自定义的</strong><code>ref</code>，并对其依赖项跟踪和更新触发进行逻辑控制。</p>
+<blockquote>
+<p>其实就是在原生ref基础上，加上自己的一些逻辑(比如延迟1s再更新数据)</p>
+</blockquote>
+<p><strong>核心</strong>：如何理解<code>track()</code>和<code>trigger()</code></p>
+<ul>
+<li>track()：监视msg的更新，<strong>一旦变化就更新页面</strong><blockquote>
+<p>页面模板中，是取的msg的值，触发的是get</p>
+</blockquote>
+</li>
+<li>trigger(): 通知Vue数据msg变化了(于是就会更新页面)<blockquote>
+<p>msg被修改，就会触发set的调用</p>
+</blockquote>
+</li>
+</ul>
+<p>实现防抖效果（<code>useSumRef.ts</code>）：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;customRef &#125; <span class="keyword">from</span> <span class="string">&quot;vue&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">function</span>(<span class="params">initValue:<span class="built_in">string</span>,delay:<span class="built_in">number</span></span>)&#123;</span><br><span class="line">  <span class="keyword">let</span> msg = <span class="title function_">customRef</span>(<span class="function">(<span class="params">track,trigger</span>)=&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">let</span> <span class="attr">timer</span>:<span class="built_in">number</span></span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      <span class="title function_">get</span>(<span class="params"></span>)&#123;</span><br><span class="line">        <span class="title function_">track</span>() <span class="comment">// 告诉Vue数据msg很重要，要对msg持续关注，一旦变化就更新页面(监视msg的更新)</span></span><br><span class="line">        <span class="keyword">return</span> initValue</span><br><span class="line">      &#125;,</span><br><span class="line">      <span class="title function_">set</span>(<span class="params">value</span>)&#123;</span><br><span class="line">        <span class="built_in">clearTimeout</span>(timer)</span><br><span class="line">        timer = <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">          initValue = value</span><br><span class="line">          <span class="title function_">trigger</span>() <span class="comment">//通知Vue数据msg变化了</span></span><br><span class="line">        &#125;, delay);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;) </span><br><span class="line">  <span class="keyword">return</span> &#123;msg&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>组件中使用：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  <span class="language-xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;app&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">h3</span>&gt;</span>我是App组件<span class="tag">&lt;/<span class="name">h3</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">h3</span>&gt;</span>&#123;&#123;msg&#125;&#125;<span class="tag">&lt;/<span class="name">h3</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">v-model</span>=<span class="string">&quot;msg&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> useSumRef <span class="keyword">from</span> <span class="string">&quot;@/hooks/useSumRef&quot;</span>;</span><br><span class="line"><span class="keyword">let</span> &#123;msg&#125; = <span class="title function_">useSumRef</span>(<span class="string">&#x27;123&#x27;</span>,<span class="number">500</span>) <span class="comment">// msg初始值为&#x27;123&#x27;, 500毫秒后才更新页面</span></span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>请我一杯咖啡吧！</div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/tsukimiya.github.io/images/wechatpay.jpg" alt="Ayu 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/tsukimiya.github.io/images/alipay.jpg" alt="Ayu 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tsukimiya.github.io/tags/Vue/" rel="tag"># Vue</a>
+              <a href="/tsukimiya.github.io/tags/Vue3/" rel="tag"># Vue3</a>
+              <a href="/tsukimiya.github.io/tags/API/" rel="tag"># API</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/tsukimiya.github.io/2024/05/18/uni-app/view%E6%A0%87%E7%AD%BE%E6%8A%A5%E7%BA%A2%E4%BF%A1%E6%81%AF/" rel="prev" title="vscode开发uniapp小程序，text、view标签报红错误提示">
+                  <i class="fa fa-angle-left"></i> vscode开发uniapp小程序，text、view标签报红错误提示
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/tsukimiya.github.io/2024/05/18/vue3/8.vue3%E6%96%B0%E7%BB%84%E4%BB%B6/" rel="next" title="vue3新组件">
+                  vue3新组件 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="waline"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Ayu</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">164k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">2:29</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="https://cdnjs.cloudflare.com/ajax/libs/ribbon.js/1.0.2/ribbon.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/tsukimiya.github.io/js/comments.js"></script><script src="/tsukimiya.github.io/js/utils.js"></script><script src="/tsukimiya.github.io/js/motion.js"></script><script src="/tsukimiya.github.io/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/tsukimiya.github.io/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+<script class="next-config" data-name="waline" type="application/json">{"lang":"zh-CN","enable":true,"serverURL":"https://waline.vercel.app","cssUrl":"https://unpkg.com/@waline/client@v2/dist/waline.css","commentCount":true,"pageview":false,"locale":{"placeholder":"Leave Something, message or money"},"emoji":["https://unpkg.com/@waline/emojis@1.0.1/tieba"],"meta":["nick","mail","link"],"requiredMeta":["nick"],"wordLimit":0,"login":"disable","pageSize":10,"el":"#waline","comment":true,"libUrl":"//unpkg.com/@waline/client@v2/dist/waline.js","path":"/tsukimiya.github.io/2024/05/18/vue3/7.vue3%E5%85%B6%E4%BB%96API/"}</script>
+<link rel="stylesheet" href="https://unpkg.com/@waline/client@v2/dist/waline.css">
+<script>
+document.addEventListener('page:loaded', () => {
+  NexT.utils.loadComments(CONFIG.waline.el).then(() =>
+    NexT.utils.getScript(CONFIG.waline.libUrl, { condition: window.Waline })
+  ).then(() => 
+    Waline.init(Object.assign({}, CONFIG.waline,{ el: document.querySelector(CONFIG.waline.el) }))
+  );
+});
+</script>
+
+</body>
+</html>
