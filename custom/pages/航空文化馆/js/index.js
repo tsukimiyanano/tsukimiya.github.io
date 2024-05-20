@@ -409,9 +409,9 @@ let zua = new Vue({
                   isDown = true
                   moveNum = 0
                   startX = e.pageX
-                  console.log(startX)
+                //   console.log(startX)
                   originL = parseInt(img.css('marginLeft'))
-                  console.log('左' + originL)
+                //   console.log('左' + originL)
                 },
                 mouseleave: function () {
                     isDown = false;
@@ -420,12 +420,12 @@ let zua = new Vue({
                     isDown = false;
                 },
                 mousemove: function (e) {
-                    console.log("移动");
+                    // console.log("移动");
                     if (!isDown) {
                         return;
                     }
                     moveNum++;
-                    console.log(moveNum);
+                    // console.log(moveNum);
                     let moveL = e.pageX - startX//拖动的长度
                     marginL = originL + moveL * 3;
                     // 往左拖是负值左移，右正值右移
