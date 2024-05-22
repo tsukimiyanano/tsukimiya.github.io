@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>点击复制文本工具</title>
+  <link rel="icon" href="/tsukimiya.github.io/images/Study.ico">
+  <style type="text/css">
+    .wrapper {
+      position: relative;
+    }
+
+    #input {
+      position: absolute;
+      top: 0;
+      left: 0;
+      opacity: 0;
+      z-index: -10;
+    }
+
+    .text{
+      background-color: antiquewhite;
+      padding: 5px 10px;
+      width: fit-content;
+      border-radius: 5px;
+      cursor: pointer;
+      margin: 8px 0;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrapper">
+    <input type="text">
+    <p class="text" onclick="copyText(event)">点击文本即可复制</p>
+    <textarea id="input">这是幕后黑手</textarea>
+  </div>
+</body>
+<script type="text/javascript">
+  let input = document.getElementById("input");
+  function copyText(e) {
+    // console.log(e);
+    let text = e.target.innerHTML;
+    e.target.style.backgroundColor = '#ccc'
+    input.value = text;
+    input.select();//选中文本
+    document.execCommand("copy");
+  }
+</script>
+
+</html>
