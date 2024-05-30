@@ -153,7 +153,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/tsukimiya.github.io/archives/">
-          <span class="site-state-item-count">25</span>
+          <span class="site-state-item-count">26</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -164,7 +164,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tsukimiya.github.io/tags/">
-        <span class="site-state-item-count">64</span>
+        <span class="site-state-item-count">68</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -189,6 +189,178 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://tsukimiyanano.github.io/tsukimiya.github.io/2024/05/23/JS/JS%E7%9A%84%E7%9B%B8%E7%AD%89%E6%80%A7%E6%AF%94%E8%BE%83%E9%99%B7%E9%98%B1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/tsukimiya.github.io/images/avatar.jpg">
+      <meta itemprop="name" content="Ayu">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ayu's Study Blog">
+      <meta itemprop="description" content="你们怎么能这么卷！！">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Ayu's Study Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/tsukimiya.github.io/2024/05/23/JS/JS%E7%9A%84%E7%9B%B8%E7%AD%89%E6%80%A7%E6%AF%94%E8%BE%83%E9%99%B7%E9%98%B1/" class="post-title-link" itemprop="url">JS相等性比较陷阱揭秘：理解`[]==![]`为`true`背后的宽松相等运算符与类型转换</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-05-23 22:08:07" itemprop="dateCreated datePublished" datetime="2024-05-23T22:08:07+08:00">2024-05-23</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-05-24 10:14:51" itemprop="dateModified" datetime="2024-05-24T10:14:51+08:00">2024-05-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/tsukimiya.github.io/categories/JS/" itemprop="url" rel="index"><span itemprop="name">JS</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="far fa-comment"></i>
+    </span>
+    <span class="post-meta-item-text">Waline：</span>
+  
+    <a title="waline" href="/tsukimiya.github.io/2024/05/23/JS/JS%E7%9A%84%E7%9B%B8%E7%AD%89%E6%80%A7%E6%AF%94%E8%BE%83%E9%99%B7%E9%98%B1/#waline" itemprop="discussionUrl">
+      <span class="post-comments-count waline-comment-count" data-path="/tsukimiya.github.io/2024/05/23/JS/JS%E7%9A%84%E7%9B%B8%E7%AD%89%E6%80%A7%E6%AF%94%E8%BE%83%E9%99%B7%E9%98%B1/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2.9k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>3 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h1><p>JavaScript是一门弱类型（或称动态类型）语言，这意味着<strong>变量的类型可以在运行时改变</strong>，为开发者提供了极大的灵活性。然而，这也引入了类型转换的概念，尤其是在使用宽松相等运算符&#x3D;&#x3D;进行比较时。宽松相等不仅比较值，还会在必要时自动转换类型以进行比较，这一特性有时会导致预期之外的结果。</p>
+<hr>
+<p>下面来看一组比较运算符的例子：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[] == []  <span class="comment">// false</span></span><br><span class="line">[] == ![] <span class="comment">// true</span></span><br><span class="line">[] == !&#123;&#125; <span class="comment">// true</span></span><br><span class="line">&#123;&#125; == !&#123;&#125; <span class="comment">// Uncaught SyntaxError: Unexpected token &#x27;==&#x27;</span></span><br><span class="line">&#123;&#125; == &#123;&#125;  <span class="comment">// Uncaught SyntaxError: Unexpected token &#x27;==&#x27;</span></span><br><span class="line">&#123;&#125; == ![] <span class="comment">// Uncaught SyntaxError: Unexpected token &#x27;==&#x27;</span></span><br><span class="line">&#123;&#125; == []  <span class="comment">// Uncaught SyntaxError: Unexpected token &#x27;==&#x27;</span></span><br><span class="line">(&#123;&#125; == !&#123;&#125;) <span class="comment">// false</span></span><br></pre></td></tr></table></figure>
+<p>提出问题：<strong>为什么[] &#x3D;&#x3D; ![]会得出true这样一个看似反直觉的结果？</strong><br>下面，我们将会逐步接近答案，揭开这个陷阱。</p>
+<hr>
+<h1 id="JavaScript中的比较运算符"><a href="#JavaScript中的比较运算符" class="headerlink" title="JavaScript中的比较运算符"></a>JavaScript中的比较运算符</h1><h2 id="严格相等与宽松相等"><a href="#严格相等与宽松相等" class="headerlink" title="严格相等与宽松相等"></a>严格相等与宽松相等</h2><ul>
+<li>严格相等运算符 <code>===</code> 要求<font color="red">两边的值及其类型完全一致</font>才能返回 <code>true</code>，是最安全的比较方式。</li>
+<li>宽松相等运算符 <code>==</code> 在比较前，<font color="red">如果两侧数据类型不匹配，会尝试将它们转换成相同类型后再比较</font>，这便是问题的根源所在。</li>
+</ul>
+<h2 id="类型转换规则"><a href="#类型转换规则" class="headerlink" title="类型转换规则"></a>类型转换规则</h2><p>类型转换发生在比较操作中，涉及多种类型间的转换逻辑，例如：</p>
+<ul>
+<li>布尔值转数字 (<code>true</code> 转换为 <code>1</code>, <code>false</code> 转换为 <code>0</code>)</li>
+<li>字符串与数字之间的相互转换</li>
+<li>对象转换为原始值（通常是字符串或数字）</li>
+</ul>
+<hr>
+<h1 id="深入解析"><a href="#深入解析" class="headerlink" title="深入解析[] == ![]"></a>深入解析<code>[] == ![]</code></h1><h2 id="逻辑非运算符"><a href="#逻辑非运算符" class="headerlink" title="逻辑非运算符!"></a>逻辑非运算符<code>!</code></h2><p>首先，理解<code>![]</code>是如何工作的。逻辑非运算符<code>!</code>会对表达式求布尔值，然后取反。对于数组（即使是空数组<code>[]</code>），在布尔上下文中被视为<code>true</code>，因此<code>![]</code>的结果是<code>false</code>。在宽松比较的上下文中，<code>false</code>进一步被转换为数字<code>0</code>。</p>
+<h2 id="数组到字符串再到数字"><a href="#数组到字符串再到数字" class="headerlink" title="数组到字符串再到数字"></a>数组到字符串再到数字</h2><p>接下来，考虑左侧的空数组<code>[]</code>。在宽松相等比较中，数组会首先转换为它的字符串表示形式，即<code>&quot;&quot;</code>（空字符串）。随后，空字符串在进一步的比较中会被转换为数字<code>0</code>。</p>
+<h2 id="比较””-0"><a href="#比较””-0" class="headerlink" title="比较”” &#x3D;&#x3D; 0"></a>比较”” &#x3D;&#x3D; 0</h2><p>因此，<code>[] == ![]</code> 的比较实质上变为<code>&quot;&quot; == 0</code>。在JavaScript的宽松比较规则下，空字符串<code>&quot;&quot;</code>和数字<code>0</code>都被认为是“空”或“假”值，在比较时被视作相等。这解释了为什么<code>[] == ![]</code>的结果是<code>true</code>，尽管直观上两者看似完全不同。</p>
+<hr>
+<h1 id="宽松相等运算符的其他陷阱示例"><a href="#宽松相等运算符的其他陷阱示例" class="headerlink" title="宽松相等运算符的其他陷阱示例"></a>宽松相等运算符的其他陷阱示例</h1><p>除了<code>[] == ![]</code>，宽松相等还可能导致其他令人迷惑的结果，例如：</p>
+<ul>
+<li><code>0 == &#39;0&#39;</code>：数字<code>0</code>与字符串<code>&#39;0&#39;</code>在宽松比较中相等。</li>
+<li><code>null == undefined</code>：这两种特殊的值在比较时也被认为是相等的。</li>
+</ul>
+<hr>
+<h1 id="最佳实践与建议"><a href="#最佳实践与建议" class="headerlink" title="最佳实践与建议"></a>最佳实践与建议</h1><p>为了避免由宽松相等引发的潜在问题，建议采取以下措施：</p>
+<ul>
+<li><font color="red">首选严格相等运算符 “&#x3D;&#x3D;&#x3D;”：除非你明确知道并期望类型转换发生，否则总是使用严格相等。</font></li>
+<li>显式类型转换：当你确实需要进行类型转换时，显式地进行，比如使用<code>Number()</code>, <code>String()</code>或<code>Boolean()</code>函数，以增强代码的可读性。</li>
+<li>代码审查：团队内部实施代码审查，可以帮助识别并纠正潜在的比较陷阱。</li>
+<li>单元测试：编写测试用例来验证比较逻辑的正确性，确保代码行为符合预期。</li>
+</ul>
+<hr>
+<h1 id="再次回顾开始的问题"><a href="#再次回顾开始的问题" class="headerlink" title="再次回顾开始的问题"></a>再次回顾开始的问题</h1><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[] == []  <span class="comment">// false</span></span><br><span class="line">[] == ![] <span class="comment">// true</span></span><br><span class="line">[] == !&#123;&#125; <span class="comment">// true</span></span><br><span class="line">&#123;&#125; == !&#123;&#125; <span class="comment">// Uncaught SyntaxError: Unexpected token &#x27;==&#x27;</span></span><br><span class="line">&#123;&#125; == &#123;&#125;  <span class="comment">// Uncaught SyntaxError: Unexpected token &#x27;==&#x27;</span></span><br><span class="line">&#123;&#125; == ![] <span class="comment">// Uncaught SyntaxError: Unexpected token &#x27;==&#x27;</span></span><br><span class="line">&#123;&#125; == []  <span class="comment">// Uncaught SyntaxError: Unexpected token &#x27;==&#x27;</span></span><br><span class="line">(&#123;&#125; == !&#123;&#125;) <span class="comment">// false</span></span><br></pre></td></tr></table></figure>
+
+<p>现在我们可以对它们挨个做出解释：</p>
+<ul>
+<li><p><code>[] == []  // false</code><br>这里两个空数组虽然内容相同，但在使用宽松相等<code>==</code>比较时，因为它们是两个不同的对象实例，所以结果为false。</p>
+</li>
+<li><p><code>[] == ![] // true</code><br>这个表达式实际上分两步理解：</p>
+<ol>
+<li><code>![]</code> 首先执行，<code>[]</code>转换为布尔值再取反，结果是false。</li>
+<li><code>[]</code>会转换为<code>&quot;&quot;</code>，而<code>false</code>被转换为<code>0</code>。就成了<code>&quot;&quot; == 0</code>的比较。根据JavaScript的类型转换规则，空字符串和数字0在比较时被认为是相等的（因为都转为了相同的布尔值false），所以结果为true。</li>
+</ol>
+</li>
+<li><p><code>[] == !&#123;&#125; // true</code><br><code>!&#123;&#125;</code>同样是非空对象转换为布尔值取反，与上面相同，结果为true。</p>
+</li>
+<li><p><code>&#123;&#125; == !&#123;&#125; 、&#123;&#125; == &#123;&#125; 、&#123;&#125; == ![] // Uncaught SyntaxError: Unexpected token &#39;==&#39;</code></p>
+<blockquote>
+<p>这里就不再是宽松相等比较类型转换的问题了<br>  这些表达式报错是因为在JS中，<font color="red">大括号 {} 既可以表示对象字面量也可以表示代码块。</font><br>  在这些情况下，解释器尝试将它们解释为代码块，但是紧接着的 <code>==</code> 或 <code>!=</code> 导致了语法错误，因为<strong>代码块后面直接跟比较操作符是不合法的</strong>。解决这个问题<strong>需要确保大括号用于创建对象时明确其意图</strong>，例如通过<strong>赋值或声明变量的方式</strong>：<code>(&#123;&#125; == !&#123;&#125;) // false</code>、<code>let obj = &#123;&#125;</code> 等。</p>
+</blockquote>
+</li>
+<li><p><code>(&#123;&#125; == !&#123;&#125;) // false</code><br>这里就是合法的比较了，<code>!&#123;&#125;</code>同样转换为<code>false</code>，然后<code>&#123;&#125;</code>转换为原始值字符串<code>[object Object]</code><br>所以表达式变成了<code>[object Object] == false</code>，结果为false。</p>
+</li>
+</ul>
+<hr>
+<p>理解JavaScript的宽松相等运算符及其隐含的类型转换机制，是成为高效JavaScript开发者的关键之一。尽管这些特性有时可能引入意料之外的行为，但通过掌握它们，我们可以编写出更加健壮、易于维护的代码。面对<code>[] == ![]</code>这样的谜题，我们不再困惑，而是能清晰地解析其背后的逻辑，进而避免类似的陷阱。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -2597,193 +2769,6 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://tsukimiyanano.github.io/tsukimiya.github.io/2024/05/08/vue3/1.vue3%E5%86%85%E5%AE%B9%E4%BB%8B%E7%BB%8D/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/tsukimiya.github.io/images/avatar.jpg">
-      <meta itemprop="name" content="Ayu">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Ayu's Study Blog">
-      <meta itemprop="description" content="你们怎么能这么卷！！">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Ayu's Study Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/tsukimiya.github.io/2024/05/08/vue3/1.vue3%E5%86%85%E5%AE%B9%E4%BB%8B%E7%BB%8D/" class="post-title-link" itemprop="url">vue3内容介绍</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2024-05-08 13:54:00" itemprop="dateCreated datePublished" datetime="2024-05-08T13:54:00+08:00">2024-05-08</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-05-18 21:13:10" itemprop="dateModified" datetime="2024-05-18T21:13:10+08:00">2024-05-18</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/tsukimiya.github.io/categories/Vue/" itemprop="url" rel="index"><span itemprop="name">Vue</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/tsukimiya.github.io/categories/Vue/Vue3/" itemprop="url" rel="index"><span itemprop="name">Vue3</span></a>
-        </span>
-    </span>
-
-  
-  
-  <span class="post-meta-item">
-    
-    <span class="post-meta-item-icon">
-      <i class="far fa-comment"></i>
-    </span>
-    <span class="post-meta-item-text">Waline：</span>
-  
-    <a title="waline" href="/tsukimiya.github.io/2024/05/08/vue3/1.vue3%E5%86%85%E5%AE%B9%E4%BB%8B%E7%BB%8D/#waline" itemprop="discussionUrl">
-      <span class="post-comments-count waline-comment-count" data-path="/tsukimiya.github.io/2024/05/08/vue3/1.vue3%E5%86%85%E5%AE%B9%E4%BB%8B%E7%BB%8D/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>1.4k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <blockquote>
-<p>Vue3内容：<br>    1. <font color="red"><strong>核心</strong></font>：<font color="red">ref、reactive、computed、watch、生命周期……</font><br>    2. <font color="green"><strong>常用</strong></font>：<font color="green">hooks、自定义ref、路由、pinia、mitt……</font><br>    3. <strong>面试</strong>：<strong>组件通信、响应式相关API……</strong></p>
-</blockquote>
-<h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>Vue是一套<strong>用于构建用户界面的前端框架</strong>。它为构建用户界面提供了一整套的解决方案(俗称Vue全家桶)：</p>
-<ul>
-<li>vue (核心库)</li>
-<li>vue-router (路由方案)</li>
-<li>vuex (状态管理方案)</li>
-<li>vue 组件库 (快速搭建页面U效果的方案)</li>
-</ul>
-<p>以及<strong>辅助vue项目开发</strong>的一系列工具:</p>
-<ul>
-<li>vue-cli (npm 全局包: 一键生成工程化的vue 项目 - 基于webpack、大而全)</li>
-<li>vite (npm 全局包: 一键生成工程化的vue项目 – 小而巧)</li>
-<li>vue-devtools (浏览器插件: 辅助调试的工具)</li>
-<li>vetur (vscode插件: 提供语法高亮和智能提示)</li>
-</ul>
-<p><img src="/tsukimiya.github.io/images/vue/vue3.png" alt="vue3"></p>
-<h2 id="版本更新"><a href="#版本更新" class="headerlink" title="版本更新"></a>版本更新</h2><blockquote>
-<p>2020.9.18，Vue.js发布 3.0版本，代号：One Piece(海贼王)（尤雨溪老二次元了XD）<br>官方发布地址：Release v3.0.0 One Piece·vuejs&#x2F;core</p>
-</blockquote>
-<p>vue3.x中<strong>兼容vue2.x中绝大多数的API与特性</strong>，同时，<strong>新增了3.x所特有的功能</strong>、并<strong>废弃了某些2.x中的旧功能</strong>:</p>
-<ul>
-<li><p>新增的功能例如:<br><strong>组合式API</strong>、多根节点组件、更好的TypeScript支持等</p>
-</li>
-<li><p>废弃的旧功能如下︰<br><strong>过滤器</strong>、不再支持$on，$off和$once实例方法等</p>
-</li>
-</ul>
-<p>详细的变更信息，请参考官方文档给出的<strong>迁移指南</strong>: <a target="_blank" rel="noopener" href="https://v3-migration.vuejs.org/zh/">https://v3-migration.vuejs.org/zh/</a></p>
-<h2 id="基本使用"><a href="#基本使用" class="headerlink" title="基本使用"></a>基本使用</h2><ol>
-<li>编码语言：JS、<strong>TS</strong><blockquote>
-<p>实际工作中，Vue3往往搭配着TS一起使用</p>
-</blockquote>
-</li>
-<li>代码风格：<strong>组合式API</strong>(最新的)、选项式API(传统的)<blockquote>
-<p>官方明确表示，推荐使用组合式API</p>
-</blockquote>
-</li>
-<li>简写形式：<strong>setup语法糖</strong></li>
-</ol>
-<ul>
-<li><font color="red"><strong>核心</strong></font>：<br><font color="red">ref、reactive、computed、watch、生命周期……</font></li>
-<li><font color="green"><strong>常用</strong></font>：<br><font color="green">hooks、自定义ref、路由、pinia、mitt……</font></li>
-<li><strong>面试</strong>：<br><strong>组件通信、响应式相关API……</strong></li>
-</ul>
-<h2 id="升级"><a href="#升级" class="headerlink" title="升级"></a>升级</h2><ul>
-<li><p>组合式API —— setup语法糖 —— <strong>弱化this</strong></p>
-<blockquote>
-<p>因为vue3里面，在setup语法糖中几乎不去碰this，所以完全可以写<strong>箭头函数</strong>(箭头函数的this指向定义箭头函数时所在上下文的this，而普通函数this指向取决于函数的调用上下文)</p>
-</blockquote>
-</li>
-<li><p>子组件的标签</p>
-<ol>
-<li><strong>可以写多个</strong>(vue2只能写一个)</li>
-<li>写法：<code>&lt;Person/&gt;</code>，<strong>支持自闭合标签的写法</strong>，也支持双标签写法<blockquote>
-<p>vue2是双标签写法<code>&lt;Person&gt;&lt;/Person&gt;</code></p>
-</blockquote>
-</li>
-</ol>
-</li>
-<li><p>根标签<br>vue3里面，<strong>根标签不是必须的</strong>，在template标签里可以有多个子级标签</p>
-</li>
-<li><p>setup语法糖底层弄了async<br>可以直接在<code>&lt;scrpit setup&gt;&lt;/scrpit&gt;</code>中写await：<code>let xxx = await axios.get(&#39;xxxx&#39;)</code></p>
-<blockquote>
-<p>但是在组件中使用了异步任务，组件内容就无法正常显示了，必须在父组件中，包裹一个<a href="/tsukimiya.github.io/2024/05/18/vue3/8.vue3%E6%96%B0%E7%BB%84%E4%BB%B6/#Suspense">Suspense元素</a></p>
-</blockquote>
-</li>
-</ul>
-<h2 id="vue-devtools调试工具"><a href="#vue-devtools调试工具" class="headerlink" title="vue-devtools调试工具"></a><strong>vue-devtools调试工具</strong></h2><p>vue-devtools有 vue2.x 和 vue3.x(带Beta标记的版本) 两个版本，<strong>不能交叉使用</strong>!<br>如何安装：<a target="_blank" rel="noopener" href="https://juejin.cn/post/7125983116396593165">掘金</a>、<a target="_blank" rel="noopener" href="https://blog.csdn.net/ashin8032/article/details/122600345">CSDN</a></p>
-<p>但是，<strong>vite</strong>似乎<strong>集成了vue-devtools</strong>，不需要在浏览器安装插件，在创建项目的时候配置上 该调试工具即可使用。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
     <span class="page-number current">1</span><a class="page-number" href="/tsukimiya.github.io/default-index/page/2/">2</a><a class="page-number" href="/tsukimiya.github.io/default-index/page/3/">3</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/tsukimiya.github.io/default-index/page/2/"><i class="fa fa-angle-right"></i></a>
   </nav>
@@ -2807,13 +2792,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">164k</span>
+    <span title="站点总字数">167k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">2:29</span>
+    <span title="站点阅读时长">2:32</span>
   </span>
 </div>
 <div class="busuanzi-count">

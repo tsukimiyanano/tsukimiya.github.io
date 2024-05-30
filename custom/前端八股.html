@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.1.1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/tsukimiya.github.io/images/Study.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/tsukimiya.github.io/images/Study.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/tsukimiya.github.io/images/Study.ico">
+  <link rel="mask-icon" href="/tsukimiya.github.io/images/Study.ico" color="#222">
+
+<link rel="stylesheet" href="/tsukimiya.github.io/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Miniver:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"tsukimiyanano.github.io","root":"/tsukimiya.github.io/","images":"/tsukimiya.github.io/images","scheme":"Pisces","darkmode":true,"version":"8.19.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/tsukimiya.github.io/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true}}</script><script src="/tsukimiya.github.io/js/config.js"></script>
+
+    <meta name="description" content="Vuev-if 和 v-show 的区别* 两者都是用来控制元素是否显示 1. 在vue渲染模板的时候，v-if 是惰性加载的，只有条件为真时才会渲染，v-show 不管 2. v-show 通过改变元素的 display 属性来控制是否显示，v-if 是通过在 dom 中移除或者添加元素 3. v-if 每次都会重新渲染，v-show 只有第一次渲染 5. v-if 适合于条件不经常改变的场景，">
+<meta property="og:type" content="website">
+<meta property="og:title" content="前端八股">
+<meta property="og:url" content="https://tsukimiyanano.github.io/tsukimiya.github.io/custom/%E5%89%8D%E7%AB%AF%E5%85%AB%E8%82%A1.html">
+<meta property="og:site_name" content="Ayu&#39;s Study Blog">
+<meta property="og:description" content="Vuev-if 和 v-show 的区别* 两者都是用来控制元素是否显示 1. 在vue渲染模板的时候，v-if 是惰性加载的，只有条件为真时才会渲染，v-show 不管 2. v-show 通过改变元素的 display 属性来控制是否显示，v-if 是通过在 dom 中移除或者添加元素 3. v-if 每次都会重新渲染，v-show 只有第一次渲染 5. v-if 适合于条件不经常改变的场景，">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-05-30T02:10:10.000Z">
+<meta property="article:modified_time" content="2024-05-30T16:10:38.918Z">
+<meta property="article:author" content="Ayu">
+<meta property="article:tag" content="hexo,next,ayu,tsukimiya,前端,node.js,nodejs,Node,nodeJS,vue,Vue,VUE,blog,博客">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://tsukimiyanano.github.io/tsukimiya.github.io/custom/%E5%89%8D%E7%AB%AF%E5%85%AB%E8%82%A1">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":false,"lang":"zh-CN","comments":"","permalink":"https://tsukimiyanano.github.io/tsukimiya.github.io/custom/%E5%89%8D%E7%AB%AF%E5%85%AB%E8%82%A1.html","path":"custom/前端八股.html","title":"前端八股"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>前端八股 | Ayu's Study Blog
+</title>
+  
+
+
+
+
+
+
+
+<link rel="dns-prefetch" href="https://waline.vercel.app">
+  <noscript>
+    <link rel="stylesheet" href="/tsukimiya.github.io/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/tsukimiya.github.io/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Ayu's Study Blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">求求你给我一份工作吧，我什么都会做的`orz</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/tsukimiya.github.io/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tsukimiya.github.io/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/tsukimiya.github.io/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/tsukimiya.github.io/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-schedule"><a href="/tsukimiya.github.io/schedule/task.html" rel="section"><i class="fa fa-calendar fa-fw"></i>日程表</a></li><li class="menu-item menu-item-guestbook"><a href="/tsukimiya.github.io/guestbook/" rel="section"><i class="fa fa-book fa-fw"></i>guestbook</a></li><li class="menu-item menu-item-pulledpost"><a href="/tsukimiya.github.io/PulledPost/" rel="section"><i class="fa fa-heart fa-fw"></i>PulledPost</a></li><li class="menu-item menu-item-cuntom-page"><a href="/tsukimiya.github.io/custom" rel="section"><i class="fa fa-folder fa-fw"></i>Cuntom Page</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Vue"><span class="nav-number">1.</span> <span class="nav-text">Vue</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#v-if-%E5%92%8C-v-show-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">1.1.</span> <span class="nav-text">v-if 和 v-show 的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#v-for-%E5%92%8C-v-if-%E7%9A%84%E4%BC%98%E5%85%88%E7%BA%A7"><span class="nav-number">1.2.</span> <span class="nav-text">v-for 和 v-if 的优先级</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CSS"><span class="nav-number">2.</span> <span class="nav-text">CSS</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A1%B5%E9%9D%A2%E9%80%82%E9%85%8D%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">2.1.</span> <span class="nav-text">页面适配的问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">2.2.</span> <span class="nav-text"></span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HTML"><span class="nav-number">3.</span> <span class="nav-text">HTML</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%92%8C%E8%AF%AD%E4%B9%89%E5%8C%BA%E5%88%AB"><span class="nav-number">3.1.</span> <span class="nav-text">&lt;b&gt;和&lt;strong&gt;语义区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#-1"><span class="nav-number">3.2.</span> <span class="nav-text"></span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B5%8F%E8%A7%88%E5%99%A8"><span class="nav-number">4.</span> <span class="nav-text">浏览器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B5%8F%E8%A7%88%E5%99%A8%E8%B7%A8%E5%9F%9F%E9%97%AE%E9%A2%98"><span class="nav-number">4.1.</span> <span class="nav-text">浏览器跨域问题</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#iframe-%E5%92%8C%E5%A4%9A%E7%AA%97%E5%8F%A3%E9%80%9A%E4%BF%A1"><span class="nav-number">4.1.1.</span> <span class="nav-text">iframe 和多窗口通信</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#JSONP%E5%A4%84%E7%90%86%E8%B7%A8%E5%9F%9F"><span class="nav-number">4.1.2.</span> <span class="nav-text">JSONP处理跨域</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#WebSocket%E5%A4%84%E7%90%86%E8%B7%A8%E5%9F%9F"><span class="nav-number">4.1.3.</span> <span class="nav-text">WebSocket处理跨域</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CORS%E5%A4%84%E7%90%86%E8%B7%A8%E5%9F%9F"><span class="nav-number">4.1.4.</span> <span class="nav-text">CORS处理跨域</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Java"><span class="nav-number">5.</span> <span class="nav-text">Java</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#equals%E5%92%8C-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">5.1.</span> <span class="nav-text">equals和&#x3D;&#x3D;的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#list%E3%80%81set%E3%80%81map%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">5.2.</span> <span class="nav-text">list、set、map的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#hashmap%E3%80%81treemap%E7%9A%84%E5%8C%BA%E5%88%AB%EF%BC%8C%E5%88%86%E5%88%AB%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E4%BD%BF%E7%94%A8%EF%BC%9F"><span class="nav-number">5.3.</span> <span class="nav-text">hashmap、treemap的区别，分别什么时候使用？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NIO%E5%92%8CIO%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">5.4.</span> <span class="nav-text">NIO和IO的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#-2"><span class="nav-number">5.5.</span> <span class="nav-text"></span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tostudylist"><span class="nav-number">6.</span> <span class="nav-text">tostudylist</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AE%80%E5%8E%86"><span class="nav-number">7.</span> <span class="nav-text">简历</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9D%A2%E8%AF%95"><span class="nav-number">8.</span> <span class="nav-text">面试</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%8D%E7%AB%AF%E7%BB%8F%E5%85%B8%E9%9D%A2%E8%AF%95%E9%A2%98"><span class="nav-number">8.1.</span> <span class="nav-text">前端经典面试题</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Ayu"
+      src="/tsukimiya.github.io/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Ayu</p>
+  <div class="site-description" itemprop="description">你们怎么能这么卷！！</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/tsukimiya.github.io/archives/">
+          <span class="site-state-item-count">26</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/tsukimiya.github.io/categories/">
+        <span class="site-state-item-count">10</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tsukimiya.github.io/tags/">
+        <span class="site-state-item-count">68</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="mailto:1832715838@qq.com" title="E-Mail → mailto:1832715838@qq.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://github.com/tsukimiyanano" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;tsukimiyanano" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner page posts-expand">
+
+
+    
+    
+    
+    <div class="post-block" lang="zh-CN"><header class="post-header">
+
+<h1 class="post-title" itemprop="name headline">前端八股
+</h1>
+
+<div class="post-meta-container">
+</div>
+
+</header>
+
+      
+      
+      <div class="post-body">
+          <h2 id="Vue"><a href="#Vue" class="headerlink" title="Vue"></a>Vue</h2><h3 id="v-if-和-v-show-的区别"><a href="#v-if-和-v-show-的区别" class="headerlink" title="v-if 和 v-show 的区别"></a>v-if 和 v-show 的区别</h3><pre><code>* 两者都是用来控制元素是否显示
+1. 在vue渲染模板的时候，v-if 是惰性加载的，只有条件为真时才会渲染，v-show 不管
+2. v-show 通过改变元素的 display 属性来控制是否显示，v-if 是通过在 dom 中移除或者添加元素
+3. v-if 每次都会重新渲染，v-show 只有第一次渲染
+5. v-if 适合于条件不经常改变的场景，v-show 适合于频繁切换的场景
+4. v-show 性能高，v-if 性能低 (其实实际开发中，这样的性能差是可以忽略不计的，基本都是使用 v-if)
+</code></pre>
+<h3 id="v-for-和-v-if-的优先级"><a href="#v-for-和-v-if-的优先级" class="headerlink" title="v-for 和 v-if 的优先级"></a>v-for 和 v-if 的优先级</h3><pre><code>1. vue2中，v-for优先级更高（v-if和v-for不推荐用在一个标签上，浪费性能）
+2. vue3中，v-if的优先级提的更高了（但还是不推荐在同一个元素使用）
+</code></pre>
+<h2 id="CSS"><a href="#CSS" class="headerlink" title="CSS"></a>CSS</h2><h3 id="页面适配的问题"><a href="#页面适配的问题" class="headerlink" title="页面适配的问题"></a>页面适配的问题</h3><pre><code>- 写页面是如何适配的？移动端、小程序是如何适配的？
+  1. 响应式布局（rem动态计算）
+  2. 媒体查询（px）
+  3. 弹性布局（flex）
+  4. 栅格布局（grid）
+  5. vw、vh
+- 如果说写H5页面，要适配移动端，包括大屏：
+  正常来说，一旦包括了大屏，就不单单是手机端了，就绝对不可能用rem，用不了。
+  因为rem会保证你当前这个字在哪个端都显示那么大，或者说你只要把PC端满足了，在手机端就满足不了。
+  因为那个字的比例大小是不会变的，它永远是占屏幕的百分之多少，这是你动态算出来的结果。
+  **那么正常来说，很多公司推荐的用法**：
+  就算是手机端，也用px去显示，字体文字能用px就用px，因为px是最保真的。
+  屏幕大了，这个文字一行可以多显示一点，屏幕小了可以少显示一点，
+  但是**核心**还是这个：**CSS响应式@midia**，写多套的媒体查询，必须得写这个。
+  这个东西 @media (max-width: 480px) &#123;
+            body &#123;
+              font-size: 14px;
+            &#125;
+          &#125;
+  这套方案其实是最不好的，因为写东西太多了，非常繁琐，但是你这一个页面想要去适配这么多端，这个东西就逃不了
+
+  很多公司也不愿意写这个媒体查询，因为这种方式非常不优雅
+  就拿手机端最上面那个条来说，手机端那个条，它长的就和PC端不一样。
+  PC端比如b站，有主页直播等横着放的，手机端就要放到一个菜单侧边栏里面，你就要重新再写一套
+  当他的屏幕变小之后，要把PC这套给隐掉，这样的话：1.增加了工作量，2.不好维护
+  所以说很多公司宁愿你去**写PC栈和m栈**，分多个项目去写。
+  好处：手机可以完全跟PC分离，可以一点关系都没有，业务都可以分离，所以很多公司也都愿意这么去写
+
+  但是目前来说，官网，门户（现在前端做门户做的少了，都变成外包项目了），但是这个门户，基本都是响应式的。
+  因为它没啥用，就是做展示，给那个爬虫去爬，不管是手机端PC端，就是爬，页面就是死的。
+  所以这种响应式的都是用在门户类业务，展示性数据大屏那种的，这两种用的比较多。
+  因为页面基本内容不变，它没有更多的特殊的案例，比如手机端多个啥，PC端有个什么头，它没有这个东西
+  这是目前来说**比较主流的两套**做适配的一个方案：**rem动态计算和px媒体查询**
+  分到一套来说，能用px的就不用rem，能多展示内容的就多展示内容，尽量保证页面的宽度比
+</code></pre>
+<h3 id=""><a href="#" class="headerlink" title=""></a></h3><h2 id="HTML"><a href="#HTML" class="headerlink" title="HTML"></a>HTML</h2><h3 id="和语义区别"><a href="#和语义区别" class="headerlink" title="&lt;b&gt;和&lt;strong&gt;语义区别"></a><code>&lt;b&gt;</code>和<code>&lt;strong&gt;</code>语义区别</h3><pre><code>* &lt;b&gt;（Bold）标签：它是一个实体标签，仅表示文本应该以粗体显示，而不传达任何特定的语义信息。
+  在HTML早期，&lt;b&gt;标签常被用于加粗文本纯粹出于视觉样式考虑，而不涉及内容的重要性或强调。
+* &lt;strong&gt;（Strong Importance）标签：与&lt;b&gt;标签不同，&lt;strong&gt;标签具有语义上的含义，
+  它表明被包含的文本具有特别的重要性或强度。
+  搜索引擎会给予&lt;strong&gt;标签内的内容更高的权重，因为它暗示这些内容对于理解文档的主旨可能是关键的。
+</code></pre>
+<h3 id="-1"><a href="#-1" class="headerlink" title=""></a></h3><h2 id="浏览器"><a href="#浏览器" class="headerlink" title="浏览器"></a>浏览器</h2><h3 id="浏览器跨域问题"><a href="#浏览器跨域问题" class="headerlink" title="浏览器跨域问题"></a>浏览器跨域问题</h3><pre><code>* 浏览器有一个同源策略，目的是为了保证用户信息的安全，防止恶意的网站窃取数据。
+* 如果非同源，共有三种行为受到限制：
+  （1） 无法读取非同源网页的 Cookie、LocalStorage 和 IndexedDB。
+  （2） 无法接触非同源网页的 DOM。
+  （3） 无法向非同源地址发送 AJAX 请求（可以发送，但浏览器会拒绝接受响应）。
+</code></pre>
+<p>  <a target="_blank" rel="noopener" href="https://wangdoc.com/javascript/bom/same-origin">浏览器同源限制</a></p>
+<h4 id="iframe-和多窗口通信"><a href="#iframe-和多窗口通信" class="headerlink" title="iframe 和多窗口通信"></a>iframe 和多窗口通信</h4><pre><code>iframe元素可以在当前网页之中，嵌入其他网页。每个iframe元素形成自己的窗口，即有自己的window对象。
+iframe窗口之中的脚本，可以获得父窗口和子窗口。
+但是，只有在同源的情况下，父窗口和子窗口才能通信；如果跨域，就无法拿到对方的 DOM。
+
+如果两个窗口一级域名相同，只是二级域名不同，那么*设置document.domain属性*，就可以*规避同源政策*，拿到 DOM。
+
+对于完全不同源的网站，目前有两种方法，可以解决跨域窗口的通信问题。
+- 片段识别符（fragment identifier）-- 属于破解
+    指的是，URL 的#号后面的部分。比如 http://example.com/x.html#fragment 的 #fragment。
+    如果只是改变片段标识符，页面不会重新刷新。
+    父窗口把所要传递的信息，写入 iframe 窗口的片段标识符。子窗口通  过监听 hashchange事件 得到通知。
+    同样的，子窗口也可以改变父窗口的片段标识符。
+- 跨文档通信API（Cross-document messaging） -- H5新增API
+    这个 API 为window对象新增了一个 window.postMessage方法 ，允许跨窗口通信，不论这两个窗口是否同源。
+    举例来说，父窗口aaa.com向子窗口bbb.com发消息，调用postMessage方法就可以了。
+        // 父窗口打开一个子窗口
+        var popup = window.open(&#39;http://bbb.com&#39;, &#39;title&#39;);
+        // 父窗口向子窗口发消息
+        popup.postMessage(&#39;Hello World!&#39;, &#39;http://bbb.com&#39;);
+    postMessage方法的第一个参数是具体的信息内容，
+    第二个参数是接收消息的窗口的源（origin），
+    即“协议 + 域名 + 端口”。也可以设为*，表示不限制域名，向所有窗口发送。
+
+    父窗口和子窗口都可以通过message事件，监听对方的消息。
+    通过window.postMessage，读写其他窗口的 LocalStorage 也成为了可能。
+</code></pre>
+<h4 id="JSONP处理跨域"><a href="#JSONP处理跨域" class="headerlink" title="JSONP处理跨域"></a>JSONP处理跨域</h4><pre><code>JSONP 是服务器与客户端跨源通信的常用方法。
+最大特点就是简单易用，没有兼容性问题，老式浏览器全部支持，服务端改造非常小。
+JSONP 的**优势**在于支持老式浏览器，以及可以向不支持 CORS 的网站请求数据。
+
+1. 它通过在网页添加一个&lt;script&gt;元素，向服务器请求一个脚本，来实现跨域请求。
+  如&lt;script src=&quot;http://api.foo.com?callback=bar&quot;&gt;&lt;/script&gt;
+  注意，请求的脚本网址有一个callback参数（?callback=bar），用来告诉服务器，客户端的回调函数名称（bar）。
+2. 服务器收到请求后，拼接一个字符串，将 JSON 数据放在函数名里面，作为字符串返回（bar(&#123;...&#125;)）。
+3. 客户端会将服务器返回的字符串，作为代码解析，因为浏览器认为，这是&lt;script&gt;标签请求的脚本内容。
+  这时，客户端只要定义了bar()函数，就能在该函数体内，拿到服务器返回的 JSON 数据。
+  function bar(data) &#123;
+    console.log(&#39;Your public IP address is: &#39; + data.ip);
+  &#125;;
+  服务器收到这个请求以后，会将数据放在回调函数的参数位置返回。
+  bar(&#123;
+    &#39;ip&#39;: &#39;8.8.8.8&#39;
+  &#125;);
+  由于&lt;script&gt;元素请求的脚本，直接作为代码运行。这时，只要浏览器定义了bar函数，该函数就会立即调用。
+  作为参数的 JSON 数据被视为 JavaScript 对象，而不是字符串，因此避免了使用JSON.parse的步骤。
+</code></pre>
+<h4 id="WebSocket处理跨域"><a href="#WebSocket处理跨域" class="headerlink" title="WebSocket处理跨域"></a>WebSocket处理跨域</h4><pre><code>WebSocket 是一种通信协议，使用ws://（非加密）和wss://（加密）作为协议前缀。
+该协议不实行同源政策，只要服务器支持，就可以通过它进行跨源通信。
+
+例子：浏览器发出的 WebSocket 请求的头信息
+GET /chat HTTP/1.1
+Host: server.example.com
+Upgrade: websocket
+Connection: Upgrade
+Sec-WebSocket-Key: x3JJHMbDL1EzLkh9GBhXDw==
+Sec-WebSocket-Protocol: chat, superchat
+Sec-WebSocket-Version: 13
+Origin: http://example.com
+
+Origin字段，表示该请求的请求源（origin），即发自哪个域名。
+
+正是因为有了Origin这个字段，所以 WebSocket 才没有实行同源政策。
+因为服务器可以根据这个字段，判断是否许可本次通信。如果该域名在白名单内，服务器就会做出如下回应。
+HTTP/1.1 101 Switching Protocols
+Upgrade: websocket
+Connection: Upgrade
+Sec-WebSocket-Accept: HSmrc0sMlYUkAGmm5OPpG2HaGWk=
+Sec-WebSocket-Protocol: chat
+</code></pre>
+<h4 id="CORS处理跨域"><a href="#CORS处理跨域" class="headerlink" title="CORS处理跨域"></a>CORS处理跨域</h4><pre><code>CORS 是跨源资源分享（Cross-Origin Resource Sharing）的缩写。
+它是 W3C 标准，属于跨源 AJAX 请求的根本解决方法。
+相比 JSONP 只能发GET请求，**CORS 允许任何类型的请求**。
+
+对于CORS处理跨域，浏览器是帮我们自动进行了处理的。
+浏览器一旦发现 AJAX 请求跨源，就会自动添加一些附加的头信息。比如添加一个origin字段，表示请求的来源。
+整个 CORS 通信过程，都是浏览器自动完成，对于开发者来说，CORS 通信与普通的 AJAX 通信没有差别，代码完全一样。
+因此，**实现 CORS 通信的关键是服务器**。只要服务器实现了 CORS 接口，就可以跨源通信。  
+</code></pre>
+<h2 id="Java"><a href="#Java" class="headerlink" title="Java"></a>Java</h2><h3 id="equals和-的区别"><a href="#equals和-的区别" class="headerlink" title="equals和&#x3D;&#x3D;的区别"></a>equals和&#x3D;&#x3D;的区别</h3><pre><code>1. “==”操作符用于比较两个对象的地址是否相等。
+2. .equals() 方法用于比较两个对象的内容是否相等。
+3. .equals()方法 可以通过去重写这个方法，来实现一些个性化比较。
+</code></pre>
+<p>  <a target="_blank" rel="noopener" href="https://javabetter.cn/string/equals.html">字符串相等判断：Java中的equals()与&#x3D;&#x3D;的区别与用法</a></p>
+<h3 id="list、set、map的区别"><a href="#list、set、map的区别" class="headerlink" title="list、set、map的区别"></a>list、set、map的区别</h3><pre><code>1. list是有序的，可重复的
+2. set是无序的，元素不可重复
+3. map是键值对，key不能重复
+</code></pre>
+<h3 id="hashmap、treemap的区别，分别什么时候使用？"><a href="#hashmap、treemap的区别，分别什么时候使用？" class="headerlink" title="hashmap、treemap的区别，分别什么时候使用？"></a>hashmap、treemap的区别，分别什么时候使用？</h3><pre><code>1、实现
+HashMap：基于哈希散列表实现
+TreeMap：SortMap接口，基于红黑树
+2、存储
+HashMap：随机存储
+TreeMap：默认按键的升序排序
+3、遍历
+HashMap：Iterator遍历是随机的
+TreeMap：Iterator遍历是有序的
+4、键值对
+HashMap：只允许键、值均为null
+TreeMap：键、值都不能为null
+5、安全
+HashMap：非并发安全Map
+TreeMap：非并发安全Map
+6、效率
+HashMap：高
+TreeMap：低
+
+7、性能损耗
+ - HashMap的底层是Array，所以HashMap在添加，查找，删除等方法上面速度会非常快。
+- 而TreeMap的底层是一个Tree结构，所以速度会比较慢。
+
+- HashMap因为要保存一个Array，所以会造成空间的浪费，
+- TreeMap只保存要保持的节点，所以占用的空间比较小。
+
+- HashMap如果出现hash冲突的话，效率会变差，不过在java 8进行TreeNode转换之后，效率有很大的提升。
+- TreeMap在添加和删除节点的时候会进行重排序，会对性能有所影响。
+
+使用场景：
+* HashMap：关心的是快速的插入、删除和查找操作，并且不需要元素有序时，HashMap是一个很好的选择。
+  适用于大多数常规的键值对存储需求，如缓存、数据映射等。
+* TreeMap：需要根据键进行排序（自然排序或自定义排序），
+  或者需要频繁执行基于范围的查询（如查找某个键范围内的所有元素），则应使用TreeMap。
+  它适用于实现索引、有序字典、有序统计等场景。
+</code></pre>
+<h3 id="NIO和IO的区别"><a href="#NIO和IO的区别" class="headerlink" title="NIO和IO的区别"></a>NIO和IO的区别</h3><pre><code>1. IO是面向流的，NIO是面向缓冲区的。
+2. IO是阻塞的，NIO是非阻塞的。
+3. IO是单向的，NIO是双向的。
+4. IO是字节流，NIO是字符流。
+5. IO是面向文件的，NIO是面向内存的。
+6. IO是同步的，NIO是异步的。
+- 对于较小文件的读取，两者差异较小，因为文件本身较小
+- 对于较大文件的读取，NIO的效率明显优于IO。
+  因为 NIO 使用了更高效的缓冲区和通道机制，可以在内存中进行更快的数据传输。
+
+* 以下是 NIO 在网络传输中优于传统 I/O 的原因：
+①、NIO 支持非阻塞 I/O，这意味着在执行 I/O 操作时，线程不会被阻塞。
+②、NIO 支持 I/O 多路复用，这意味着一个线程可以同时监视多个通道（如套接字），
+  并在 I/O 事件（如可读、可写）准备好时处理它们。
+③、NIO 提供了 ByteBuffer 类，可以高效地管理缓冲区。
+</code></pre>
+<p>  <a target="_blank" rel="noopener" href="https://javabetter.cn/nio/nio-better-io.html">Java NIO 比传统 IO 强在哪里？</a></p>
+<h3 id="-2"><a href="#-2" class="headerlink" title=""></a></h3><h2 id="tostudylist"><a href="#tostudylist" class="headerlink" title="tostudylist"></a>tostudylist</h2><ul>
+<li><p>算法 力扣hot100、150 , 剑指offer （大厂是比较看重算法的）</p>
+<blockquote>
+<p>大厂是比较看重算法的</p>
+</blockquote>
+</li>
+<li><p>HTML&#x2F;CSS 常见的面试题 flex布局 盒子模型 BFC 重绘、重排 常见布局 HTML5 CSS3新特性等等</p>
+</li>
+<li><p>JS中的数据类型 闭包 作用域 原型 原型链 数组常见操作 字符串常见操作 事件循环 深浅拷贝 事件代理 DOM、BOM操作 防抖节流 ES6相关的等等</p>
+</li>
+<li><p>Vue相关的 响应式 通信方式 生命周期 MVVM原理 虚拟dom diff算法 key 插件 混入 指令 权限设计 Vue3新特性 等等</p>
+</li>
+<li><p>HTTP、Webpack、Node相关的问题</p>
+</li>
+<li><p>性能优化，前端安全，算法（如果目标企业不是大厂，可以练习一些常用的算法，如排序，数组字符串的常用操作）</p>
+</li>
+<li><p>数组常用方法</p>
+</li>
+<li><p>vue父子传值方式</p>
+</li>
+<li><p>跨域原因及处理方案</p>
+</li>
+<li><p>BFC概念</p>
+</li>
+<li><p>promise相关</p>
+</li>
+<li><p>页面的重绘重排</p>
+</li>
+<li><p>MVVM概念</p>
+</li>
+<li><p>简单算法题</p>
+</li>
+<li><p>element-ui覆盖方式</p>
+</li>
+<li><p>调试方法</p>
+</li>
+<li><p>axios封装 </p>
+</li>
+<li><p>前后端分离</p>
+</li>
+<li><p>打包自动化</p>
+</li>
+<li><p>代码版本管理、发布管理</p>
+</li>
+<li><p>微前端</p>
+</li>
+<li><p>日志管理</p>
+</li>
+<li><p>标准工程化、标准杨世华、自动化、组件化、插件化、nodeJS、性能优化</p>
+</li>
+<li><p>运维管理</p>
+</li>
+<li><p>nginx反向代理</p>
+</li>
+<li><p>服务器中台？</p>
+</li>
+<li><p>数据库表结构</p>
+</li>
+<li><p>网关、安全、加密？</p>
+</li>
+<li><p>uniapp？、微信小程序？、微信公众号？、安卓？、ios？</p>
+</li>
+<li><p>vue的异步组件、动态组件？</p>
+</li>
+<li><p>虚拟dom diff算法<br>  在vue框架团队开始着手开发框架的时候，他们有3种方法操作dom：1. document.createElement 2. innerHTML 3. virtual dom<br>  这个innerHTML性能是最差的，document是最好的，但是virtual dom开发体验是最好的，最后就是选用了这个进行框架的渲染。<br>  它需要配合渲染器和编译器来使用，像是vue就是先把模板语法通过编译器编译成一些对象，然后把对象扔给渲染器，渲染器最后把它渲染出来<br>  如果操作真实dom，它上面的元素，属性都特别多，程序运行起来会比较浪费时间</p>
+</li>
+<li><p>vue的diff算法和react的diff算法有区别，是什么？<br>  vue是能够明确的知道我要更新哪个组件，react是不知道的，只能从上往下找</p>
+</li>
+<li><p>有一百万条数据，返回给前端，前端怎么处理？怎么优化？（分页、虚拟列表、多线程webwork？）</p>
+</li>
+<li><p>时间切片？<br>  是在react Scheduler里面提出的，它通过将长时间运行的任务（如大组件树的渲染）分解为小任务（时间切片），并在多个浏览器任务之间交错执行这些小任务，确保了即使在执行大量工作时，浏览器也有机会处理其他高优先级任务，比如用户输入事件的响应，从而避免了界面卡顿。<br>  就是说，它是有一个人机交互时间，它不希望用户感觉卡顿，但是又不希望程序停下来运行，它就相当于把浏览器的运行和用户的交互交替运行，既让用户感觉不到卡顿，又让程序不停止运行</p>
+</li>
+<li><p>iframe和img都可以使用loading属性来实现懒加载</p>
+</li>
+<li><p>自动部署？</p>
+</li>
+<li><p>如何进行页面的主题切换？（换肤）</p>
+</li>
+<li><p>小程序如何进行分包？（项目有分包吗？）<br>  小程序本身有一个限制，当程序超过200m的时候，就没有办法进行打包了，所以需要分包</p>
+</li>
+<li><p>小程序的？onLoad、onShow、onReady、onHide、onUnload？onload和onshow的区别？</p>
+</li>
+<li><p>把小程序切出去，切到后台再切回来，会执行哪个？onshow？</p>
+</li>
+<li><p>微信小程序如何进行页面跳转？</p>
+</li>
+<li><p>小程序webview?嵌入一个H5页面？和H5的通信？和小程序通信？</p>
+</li>
+<li><p>小程序的bandtype和catchtype的区别？事件？还有个不是小程序的缓存？ – 一个冒泡，一个不冒泡？</p>
+</li>
+<li><p>抗锯齿？有些时候手机端显示文字可能会有锯齿，毛边，正常手机端是有个css属性可以抗锯齿的，但是那个效果并不好，而且支持性很差<br>transform里面的scale缩放，它用到了GPU，它这个是支持抗锯齿的，所以有的页面会写scale(1),啥都不做，也不缩放，目的就是为了抗锯齿，只要写到html根上</p>
+</li>
+<li><p>如何使动态路由持久化？</p>
+</li>
+<li><p>权限问题？如何处理？前端</p>
+</li>
+<li><p>按钮级别的权限？如控制菜单？</p>
+</li>
+<li><p>回溯？</p>
+</li>
+<li><p>递归是广度优先还是深度优先？<br>  递归是深度优先，它有一个回溯的操作<br>  广度优先是按队列来的<br>  递归是按栈来的，它有一个调用栈，最后一个递归调用的方法，最后调用，但是最先释放，然后依次回溯</p>
+</li>
+<li><p>vue的diff算法？（算是比较核心的东西？）</p>
+</li>
+<li><p>如何判断一个数据是数组？<br>  contructor.name？，就是那个构造函数的东西？<br>  还有isArray？原型链，instance of</p>
+</li>
+<li><p>vue-for的key是和diff算法有关的？</p>
+</li>
+<li><p>vue的响应式原理？</p>
+</li>
+<li><p>vue的路由变化是如何监听的？hash change？</p>
+</li>
+<li><p>如何使数组扁平化？<br>  es6的flat方法？还有es5的reduce方法？还有es5的递归？还有一个投机取巧的方法–转字符串转数组？</p>
+</li>
+<li><p>简历最好把自己会的技术都写上，不嫌多，最好列出来自己的技术，搜在线简历，有那种把所有的技术栈列在左边的，标有掌握还是熟悉的？推荐关注玩偶君的简历？玩偶君的简历，有技术栈，有项目经验，有项目展示，有自我评价，有联系方式，有github链接，有博客链接？？玩偶哥哥？</p>
+</li>
+<li><p>vue3的异步组件？动态组件？</p>
+</li>
+<li><p>负载均衡？</p>
+</li>
+<li><p>linux常用命令？</p>
+</li>
+<li><p>nignx常用命令？</p>
+</li>
+<li><p>rpc服务？</p>
+</li>
+<li><p>微服务mq？</p>
+</li>
+<li><p>数组去重？</p>
+</li>
+<li><p>js操作dom的方法？<br>  原生的document.queySelector、document.querySelectorAll、<br>  document.getElementsByClassName、<br>  document.getElementById、<br>  document.createElement、<br>  document.appendChild、…</p>
+</li>
+<li><p>浏览器缓存？</p>
+</li>
+<li><p>浏览器缓存机制？</p>
+</li>
+<li><p>session、cookie、token？jwt？</p>
+</li>
+<li><p>http和https的区别？</p>
+</li>
+<li><p>http2和http1.1？http1.1是有队列的，这个队列的长度是多少？</p>
+</li>
+<li><p>如何解决跨域问题？都有哪些解决跨域的方法？<br>  cors、jsonp、代理服务器、nginx反向代理、iframe、document.domain、window.name、postMessage、hash、location.hash、<br>  cors是设置响应头，jsonp是动态创建script标签，代理服务器是后端配置，nginx反向代理是前端配置<br>  iframe可以跨域，但是会阻塞页面加载?ifname可以解决跨域问题，但是要设置name属性，而且页面加载会阻塞，其实用的不多，因为不太好使</p>
+</li>
+<li><p>jsonp和cors的区别？<br>  jsonp是前端解决跨域问题，cors是后端解决跨域问题<br>  jsonp只能发送get请求，cors可以发送任意类型的请求<br>  jsonp是动态创建script标签，cors是设置响应头</p>
+</li>
+<li><p>jsonp和json的区别？<br>  jsonp是动态创建script标签，json是数据格式<br>  jsonp是前端解决跨域问题，json是数据格式</p>
+</li>
+<li><p>ssh的渲染方式？</p>
+</li>
+<li><p>分包加载？</p>
+</li>
+<li><p>js的线程和进程？</p>
+</li>
+<li><p>webworker？</p>
+</li>
+<li><p>websocket？webSocket协议是建立在TCP之上的，和HTTP协议一样?</p>
+</li>
+<li><p>webjis?用来做地图的？</p>
+</li>
+<li><p>webrtc?</p>
+</li>
+<li><p>webgl?</p>
+</li>
+<li><p>websqllite?websqlL?</p>
+</li>
+<li><p>use strict严格模式？严格模式的限制？</p>
+</li>
+<li><p>变量提升？let和const有提升吗？</p>
+</li>
+<li><p>闭包？es6的let和const有闭包吗？</p>
+</li>
+</ul>
+<h2 id="简历"><a href="#简历" class="headerlink" title="简历"></a>简历</h2><ol>
+<li><p><a target="_blank" rel="noopener" href="https://www.xuanfengge.com/it-job-seekers-resume-how-to-write.html">IT求职者的简历该如何编写</a>(轩枫阁)</p>
+<blockquote>
+<p>2014&#x2F;10&#x2F;14的帖子，不过还是有很多值得学习的地方</p>
+</blockquote>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://www.laoyujianli.com/">老鱼简历</a>(鱼皮)</p>
+<blockquote>
+<p>根据模板快速制作简历，可惜模版太少，不好看</p>
+</blockquote>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://www.canva.cn/"><font color="red">Canva可画</font></a>  </p>
+<blockquote>
+<p>非常好用的在线编辑工具，有很多简历模板，也可以自己制作<br>把老鱼简历薄纱了</p>
+</blockquote>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://juejin.cn/post/7080765301175877640"><font color="red">前端校招简历点评</font></a>（掘金 | 2022-03-30）</p>
+<blockquote>
+<p>说了很多简历的点，非常值得借鉴</p>
+</blockquote>
+</li>
+</ol>
+<h2 id="面试"><a href="#面试" class="headerlink" title="面试"></a>面试</h2><ul>
+<li><input checked="" disabled="" type="checkbox"> <font color="red">小满模拟面试</font> 强烈推荐！！(非常值得多刷的东西，小满和康老师太牛了！)<br><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1gB4y1V7cN?t=10.8">https://www.bilibili.com/video/BV1gB4y1V7cN?t=10.8</a></li>
+</ul>
+<h3 id="前端经典面试题"><a href="#前端经典面试题" class="headerlink" title="前端经典面试题"></a>前端经典面试题</h3><ul>
+<li><p><a target="_blank" rel="noopener" href="https://juejin.cn/post/7056400571967733774">前端常见面试题（56道）（掘金）</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://gitcode.csdn.net/6628b83a9ab37021bfb0b886.html">前端经典面试题 30道 (gitcode)</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_39843414/article/details/120213065">前端经典面试题60道，附答案！(CSDN)</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/2301_76379381/article/details/138986137">前端经典面试题 30道(1)</a></p>
+</li>
+</ul>
+
+      </div>
+      
+      
+      
+    </div>
+
+    
+    
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Ayu</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">167k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">2:32</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="https://cdnjs.cloudflare.com/ajax/libs/ribbon.js/1.0.2/ribbon.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/tsukimiya.github.io/js/comments.js"></script><script src="/tsukimiya.github.io/js/utils.js"></script><script src="/tsukimiya.github.io/js/motion.js"></script><script src="/tsukimiya.github.io/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/tsukimiya.github.io/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+<script class="next-config" data-name="waline" type="application/json">{"lang":"zh-CN","enable":true,"serverURL":"https://waline.vercel.app","cssUrl":"https://unpkg.com/@waline/client@v2/dist/waline.css","commentCount":true,"pageview":false,"locale":{"placeholder":"Leave Something, message or money"},"emoji":["https://unpkg.com/@waline/emojis@1.0.1/tieba"],"meta":["nick","mail","link"],"requiredMeta":["nick"],"wordLimit":0,"login":"disable","pageSize":10,"el":"#waline","comment":true,"libUrl":"//unpkg.com/@waline/client@v2/dist/waline.js","path":"/tsukimiya.github.io/custom/%E5%89%8D%E7%AB%AF%E5%85%AB%E8%82%A1.html"}</script>
+<link rel="stylesheet" href="https://unpkg.com/@waline/client@v2/dist/waline.css">
+<script>
+document.addEventListener('page:loaded', () => {
+  NexT.utils.loadComments(CONFIG.waline.el).then(() =>
+    NexT.utils.getScript(CONFIG.waline.libUrl, { condition: window.Waline })
+  ).then(() => 
+    Waline.init(Object.assign({}, CONFIG.waline,{ el: document.querySelector(CONFIG.waline.el) }))
+  );
+});
+</script>
+
+</body>
+</html>

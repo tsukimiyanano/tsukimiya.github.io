@@ -33,8 +33,8 @@ let vm = new Vue({
                 address: 'https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Array/every',
                 describe: '每一项都满足判断条件就得到true，只要有任何一项不满足就是false，后面的元素都不会再执行。<br>不会对空数组进行检测，不会改变原始数组',
                 use:
-`[1,2,3,4,5].erver((num)=>num<10) // true
-[1,2,3,4,5].erver((num)=>num>1) // false`,
+`[1,2,3,4,5].every((num)=>num<10) // true
+[1,2,3,4,5].every((num)=>num>1) // false`,
                 syntax:
 `every(callbackFn)
 every(callbackFn(element,index,array), thisArg)`,

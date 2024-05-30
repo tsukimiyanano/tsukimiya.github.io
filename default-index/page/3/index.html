@@ -153,7 +153,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/tsukimiya.github.io/archives/">
-          <span class="site-state-item-count">25</span>
+          <span class="site-state-item-count">26</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -164,7 +164,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tsukimiya.github.io/tags/">
-        <span class="site-state-item-count">64</span>
+        <span class="site-state-item-count">68</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -189,6 +189,167 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://tsukimiyanano.github.io/tsukimiya.github.io/2024/04/30/Vue2/5.ref%E5%BC%95%E7%94%A8DOM%E5%85%83%E7%B4%A0%E5%92%8C%E7%BB%84%E4%BB%B6%E5%AE%9E%E4%BE%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/tsukimiya.github.io/images/avatar.jpg">
+      <meta itemprop="name" content="Ayu">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ayu's Study Blog">
+      <meta itemprop="description" content="你们怎么能这么卷！！">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Ayu's Study Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/tsukimiya.github.io/2024/04/30/Vue2/5.ref%E5%BC%95%E7%94%A8DOM%E5%85%83%E7%B4%A0%E5%92%8C%E7%BB%84%E4%BB%B6%E5%AE%9E%E4%BE%8B/" class="post-title-link" itemprop="url">ref引用DOM元素和组件实例</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2024-04-30 22:23:21" itemprop="dateCreated datePublished" datetime="2024-04-30T22:23:21+08:00">2024-04-30</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-05-04 14:00:38" itemprop="dateModified" datetime="2024-05-04T14:00:38+08:00">2024-05-04</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/tsukimiya.github.io/categories/Vue/" itemprop="url" rel="index"><span itemprop="name">Vue</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/tsukimiya.github.io/categories/Vue/Vue2/" itemprop="url" rel="index"><span itemprop="name">Vue2</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="far fa-comment"></i>
+    </span>
+    <span class="post-meta-item-text">Waline：</span>
+  
+    <a title="waline" href="/tsukimiya.github.io/2024/04/30/Vue2/5.ref%E5%BC%95%E7%94%A8DOM%E5%85%83%E7%B4%A0%E5%92%8C%E7%BB%84%E4%BB%B6%E5%AE%9E%E4%BE%8B/#waline" itemprop="discussionUrl">
+      <span class="post-comments-count waline-comment-count" data-path="/tsukimiya.github.io/2024/04/30/Vue2/5.ref%E5%BC%95%E7%94%A8DOM%E5%85%83%E7%B4%A0%E5%92%8C%E7%BB%84%E4%BB%B6%E5%AE%9E%E4%BE%8B/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>2 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <blockquote>
+<p>目标:<br>能够使用<code>ref</code>获取页面上DOM或组件的引用：<br>给元素或组件添加<code>ref=&quot;xxx&quot;</code>的引用名称，通过<code>this.$refs.xxx</code>获取元素或组件的实例</p>
+</blockquote>
+<blockquote>
+<p>能够知道<code>$nextTick</code>的应用场景并合理地使用：把回调函数里面的代码推迟到当DOM重新渲染完毕之后执行</p>
+</blockquote>
+<blockquote>
+<p>通过<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1zq4y1p7ga?p=127">“购物车案例”</a>巩固前4天所有学知识</p>
+</blockquote>
+<h2 id="ref引用-引用DOM元素-组件实例"><a href="#ref引用-引用DOM元素-组件实例" class="headerlink" title="ref引用 - 引用DOM元素 &#x2F; 组件实例"></a>ref引用 - 引用DOM元素 &#x2F; 组件实例</h2><blockquote>
+<p><font color='red'>Vue的优势：MVVM的数据驱动视图 – 在vue中，程序员不需要操作DOM，只需要把数据维护好即可。</font><br>因此，在vue项目中，墙裂不建议安装和使用jQuery，因为没有操作DOM的需求，如果有也是极少的。</p>
+</blockquote>
+<ol>
+<li><p>什么是ref 引用<br> ref用来辅助开发者在<strong>不依赖于jQuery的情况下</strong>且<strong>在不调用DOM API的前提下</strong>，<strong>获取页面上DOM元素或组件的引用</strong>。</p>
+<p> 每个vue的组件实例上，都包含一个<code>$refs</code>对象，里面存储着对应的DOM元素或组件的引用。<strong>默认情况下，组件的<code>$refs</code> 指向一个空对象</strong>。</p>
+<blockquote>
+<p>打印出vue实例对象this，可以看到，凡是$开头的，都是vue内置的一些成员。</p>
+</blockquote>
+</li>
+<li><p>使用ref引用 DOM元素<br> 在标签上通过ref属性来指定一个名字，这个名字就指向这个标签，并添加到<code>$ref</code>对象中。如：</p>
+ <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">h1</span> <span class="attr">ref</span>=<span class="string">&quot;myh1&quot;</span>&gt;</span>APP根组件<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br></pre></td></tr></table></figure>
+ <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">$refs</span>:&#123;<span class="comment">//vue实例上的$refs属性值</span></span><br><span class="line">    <span class="attr">myh1</span>: h1</span><br><span class="line">&#125;</span><br><span class="line"><span class="variable language_">this</span>.<span class="property">$refs</span>.<span class="property">myh1</span>.<span class="property">style</span>.<span class="property">color</span> = <span class="string">&#x27;red&#x27;</span><span class="comment">//操作DOM</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用ref引用 组件实例<br> 只要<strong>在引用的子组件的标签上，加一个ref</strong>，这个名字就指向了这个子组件的vue实例，就可以通过它来调用这个子组件的属性和方法。</p>
+</li>
+</ol>
+<p><font color='red'>建议：只要是ref的引用，尽量都以Ref后缀结尾，这样一看名字就知道是个引用</font></p>
+<h2 id="this-nextTick的应用场景"><a href="#this-nextTick的应用场景" class="headerlink" title="this.$nextTick的应用场景"></a><code>this.$nextTick</code>的应用场景</h2><ul>
+<li><strong>问题</strong></li>
+</ul>
+<p>在app组件中，控制组件内按钮和输入框元素的切换</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span> <span class="attr">v-if</span>=<span class="string">&quot;inputVisible&quot;</span> @<span class="attr">blur</span>=<span class="string">&quot;showButton&quot;</span> <span class="attr">ref</span>=<span class="string">&quot;iptRef&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">button</span> <span class="attr">v-else</span> @<span class="attr">click</span>=<span class="string">&quot;showinput&quot;</span>&gt;</span>显示输入框<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>当我们想要在切换到输入框的时候，直接进入输入框焦点</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">showinput</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">inputVisible</span> = <span class="literal">true</span>;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">$refs</span>.<span class="property">iptRef</span>.<span class="title function_">focus</span>()</span><br><span class="line">&#125;,</span><br><span class="line"><span class="title function_">showButton</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">inputVisible</span> = <span class="literal">false</span>;</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+<p>但是<code>this.$refs.iptRef.focus()</code>这样却报错了<br><code>TypeError: Cannot read properties of undefined (reading &#39;focus&#39;)</code><br>这个错误代表说，我要调用一个focus方法，或我要访问一个focus属性，但是它前面那个东西是undefined<br>当我们打印<code>console.log(this.$refs.iptRef);</code>会发现它是<code>undefined</code>！</p>
+<ul>
+<li><strong>分析原因</strong></li>
+</ul>
+<p>在这个函数中，我们是更改inputVisible的值让文本框显示出来，但是现在页面上文本框还未显示出来，所以拿不到这个元素，因此是undefined<br>在Vue的生命周期中，当data里面的数据变化，会触发DOM元素的更新，根据最新的数据，重新渲染页面的UI结构。<strong>在updated之前，页面还没来得及重新渲染，所以数据是新的，但是页面的结构是旧的。</strong><br>所以<code>this.inputVisible = true;</code>这句执行之后，页面上还是按钮，文本框还未被展示，还需要一个更新的过程，需要一定的时间。如果立马去执行<code>this.$refs.iptRef.focus()</code>是拿不到文本框的</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">showinput</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">inputVisible</span> = <span class="literal">true</span>;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">$refs</span>.<span class="property">iptRef</span>.<span class="title function_">focus</span>()</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+<p><font color='red'>总结：<code>this.inputVisible = true</code>这行代码执行完，只是数据是最新的，页面还没来得及重新渲染，没有文本框，拿不到它的引用，所以是undefined</font><br>要想不报错，<code>this.$refs.iptRef.focus()</code>这一行调用应该放在页面重新渲染完毕之后</p>
+<ul>
+<li><strong>解决</strong> – <code>this.$nextTick(cb)</code>方法<br>里面接收一个回调，cb是callback<br>代表：<strong>把回调函数里面的代码推迟到当DOM重新渲染完毕之后执行</strong><br>保证cb回调函数可以操作到最新的DOM元素</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">showinput</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">inputVisible</span> = <span class="literal">true</span>;</span><br><span class="line">    <span class="variable language_">this</span>.$nextTick(<span class="function">()=&gt;</span>&#123;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">$refs</span>.<span class="property">iptRef</span>.<span class="title function_">focus</span>()</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1645,13 +1806,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">164k</span>
+    <span title="站点总字数">167k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">2:29</span>
+    <span title="站点阅读时长">2:32</span>
   </span>
 </div>
 <div class="busuanzi-count">
