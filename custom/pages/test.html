@@ -4,16 +4,24 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
+  <style>
+    div{
+      width: 200px;
+      height: 120px;
+      background-color: red;
+      padding: 15px 10px;
+      box-sizing: border-box;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box; /* 弹性伸缩盒子模型显示 */
+      -webkit-line-clamp: 4; /*  限制在一个块元素显示的文本的行数 */
+      -webkit-box-orient: vertical; /* 设置伸缩盒对象的子元素的排列方式 */
+    }
+  </style>
 </head>
 <body>
-  <svg width="600" height="600">
-    <polygon>
-        <!-- 变换绘画路径 -->
-      <animate attributeType="XML" attributeName="points" dur="1s" fill="freeze"
-        values="20,20 50,50 10,30; 30,50 80,90 50,10" />
-        <!-- 变换填充颜色 -->
-      <animate attributeType="XML" attributeName="fill" dur="1s" fill="freeze" values="red;green" />
-    </polygon>
-  </svg>
+  <div>
+    这里是商家发货哦额啊回复啊饿哦合法化佛啊额何红了阿帆挖法无法无法阿无法违法违法
+  </div>
 </body>
 </html>
