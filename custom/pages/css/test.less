@@ -1,0 +1,15 @@
+// 定义一个颜色变量
+@color: deeppink;
+
+// 使用变量
+/*zheli shi*/
+body {
+  background-color: @color;
+}
+
+@border: 5px + 5;
+div{
+  width: (200px - 50) * 2;
+  height: (200px / 2);
+  border: @border solid blue + 222;
+}

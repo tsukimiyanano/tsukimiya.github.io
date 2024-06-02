@@ -153,18 +153,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/tsukimiya.github.io/archives/">
-          <span class="site-state-item-count">27</span>
+          <span class="site-state-item-count">28</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/tsukimiya.github.io/categories/">
-        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-count">13</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tsukimiya.github.io/tags/">
-        <span class="site-state-item-count">69</span>
+        <span class="site-state-item-count">71</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -189,6 +189,208 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://tsukimiyanano.github.io/tsukimiya.github.io/2024/06/01/CSS/Less/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/tsukimiya.github.io/images/avatar.jpg">
+      <meta itemprop="name" content="Ayu">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ayu's Study Blog">
+      <meta itemprop="description" content="你们怎么能这么卷！！">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Ayu's Study Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/tsukimiya.github.io/2024/06/01/CSS/Less/" class="post-title-link" itemprop="url">Less</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2024-06-01 19:21:02 / 修改时间：22:16:48" itemprop="dateCreated datePublished" datetime="2024-06-01T19:21:02+08:00">2024-06-01</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/tsukimiya.github.io/categories/CSS/" itemprop="url" rel="index"><span itemprop="name">CSS</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/tsukimiya.github.io/categories/CSS/Less/" itemprop="url" rel="index"><span itemprop="name">Less</span></a>
+        </span>
+    </span>
+
+  
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="far fa-comment"></i>
+    </span>
+    <span class="post-meta-item-text">Waline：</span>
+  
+    <a title="waline" href="/tsukimiya.github.io/2024/06/01/CSS/Less/#waline" itemprop="discussionUrl">
+      <span class="post-comments-count waline-comment-count" data-path="/tsukimiya.github.io/2024/06/01/CSS/Less/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2.7k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>2 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="CSS的弊端"><a href="#CSS的弊端" class="headerlink" title="CSS的弊端"></a>CSS的弊端</h2><p>CSS是一门非程序的语言，没有变量、函数、作用域(SCOPE)等概念。</p>
+<p>CSS在一定程度上，有下面这些弊端：</p>
+<ol>
+<li>冗余度较高 (特别是在选择器上嵌套的层次过多)</li>
+<li>不方便维护及扩展，不利于复用</li>
+<li>没有很好的计算能力 (虽然css3中引入了calc()函数，但是计算能力有限，并且效率不高)</li>
+</ol>
+<h2 id="Less"><a href="#Less" class="headerlink" title="Less"></a>Less</h2><p>less（Leaner Style Sheets的缩写）是一门CSS扩展语言，也称为CSS预处理器。 可以理解为css的超集。<br>它在css的语法基础上，引入了变量、Mixin(混入)、运算以及函数等功能，使得css更加简洁，Write less, do more！</p>
+<p>Less中文网址：<a target="_blank" rel="noopener" href="http://lesscss.cn/">http://lesscss.cn/</a></p>
+<p>常见的CSS预处理器：Sass、Less、Stylus</p>
+<h3 id="Less编译"><a href="#Less编译" class="headerlink" title="Less编译"></a>Less编译</h3><p>本质上，Less包含一套自定义的语法及一个解析器，用户根据这些语法定义自己的样式规则，这些规则最终会通过解析器，编译生成对应的CSS文件。<br>所以我们需要把less文件，编译生成为css文件，html页面才能使用。</p>
+<ul>
+<li><p>Easy LESS插件<br>Easy LESS插件可以在我们保存less文件的时候自动编译less文件，并生成对应的css文件。<br>当我们修改less文件的时候，生成的css文件会自动更新。<br>我们只需要在页面引入生成的css文件即可。</p>
+</li>
+<li><p>Less文件中的注释是 &#x2F;&#x2F;<br>Less文件是通过js来解析的，所以注释是js的注释。而不是css的注释&#x2F;* <em>&#x2F;<br>Less文件生成的css文件，&#x2F;&#x2F;注释不会保留。<br>Less文件也支持多行注释 &#x2F;</em> *&#x2F;，且会保留在css文件中。</p>
+</li>
+</ul>
+<h3 id="Less变量"><a href="#Less变量" class="headerlink" title="Less变量"></a>Less变量</h3><figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@变量名: 值;</span><br></pre></td></tr></table></figure>
+<p>变量命名规范：</p>
+<ul>
+<li>变量名必须以@开头</li>
+<li>不能包含特殊字符</li>
+<li>不能以数字开头</li>
+<li>区分大小写</li>
+</ul>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 定义一个粉色的变量</span></span><br><span class="line"><span class="variable">@color:</span> pink;</span><br><span class="line"><span class="comment">// 引用变量</span></span><br><span class="line"><span class="selector-tag">body</span> &#123;</span><br><span class="line">  backgroud-<span class="attribute">color</span>: <span class="variable">@color</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Less嵌套"><a href="#Less嵌套" class="headerlink" title="Less嵌套"></a>Less嵌套</h3><p>Less支持嵌套写法</p>
+<ol>
+<li>子元素样式直接写到父元素里面</li>
+</ol>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.header</span>&#123;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">200px</span>;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">200px</span>;</span><br><span class="line">  <span class="attribute">background-color</span>: pink;</span><br><span class="line">  <span class="selector-tag">a</span> &#123;</span><br><span class="line">    <span class="attribute">color</span>: red;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>编译后：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.header</span> &#123;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">200px</span>;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">200px</span>;</span><br><span class="line">  <span class="attribute">background-color</span>: pink;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.header</span> <span class="selector-tag">a</span> &#123;</span><br><span class="line">  <span class="attribute">color</span>: red;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>如果遇见 交集|伪类|伪元素选择器</li>
+</ol>
+<ul>
+<li>内层选择器的前面没有 &amp; 符号，则它被解析为父选择器的后代</li>
+</ul>
+  <figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">a</span>&#123;</span><br><span class="line">  <span class="attribute">color</span>: red;</span><br><span class="line">  <span class="selector-pseudo">:hover</span>&#123;</span><br><span class="line">    <span class="attribute">color</span>: blue;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 会被解析为：</span></span><br><span class="line"><span class="selector-tag">a</span>&#123;</span><br><span class="line">  <span class="attribute">color</span>: red;</span><br><span class="line">&#125;</span><br><span class="line">a :hover&#123; // 就不是a的伪类的，而是a的子元素</span><br><span class="line">  <span class="attribute">color</span>: blue;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>如果有 &amp; 符号，则被解析为父元素自身或父元素的伪类</li>
+</ul>
+  <figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">a</span>&#123;</span><br><span class="line">  <span class="attribute">color</span>: red;</span><br><span class="line">  <span class="selector-tag">&amp;</span><span class="selector-pseudo">:hover</span>&#123;</span><br><span class="line">    <span class="attribute">color</span>: blue;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 会被解析为：</span></span><br><span class="line"><span class="selector-tag">a</span>&#123;</span><br><span class="line">  <span class="attribute">color</span>: red;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-tag">a</span><span class="selector-pseudo">:hover</span>&#123;</span><br><span class="line">  <span class="attribute">color</span>: blue;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Less运算"><a href="#Less运算" class="headerlink" title="Less运算"></a>Less运算</h3><p>任何数字、颜色或者变量都可以参与运算。就是Less提供了加(+)、减(-)、乘(*)、除(&#x2F;)算术运算。</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">  <span class="variable">@border:</span> <span class="number">5px</span> + <span class="number">5</span>;</span><br><span class="line"><span class="selector-tag">div</span>&#123;</span><br><span class="line">  <span class="attribute">width</span>: (<span class="number">200px</span> - <span class="number">50</span>) * <span class="number">2</span>;</span><br><span class="line">  <span class="attribute">height</span>: (<span class="number">200px</span> / <span class="number">2</span>); <span class="comment">// 除法运算，需要用()括起来</span></span><br><span class="line">  <span class="attribute">border</span>: <span class="variable">@border</span> solid blue + <span class="number">222</span>; <span class="comment">// #666 - 222 = #444</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>通过运算，我们在去写rem的时候就方便很多。比如：<br>html的<code>font-size: 50px;</code><br>某元素大小为<code>82px</code>，换成rem就直接写成 <code>82/50 rem</code> 就可以了，不用再去计算。</p>
+<p><strong>注意</strong>：</p>
+<ol>
+<li>运算符左右两侧必须有一个空格(现在可以不加空格了)</li>
+<li>除法运算需要用()括起来</li>
+<li>两个数参与运算，如果只有一个数有单位，则结果以这个单位为准</li>
+<li>两个数参与运算，如果2个数都有单位，且是不一样的单位，则以第一个单位为准</li>
+</ol>
+<h2 id="Sass"><a href="#Sass" class="headerlink" title="Sass"></a>Sass</h2><p>Sass中文网：<a target="_blank" rel="noopener" href="https://www.sass.hk/">https://www.sass.hk/</a><br>Sass官网：<a target="_blank" rel="noopener" href="https://sass.bootcss.com/index.html">https://sass.bootcss.com/index.html</a><br><a target="_blank" rel="noopener" href="https://ruanyifeng.com/blog/2012/06/sass.html">Sass用法指南</a> - 阮一峰的网络日志</p>
+<p>Sass和Less的区别：</p>
+<ol>
+<li>语法风格：<ul>
+<li>Sass有两种语法风格，一种是使用缩进(类似Python)的缩写语法(.sass)，一种是SCSS(Sassy CSS)，它与CSS语法几乎完全相同，只是添加了额外的功能(使用.scss扩展名)。SCSS现在更为普遍。</li>
+<li>Less语法更接近传统的css，使用大括号<code>&#123;&#125;</code>界定代码块，使得css开发正更易上手。</li>
+</ul>
+</li>
+<li>编译环境：<ul>
+<li>Sass 最初是基于Ruby的，需要Ruby环境来运行。尽管后来推出了Dart实现的dart-sass，它不依赖Ruby，但编译速度可能较慢。Sass通常作为开发流程的一部分在服务器端编译。</li>
+<li>Less 是基于JavaScript的，可以借助Less.js在客户端（浏览器）直接处理，也可以在构建过程中服务器端编译。由于客户端处理可能会增加页面加载时间和CPU负担，生产环境中通常选择预先编译。</li>
+</ul>
+</li>
+<li>变量和Mixin（混入）:<ul>
+<li>在Sass 中，变量以 <code>$</code> 符号开始，Mixin 使用 <code>@mixin</code> 定义，提供了更强大的继承、占位符和模块化功能。</li>
+<li>Less 也支持变量（以 <code>@</code> 开头）和Mixin，但Sass在高级功能（如嵌套、继承、函数）方面通常被认为更强大和灵活。</li>
+</ul>
+</li>
+<li>循环和逻辑：<ul>
+<li>Sass 支持 for、each、while 等循环以及条件语句，使数据驱动的样式生成更加灵活。</li>
+<li>Less 虽然可以通过递归来模拟循环，但它原生并不支持除数值递增外的循环结构，这在复杂逻辑处理上可能不如Sass方便。</li>
+</ul>
+</li>
+<li>扩展性和生态系统:<ul>
+<li>Sass 拥有悠久的历史和庞大的社区，提供了如Compass这样的强大框架，以及丰富的插件和库。</li>
+</ul>
+</li>
+<li>编译工具和集成:<ul>
+<li>两者都有良好的集成工具和编译器，比如Grunt、Gulp、Webpack等前端构建工具都可以方便地集成Sass和Less的编译过程。</li>
+</ul>
+</li>
+</ol>
+<p>Sass和Less的选择往往取决于个人或团队的偏好、项目需求以及对特定特性的需求。Sass在功能和生态系统方面可能更成熟一些，提供了更多的功能和灵活性。而Less在学习曲线和即用性方面可能对新手更友好，且在一般情况下，Less足以满足我们的需求。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -2409,235 +2611,6 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://tsukimiyanano.github.io/tsukimiya.github.io/2024/05/10/vue3/2.vue3%E4%BB%8B%E7%BB%8D&Vite%E5%88%9B%E5%BB%BA%E5%B7%A5%E7%A8%8B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/tsukimiya.github.io/images/avatar.jpg">
-      <meta itemprop="name" content="Ayu">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Ayu's Study Blog">
-      <meta itemprop="description" content="你们怎么能这么卷！！">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Ayu's Study Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/tsukimiya.github.io/2024/05/10/vue3/2.vue3%E4%BB%8B%E7%BB%8D&Vite%E5%88%9B%E5%BB%BA%E5%B7%A5%E7%A8%8B/" class="post-title-link" itemprop="url">vue3介绍&Vite创建工程</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-      
-
-      <time title="创建时间：2024-05-10 13:42:43 / 修改时间：17:42:35" itemprop="dateCreated datePublished" datetime="2024-05-10T13:42:43+08:00">2024-05-10</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/tsukimiya.github.io/categories/Vue/" itemprop="url" rel="index"><span itemprop="name">Vue</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/tsukimiya.github.io/categories/Vue/Vue3/" itemprop="url" rel="index"><span itemprop="name">Vue3</span></a>
-        </span>
-    </span>
-
-  
-  
-  <span class="post-meta-item">
-    
-    <span class="post-meta-item-icon">
-      <i class="far fa-comment"></i>
-    </span>
-    <span class="post-meta-item-text">Waline：</span>
-  
-    <a title="waline" href="/tsukimiya.github.io/2024/05/10/vue3/2.vue3%E4%BB%8B%E7%BB%8D&Vite%E5%88%9B%E5%BB%BA%E5%B7%A5%E7%A8%8B/#waline" itemprop="discussionUrl">
-      <span class="post-comments-count waline-comment-count" data-path="/tsukimiya.github.io/2024/05/10/vue3/2.vue3%E4%BB%8B%E7%BB%8D&Vite%E5%88%9B%E5%BB%BA%E5%B7%A5%E7%A8%8B/" itemprop="commentCount"></span>
-    </a>
-  </span>
-  
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>3.4k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>3 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="Vue3简介"><a href="#Vue3简介" class="headerlink" title="Vue3简介"></a>Vue3简介</h1><ul>
-<li>2020年9月18日，<code>Vue.js</code>发布版<code>3.0</code>版本，代号：<code>One Piece</code></li>
-<li>经历了：<a target="_blank" rel="noopener" href="https://github.com/vuejs/core/commits/main">4800+次提交</a>、<a target="_blank" rel="noopener" href="https://github.com/vuejs/rfcs/tree/master/active-rfcs">40+个RFC</a>、<a target="_blank" rel="noopener" href="https://github.com/vuejs/vue-next/pulls?q=is:pr+is:merged+-author:app/dependabot-preview+">600+次PR</a>、<a target="_blank" rel="noopener" href="https://github.com/vuejs/core/graphs/contributors">300+贡献者</a></li>
-<li>官方发版地址：<a target="_blank" rel="noopener" href="https://github.com/vuejs/core/releases/tag/v3.0.0">Release v3.0.0 One Piece · vuejs&#x2F;core</a></li>
-<li>截止2023年10月，最新的公开版本为：<code>3.3.4</code>  <img width="50%" style="margin-left:0;" src="/tsukimiya.github.io/images/vue3/版本.png" alt="版本"></li>
-</ul>
-<h2 id="性能的提升"><a href="#性能的提升" class="headerlink" title="性能的提升"></a>性能的提升</h2><ul>
-<li><p>打包大小减少<code>41%</code>。</p>
-</li>
-<li><p>初次渲染快<code>55%</code>, 更新渲染快<code>133%</code>。</p>
-</li>
-<li><p>内存减少<code>54%</code>。</p>
-</li>
-</ul>
-<h2 id="源码的升级"><a href="#源码的升级" class="headerlink" title="源码的升级"></a>源码的升级</h2><ul>
-<li><p>使用<code>Proxy</code>代替<code>defineProperty</code>实现响应式。</p>
-</li>
-<li><p>重写虚拟<code>DOM</code>的实现和<code>Tree-Shaking</code>。</p>
-</li>
-</ul>
-<h2 id="拥抱TypeScript"><a href="#拥抱TypeScript" class="headerlink" title="拥抱TypeScript"></a>拥抱TypeScript</h2><ul>
-<li><code>Vue3</code>可以更好的支持<code>TypeScript</code>。</li>
-</ul>
-<h2 id="新的特性"><a href="#新的特性" class="headerlink" title="新的特性"></a>新的特性</h2><ol>
-<li><p><code>Composition API</code>（组合<code>API</code>）：</p>
-<ul>
-<li><p><code>setup</code></p>
-</li>
-<li><p><code>ref</code>与<code>reactive</code></p>
-</li>
-<li><p><code>computed</code>与<code>watch</code></p>
-<p>……</p>
-</li>
-</ul>
-</li>
-<li><p>新的内置组件：</p>
-<ul>
-<li><p><code>Fragment</code></p>
-</li>
-<li><p><code>Teleport</code></p>
-</li>
-<li><p><code>Suspense</code></p>
-<p>……</p>
-</li>
-</ul>
-</li>
-<li><p>其他改变：</p>
-<ul>
-<li><p>新的生命周期钩子</p>
-</li>
-<li><p><code>data</code> 选项应始终被声明为一个函数</p>
-</li>
-<li><p>移除<code>keyCode</code>支持作为<code> v-on</code> 的修饰符</p>
-<p>……</p>
-</li>
-</ul>
-</li>
-</ol>
-<h1 id="创建Vue3工程"><a href="#创建Vue3工程" class="headerlink" title="创建Vue3工程"></a>创建Vue3工程</h1><h2 id="基于-vue-cli-创建"><a href="#基于-vue-cli-创建" class="headerlink" title="基于 vue-cli 创建"></a>基于 vue-cli 创建</h2><p>点击查看<a target="_blank" rel="noopener" href="https://cli.vuejs.org/zh/guide/creating-a-project.html#vue-create">官方文档</a></p>
-<blockquote>
-<p>备注：目前<code>vue-cli</code>已处于维护模式，官方推荐基于 <code>Vite</code> 创建项目。</p>
-</blockquote>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## 查看@vue/cli版本，确保@vue/cli版本在4.5.0以上</span></span><br><span class="line">vue <span class="literal">--version</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## 安装或者升级你的@vue/cli </span></span><br><span class="line">npm install <span class="literal">-g</span> @vue/<span class="built_in">cli</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## 执行创建命令</span></span><br><span class="line">vue create vue_test</span><br><span class="line"></span><br><span class="line"><span class="comment">##  随后选择3.x</span></span><br><span class="line"><span class="comment">##  Choose a version of Vue.js that you want to start the project with (Use arrow keys)</span></span><br><span class="line"><span class="comment">##  &gt; 3.x</span></span><br><span class="line"><span class="comment">##    2.x</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## 启动</span></span><br><span class="line"><span class="built_in">cd</span> vue_test</span><br><span class="line">npm run serve</span><br></pre></td></tr></table></figure>
-
-<hr>
-<h2 id="基于-vite-创建-推荐"><a href="#基于-vite-创建-推荐" class="headerlink" title="基于 vite 创建 (推荐)"></a>基于 vite 创建 (推荐)</h2><p><code>vite</code> 是新一代前端构建工具，官网地址：<a target="_blank" rel="noopener" href="https://vitejs.cn/">https://vitejs.cn</a>，<code>vite</code>的优势如下：</p>
-<ul>
-<li>轻量快速的热重载（<code>HMR</code>），能实现<strong>极速的服务启动</strong>。</li>
-<li>对 <code>TypeScript</code>、<code>JSX</code>、<code>CSS</code> 等支持开箱即用。</li>
-<li>真正的<strong>按需编译</strong>，不再等待整个应用编译完成。</li>
-<li><code>webpack</code>构建 与 <code>vite</code>构建对比图如下：<br>webpack是处理完所有模块才启动工程，而vite是直接启动，后续按需加载(比较像懒加载)</li>
-</ul>
-<p><img src="/tsukimiya.github.io/images/vue3/webpack构建.png" alt="webpack构建" title="webpack构建" style="display:inline;width:49.8%;margin:0;box-shadow:0 0 10px black" />	<img src="/tsukimiya.github.io/images/vue3/vite构建.png" alt="vite构建" title="vite构建" style="display:inline;width:49.3%;margin:0;box-shadow:0 0 10px black" /></p>
-<ul>
-<li>具体操作如下（点击查看<a target="_blank" rel="noopener" href="https://cn.vuejs.org/guide/quick-start.html#creating-a-vue-application">官方文档</a>）</li>
-</ul>
-<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## 1.创建命令</span></span><br><span class="line">npm create vue@latest</span><br><span class="line"></span><br><span class="line"><span class="comment">## 2.具体配置</span></span><br><span class="line"><span class="comment">## 配置项目名称 // 不能出现中文和特殊字符，最好用 纯小写字母+数字+下划线</span></span><br><span class="line">√ Project name: vue3_test</span><br><span class="line"><span class="comment">## 是否添加TypeScript支持</span></span><br><span class="line">√ Add TypeScript?  Yes</span><br><span class="line"><span class="comment">## 是否添加JSX支持</span></span><br><span class="line">√ Add JSX Support?  No</span><br><span class="line"><span class="comment">## 是否添加路由环境</span></span><br><span class="line">√ Add Vue Router <span class="keyword">for</span> Single Page Application development?  No</span><br><span class="line"><span class="comment">## 是否添加pinia环境</span></span><br><span class="line">√ Add Pinia <span class="keyword">for</span> state management?  No</span><br><span class="line"><span class="comment">## 是否添加单元测试</span></span><br><span class="line">√ Add Vitest <span class="keyword">for</span> Unit Testing?  No</span><br><span class="line"><span class="comment">## 是否添加端到端测试方案</span></span><br><span class="line">√ Add an <span class="keyword">End</span><span class="literal">-to-End</span> Testing Solution? » No</span><br><span class="line"><span class="comment">## 是否添加ESLint语法检查</span></span><br><span class="line">√ Add ESLint <span class="keyword">for</span> code quality?  Yes</span><br><span class="line"><span class="comment">## 是否添加Prettiert代码格式化</span></span><br><span class="line">√ Add Prettier <span class="keyword">for</span> code formatting?  No</span><br></pre></td></tr></table></figure>
-<ul>
-<li>项目文件<br>  一开始打开项目文件，会有很多文件报红，这是因为项目文件找不到依赖，可以发现我们没有<code>node_modules</code>文件夹，我们需要<code>npm i</code>安装所有的依赖，再重新打开项目文件，就好了<ul>
-<li><p><code>.vscode/extensions.json</code>：配置了插件，如果vscode一个插件都没安装，会给你一个提示</p>
-</li>
-<li><p><code>public</code>：脚手架的根目录，只放了一个页签图标<code>favicon.ico</code>，就是网页标签的图标</p>
-</li>
-<li><p><code>env.d.ts</code>: <code>/// &lt;reference types=&quot;vite/client&quot; /&gt;</code><br>  ts不认识.jpg、.txt等文件，这个文件的作用就是让ts去认识这些文件</p>
-<blockquote>
-<p>比如，如果删掉这行代码，在a.ts文件中引入一个txt：<code>import b from &#39;./b.txt&#39;</code>，会发现ts不认识<br>  ctrl点进这个<code>vite/client</code>，这个文件中，常用的文件都配在这里了，包括各种图片视频图标等等</p>
-</blockquote>
-</li>
-<li><p><code>index.html</code>：入口文件<br>  它引入了<code>src/main.ts</code>，它支撑着整个应用跑起来</p>
-<blockquote>
-<p>这点vite和webpack就有区别了，入口文件不是main.js，也不是mian.ts</p>
-</blockquote>
-</li>
-<li><p>运行；<code>npm run dev</code></p>
-</li>
-</ul>
-</li>
-</ul>
-<p>自己动手编写一个App组件</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;app&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">h1</span>&gt;</span>你好啊！<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">lang</span>=<span class="string">&quot;ts&quot;</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">  <span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span><br><span class="line"><span class="language-javascript">    <span class="attr">name</span>:<span class="string">&#x27;App&#x27;</span> <span class="comment">//组件名</span></span></span><br><span class="line"><span class="language-javascript">  &#125;</span></span><br><span class="line"><span class="language-javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="language-css"></span></span><br><span class="line"><span class="language-css">  <span class="selector-class">.app</span> &#123;</span></span><br><span class="line"><span class="language-css">    <span class="attribute">background-color</span>: <span class="number">#ddd</span>;</span></span><br><span class="line"><span class="language-css">    <span class="attribute">box-shadow</span>: <span class="number">0</span> <span class="number">0</span> <span class="number">10px</span>;</span></span><br><span class="line"><span class="language-css">    <span class="attribute">border-radius</span>: <span class="number">10px</span>;</span></span><br><span class="line"><span class="language-css">    <span class="attribute">padding</span>: <span class="number">20px</span>;</span></span><br><span class="line"><span class="language-css">  &#125;</span></span><br><span class="line"><span class="language-css"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>安装官方推荐的<code>vscode</code>插件：</p>
-<img src="/tsukimiya.github.io/images/vue3/volar.png" alt="volar" style="width:30%;margin:0;display:inline" /> 
-
-<img src="/tsukimiya.github.io/images/vue3/ts-volar.png" alt="ts-volar" style="width:30%;margin:0;display:inline" /> 
-
-<blockquote>
-<p>TS版本的volar现在已经启用，而是新的vue-offical将volar 和 TS volar两个插件的功能集合到了一起，但是好像目前很垃圾，评价很差</p>
-</blockquote>
-<p>总结：</p>
-<ul>
-<li><code>Vite</code> 项目中，<code>index.html</code> 是项目的入口文件，在项目最外层。</li>
-<li>加载<code>index.html</code>后，<code>Vite</code> 解析 <code>&lt;script type=&quot;module&quot; src=&quot;xxx&quot;&gt;</code> 指向的<code>JavaScript</code>。</li>
-<li><code>Vue3</code>中是通过<code>createApp</code> 函数创建一个应用实例。</li>
-</ul>
-<h2 id="一个简单的效果"><a href="#一个简单的效果" class="headerlink" title="一个简单的效果"></a>一个简单的效果</h2><p><code>Vue3</code>向下兼容<code>Vue2</code>语法，且<code>Vue3</code>中的模板中可以没有根标签</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  <span class="language-xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;person&quot;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">h2</span>&gt;</span>姓名：&#123;&#123;name&#125;&#125;<span class="tag">&lt;/<span class="name">h2</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">h2</span>&gt;</span>年龄：&#123;&#123;age&#125;&#125;<span class="tag">&lt;/<span class="name">h2</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">button</span> @<span class="attr">click</span>=<span class="string">&quot;changeName&quot;</span>&gt;</span>修改名字<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">button</span> @<span class="attr">click</span>=<span class="string">&quot;changeAge&quot;</span>&gt;</span>年龄+1<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;<span class="name">button</span> @<span class="attr">click</span>=<span class="string">&quot;showTel&quot;</span>&gt;</span>点我查看联系方式<span class="tag">&lt;/<span class="name">button</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">script</span> <span class="attr">lang</span>=<span class="string">&quot;ts&quot;</span>&gt;</span><span class="language-javascript"></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  <span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    <span class="attr">name</span>:<span class="string">&#x27;App&#x27;</span>,</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    <span class="title function_">data</span>(<span class="params"></span>) &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">      <span class="keyword">return</span> &#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        <span class="attr">name</span>:<span class="string">&#x27;张三&#x27;</span>,</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        <span class="attr">age</span>:<span class="number">18</span>,</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        <span class="attr">tel</span>:<span class="string">&#x27;13888888888&#x27;</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">      &#125;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    &#125;,</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    <span class="attr">methods</span>:&#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">      <span class="title function_">changeName</span>(<span class="params"></span>)&#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        <span class="variable language_">this</span>.<span class="property">name</span> = <span class="string">&#x27;zhang-san&#x27;</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">      &#125;,</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">      <span class="title function_">changeAge</span>(<span class="params"></span>)&#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        <span class="variable language_">this</span>.<span class="property">age</span> += <span class="number">1</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">      &#125;,</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">      <span class="title function_">showTel</span>(<span class="params"></span>)&#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">        <span class="title function_">alert</span>(<span class="variable language_">this</span>.<span class="property">tel</span>)</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">      &#125;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    &#125;,</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  &#125;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
-<p>这种写法就是<strong>vue2的选项式API</strong>(也叫<strong>配置式</strong>)，name、data、methods就是一个<strong>选项</strong>，或者说一个<strong>配置项</strong>。<br>这些东西写多了，就<strong>会出现一些问题</strong>，<a target="_blank" rel="noopener" href="https://cn.vuejs.org/guide/extras/composition-api-faq.html#why-composition-api">官网有明确的说明</a>，这里在下一篇文章通过动态图作说明→</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
     <span class="page-number current">1</span><a class="page-number" href="/tsukimiya.github.io/default-index/page/2/">2</a><a class="page-number" href="/tsukimiya.github.io/default-index/page/3/">3</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/tsukimiya.github.io/default-index/page/2/"><i class="fa fa-angle-right"></i></a>
   </nav>
@@ -2661,13 +2634,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="站点总字数">167k</span>
+    <span title="站点总字数">170k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="站点阅读时长">2:32</span>
+    <span title="站点阅读时长">2:35</span>
   </span>
 </div>
 <div class="busuanzi-count">
@@ -2724,7 +2697,7 @@
 
 
 
-<script class="next-config" data-name="waline" type="application/json">{"lang":"zh-CN","enable":true,"serverURL":"https://waline.vercel.app","cssUrl":"https://unpkg.com/@waline/client@v2/dist/waline.css","commentCount":true,"pageview":false,"locale":{"placeholder":"Leave Something, message or money"},"emoji":["https://unpkg.com/@waline/emojis@1.0.1/tieba"],"meta":["nick","mail","link"],"requiredMeta":["nick"],"wordLimit":0,"login":"disable","pageSize":10,"el":"#waline","comment":true,"libUrl":"//unpkg.com/@waline/client@v2/dist/waline.js","path":"/tsukimiya.github.io/default-index/"}</script>
+<script class="next-config" data-name="waline" type="application/json">{"lang":"zh-CN","enable":true,"serverURL":"https://waline.vercel.app","cssUrl":"https://unpkg.com/@waline/client@v2/dist/waline.css","commentCount":true,"pageview":false,"locale":{"placeholder":"Leave Something, messi or meshi"},"emoji":["https://unpkg.com/@waline/emojis@1.0.1/tieba"],"meta":["nick","mail","link"],"requiredMeta":["nick"],"wordLimit":0,"login":"disable","pageSize":10,"el":"#waline","comment":true,"libUrl":"//unpkg.com/@waline/client@v2/dist/waline.js","path":"/tsukimiya.github.io/default-index/"}</script>
 <link rel="stylesheet" href="https://unpkg.com/@waline/client@v2/dist/waline.css">
 <script>
 document.addEventListener('page:loaded', () => {

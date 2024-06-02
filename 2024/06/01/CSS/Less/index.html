@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 7.1.1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/tsukimiya.github.io/images/Study.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/tsukimiya.github.io/images/Study.ico">
+  <link rel="icon" type="image/png" sizes="16x16" href="/tsukimiya.github.io/images/Study.ico">
+  <link rel="mask-icon" href="/tsukimiya.github.io/images/Study.ico" color="#222">
+
+<link rel="stylesheet" href="/tsukimiya.github.io/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Miniver:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha256-wiz7ZSCn/btzhjKDQBms9Hx4sSeUYsDrTLg7roPstac=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"tsukimiyanano.github.io","root":"/tsukimiya.github.io/","images":"/tsukimiya.github.io/images","scheme":"Pisces","darkmode":true,"version":"8.19.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/tsukimiya.github.io/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true}}</script><script src="/tsukimiya.github.io/js/config.js"></script>
+
+    <meta name="description" content="CSS的弊端CSS是一门非程序的语言，没有变量、函数、作用域(SCOPE)等概念。 CSS在一定程度上，有下面这些弊端：  冗余度较高 (特别是在选择器上嵌套的层次过多) 不方便维护及扩展，不利于复用 没有很好的计算能力 (虽然css3中引入了calc()函数，但是计算能力有限，并且效率不高)  Lessless（Leaner Style Sheets的缩写）是一门CSS扩展语言，也称为CSS预处">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Less">
+<meta property="og:url" content="https://tsukimiyanano.github.io/tsukimiya.github.io/2024/06/01/CSS/Less/index.html">
+<meta property="og:site_name" content="Ayu&#39;s Study Blog">
+<meta property="og:description" content="CSS的弊端CSS是一门非程序的语言，没有变量、函数、作用域(SCOPE)等概念。 CSS在一定程度上，有下面这些弊端：  冗余度较高 (特别是在选择器上嵌套的层次过多) 不方便维护及扩展，不利于复用 没有很好的计算能力 (虽然css3中引入了calc()函数，但是计算能力有限，并且效率不高)  Lessless（Leaner Style Sheets的缩写）是一门CSS扩展语言，也称为CSS预处">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-06-01T11:21:02.050Z">
+<meta property="article:modified_time" content="2024-06-01T14:16:48.872Z">
+<meta property="article:author" content="Ayu">
+<meta property="article:tag" content="CSS">
+<meta property="article:tag" content="Less">
+<meta property="article:tag" content="Sass">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://tsukimiyanano.github.io/tsukimiya.github.io/2024/06/01/CSS/Less/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://tsukimiyanano.github.io/tsukimiya.github.io/2024/06/01/CSS/Less/","path":"2024/06/01/CSS/Less/","title":"Less"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Less | Ayu's Study Blog</title>
+  
+
+
+
+
+
+
+
+<link rel="dns-prefetch" href="https://waline.vercel.app">
+  <noscript>
+    <link rel="stylesheet" href="/tsukimiya.github.io/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/tsukimiya.github.io/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Ayu's Study Blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">求求你给我一份工作吧，我什么都会做的`orz</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/tsukimiya.github.io/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tsukimiya.github.io/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/tsukimiya.github.io/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li><li class="menu-item menu-item-archives"><a href="/tsukimiya.github.io/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li><li class="menu-item menu-item-schedule"><a href="/tsukimiya.github.io/schedule/task.html" rel="section"><i class="fa fa-calendar fa-fw"></i>日程表</a></li><li class="menu-item menu-item-guestbook"><a href="/tsukimiya.github.io/guestbook/" rel="section"><i class="fa fa-book fa-fw"></i>guestbook</a></li><li class="menu-item menu-item-pulledpost"><a href="/tsukimiya.github.io/PulledPost/" rel="section"><i class="fa fa-heart fa-fw"></i>PulledPost</a></li><li class="menu-item menu-item-cuntom-page"><a href="/tsukimiya.github.io/custom" rel="section"><i class="fa fa-folder fa-fw"></i>Cuntom Page</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#CSS%E7%9A%84%E5%BC%8A%E7%AB%AF"><span class="nav-number">1.</span> <span class="nav-text">CSS的弊端</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Less"><span class="nav-number">2.</span> <span class="nav-text">Less</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Less%E7%BC%96%E8%AF%91"><span class="nav-number">2.1.</span> <span class="nav-text">Less编译</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Less%E5%8F%98%E9%87%8F"><span class="nav-number">2.2.</span> <span class="nav-text">Less变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Less%E5%B5%8C%E5%A5%97"><span class="nav-number">2.3.</span> <span class="nav-text">Less嵌套</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Less%E8%BF%90%E7%AE%97"><span class="nav-number">2.4.</span> <span class="nav-text">Less运算</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Sass"><span class="nav-number">3.</span> <span class="nav-text">Sass</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Ayu"
+      src="/tsukimiya.github.io/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Ayu</p>
+  <div class="site-description" itemprop="description">你们怎么能这么卷！！</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/tsukimiya.github.io/archives/">
+          <span class="site-state-item-count">28</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/tsukimiya.github.io/categories/">
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tsukimiya.github.io/tags/">
+        <span class="site-state-item-count">71</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="mailto:1832715838@qq.com" title="E-Mail → mailto:1832715838@qq.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://github.com/tsukimiyanano" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;tsukimiyanano" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://tsukimiyanano.github.io/tsukimiya.github.io/2024/06/01/CSS/Less/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/tsukimiya.github.io/images/avatar.jpg">
+      <meta itemprop="name" content="Ayu">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Ayu's Study Blog">
+      <meta itemprop="description" content="你们怎么能这么卷！！">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Less | Ayu's Study Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Less
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2024-06-01 19:21:02 / 修改时间：22:16:48" itemprop="dateCreated datePublished" datetime="2024-06-01T19:21:02+08:00">2024-06-01</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/tsukimiya.github.io/categories/CSS/" itemprop="url" rel="index"><span itemprop="name">CSS</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/tsukimiya.github.io/categories/CSS/Less/" itemprop="url" rel="index"><span itemprop="name">Less</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="far fa-comment"></i>
+    </span>
+    <span class="post-meta-item-text">Waline：</span>
+  
+    <a title="waline" href="/tsukimiya.github.io/2024/06/01/CSS/Less/#waline" itemprop="discussionUrl">
+      <span class="post-comments-count waline-comment-count" data-path="/tsukimiya.github.io/2024/06/01/CSS/Less/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>2.7k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>2 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="CSS的弊端"><a href="#CSS的弊端" class="headerlink" title="CSS的弊端"></a>CSS的弊端</h2><p>CSS是一门非程序的语言，没有变量、函数、作用域(SCOPE)等概念。</p>
+<p>CSS在一定程度上，有下面这些弊端：</p>
+<ol>
+<li>冗余度较高 (特别是在选择器上嵌套的层次过多)</li>
+<li>不方便维护及扩展，不利于复用</li>
+<li>没有很好的计算能力 (虽然css3中引入了calc()函数，但是计算能力有限，并且效率不高)</li>
+</ol>
+<h2 id="Less"><a href="#Less" class="headerlink" title="Less"></a>Less</h2><p>less（Leaner Style Sheets的缩写）是一门CSS扩展语言，也称为CSS预处理器。 可以理解为css的超集。<br>它在css的语法基础上，引入了变量、Mixin(混入)、运算以及函数等功能，使得css更加简洁，Write less, do more！</p>
+<p>Less中文网址：<a target="_blank" rel="noopener" href="http://lesscss.cn/">http://lesscss.cn/</a></p>
+<p>常见的CSS预处理器：Sass、Less、Stylus</p>
+<h3 id="Less编译"><a href="#Less编译" class="headerlink" title="Less编译"></a>Less编译</h3><p>本质上，Less包含一套自定义的语法及一个解析器，用户根据这些语法定义自己的样式规则，这些规则最终会通过解析器，编译生成对应的CSS文件。<br>所以我们需要把less文件，编译生成为css文件，html页面才能使用。</p>
+<ul>
+<li><p>Easy LESS插件<br>Easy LESS插件可以在我们保存less文件的时候自动编译less文件，并生成对应的css文件。<br>当我们修改less文件的时候，生成的css文件会自动更新。<br>我们只需要在页面引入生成的css文件即可。</p>
+</li>
+<li><p>Less文件中的注释是 &#x2F;&#x2F;<br>Less文件是通过js来解析的，所以注释是js的注释。而不是css的注释&#x2F;* <em>&#x2F;<br>Less文件生成的css文件，&#x2F;&#x2F;注释不会保留。<br>Less文件也支持多行注释 &#x2F;</em> *&#x2F;，且会保留在css文件中。</p>
+</li>
+</ul>
+<h3 id="Less变量"><a href="#Less变量" class="headerlink" title="Less变量"></a>Less变量</h3><figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">@变量名: 值;</span><br></pre></td></tr></table></figure>
+<p>变量命名规范：</p>
+<ul>
+<li>变量名必须以@开头</li>
+<li>不能包含特殊字符</li>
+<li>不能以数字开头</li>
+<li>区分大小写</li>
+</ul>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 定义一个粉色的变量</span></span><br><span class="line"><span class="variable">@color:</span> pink;</span><br><span class="line"><span class="comment">// 引用变量</span></span><br><span class="line"><span class="selector-tag">body</span> &#123;</span><br><span class="line">  backgroud-<span class="attribute">color</span>: <span class="variable">@color</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Less嵌套"><a href="#Less嵌套" class="headerlink" title="Less嵌套"></a>Less嵌套</h3><p>Less支持嵌套写法</p>
+<ol>
+<li>子元素样式直接写到父元素里面</li>
+</ol>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.header</span>&#123;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">200px</span>;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">200px</span>;</span><br><span class="line">  <span class="attribute">background-color</span>: pink;</span><br><span class="line">  <span class="selector-tag">a</span> &#123;</span><br><span class="line">    <span class="attribute">color</span>: red;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>编译后：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.header</span> &#123;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">200px</span>;</span><br><span class="line">  <span class="attribute">height</span>: <span class="number">200px</span>;</span><br><span class="line">  <span class="attribute">background-color</span>: pink;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.header</span> <span class="selector-tag">a</span> &#123;</span><br><span class="line">  <span class="attribute">color</span>: red;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>如果遇见 交集|伪类|伪元素选择器</li>
+</ol>
+<ul>
+<li>内层选择器的前面没有 &amp; 符号，则它被解析为父选择器的后代</li>
+</ul>
+  <figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">a</span>&#123;</span><br><span class="line">  <span class="attribute">color</span>: red;</span><br><span class="line">  <span class="selector-pseudo">:hover</span>&#123;</span><br><span class="line">    <span class="attribute">color</span>: blue;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 会被解析为：</span></span><br><span class="line"><span class="selector-tag">a</span>&#123;</span><br><span class="line">  <span class="attribute">color</span>: red;</span><br><span class="line">&#125;</span><br><span class="line">a :hover&#123; // 就不是a的伪类的，而是a的子元素</span><br><span class="line">  <span class="attribute">color</span>: blue;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>如果有 &amp; 符号，则被解析为父元素自身或父元素的伪类</li>
+</ul>
+  <figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">a</span>&#123;</span><br><span class="line">  <span class="attribute">color</span>: red;</span><br><span class="line">  <span class="selector-tag">&amp;</span><span class="selector-pseudo">:hover</span>&#123;</span><br><span class="line">    <span class="attribute">color</span>: blue;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 会被解析为：</span></span><br><span class="line"><span class="selector-tag">a</span>&#123;</span><br><span class="line">  <span class="attribute">color</span>: red;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-tag">a</span><span class="selector-pseudo">:hover</span>&#123;</span><br><span class="line">  <span class="attribute">color</span>: blue;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Less运算"><a href="#Less运算" class="headerlink" title="Less运算"></a>Less运算</h3><p>任何数字、颜色或者变量都可以参与运算。就是Less提供了加(+)、减(-)、乘(*)、除(&#x2F;)算术运算。</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">  <span class="variable">@border:</span> <span class="number">5px</span> + <span class="number">5</span>;</span><br><span class="line"><span class="selector-tag">div</span>&#123;</span><br><span class="line">  <span class="attribute">width</span>: (<span class="number">200px</span> - <span class="number">50</span>) * <span class="number">2</span>;</span><br><span class="line">  <span class="attribute">height</span>: (<span class="number">200px</span> / <span class="number">2</span>); <span class="comment">// 除法运算，需要用()括起来</span></span><br><span class="line">  <span class="attribute">border</span>: <span class="variable">@border</span> solid blue + <span class="number">222</span>; <span class="comment">// #666 - 222 = #444</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>通过运算，我们在去写rem的时候就方便很多。比如：<br>html的<code>font-size: 50px;</code><br>某元素大小为<code>82px</code>，换成rem就直接写成 <code>82/50 rem</code> 就可以了，不用再去计算。</p>
+<p><strong>注意</strong>：</p>
+<ol>
+<li>运算符左右两侧必须有一个空格(现在可以不加空格了)</li>
+<li>除法运算需要用()括起来</li>
+<li>两个数参与运算，如果只有一个数有单位，则结果以这个单位为准</li>
+<li>两个数参与运算，如果2个数都有单位，且是不一样的单位，则以第一个单位为准</li>
+</ol>
+<h2 id="Sass"><a href="#Sass" class="headerlink" title="Sass"></a>Sass</h2><p>Sass中文网：<a target="_blank" rel="noopener" href="https://www.sass.hk/">https://www.sass.hk/</a><br>Sass官网：<a target="_blank" rel="noopener" href="https://sass.bootcss.com/index.html">https://sass.bootcss.com/index.html</a><br><a target="_blank" rel="noopener" href="https://ruanyifeng.com/blog/2012/06/sass.html">Sass用法指南</a> - 阮一峰的网络日志</p>
+<p>Sass和Less的区别：</p>
+<ol>
+<li>语法风格：<ul>
+<li>Sass有两种语法风格，一种是使用缩进(类似Python)的缩写语法(.sass)，一种是SCSS(Sassy CSS)，它与CSS语法几乎完全相同，只是添加了额外的功能(使用.scss扩展名)。SCSS现在更为普遍。</li>
+<li>Less语法更接近传统的css，使用大括号<code>&#123;&#125;</code>界定代码块，使得css开发正更易上手。</li>
+</ul>
+</li>
+<li>编译环境：<ul>
+<li>Sass 最初是基于Ruby的，需要Ruby环境来运行。尽管后来推出了Dart实现的dart-sass，它不依赖Ruby，但编译速度可能较慢。Sass通常作为开发流程的一部分在服务器端编译。</li>
+<li>Less 是基于JavaScript的，可以借助Less.js在客户端（浏览器）直接处理，也可以在构建过程中服务器端编译。由于客户端处理可能会增加页面加载时间和CPU负担，生产环境中通常选择预先编译。</li>
+</ul>
+</li>
+<li>变量和Mixin（混入）:<ul>
+<li>在Sass 中，变量以 <code>$</code> 符号开始，Mixin 使用 <code>@mixin</code> 定义，提供了更强大的继承、占位符和模块化功能。</li>
+<li>Less 也支持变量（以 <code>@</code> 开头）和Mixin，但Sass在高级功能（如嵌套、继承、函数）方面通常被认为更强大和灵活。</li>
+</ul>
+</li>
+<li>循环和逻辑：<ul>
+<li>Sass 支持 for、each、while 等循环以及条件语句，使数据驱动的样式生成更加灵活。</li>
+<li>Less 虽然可以通过递归来模拟循环，但它原生并不支持除数值递增外的循环结构，这在复杂逻辑处理上可能不如Sass方便。</li>
+</ul>
+</li>
+<li>扩展性和生态系统:<ul>
+<li>Sass 拥有悠久的历史和庞大的社区，提供了如Compass这样的强大框架，以及丰富的插件和库。</li>
+</ul>
+</li>
+<li>编译工具和集成:<ul>
+<li>两者都有良好的集成工具和编译器，比如Grunt、Gulp、Webpack等前端构建工具都可以方便地集成Sass和Less的编译过程。</li>
+</ul>
+</li>
+</ol>
+<p>Sass和Less的选择往往取决于个人或团队的偏好、项目需求以及对特定特性的需求。Sass在功能和生态系统方面可能更成熟一些，提供了更多的功能和灵活性。而Less在学习曲线和即用性方面可能对新手更友好，且在一般情况下，Less足以满足我们的需求。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div>请我一杯咖啡吧！</div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/tsukimiya.github.io/images/wechatpay.jpg" alt="Ayu 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/tsukimiya.github.io/images/alipay.jpg" alt="Ayu 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tsukimiya.github.io/tags/CSS/" rel="tag"># CSS</a>
+              <a href="/tsukimiya.github.io/tags/Less/" rel="tag"># Less</a>
+              <a href="/tsukimiya.github.io/tags/Sass/" rel="tag"># Sass</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/tsukimiya.github.io/2024/05/31/Problem/Trouble%20Set/" rel="prev" title="Trouble Set">
+                  <i class="fa fa-angle-left"></i> Trouble Set
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="waline"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Ayu</span>
+  </div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="站点总字数">170k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="站点阅读时长">2:35</span>
+  </span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="https://cdnjs.cloudflare.com/ajax/libs/ribbon.js/1.0.2/ribbon.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/tsukimiya.github.io/js/comments.js"></script><script src="/tsukimiya.github.io/js/utils.js"></script><script src="/tsukimiya.github.io/js/motion.js"></script><script src="/tsukimiya.github.io/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/tsukimiya.github.io/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+<script class="next-config" data-name="waline" type="application/json">{"lang":"zh-CN","enable":true,"serverURL":"https://waline.vercel.app","cssUrl":"https://unpkg.com/@waline/client@v2/dist/waline.css","commentCount":true,"pageview":false,"locale":{"placeholder":"Leave Something, messi or meshi"},"emoji":["https://unpkg.com/@waline/emojis@1.0.1/tieba"],"meta":["nick","mail","link"],"requiredMeta":["nick"],"wordLimit":0,"login":"disable","pageSize":10,"el":"#waline","comment":true,"libUrl":"//unpkg.com/@waline/client@v2/dist/waline.js","path":"/tsukimiya.github.io/2024/06/01/CSS/Less/"}</script>
+<link rel="stylesheet" href="https://unpkg.com/@waline/client@v2/dist/waline.css">
+<script>
+document.addEventListener('page:loaded', () => {
+  NexT.utils.loadComments(CONFIG.waline.el).then(() =>
+    NexT.utils.getScript(CONFIG.waline.libUrl, { condition: window.Waline })
+  ).then(() => 
+    Waline.init(Object.assign({}, CONFIG.waline,{ el: document.querySelector(CONFIG.waline.el) }))
+  );
+});
+</script>
+
+</body>
+</html>
