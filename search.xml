@@ -106,79 +106,6 @@
       </tags>
   </entry>
   <entry>
-    <title>JS相等性比较陷阱揭秘：理解`[]==![]`为`true`背后的宽松相等运算符与类型转换</title>
-    <url>/tsukimiya.github.io/2024/05/23/JS/JS%E7%9A%84%E7%9B%B8%E7%AD%89%E6%80%A7%E6%AF%94%E8%BE%83%E9%99%B7%E9%98%B1/</url>
-    <content><![CDATA[<h1 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h1><p>JavaScript是一门弱类型（或称动态类型）语言，这意味着<strong>变量的类型可以在运行时改变</strong>，为开发者提供了极大的灵活性。然而，这也引入了类型转换的概念，尤其是在使用宽松相等运算符&#x3D;&#x3D;进行比较时。宽松相等不仅比较值，还会在必要时自动转换类型以进行比较，这一特性有时会导致预期之外的结果。</p>
-<hr>
-<p>下面来看一组比较运算符的例子：</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">[] == []  <span class="comment">// false</span></span><br><span class="line">[] == ![] <span class="comment">// true</span></span><br><span class="line">[] == !&#123;&#125; <span class="comment">// true</span></span><br><span class="line">&#123;&#125; == !&#123;&#125; <span class="comment">// Uncaught SyntaxError: Unexpected token &#x27;==&#x27;</span></span><br><span class="line">&#123;&#125; == &#123;&#125;  <span class="comment">// Uncaught SyntaxError: Unexpected token &#x27;==&#x27;</span></span><br><span class="line">&#123;&#125; == ![] <span class="comment">// Uncaught SyntaxError: Unexpected token &#x27;==&#x27;</span></span><br><span class="line">&#123;&#125; == []  <span class="comment">// Uncaught SyntaxError: Unexpected token &#x27;==&#x27;</span></span><br><span class="line">(&#123;&#125; == !&#123;&#125;) <span class="comment">// false</span></span><br></pre></td></tr></table></figure>
-<p>提出问题：<strong>为什么[] &#x3D;&#x3D; ![]会得出true这样一个看似反直觉的结果？</strong><br>下面，我们将会逐步接近答案，揭开这个陷阱。</p>
-<hr>
-<h1 id="JavaScript中的比较运算符"><a href="#JavaScript中的比较运算符" class="headerlink" title="JavaScript中的比较运算符"></a>JavaScript中的比较运算符</h1><h2 id="严格相等与宽松相等"><a href="#严格相等与宽松相等" class="headerlink" title="严格相等与宽松相等"></a>严格相等与宽松相等</h2><ul>
-<li>严格相等运算符 <code>===</code> 要求<font color="red">两边的值及其类型完全一致</font>才能返回 <code>true</code>，是最安全的比较方式。</li>
-<li>宽松相等运算符 <code>==</code> 在比较前，<font color="red">如果两侧数据类型不匹配，会尝试将它们转换成相同类型后再比较</font>，这便是问题的根源所在。</li>
-</ul>
-<h2 id="类型转换规则"><a href="#类型转换规则" class="headerlink" title="类型转换规则"></a>类型转换规则</h2><p>类型转换发生在比较操作中，涉及多种类型间的转换逻辑，例如：</p>
-<ul>
-<li>布尔值转数字 (<code>true</code> 转换为 <code>1</code>, <code>false</code> 转换为 <code>0</code>)</li>
-<li>字符串与数字之间的相互转换</li>
-<li>对象转换为原始值（通常是字符串或数字）</li>
-</ul>
-<hr>
-<h1 id="深入解析"><a href="#深入解析" class="headerlink" title="深入解析[] == ![]"></a>深入解析<code>[] == ![]</code></h1><h2 id="逻辑非运算符"><a href="#逻辑非运算符" class="headerlink" title="逻辑非运算符!"></a>逻辑非运算符<code>!</code></h2><p>首先，理解<code>![]</code>是如何工作的。逻辑非运算符<code>!</code>会对表达式求布尔值，然后取反。对于数组（即使是空数组<code>[]</code>），在布尔上下文中被视为<code>true</code>，因此<code>![]</code>的结果是<code>false</code>。在宽松比较的上下文中，<code>false</code>进一步被转换为数字<code>0</code>。</p>
-<h2 id="数组到字符串再到数字"><a href="#数组到字符串再到数字" class="headerlink" title="数组到字符串再到数字"></a>数组到字符串再到数字</h2><p>接下来，考虑左侧的空数组<code>[]</code>。在宽松相等比较中，数组会首先转换为它的字符串表示形式，即<code>&quot;&quot;</code>（空字符串）。随后，空字符串在进一步的比较中会被转换为数字<code>0</code>。</p>
-<h2 id="比较””-0"><a href="#比较””-0" class="headerlink" title="比较”” &#x3D;&#x3D; 0"></a>比较”” &#x3D;&#x3D; 0</h2><p>因此，<code>[] == ![]</code> 的比较实质上变为<code>&quot;&quot; == 0</code>。在JavaScript的宽松比较规则下，空字符串<code>&quot;&quot;</code>和数字<code>0</code>都被认为是“空”或“假”值，在比较时被视作相等。这解释了为什么<code>[] == ![]</code>的结果是<code>true</code>，尽管直观上两者看似完全不同。</p>
-<hr>
-<h1 id="宽松相等运算符的其他陷阱示例"><a href="#宽松相等运算符的其他陷阱示例" class="headerlink" title="宽松相等运算符的其他陷阱示例"></a>宽松相等运算符的其他陷阱示例</h1><p>除了<code>[] == ![]</code>，宽松相等还可能导致其他令人迷惑的结果，例如：</p>
-<ul>
-<li><code>0 == &#39;0&#39;</code>：数字<code>0</code>与字符串<code>&#39;0&#39;</code>在宽松比较中相等。</li>
-<li><code>null == undefined</code>：这两种特殊的值在比较时也被认为是相等的。</li>
-</ul>
-<hr>
-<h1 id="最佳实践与建议"><a href="#最佳实践与建议" class="headerlink" title="最佳实践与建议"></a>最佳实践与建议</h1><p>为了避免由宽松相等引发的潜在问题，建议采取以下措施：</p>
-<ul>
-<li><font color="red">首选严格相等运算符 “&#x3D;&#x3D;&#x3D;”：除非你明确知道并期望类型转换发生，否则总是使用严格相等。</font></li>
-<li>显式类型转换：当你确实需要进行类型转换时，显式地进行，比如使用<code>Number()</code>, <code>String()</code>或<code>Boolean()</code>函数，以增强代码的可读性。</li>
-<li>代码审查：团队内部实施代码审查，可以帮助识别并纠正潜在的比较陷阱。</li>
-<li>单元测试：编写测试用例来验证比较逻辑的正确性，确保代码行为符合预期。</li>
-</ul>
-<hr>
-<h1 id="再次回顾开始的问题"><a href="#再次回顾开始的问题" class="headerlink" title="再次回顾开始的问题"></a>再次回顾开始的问题</h1><figure class="highlight js"><table><tr><td class="code"><pre><span class="line">[] == []  <span class="comment">// false</span></span><br><span class="line">[] == ![] <span class="comment">// true</span></span><br><span class="line">[] == !&#123;&#125; <span class="comment">// true</span></span><br><span class="line">&#123;&#125; == !&#123;&#125; <span class="comment">// Uncaught SyntaxError: Unexpected token &#x27;==&#x27;</span></span><br><span class="line">&#123;&#125; == &#123;&#125;  <span class="comment">// Uncaught SyntaxError: Unexpected token &#x27;==&#x27;</span></span><br><span class="line">&#123;&#125; == ![] <span class="comment">// Uncaught SyntaxError: Unexpected token &#x27;==&#x27;</span></span><br><span class="line">&#123;&#125; == []  <span class="comment">// Uncaught SyntaxError: Unexpected token &#x27;==&#x27;</span></span><br><span class="line">(&#123;&#125; == !&#123;&#125;) <span class="comment">// false</span></span><br></pre></td></tr></table></figure>
-
-<p>现在我们可以对它们挨个做出解释：</p>
-<ul>
-<li><p><code>[] == []  // false</code><br>这里两个空数组虽然内容相同，但在使用宽松相等<code>==</code>比较时，因为它们是两个不同的对象实例，所以结果为false。</p>
-</li>
-<li><p><code>[] == ![] // true</code><br>这个表达式实际上分两步理解：</p>
-<ol>
-<li><code>![]</code> 首先执行，<code>[]</code>转换为布尔值再取反，结果是false。</li>
-<li><code>[]</code>会转换为<code>&quot;&quot;</code>，而<code>false</code>被转换为<code>0</code>。就成了<code>&quot;&quot; == 0</code>的比较。根据JavaScript的类型转换规则，空字符串和数字0在比较时被认为是相等的（因为都转为了相同的布尔值false），所以结果为true。</li>
-</ol>
-</li>
-<li><p><code>[] == !&#123;&#125; // true</code><br><code>!&#123;&#125;</code>同样是非空对象转换为布尔值取反，与上面相同，结果为true。</p>
-</li>
-<li><p><code>&#123;&#125; == !&#123;&#125; 、&#123;&#125; == &#123;&#125; 、&#123;&#125; == ![] // Uncaught SyntaxError: Unexpected token &#39;==&#39;</code></p>
-<blockquote>
-<p>这里就不再是宽松相等比较类型转换的问题了<br>  这些表达式报错是因为在JS中，<font color="red">大括号 {} 既可以表示对象字面量也可以表示代码块。</font><br>  在这些情况下，解释器尝试将它们解释为代码块，但是紧接着的 <code>==</code> 或 <code>!=</code> 导致了语法错误，因为<strong>代码块后面直接跟比较操作符是不合法的</strong>。解决这个问题<strong>需要确保大括号用于创建对象时明确其意图</strong>，例如通过<strong>赋值或声明变量的方式</strong>：<code>(&#123;&#125; == !&#123;&#125;) // false</code>、<code>let obj = &#123;&#125;</code> 等。</p>
-</blockquote>
-</li>
-<li><p><code>(&#123;&#125; == !&#123;&#125;) // false</code><br>这里就是合法的比较了，<code>!&#123;&#125;</code>同样转换为<code>false</code>，然后<code>&#123;&#125;</code>转换为原始值字符串<code>[object Object]</code><br>所以表达式变成了<code>[object Object] == false</code>，结果为false。</p>
-</li>
-</ul>
-<hr>
-<p>理解JavaScript的宽松相等运算符及其隐含的类型转换机制，是成为高效JavaScript开发者的关键之一。尽管这些特性有时可能引入意料之外的行为，但通过掌握它们，我们可以编写出更加健壮、易于维护的代码。面对<code>[] == ![]</code>这样的谜题，我们不再困惑，而是能清晰地解析其背后的逻辑，进而避免类似的陷阱。</p>
-]]></content>
-      <categories>
-        <category>JS</category>
-      </categories>
-      <tags>
-        <tag>JS</tag>
-        <tag>==</tag>
-        <tag>比较运算符</tag>
-        <tag>类型转换</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Hexo使用emoji表情</title>
     <url>/tsukimiya.github.io/2024/05/07/Hexo/hexo%E4%BD%BF%E7%94%A8emoji%E8%A1%A8%E6%83%85/</url>
     <content><![CDATA[<blockquote>
@@ -278,15 +205,347 @@
       </tags>
   </entry>
   <entry>
-    <title>Trouble Set</title>
-    <url>/tsukimiya.github.io/2024/05/31/Problem/Trouble%20Set/</url>
-    <content><![CDATA[<h2 id="axios请求刷新页面的问题"><a href="#axios请求刷新页面的问题" class="headerlink" title="axios请求刷新页面的问题"></a>axios请求刷新页面的问题</h2><p>axios请求会导致页面刷新，这是vscode的live server插件的bug<br>不知道什么原因，但是只要在文件夹打开页面就可以了。</p>
+    <title>ES6模块化</title>
+    <url>/tsukimiya.github.io/2024/05/05/ES6/1.ES6%E6%A8%A1%E5%9D%97%E5%8C%96/</url>
+    <content><![CDATA[<blockquote>
+<p>ES6模块化 与 异步编程高级用法：<br>  E6的模块化语法<br>  使用Promise解决回调地狱的问题<br>  使用 async&#x2F;await 简化 Promise 的调用<br>  什么是 EventLoop<br>  宏任务 和 微任务 的执行顺序</p>
+</blockquote>
+<h2 id="模块化"><a href="#模块化" class="headerlink" title="模块化"></a>模块化</h2><ol>
+<li><p>node.js中如何实现模块化<br>node.js遵循了<strong>CommonJS</strong>的模块化规范。其中:</p>
+<ul>
+<li>导入其它模块使用<code>require()</code>方法</li>
+<li>模块对外共享成员使用<code>module.exports</code>对象</li>
+</ul>
+</li>
+<li><p><strong>模块化的好处</strong>：<br>大家都遵守同样的模块化规范写代码，<strong>降低了沟通的成本，极大方便了各个模块之间的相互调用</strong>，利人利己。</p>
+</li>
+</ol>
+<h3 id="前端模块化规范的分类"><a href="#前端模块化规范的分类" class="headerlink" title="前端模块化规范的分类"></a>前端模块化规范的分类</h3><p>在<strong>ES6模块化规范诞生之前</strong>，JavaScript 社区已经尝试并提出了<strong>AMD、CMD、CommonJS</strong>等模块化规范。</p>
+<blockquote>
+<p>这几个规范不是官方的模块化标准，而是社区的开发者经过反复的实践与尝试，提出来的规范</p>
+</blockquote>
+<p>但是，这些由社区提出的模块化标准，还是存在一定的<strong>差异性与局限性</strong>、<strong>并不是</strong>浏览器与服务器<strong>通用的模块化标准</strong>，例如:</p>
+<ul>
+<li>AMD和CMD适用于<strong>浏览器端</strong>的Javascript模块化</li>
+<li>CommonJS适用于<strong>服务器端</strong>的Javascript模块化</li>
+</ul>
+<p>太多的模块化规范给开发者增加了学习的难度与开发的成本。因此，<strong>大一统的ES6模块化规范诞生了</strong>!</p>
+<h3 id="ES6模块化规范"><a href="#ES6模块化规范" class="headerlink" title="ES6模块化规范"></a>ES6模块化规范</h3><p>ES6模块化规范是浏览器端与服务器端通用的模块化开发规范。</p>
+<p>ES6模块化规范中定义:</p>
+<ul>
+<li>每个js文件都是一个独立的模块</li>
+<li>导入其它模块成员使用<strong>import</strong>关键字</li>
+<li>向外共享模块成员使用<strong>export</strong>关键字</li>
+</ul>
+<h3 id="在node-js中使用ES6模块化"><a href="#在node-js中使用ES6模块化" class="headerlink" title="在node.js中使用ES6模块化"></a>在node.js中使用ES6模块化</h3><p>node.js默认支持CommonJS模块化规范，如果要使用ES6模块化语法，需要配置：</p>
+<ol>
+<li>确保安装了v14.15.1或更高版本的node.js</li>
+<li>在package.json的根节点中添加<code>&quot;type&quot;:&quot;module&quot;</code>节点</li>
+</ol>
+<h2 id="ES6模块化的基本语法"><a href="#ES6模块化的基本语法" class="headerlink" title="ES6模块化的基本语法"></a>ES6模块化的基本语法</h2><p>ES6的模块化主要包含如下3种用法:<br>    1. 默认导出与默认导入<br>    2. 按需导出与按需导入<br>    3. 直接导入并执行模块中的代码</p>
+<ol>
+<li><p>默认导出<br><code>export dufault 默认导出的成员</code></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> n1 = <span class="number">10</span></span><br><span class="line"><span class="keyword">let</span> n2 = <span class="number">20</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">show</span>(<span class="params"></span>)&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  n1,</span><br><span class="line">  show</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注意事项：<strong>只允许默认导出一次</strong>(使用唯一的一次export default)</p>
+</li>
+<li><p>默认导入<br><code>import 接收名称 from &#39;模块标识符&#39;</code></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> m1 <span class="keyword">from</span> <span class="string">&#x27;./1.默认导出.js&#x27;</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(m1); <span class="comment">//&#123; n1: 10, show: [Function: show] &#125;</span></span><br></pre></td></tr></table></figure>
+<p>注意事项：<strong>接收名称</strong>可以是任意名称，只要是<strong>合法的成员名称即可</strong>(只能以字符_$开头，不能以数字)</p>
+</li>
+<li><p>按需导出<br><code>export 按需导出的成员</code></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">let</span> s1 = <span class="string">&#x27;aaa&#x27;</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">let</span> s2 = <span class="string">&#x27;ccc&#x27;</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> <span class="title function_">say</span>(<span class="params"></span>)&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  <span class="attr">a</span>: <span class="number">20</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注意事项：<strong>可以使用多次</strong>，可以和默认导出一起使用。</p>
+</li>
+<li><p>按需导入<br><code>import &#123;s1&#125; from &#39;模块标识符&#39;</code><br>导入多个模块成员<br><code>import &#123;s1,s2,s3&#125; from &#39;模块标识符&#39;</code></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> info, &#123;s1, s2 <span class="keyword">as</span> str2, say&#125; <span class="keyword">from</span> <span class="string">&#x27;./3.按需导出.js&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(s1); <span class="comment">// aaa</span></span><br><span class="line"><span class="comment">// console.log(s2); // 报错，未定义</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(str2); <span class="comment">// ccc</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(say);<span class="comment">// [Function: say]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// info 接收的默认导出的对象</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(info); <span class="comment">// &#123; a:20 &#125;</span></span><br></pre></td></tr></table></figure>
+<p>注意事项：</p>
+<ol>
+<li>按需导入的成员<strong>名称必须</strong>和按需导出的名称<strong>保持一致</strong></li>
+<li>按需导入时，可以使用 <strong>as关键字</strong> 进行<strong>重命名</strong></li>
+<li>按需导入可以和默认导入一起使用</li>
+</ol>
+</li>
+<li><p><strong>直接导入并执行模块中的代码</strong><br>如果<strong>只想单纯地执行某个模块中的代码</strong>，并不需要得到模块中向外共享的成员。此时，可以直接导入并执行模块代码，示例代码如下:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 05.js</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="number">3</span>; i++) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(i);  </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// test.js</span></span><br><span class="line"><span class="keyword">import</span> <span class="string">&#x27;./5.直接运行模块中的代码.js&#x27;</span></span><br><span class="line"><span class="comment">// node testjs 结果 --  0 1 2</span></span><br></pre></td></tr></table></figure></li>
+</ol>
 ]]></content>
       <categories>
-        <category>Problem</category>
+        <category>JS</category>
+        <category>ES6</category>
       </categories>
       <tags>
-        <tag>Problem</tag>
+        <tag>ES6</tag>
+        <tag>ES6模块化</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Promise</title>
+    <url>/tsukimiya.github.io/2024/05/06/ES6/2.Promise/</url>
+    <content><![CDATA[<h2 id="回调地狱"><a href="#回调地狱" class="headerlink" title="回调地狱"></a>回调地狱</h2><ol>
+<li><p>回调地狱<br>多层回调函数的相互嵌套，就形成了回调地狱。示例代码如:</p>
+<blockquote>
+<p>回调地狱更多导致的问题还是：<strong>难以阅读和维护</strong>，通常出现在异步操作中<br>其和递归问题导致的栈溢出还是不同的，两者是不同的问题</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="built_in">setTimeout</span>( <span class="function">() =&gt;</span>&#123; <span class="comment">//第1层回调函数</span></span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>( <span class="string">&#x27;延时1秒后输出&#x27;</span>)</span><br><span class="line">  </span><br><span class="line">  <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123; <span class="comment">//第2层回调函数</span></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;再延时2秒后输出&#x27;</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123; <span class="comment">//第3层回调函数</span></span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;再延时3秒后输出&#x27;</span>)</span><br><span class="line">    &#125;,<span class="number">3000</span>)</span><br><span class="line"></span><br><span class="line">  &#125;,<span class="number">2000</span>)</span><br><span class="line"></span><br><span class="line">&#125;,<span class="number">1000</span>)</span><br></pre></td></tr></table></figure>
+<p>回调地狱的缺点:<br>代码耦合性太强，牵一发而动全身，<strong>难以维护</strong><br>大量冗余的代码相互嵌套，代码的<strong>可读性变差</strong></p>
+</li>
+<li><p>如何解决<br>为了解决回调地狱的问题，ES6 (ECMAScript 2015)中新增了<strong>Promise</strong>的概念。</p>
+<blockquote>
+<p>解决回调地狱的方法包括使用 Promise、async&#x2F;await 等异步编程技术，以及使用函数式编程的方式来组织代码，使其更具可读性和可维护性。</p>
+</blockquote>
+</li>
+</ol>
+<h2 id="Promise基本概念"><a href="#Promise基本概念" class="headerlink" title="Promise基本概念"></a>Promise基本概念</h2><ol>
+<li><p><strong>Promise是一个构造函数</strong></p>
+<ul>
+<li>我们可以创建Promise 的实例 <code>const p = newPromise()</code></li>
+<li>new出来的Promise 实例对象，<strong>代表一个异步操作</strong></li>
+</ul>
+</li>
+<li><p><strong>Promise.prototype 上包含一个.then()方法</strong></p>
+<ul>
+<li>每一次new Promise()构造函数得到的实例对象，</li>
+<li>都可以<strong>通过原型链的方式</strong>访问到.then()方法，例如<code>p.then()</code></li>
+</ul>
+</li>
+<li><p><strong>.then()方法用来预先指定成功和失败的回调函数</strong></p>
+<ul>
+<li>p.then(<strong>成功的回调函数</strong>，<strong>失败的回调函数</strong>)</li>
+<li>p.then(result,&#x3D;&gt; {}, error &#x3D;&gt; {})</li>
+<li>调用.then()方法时，<strong>成功的回调函数是必选的</strong>、失败的回调函数是可选的</li>
+</ul>
+</li>
+</ol>
+<h2 id="基于-then-fs-异步的读取文件内容"><a href="#基于-then-fs-异步的读取文件内容" class="headerlink" title="基于 then-fs 异步的读取文件内容"></a>基于 then-fs 异步的读取文件内容</h2><ol>
+<li><p>基于回调函数按顺序读取文件内容<br>虽然可以保证文件的读取顺序，但是形成了一个回调地狱的问题<br><img src="/tsukimiya.github.io/images/ES6/%E5%9F%BA%E4%BA%8E%E5%9B%9E%E8%B0%83%E5%87%BD%E6%95%B0%E6%8C%89%E9%A1%BA%E5%BA%8F%E8%AF%BB%E5%8F%96%E6%96%87%E4%BB%B6%E5%86%85%E5%AE%B9.png" alt="img"></p>
+</li>
+<li><p>基于 then-fs 读取文件内容<br><strong>fs模块仅支持 以回调函数的方式 读取文件，不支持Promise的调用方式</strong>。因此，需要先安装 then-fs 第三方包，从而支持基于Promise的方式读取文件的内容： <code>npm install then-fs</code></p>
+</li>
+</ol>
+<ul>
+<li><strong>then-fs 的基本使用</strong><br>调用 then-fs 提供的<strong>readFile()<strong>方法，可以异步地读取文件的内容，</strong>它的返回值是 Promise 的实例对象</strong>。因此可以<strong>调用.then()方法</strong>为每个 Promise 异步操作指定<strong>成功</strong>和<strong>失败</strong>之后的回调函数。示例代码如下:<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 基于Promise的方式读取文件</span></span><br><span class="line"><span class="keyword">import</span> thenFs <span class="keyword">from</span> <span class="string">&#x27;then-fs&#x27;</span></span><br><span class="line"><span class="comment">// .then()中的失败回调是可选的，这里省略了</span></span><br><span class="line">thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/1.txt&#x27;</span>,<span class="string">&#x27;utf8&#x27;</span>).<span class="title function_">then</span>(<span class="function">(<span class="params">r1</span>)=&gt;</span>&#123;<span class="variable language_">console</span>.<span class="title function_">log</span>(r1);&#125;)</span><br><span class="line">thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/2.txt&#x27;</span>,<span class="string">&#x27;utf8&#x27;</span>).<span class="title function_">then</span>(<span class="function">(<span class="params">r2</span>)=&gt;</span>&#123;<span class="variable language_">console</span>.<span class="title function_">log</span>(r2);&#125;)</span><br><span class="line">thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/3.txt&#x27;</span>,<span class="string">&#x27;utf8&#x27;</span>).<span class="title function_">then</span>(<span class="function">(<span class="params">r3</span>)=&gt;</span>&#123;<span class="variable language_">console</span>.<span class="title function_">log</span>(r3);&#125;)</span><br></pre></td></tr></table></figure>
+当前只是异步的去读文件，<strong>无法保证文件的读取顺序</strong>，多次执行读取顺序不一</li>
+</ul>
+<h2 id="基于Promise按顺序读取文件的内容"><a href="#基于Promise按顺序读取文件的内容" class="headerlink" title="基于Promise按顺序读取文件的内容"></a>基于Promise按顺序读取文件的内容</h2><ul>
+<li><p><strong>.then方法的特性</strong><br>如果上一个.then()方法中<strong>返回了一个新的Promise实例对象</strong>，则可以通过下一个.then()继续进行处理。通过.then()方法的<strong>链式调用</strong>，就解决了回调地狱的问题。</p>
+</li>
+<li><p><strong>基于Promise</strong>按顺序读取文件的内容<br><strong>只要任何方法返回值是一个Promise实例对象，那就都可以继续调用.then()方法</strong></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> thenFs <span class="keyword">from</span> <span class="string">&#x27;then-fs&#x27;</span></span><br><span class="line"></span><br><span class="line">thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/1.txt&#x27;</span>, <span class="string">&#x27;utf8&#x27;</span>)<span class="comment">// 返回值是Promise的实例对象</span></span><br><span class="line">  .<span class="title function_">then</span>(<span class="function">(<span class="params">r1</span>) =&gt;</span> &#123; <span class="comment">// 通过.then 为返回的promise实例指定成功之后的回调函数</span></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(r1)</span><br><span class="line">    <span class="keyword">return</span> thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/2.txt&#x27;</span>, <span class="string">&#x27;utf8&#x27;</span>)</span><br><span class="line">  &#125;).<span class="title function_">then</span>(<span class="function">(<span class="params">r2</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(r2)</span><br><span class="line">    <span class="keyword">return</span> thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/3.txt&#x27;</span>, <span class="string">&#x27;utf8&#x27;</span>)</span><br><span class="line">  &#125;).<span class="title function_">then</span>(<span class="function">(<span class="params">r3</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(r3)</span><br><span class="line">  &#125;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>通过 .catch 捕获错误<br>在 Promise 的链式操作中如果发生了错误，可以使用Promise.prototype.catch方法进行捕获和处理:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> thenFs <span class="keyword">from</span> <span class="string">&#x27;then-fs&#x27;</span></span><br><span class="line"></span><br><span class="line">thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/11.txt&#x27;</span>, <span class="string">&#x27;utf8&#x27;</span>) <span class="comment">// 文件不存在</span></span><br><span class="line">  .<span class="title function_">then</span>(<span class="function">(<span class="params">r1</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(r1)</span><br><span class="line">    <span class="keyword">return</span> thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/2.txt&#x27;</span>, <span class="string">&#x27;utf8&#x27;</span>)</span><br><span class="line">  &#125;)</span><br><span class="line">  .<span class="title function_">then</span>(<span class="function">(<span class="params">r2</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(r2)</span><br><span class="line">    <span class="keyword">return</span> thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/3.txt&#x27;</span>, <span class="string">&#x27;utf8&#x27;</span>)</span><br><span class="line">  &#125;)</span><br><span class="line">  .<span class="title function_">then</span>(<span class="function">(<span class="params">r3</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(r3)</span><br><span class="line">  &#125;)</span><br><span class="line">  .<span class="title function_">catch</span>(<span class="function">(<span class="params">err</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(err.<span class="property">message</span>)</span><br><span class="line">  &#125;) <span class="comment">// 只返回错误，没有读取的文件内容</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>如果不希望前面的错误导致后续的.then无法正常执行，<strong>可以将.catch的调用提前</strong>：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> thenFs <span class="keyword">from</span> <span class="string">&#x27;then-fs&#x27;</span></span><br><span class="line"></span><br><span class="line">thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/11.txt&#x27;</span>, <span class="string">&#x27;utf8&#x27;</span>)</span><br><span class="line">  .<span class="title function_">catch</span>(<span class="function">(<span class="params">err</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(err.<span class="property">message</span>)</span><br><span class="line">  &#125;)</span><br><span class="line">  .<span class="title function_">then</span>(<span class="function">(<span class="params">r1</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(r1)</span><br><span class="line">    <span class="keyword">return</span> thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/2.txt&#x27;</span>, <span class="string">&#x27;utf8&#x27;</span>)</span><br><span class="line">  &#125;)</span><br><span class="line">  .<span class="title function_">then</span>(<span class="function">(<span class="params">r2</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(r2)</span><br><span class="line">    <span class="keyword">return</span> thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/3.txt&#x27;</span>, <span class="string">&#x27;utf8&#x27;</span>)</span><br><span class="line">  &#125;)</span><br><span class="line">  .<span class="title function_">then</span>(<span class="function">(<span class="params">r3</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(r3)</span><br><span class="line">  &#125;) <span class="comment">// 先打印错误，然后打印读取内容，r1为undefined，r2r3读取成功</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="Promise-all-方法"><a href="#Promise-all-方法" class="headerlink" title="Promise.all()方法"></a>Promise.all()方法</h2><p>Promise.all()方法会发起并行的Promise异步操作，等<strong>所有的异步操作全部结束后</strong>才会执行下一步的.then操作（等待机制）。示例代码如下:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> thenFs <span class="keyword">from</span> <span class="string">&#x27;then-fs&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> promiseArr = [</span><br><span class="line">  thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/1.txt&#x27;</span>, <span class="string">&#x27;utf8&#x27;</span>), </span><br><span class="line">  thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/2.txt&#x27;</span>, <span class="string">&#x27;utf8&#x27;</span>), </span><br><span class="line">  thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/3.txt&#x27;</span>, <span class="string">&#x27;utf8&#x27;</span>)</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="title class_">Promise</span>.<span class="title function_">all</span>(promiseArr).<span class="title function_">then</span>(<span class="function"><span class="params">result</span> =&gt;</span>&#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(result); <span class="comment">// [ &#x27;111&#x27;, &#x27;222&#x27;, &#x27;333&#x27; ]</span></span><br><span class="line">&#125;)</span><br><span class="line">.<span class="title function_">catch</span>(<span class="function"><span class="params">err</span>=&gt;</span>&#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(err.<span class="property">message</span>);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>Promise示例的顺序，就是最终拿到的结果的顺序。如果有一个文件读取错误，所有数据都拿不到</p>
+<h2 id="Promise-race-方法"><a href="#Promise-race-方法" class="headerlink" title="Promise.race() 方法"></a>Promise.race() 方法</h2><p>Promise.race()方法会发起并行的Promise异步操作，<strong>只要任何一个异步操作完成，就立即执行下一步的.then操作</strong>（赛跑机制）。示例代码如下:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> thenFs <span class="keyword">from</span> <span class="string">&#x27;then-fs&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> promiseArr = [</span><br><span class="line">  thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/1.txt&#x27;</span>, <span class="string">&#x27;utf8&#x27;</span>), </span><br><span class="line">  thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/2.txt&#x27;</span>, <span class="string">&#x27;utf8&#x27;</span>), </span><br><span class="line">  thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/3.txt&#x27;</span>, <span class="string">&#x27;utf8&#x27;</span>)</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="title class_">Promise</span>.<span class="title function_">race</span>(promiseArr).<span class="title function_">then</span>(<span class="function"><span class="params">result</span> =&gt;</span>&#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(result);</span><br><span class="line">&#125;)</span><br><span class="line">.<span class="title function_">catch</span>(<span class="function"><span class="params">err</span>=&gt;</span>&#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(err.<span class="property">message</span>);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>只会拿到一个文件的读取结果，读取最快的那个，无法保证读取的文件是哪个</p>
+<h2 id="基于Promise封装异步读文件的方法"><a href="#基于Promise封装异步读文件的方法" class="headerlink" title="基于Promise封装异步读文件的方法"></a>基于Promise封装异步读文件的方法</h2><ul>
+<li><p>方法的封装要求:</p>
+<ol>
+<li>方法的名称要定义为getFile</li>
+<li>方法接收一个形参fpath，表示要读取的文件的路径</li>
+<li>方法的返回值为Promise 实例对象</li>
+</ol>
+</li>
+<li><p>getFile方法的基本定义</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">getFile</span>(<span class="params">fpath</span>)&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Promise</span>()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注意：<strong>new Promise()</strong> 只是创建了一个<strong>形式上的异步操作</strong></p>
+</li>
+<li><p><strong>创建具体的异步操作</strong><br>如果想要创建具体的异步操作，则需要在new Promise()构造函数期间，<strong>传递一个function函数，将具体的<br>异步操作定义到function函数内部</strong>。示例代码如下:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> fs <span class="keyword">from</span> <span class="string">&#x27;fs&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">getFile</span>(<span class="params">fpath</span>)&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">    fs.<span class="title function_">readFile</span>(fpath,<span class="string">&#x27;utf-8&#x27;</span>,<span class="function">(<span class="params">err,dataStr</span>)=&gt;</span>&#123; &#125;)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>获取.then的两个实参<br>通过.then()指定的成功和失败的回调函数，可以在 function的形参中 进行接收，示例代码如下:<br><img src="/tsukimiya.github.io/images/ES6/%E8%8E%B7%E5%8F%96.then%E7%9A%84%E4%B8%A4%E4%B8%AA%E5%AE%9E%E5%8F%82.png" alt="img"></p>
+</li>
+<li><p>调用 resolve 和 reject 回调函数<br>Promise<strong>异步操作的结果</strong>，可以调用 <strong>resolve</strong> 或 <strong>reject</strong> 回调函数进行处理。示例代码如下:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> fs <span class="keyword">from</span> <span class="string">&#x27;fs&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">getFile</span>(<span class="params">fpath</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="keyword">function</span> (<span class="params">resolve,reject</span>) &#123;</span><br><span class="line">    fs.<span class="title function_">readFile</span>(fpath, <span class="string">&#x27;utf-8&#x27;</span>, <span class="function">(<span class="params">err, dataStr</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">if</span>(err) <span class="keyword">return</span> <span class="title function_">reject</span>(err) <span class="comment">// 发生错误</span></span><br><span class="line">      <span class="title function_">resolve</span>(dataStr) <span class="comment">// 读取成功</span></span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_">getFile</span>(<span class="string">&#x27;./files/1.txt&#x27;</span>).<span class="title function_">then</span>(<span class="function">(<span class="params">r1</span>)=&gt;</span>&#123;<span class="variable language_">console</span>.<span class="title function_">log</span>(r1)&#125;,<span class="function">(<span class="params">err</span>)=&gt;</span>&#123;<span class="variable language_">console</span>.<span class="title function_">log</span>(err.<span class="property">message</span>);&#125;)</span><br><span class="line"><span class="comment">// 失败的回调函数可以省略不写，可以用catch进行捕获</span></span><br><span class="line"><span class="title function_">getFile</span>(<span class="string">&#x27;./files/1.txt&#x27;</span>).<span class="title function_">then</span>(<span class="function">(<span class="params">r1</span>)=&gt;</span>&#123;<span class="variable language_">console</span>.<span class="title function_">log</span>(r1)&#125;).<span class="title function_">catch</span>(<span class="function">(<span class="params">err</span>)=&gt;</span>&#123;<span class="variable language_">console</span>.<span class="title function_">log</span>(err.<span class="property">message</span>)&#125;)</span><br></pre></td></tr></table></figure></li>
+</ul>
+]]></content>
+      <categories>
+        <category>JS</category>
+        <category>ES6</category>
+      </categories>
+      <tags>
+        <tag>ES6</tag>
+        <tag>Promise</tag>
+        <tag>回调地狱</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>async/await</title>
+    <url>/tsukimiya.github.io/2024/05/06/ES6/3.async-await/</url>
+    <content><![CDATA[<h2 id="什么是-async-await"><a href="#什么是-async-await" class="headerlink" title="什么是 async &#x2F; await"></a>什么是 async &#x2F; await</h2><p><strong>async&#x2F;await</strong> 是 <strong>ES8</strong>(ECMAScript 2017)引入的新语法，用来<strong>简化Promise异步操作</strong>。在async&#x2F;await出现之前，开发者只能通过<strong>链式.then()的方式</strong>处理Promise异步操作。示例代码如下:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> thenFs <span class="keyword">from</span> <span class="string">&#x27;then-fs&#x27;</span></span><br><span class="line"></span><br><span class="line">thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/1.txt&#x27;</span>, <span class="string">&#x27;utf8&#x27;</span>)<span class="comment">// 返回值是Promise的实例对象</span></span><br><span class="line">  .<span class="title function_">then</span>(<span class="function">(<span class="params">r1</span>) =&gt;</span> &#123; <span class="comment">// 通过.then 为返回的promise实例指定成功之后的回调函数</span></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(r1)</span><br><span class="line">    <span class="keyword">return</span> thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/2.txt&#x27;</span>, <span class="string">&#x27;utf8&#x27;</span>)</span><br><span class="line">  &#125;).<span class="title function_">then</span>(<span class="function">(<span class="params">r2</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(r2)</span><br><span class="line">    <span class="keyword">return</span> thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/3.txt&#x27;</span>, <span class="string">&#x27;utf8&#x27;</span>)</span><br><span class="line">  &#125;).<span class="title function_">then</span>(<span class="function">(<span class="params">r3</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(r3)</span><br><span class="line">  &#125;)</span><br></pre></td></tr></table></figure>
+<p>.then链式调用的<strong>优点</strong>：解决了回调地狱的问题<br>.then链式调用的<strong>缺点</strong>：代码冗余、阅读性差、不易理解</p>
+<h2 id="async-await-的基本使用"><a href="#async-await-的基本使用" class="headerlink" title="async &#x2F; await 的基本使用"></a>async &#x2F; await 的基本使用</h2><p>使用async&#x2F; await简化 Promise异步操作的示例代码如下:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> thenFs <span class="keyword">from</span> <span class="string">&#x27;then-fs&#x27;</span></span><br><span class="line"><span class="comment">// 按顺序读取文件 1 2 3 的内容</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">getAllFile</span>(<span class="params"></span>)&#123;</span><br><span class="line">  <span class="comment">// 如果不加await，它的返回值就是Promise实例，加了await，返回值就是最终读取到的文件中的内容</span></span><br><span class="line">  <span class="keyword">const</span> r1 = <span class="keyword">await</span> thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/1.txt&#x27;</span>,<span class="string">&#x27;utf-8&#x27;</span>)</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(r1) <span class="comment">// 111</span></span><br><span class="line">  <span class="keyword">const</span> r2 = <span class="keyword">await</span> thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/2.txt&#x27;</span>, <span class="string">&#x27;utf-8&#x27;</span>)</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(r2) <span class="comment">// 222</span></span><br><span class="line">  <span class="keyword">const</span> r3 = <span class="keyword">await</span> thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/3.txt&#x27;</span>, <span class="string">&#x27;utf-8&#x27;</span>)</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(r3) <span class="comment">// 333</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_">getAllFile</span>()</span><br></pre></td></tr></table></figure>
+<p>如果<strong>某个方法的返回值是个Promise实例对象</strong>，那么我们就可以在前面<strong>用await</strong>来进行<strong>修饰</strong>，修饰完毕之后，这个<strong>返回值就不再是Promise实例</strong>，而是<strong>变成一个真正的值</strong>。<br>而且需要注意：<font color='red'>如果这个方法内部用到了await，那么这个方法必须被async来修饰</font></p>
+<h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><ol>
+<li><font color='green'>如果在 function 中使用了 await ，则 function <strong>必须</strong>被 async 修饰</font></li>
+<li><font color='green'>在 async 方法中，<strong>第一个 await 之前的代码会同步执行</strong>，await之后的代码会异步执行</font><br>最终输出的顺序：A、B、C、111 222 333、D<br>碰到第一个await，主线程就退出了方法执行，立马输出了C，当1 2 3异步读取完成之后就按顺序输出，最后异步的输出了D<br><img src="/tsukimiya.github.io/images/ES6/async%E6%96%B9%E6%B3%95%E6%89%A7%E8%A1%8C%E9%A1%BA%E5%BA%8F.png" alt="async/await方法执行顺序"></li>
+</ol>
+]]></content>
+      <categories>
+        <category>JS</category>
+        <category>ES6</category>
+      </categories>
+      <tags>
+        <tag>ES6</tag>
+        <tag>async</tag>
+        <tag>await</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>EventLoop</title>
+    <url>/tsukimiya.github.io/2024/05/07/ES6/4.EventLoop/</url>
+    <content><![CDATA[<h2 id="JS的单线程"><a href="#JS的单线程" class="headerlink" title="JS的单线程"></a>JS的单线程</h2><p>JS是一门<strong>单线程执行</strong>的编程语言。同一事件只能做一件事情。</p>
+<p>JS的执行线程<br>↓<br>任务1 → 任务2 → 任务3 → 任务N（待执行的任务队列）</p>
+<p>单线程执行队列的问题：<br>如果<strong>前一个任务非常耗时</strong>，则后续的任务就不得不一直等待，从而导致<strong>程序假死</strong>的问题。</p>
+<h2 id="同步任务和异步任务"><a href="#同步任务和异步任务" class="headerlink" title="同步任务和异步任务"></a>同步任务和异步任务</h2><p>为了防止某个<strong>耗时任务</strong>导致<strong>程序假死</strong>的问题，JavaScript把待执行的任务分为了两类:</p>
+<ol>
+<li>同步任务 (synchronous)<ul>
+<li>又叫做<strong>非耗时任务</strong>，指的是在主线程上排队执行的那些任务</li>
+<li>只有前一个任务执行完毕，才能执行后一个任务</li>
+</ul>
+</li>
+<li>异步任务 (asynchronous)<ul>
+<li>又叫做<strong>耗时任务</strong>，异步任务由JavaScript<strong>委托给宿主环境</strong>进行执行</li>
+<li>当异步任务执行完成后，会<strong>通知JavaScript主线程</strong>执行异步任务的<strong>回调函数</strong><blockquote>
+<p>宿主环境就是JS的执行环境，在浏览器里面运行JS，浏览器就是JS的宿主环境，在Node.js…</p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="同步任务和异步任务的执行过程"><a href="#同步任务和异步任务的执行过程" class="headerlink" title="同步任务和异步任务的执行过程"></a>同步任务和异步任务的执行过程</h2><p><img src="/tsukimiya.github.io/images/ES6/js%E6%89%A7%E8%A1%8C%E8%BF%87%E7%A8%8B.png" alt="js执行过程"></p>
+<h2 id="EventLoop的基本概念"><a href="#EventLoop的基本概念" class="headerlink" title="EventLoop的基本概念"></a>EventLoop的基本概念</h2><p><strong>JavaScript主线程从“任务队列”中读取异步任务的回调函数，放到执行栈中依次执行</strong>。这个过程是循环不断的，所以整个的这种运行机<br>制又称为<strong>EventLoop</strong>(事件循环)。</p>
+<ul>
+<li><p>练习<br><img src="/tsukimiya.github.io/images/ES6/%E7%BB%83%E4%B9%A0.png" alt="练习"></p>
+</li>
+<li><p>分享文章<br>面试必问之 JS 事件循环(Event Loop)，看这一篇足够(<a href="https://zhuanlan.zhihu.com/p/580956436">https://zhuanlan.zhihu.com/p/580956436</a>)</p>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>JS</category>
+        <category>ES6</category>
+      </categories>
+      <tags>
+        <tag>ES6</tag>
+        <tag>EventLoop</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>宏任务和微任务</title>
+    <url>/tsukimiya.github.io/2024/05/08/ES6/5.%E5%AE%8F%E4%BB%BB%E5%8A%A1%E5%92%8C%E5%BE%AE%E4%BB%BB%E5%8A%A1/</url>
+    <content><![CDATA[<h2 id="什么是宏任务和微任务"><a href="#什么是宏任务和微任务" class="headerlink" title="什么是宏任务和微任务"></a>什么是宏任务和微任务</h2><p>JavaScript把异步任务又做了进一步的划分，异步任务又分为两类，分别是:</p>
+<ol>
+<li>宏任务( macrotask)<ul>
+<li>异步Ajax请求、</li>
+<li>setTimeout、setlnterval、</li>
+<li>文件操作</li>
+<li>其它宏任务</li>
+</ul>
+</li>
+<li>微任务( microtask)<ul>
+<li>Promise.then、.catch和.finally</li>
+<li>process.nextTick</li>
+<li>其它微任务</li>
+</ul>
+</li>
+</ol>
+<p><img src="/tsukimiya.github.io/images/ES6/%E5%AE%8F%E4%BB%BB%E5%8A%A1%E5%92%8C%E5%BE%AE%E4%BB%BB%E5%8A%A1.png" alt="宏任务和微任务"></p>
+<h2 id="划分依据"><a href="#划分依据" class="headerlink" title="划分依据"></a>划分依据</h2><p>异步任务是根据<strong>任务的触发时机</strong>和<strong>任务队列的不同</strong>来分为宏任务和微任务的。下面是它们的依据：</p>
+<ol>
+<li><p><strong>触发时机</strong>：</p>
+<ul>
+<li><strong>宏任务（Macro Task）</strong>：宏任务是由 JavaScript 引擎外部的任务触发的，比如 DOM 事件（如点击事件、鼠标移动事件）、<code>setTimeout</code>、<code>setInterval</code>、网络请求等。宏任务代表着一个独立的、顺序执行的任务单元，它们会被放入宏任务队列中等待执行。</li>
+<li><strong>微任务（Micro Task）</strong>：微任务是在当前任务执行完成之后立即执行的任务，它们一般是由 JavaScript 引擎内部触发的，比如 Promise 的状态改变、<code>queueMicrotask</code> 函数等。微任务的执行时机是在当前宏任务执行结束、事件循环进入下一次循环之前。</li>
+</ul>
+</li>
+<li><p><strong>任务队列</strong>：</p>
+<ul>
+<li><strong>宏任务队列</strong>：宏任务队列中存放着各种宏任务，包括了 DOM 事件、定时器、I&#x2F;O 操作等。在事件循环的每一轮中，只有一个宏任务会被执行。</li>
+<li><strong>微任务队列</strong>：微任务队列中存放着微任务，它们的执行顺序是按照它们进入队列的顺序执行的。在每个宏任务执行结束后，会检查并执行所有的微任务，直到微任务队列为空。</li>
+</ul>
+</li>
+</ol>
+<p>因此，异步任务是根据触发时机和任务队列的不同而被分为宏任务和微任务的。这种分化使得 JavaScript 引擎能够灵活地处理异步任务，并根据执行上下文的情况来调度它们的执行顺序。</p>
+<h2 id="执行顺序"><a href="#执行顺序" class="headerlink" title="执行顺序"></a>执行顺序</h2><p>宏任务和微任务是交替执行的。<br>在 JavaScript 中，<strong>执行完同步任务后</strong>，<strong>会先检查是否存在微任务</strong>，如果存在，则先执行微任务队列中的所有微任务。执行完所有微任务后，再去执行宏任务队列中的任务。<br><img src="/tsukimiya.github.io/images/ES6/%E5%AE%8F%E4%BB%BB%E5%8A%A1%E5%BE%AE%E4%BB%BB%E5%8A%A1%E6%89%A7%E8%A1%8C%E9%A1%BA%E5%BA%8F.png" alt="宏任务微任务执行顺序"></p>
+<ul>
+<li><p>场景举例<br><img src="/tsukimiya.github.io/images/ES6/%E5%9C%BA%E6%99%AF.png" alt="场景"></p>
+</li>
+<li><p>练习<br>new Promise 是同步任务，其调用的.then是微任务<br><img src="/tsukimiya.github.io/images/ES6/%E7%BB%83%E4%B9%A02.png" alt="练习2"></p>
+</li>
+<li><p>练习<br><img src="/tsukimiya.github.io/images/ES6/%E7%BB%83%E4%B9%A03.png" alt="练习3"></p>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>JS</category>
+        <category>ES6</category>
+      </categories>
+      <tags>
+        <tag>ES6</tag>
+        <tag>宏任务和微任务</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>简单的API接口案例</title>
+    <url>/tsukimiya.github.io/2024/05/08/Node/API%E6%8E%A5%E5%8F%A3%E6%A1%88%E4%BE%8B/</url>
+    <content><![CDATA[<h2 id="API接口案例"><a href="#API接口案例" class="headerlink" title="API接口案例"></a>API接口案例</h2><p>基于<strong>MySQL数据库 + Express</strong>对外提供<strong>用户列表</strong>的API接口服务</p>
+<ol>
+<li>技术栈：<ul>
+<li>第三方包express、mysql2</li>
+<li>ES6模块化</li>
+<li>Promise</li>
+<li>async&#x2F;await</li>
+</ul>
+</li>
+<li>主要实现步骤<ol>
+<li>搭建项目的基本结构</li>
+<li>创建基本的服务器</li>
+<li>创建db数据库操作模块</li>
+<li>创建user_ctrl 业务模块</li>
+<li>创建user_router路由模块</li>
+</ol>
+</li>
+</ol>
+<h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><ol>
+<li><p>初始化包管理配置文件package.json —— <code>npm init -y</code></p>
+</li>
+<li><p>启用ES6模块化支持</p>
+<ul>
+<li>在package.json中声明<code>&quot;type&quot;: &quot;module&quot;</code></li>
+</ul>
+</li>
+<li><p>安装第三方依赖包</p>
+<ul>
+<li>运行<code>npm install express@4.17.1 mysql2@2.2.5</code></li>
+</ul>
+</li>
+<li><p>创建最基本的web服务器</p>
+ <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// app.js</span></span><br><span class="line"><span class="comment">//导入express模块</span></span><br><span class="line"><span class="keyword">import</span> express <span class="keyword">from</span> <span class="string">&#x27;express&#x27;</span></span><br><span class="line"><span class="comment">//创建express服务器实例</span></span><br><span class="line"><span class="keyword">const</span> app = <span class="title function_">express</span>()</span><br><span class="line"></span><br><span class="line"><span class="comment">//调用app.listen方法，指定端口号并启动web服务器</span></span><br><span class="line">app.<span class="title function_">listen</span>(<span class="number">8080</span>,<span class="function">()=&gt;</span>&#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;Express server running at http://127.0.0.1:8080&#x27;</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></li>
+<li><p>创建db数据库操作模块</p>
+ <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// db/index.js</span></span><br><span class="line"><span class="keyword">import</span> mysql <span class="keyword">from</span> <span class="string">&#x27;mysql2&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> pool = mysql.<span class="title function_">createPool</span>(&#123;</span><br><span class="line">  <span class="attr">host</span>: <span class="string">&#x27;127.0.0.1&#x27;</span>, <span class="comment">// 指定操作哪台电脑</span></span><br><span class="line">  <span class="attr">port</span>: <span class="number">3306</span>, <span class="comment">// 指定端口号，一般mysql数据库的端口号都是3306</span></span><br><span class="line">  <span class="attr">database</span>: <span class="string">&#x27;my_db_01&#x27;</span>,</span><br><span class="line">  <span class="attr">user</span>: <span class="string">&#x27;root&#x27;</span>,</span><br><span class="line">  <span class="attr">password</span>: <span class="string">&#x27;ayu123+&#x27;</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 如果导出pool，它不支持以promise API的形式来操作数据库</span></span><br><span class="line"><span class="comment">// 此时我们需要调用pool提供的.promise()，把返回值导出出去</span></span><br><span class="line"><span class="comment">// 外界拿到数据库的连接对象之后，就可以以Promise的方式来操作数据库</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> pool.<span class="title function_">promise</span>()</span><br></pre></td></tr></table></figure></li>
+<li><p>创建user_ctrl 业务模块</p>
+ <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// controller/user_ctrl.js</span></span><br><span class="line"><span class="keyword">import</span> db <span class="keyword">from</span> <span class="string">&#x27;../db/index.js&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用ES6的按需导出语法，将getALLUser语法导出出去</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">getAllUser</span>(<span class="params">req,res</span>)&#123;</span><br><span class="line">  <span class="comment">// 数组中，索引为0的那一项，是最终需要的数据，所以解构赋值出一个rows</span></span><br><span class="line">  <span class="keyword">const</span> [rows] = <span class="keyword">await</span> db.<span class="title function_">query</span>(<span class="string">&#x27;select id,username,nickname from users&#x27;</span>)</span><br><span class="line">  res.<span class="title function_">send</span>(&#123;</span><br><span class="line">    <span class="attr">status</span>: <span class="number">0</span>,</span><br><span class="line">    <span class="attr">messages</span>: <span class="string">&#x27;获取用户列表数据成功！&#x27;</span>,</span><br><span class="line">    <span class="attr">data</span>: rows,</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>创建user_router路由模块</p>
+ <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// router/user_router.js</span></span><br><span class="line"><span class="keyword">import</span> express <span class="keyword">from</span> <span class="string">&#x27;express&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123; getAllUser &#125; <span class="keyword">from</span> <span class="string">&#x27;../controller/user_ctrl.js&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> router = <span class="keyword">new</span> express.<span class="title class_">Router</span>()</span><br><span class="line">router.<span class="title function_">get</span>(<span class="string">&#x27;/user&#x27;</span>, getAllUser)</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> router</span><br><span class="line"></span><br><span class="line"><span class="comment">// 在app.js注册路由</span></span><br><span class="line"><span class="keyword">import</span> userRouter <span class="keyword">from</span> <span class="string">&#x27;./router/user_router.js&#x27;</span></span><br><span class="line">app.<span class="title function_">use</span>(<span class="string">&#x27;/api&#x27;</span>, userRouter)</span><br></pre></td></tr></table></figure></li>
+<li><p>使用try…catch捕获异常<br>当报错之后，使用catch进行处理，程序不会发生崩溃</p>
+ <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// controller/user_ctrl.js</span></span><br><span class="line"><span class="keyword">import</span> db <span class="keyword">from</span> <span class="string">&#x27;../db/index.js&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用ES6的按需导出语法，将getALLUser语法导出出去</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">getAllUser</span>(<span class="params">req,res</span>)&#123;</span><br><span class="line">  <span class="comment">// 数组中，索引为0的那一项，是最终需要的数据，所以解构赋值出一个rows</span></span><br><span class="line">  <span class="keyword">try</span>&#123;</span><br><span class="line">    <span class="keyword">const</span> [rows] = <span class="keyword">await</span> db.<span class="title function_">query</span>(<span class="string">&#x27;select id,username,nickname,xxx from users&#x27;</span>)</span><br><span class="line">    res.<span class="title function_">send</span>(&#123;</span><br><span class="line">      <span class="attr">status</span>: <span class="number">0</span>,</span><br><span class="line">      <span class="attr">messages</span>: <span class="string">&#x27;获取用户列表数据成功！&#x27;</span>,</span><br><span class="line">      <span class="attr">data</span>: rows,</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;<span class="keyword">catch</span>(err)&#123;</span><br><span class="line">    res.<span class="title function_">send</span>(&#123;</span><br><span class="line">      <span class="attr">status</span>: <span class="number">1</span>,</span><br><span class="line">      <span class="attr">messages</span>: <span class="string">&#x27;获取用户数据失败！&#x27;</span>,</span><br><span class="line">      <span class="attr">desc</span>: err.<span class="property">messages</span></span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+]]></content>
+      <categories>
+        <category>Node.js</category>
+      </categories>
+      <tags>
+        <tag>Node.js</tag>
       </tags>
   </entry>
   <entry>
@@ -413,57 +672,76 @@
       </tags>
   </entry>
   <entry>
-    <title>简单的API接口案例</title>
-    <url>/tsukimiya.github.io/2024/05/08/Node/API%E6%8E%A5%E5%8F%A3%E6%A1%88%E4%BE%8B/</url>
-    <content><![CDATA[<h2 id="API接口案例"><a href="#API接口案例" class="headerlink" title="API接口案例"></a>API接口案例</h2><p>基于<strong>MySQL数据库 + Express</strong>对外提供<strong>用户列表</strong>的API接口服务</p>
+    <title>JS相等性比较陷阱揭秘：理解`[]==![]`为`true`背后的宽松相等运算符与类型转换</title>
+    <url>/tsukimiya.github.io/2024/05/23/JS/JS%E7%9A%84%E7%9B%B8%E7%AD%89%E6%80%A7%E6%AF%94%E8%BE%83%E9%99%B7%E9%98%B1/</url>
+    <content><![CDATA[<h1 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h1><p>JavaScript是一门弱类型（或称动态类型）语言，这意味着<strong>变量的类型可以在运行时改变</strong>，为开发者提供了极大的灵活性。然而，这也引入了类型转换的概念，尤其是在使用宽松相等运算符&#x3D;&#x3D;进行比较时。宽松相等不仅比较值，还会在必要时自动转换类型以进行比较，这一特性有时会导致预期之外的结果。</p>
+<hr>
+<p>下面来看一组比较运算符的例子：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">[] == []  <span class="comment">// false</span></span><br><span class="line">[] == ![] <span class="comment">// true</span></span><br><span class="line">[] == !&#123;&#125; <span class="comment">// true</span></span><br><span class="line">&#123;&#125; == !&#123;&#125; <span class="comment">// Uncaught SyntaxError: Unexpected token &#x27;==&#x27;</span></span><br><span class="line">&#123;&#125; == &#123;&#125;  <span class="comment">// Uncaught SyntaxError: Unexpected token &#x27;==&#x27;</span></span><br><span class="line">&#123;&#125; == ![] <span class="comment">// Uncaught SyntaxError: Unexpected token &#x27;==&#x27;</span></span><br><span class="line">&#123;&#125; == []  <span class="comment">// Uncaught SyntaxError: Unexpected token &#x27;==&#x27;</span></span><br><span class="line">(&#123;&#125; == !&#123;&#125;) <span class="comment">// false</span></span><br></pre></td></tr></table></figure>
+<p>提出问题：<strong>为什么[] &#x3D;&#x3D; ![]会得出true这样一个看似反直觉的结果？</strong><br>下面，我们将会逐步接近答案，揭开这个陷阱。</p>
+<hr>
+<h1 id="JavaScript中的比较运算符"><a href="#JavaScript中的比较运算符" class="headerlink" title="JavaScript中的比较运算符"></a>JavaScript中的比较运算符</h1><h2 id="严格相等与宽松相等"><a href="#严格相等与宽松相等" class="headerlink" title="严格相等与宽松相等"></a>严格相等与宽松相等</h2><ul>
+<li>严格相等运算符 <code>===</code> 要求<font color="red">两边的值及其类型完全一致</font>才能返回 <code>true</code>，是最安全的比较方式。</li>
+<li>宽松相等运算符 <code>==</code> 在比较前，<font color="red">如果两侧数据类型不匹配，会尝试将它们转换成相同类型后再比较</font>，这便是问题的根源所在。</li>
+</ul>
+<h2 id="类型转换规则"><a href="#类型转换规则" class="headerlink" title="类型转换规则"></a>类型转换规则</h2><p>类型转换发生在比较操作中，涉及多种类型间的转换逻辑，例如：</p>
+<ul>
+<li>布尔值转数字 (<code>true</code> 转换为 <code>1</code>, <code>false</code> 转换为 <code>0</code>)</li>
+<li>字符串与数字之间的相互转换</li>
+<li>对象转换为原始值（通常是字符串或数字）</li>
+</ul>
+<hr>
+<h1 id="深入解析"><a href="#深入解析" class="headerlink" title="深入解析[] == ![]"></a>深入解析<code>[] == ![]</code></h1><h2 id="逻辑非运算符"><a href="#逻辑非运算符" class="headerlink" title="逻辑非运算符!"></a>逻辑非运算符<code>!</code></h2><p>首先，理解<code>![]</code>是如何工作的。逻辑非运算符<code>!</code>会对表达式求布尔值，然后取反。对于数组（即使是空数组<code>[]</code>），在布尔上下文中被视为<code>true</code>，因此<code>![]</code>的结果是<code>false</code>。在宽松比较的上下文中，<code>false</code>进一步被转换为数字<code>0</code>。</p>
+<h2 id="数组到字符串再到数字"><a href="#数组到字符串再到数字" class="headerlink" title="数组到字符串再到数字"></a>数组到字符串再到数字</h2><p>接下来，考虑左侧的空数组<code>[]</code>。在宽松相等比较中，数组会首先转换为它的字符串表示形式，即<code>&quot;&quot;</code>（空字符串）。随后，空字符串在进一步的比较中会被转换为数字<code>0</code>。</p>
+<h2 id="比较””-0"><a href="#比较””-0" class="headerlink" title="比较”” &#x3D;&#x3D; 0"></a>比较”” &#x3D;&#x3D; 0</h2><p>因此，<code>[] == ![]</code> 的比较实质上变为<code>&quot;&quot; == 0</code>。在JavaScript的宽松比较规则下，空字符串<code>&quot;&quot;</code>和数字<code>0</code>都被认为是“空”或“假”值，在比较时被视作相等。这解释了为什么<code>[] == ![]</code>的结果是<code>true</code>，尽管直观上两者看似完全不同。</p>
+<hr>
+<h1 id="宽松相等运算符的其他陷阱示例"><a href="#宽松相等运算符的其他陷阱示例" class="headerlink" title="宽松相等运算符的其他陷阱示例"></a>宽松相等运算符的其他陷阱示例</h1><p>除了<code>[] == ![]</code>，宽松相等还可能导致其他令人迷惑的结果，例如：</p>
+<ul>
+<li><code>0 == &#39;0&#39;</code>：数字<code>0</code>与字符串<code>&#39;0&#39;</code>在宽松比较中相等。</li>
+<li><code>null == undefined</code>：这两种特殊的值在比较时也被认为是相等的。</li>
+</ul>
+<hr>
+<h1 id="最佳实践与建议"><a href="#最佳实践与建议" class="headerlink" title="最佳实践与建议"></a>最佳实践与建议</h1><p>为了避免由宽松相等引发的潜在问题，建议采取以下措施：</p>
+<ul>
+<li><font color="red">首选严格相等运算符 “&#x3D;&#x3D;&#x3D;”：除非你明确知道并期望类型转换发生，否则总是使用严格相等。</font></li>
+<li>显式类型转换：当你确实需要进行类型转换时，显式地进行，比如使用<code>Number()</code>, <code>String()</code>或<code>Boolean()</code>函数，以增强代码的可读性。</li>
+<li>代码审查：团队内部实施代码审查，可以帮助识别并纠正潜在的比较陷阱。</li>
+<li>单元测试：编写测试用例来验证比较逻辑的正确性，确保代码行为符合预期。</li>
+</ul>
+<hr>
+<h1 id="再次回顾开始的问题"><a href="#再次回顾开始的问题" class="headerlink" title="再次回顾开始的问题"></a>再次回顾开始的问题</h1><figure class="highlight js"><table><tr><td class="code"><pre><span class="line">[] == []  <span class="comment">// false</span></span><br><span class="line">[] == ![] <span class="comment">// true</span></span><br><span class="line">[] == !&#123;&#125; <span class="comment">// true</span></span><br><span class="line">&#123;&#125; == !&#123;&#125; <span class="comment">// Uncaught SyntaxError: Unexpected token &#x27;==&#x27;</span></span><br><span class="line">&#123;&#125; == &#123;&#125;  <span class="comment">// Uncaught SyntaxError: Unexpected token &#x27;==&#x27;</span></span><br><span class="line">&#123;&#125; == ![] <span class="comment">// Uncaught SyntaxError: Unexpected token &#x27;==&#x27;</span></span><br><span class="line">&#123;&#125; == []  <span class="comment">// Uncaught SyntaxError: Unexpected token &#x27;==&#x27;</span></span><br><span class="line">(&#123;&#125; == !&#123;&#125;) <span class="comment">// false</span></span><br></pre></td></tr></table></figure>
+
+<p>现在我们可以对它们挨个做出解释：</p>
+<ul>
+<li><p><code>[] == []  // false</code><br>这里两个空数组虽然内容相同，但在使用宽松相等<code>==</code>比较时，因为它们是两个不同的对象实例，所以结果为false。</p>
+</li>
+<li><p><code>[] == ![] // true</code><br>这个表达式实际上分两步理解：</p>
 <ol>
-<li>技术栈：<ul>
-<li>第三方包express、mysql2</li>
-<li>ES6模块化</li>
-<li>Promise</li>
-<li>async&#x2F;await</li>
-</ul>
-</li>
-<li>主要实现步骤<ol>
-<li>搭建项目的基本结构</li>
-<li>创建基本的服务器</li>
-<li>创建db数据库操作模块</li>
-<li>创建user_ctrl 业务模块</li>
-<li>创建user_router路由模块</li>
+<li><code>![]</code> 首先执行，<code>[]</code>转换为布尔值再取反，结果是false。</li>
+<li><code>[]</code>会转换为<code>&quot;&quot;</code>，而<code>false</code>被转换为<code>0</code>。就成了<code>&quot;&quot; == 0</code>的比较。根据JavaScript的类型转换规则，空字符串和数字0在比较时被认为是相等的（因为都转为了相同的布尔值false），所以结果为true。</li>
 </ol>
 </li>
-</ol>
-<h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><ol>
-<li><p>初始化包管理配置文件package.json —— <code>npm init -y</code></p>
+<li><p><code>[] == !&#123;&#125; // true</code><br><code>!&#123;&#125;</code>同样是非空对象转换为布尔值取反，与上面相同，结果为true。</p>
 </li>
-<li><p>启用ES6模块化支持</p>
-<ul>
-<li>在package.json中声明<code>&quot;type&quot;: &quot;module&quot;</code></li>
+<li><p><code>&#123;&#125; == !&#123;&#125; 、&#123;&#125; == &#123;&#125; 、&#123;&#125; == ![] // Uncaught SyntaxError: Unexpected token &#39;==&#39;</code></p>
+<blockquote>
+<p>这里就不再是宽松相等比较类型转换的问题了<br>  这些表达式报错是因为在JS中，<font color="red">大括号 {} 既可以表示对象字面量也可以表示代码块。</font><br>  在这些情况下，解释器尝试将它们解释为代码块，但是紧接着的 <code>==</code> 或 <code>!=</code> 导致了语法错误，因为<strong>代码块后面直接跟比较操作符是不合法的</strong>。解决这个问题<strong>需要确保大括号用于创建对象时明确其意图</strong>，例如通过<strong>赋值或声明变量的方式</strong>：<code>(&#123;&#125; == !&#123;&#125;) // false</code>、<code>let obj = &#123;&#125;</code> 等。</p>
+</blockquote>
+</li>
+<li><p><code>(&#123;&#125; == !&#123;&#125;) // false</code><br>这里就是合法的比较了，<code>!&#123;&#125;</code>同样转换为<code>false</code>，然后<code>&#123;&#125;</code>转换为原始值字符串<code>[object Object]</code><br>所以表达式变成了<code>[object Object] == false</code>，结果为false。</p>
+</li>
 </ul>
-</li>
-<li><p>安装第三方依赖包</p>
-<ul>
-<li>运行<code>npm install express@4.17.1 mysql2@2.2.5</code></li>
-</ul>
-</li>
-<li><p>创建最基本的web服务器</p>
- <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// app.js</span></span><br><span class="line"><span class="comment">//导入express模块</span></span><br><span class="line"><span class="keyword">import</span> express <span class="keyword">from</span> <span class="string">&#x27;express&#x27;</span></span><br><span class="line"><span class="comment">//创建express服务器实例</span></span><br><span class="line"><span class="keyword">const</span> app = <span class="title function_">express</span>()</span><br><span class="line"></span><br><span class="line"><span class="comment">//调用app.listen方法，指定端口号并启动web服务器</span></span><br><span class="line">app.<span class="title function_">listen</span>(<span class="number">8080</span>,<span class="function">()=&gt;</span>&#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;Express server running at http://127.0.0.1:8080&#x27;</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></li>
-<li><p>创建db数据库操作模块</p>
- <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// db/index.js</span></span><br><span class="line"><span class="keyword">import</span> mysql <span class="keyword">from</span> <span class="string">&#x27;mysql2&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> pool = mysql.<span class="title function_">createPool</span>(&#123;</span><br><span class="line">  <span class="attr">host</span>: <span class="string">&#x27;127.0.0.1&#x27;</span>, <span class="comment">// 指定操作哪台电脑</span></span><br><span class="line">  <span class="attr">port</span>: <span class="number">3306</span>, <span class="comment">// 指定端口号，一般mysql数据库的端口号都是3306</span></span><br><span class="line">  <span class="attr">database</span>: <span class="string">&#x27;my_db_01&#x27;</span>,</span><br><span class="line">  <span class="attr">user</span>: <span class="string">&#x27;root&#x27;</span>,</span><br><span class="line">  <span class="attr">password</span>: <span class="string">&#x27;ayu123+&#x27;</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 如果导出pool，它不支持以promise API的形式来操作数据库</span></span><br><span class="line"><span class="comment">// 此时我们需要调用pool提供的.promise()，把返回值导出出去</span></span><br><span class="line"><span class="comment">// 外界拿到数据库的连接对象之后，就可以以Promise的方式来操作数据库</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> pool.<span class="title function_">promise</span>()</span><br></pre></td></tr></table></figure></li>
-<li><p>创建user_ctrl 业务模块</p>
- <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// controller/user_ctrl.js</span></span><br><span class="line"><span class="keyword">import</span> db <span class="keyword">from</span> <span class="string">&#x27;../db/index.js&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用ES6的按需导出语法，将getALLUser语法导出出去</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">getAllUser</span>(<span class="params">req,res</span>)&#123;</span><br><span class="line">  <span class="comment">// 数组中，索引为0的那一项，是最终需要的数据，所以解构赋值出一个rows</span></span><br><span class="line">  <span class="keyword">const</span> [rows] = <span class="keyword">await</span> db.<span class="title function_">query</span>(<span class="string">&#x27;select id,username,nickname from users&#x27;</span>)</span><br><span class="line">  res.<span class="title function_">send</span>(&#123;</span><br><span class="line">    <span class="attr">status</span>: <span class="number">0</span>,</span><br><span class="line">    <span class="attr">messages</span>: <span class="string">&#x27;获取用户列表数据成功！&#x27;</span>,</span><br><span class="line">    <span class="attr">data</span>: rows,</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>创建user_router路由模块</p>
- <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// router/user_router.js</span></span><br><span class="line"><span class="keyword">import</span> express <span class="keyword">from</span> <span class="string">&#x27;express&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123; getAllUser &#125; <span class="keyword">from</span> <span class="string">&#x27;../controller/user_ctrl.js&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> router = <span class="keyword">new</span> express.<span class="title class_">Router</span>()</span><br><span class="line">router.<span class="title function_">get</span>(<span class="string">&#x27;/user&#x27;</span>, getAllUser)</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> router</span><br><span class="line"></span><br><span class="line"><span class="comment">// 在app.js注册路由</span></span><br><span class="line"><span class="keyword">import</span> userRouter <span class="keyword">from</span> <span class="string">&#x27;./router/user_router.js&#x27;</span></span><br><span class="line">app.<span class="title function_">use</span>(<span class="string">&#x27;/api&#x27;</span>, userRouter)</span><br></pre></td></tr></table></figure></li>
-<li><p>使用try…catch捕获异常<br>当报错之后，使用catch进行处理，程序不会发生崩溃</p>
- <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// controller/user_ctrl.js</span></span><br><span class="line"><span class="keyword">import</span> db <span class="keyword">from</span> <span class="string">&#x27;../db/index.js&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用ES6的按需导出语法，将getALLUser语法导出出去</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">getAllUser</span>(<span class="params">req,res</span>)&#123;</span><br><span class="line">  <span class="comment">// 数组中，索引为0的那一项，是最终需要的数据，所以解构赋值出一个rows</span></span><br><span class="line">  <span class="keyword">try</span>&#123;</span><br><span class="line">    <span class="keyword">const</span> [rows] = <span class="keyword">await</span> db.<span class="title function_">query</span>(<span class="string">&#x27;select id,username,nickname,xxx from users&#x27;</span>)</span><br><span class="line">    res.<span class="title function_">send</span>(&#123;</span><br><span class="line">      <span class="attr">status</span>: <span class="number">0</span>,</span><br><span class="line">      <span class="attr">messages</span>: <span class="string">&#x27;获取用户列表数据成功！&#x27;</span>,</span><br><span class="line">      <span class="attr">data</span>: rows,</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;<span class="keyword">catch</span>(err)&#123;</span><br><span class="line">    res.<span class="title function_">send</span>(&#123;</span><br><span class="line">      <span class="attr">status</span>: <span class="number">1</span>,</span><br><span class="line">      <span class="attr">messages</span>: <span class="string">&#x27;获取用户数据失败！&#x27;</span>,</span><br><span class="line">      <span class="attr">desc</span>: err.<span class="property">messages</span></span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-</ol>
+<hr>
+<p>理解JavaScript的宽松相等运算符及其隐含的类型转换机制，是成为高效JavaScript开发者的关键之一。尽管这些特性有时可能引入意料之外的行为，但通过掌握它们，我们可以编写出更加健壮、易于维护的代码。面对<code>[] == ![]</code>这样的谜题，我们不再困惑，而是能清晰地解析其背后的逻辑，进而避免类似的陷阱。</p>
 ]]></content>
       <categories>
-        <category>Node.js</category>
+        <category>JS</category>
       </categories>
       <tags>
-        <tag>Node.js</tag>
+        <tag>JS</tag>
+        <tag>==</tag>
+        <tag>比较运算符</tag>
+        <tag>类型转换</tag>
       </tags>
   </entry>
   <entry>
@@ -722,6 +1000,154 @@
       </tags>
   </entry>
   <entry>
+    <title>Vue2 过滤器、侦听器、计算属性、axios &amp; vue-cli</title>
+    <url>/tsukimiya.github.io/2024/04/21/Vue2/3.%E8%BF%87%E6%BB%A4%E5%99%A8%20%E4%BE%A6%E5%90%AC%E5%99%A8%20%E8%AE%A1%E7%AE%97%E5%B1%9E%E6%80%A7%20axios&amp;vue-cli/</url>
+    <content><![CDATA[<blockquote>
+<p>目标：<br>在实际开发中合理运用过滤器、侦听器、计算属性解决问题<br>使用axios发起Ajax请求<br>使用vue-cli工具生成工程化的Vue项目</p>
+</blockquote>
+<p>[toc]</p>
+<h2 id="过滤器-Filters"><a href="#过滤器-Filters" class="headerlink" title="过滤器(Filters)"></a>过滤器(Filters)</h2><blockquote>
+<p>2020年9月 vue3发布。增加了很多新功能，但是也删掉了一些功能。 比如删掉了vue2中的过滤器filter功能。<br>与此同时，官方建议： <strong>用方法调用或计算属性替换过滤器</strong>。<br>filter过滤器能加工数据，computed计算属性和methods方法也都可以加工数据，这样的话，就功能重复了…(于是filter被开除了XDD)</p>
+</blockquote>
+<p>vue3已经把过滤器删掉了，只能在vue2中使用，会基础语法就行了。</p>
+<ul>
+<li><font color="green">过滤器要点</font><ol>
+<li>必须被定义到 <code>filters节点</code> 之下，本质是一个函数</li>
+<li>强调：过滤器中一定要有一个返回值</li>
+<li>过滤器函数中的 形参<code>val</code>(随意命名)，永远都是管道符前面的那个值。(多个形参，则第一个外都是undefined)</li>
+<li>过滤器函数 由 管道符 <code>|</code> 调用</li>
+<li>过滤器只能在 <code>差值表达式</code> 或 <code>属性绑定指令v-bind</code> 中调用</li>
+<li>最终得到的结果是过滤器的返回值</li>
+</ol>
+</li>
+</ul>
+<p><strong>过滤器常用于文本的格式化</strong>,应该被添加在JavaScript表达式的尾部，由“<strong>管道符</strong>”进行调用。示例:</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 在花括号中通过管道符调用capitalize过滤器，对message的值进行格式化 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>&#123;&#123;message | capitalize&#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 在v-bind中通过管道符调用formatId过滤器，对rawId的值进行格式化 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">v-bind:id</span>=<span class="string">&quot;rawId | formatId&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="私有过滤器-和-全局过滤器"><a href="#私有过滤器-和-全局过滤器" class="headerlink" title="私有过滤器 和 全局过滤器"></a>私有过滤器 和 全局过滤器</h3><p><strong>在 <code>filters节点</code> 下定义的过滤器</strong>，称为“<strong>私有过滤器</strong>”，因为它只能在当前vm实例所控制的el区域内使用。如果希望在多个vue实例之间共享过滤器，则可以按照如下的格式<strong>定义全局过滤器</strong>:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 全局过滤器–独立于每个vm实例之外 </span></span><br><span class="line"><span class="comment">// Vue.filter()方法接收两个参数:</span></span><br><span class="line"><span class="comment">// 第1个参数，是全局过滤器的&quot;名字”</span></span><br><span class="line"><span class="comment">// 第2个参数，是全局过滤器的&quot;处理函数&quot;</span></span><br><span class="line"><span class="title class_">Vue</span>.<span class="title function_">filter</span>( <span class="string">&#x27;capitalize&#x27;</span>, <span class="function">(<span class="params">str</span>) =&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> str.<span class="title function_">charAt</span>(<span class="number">0</span>).<span class="title function_">toUpperCase</span>() + str.<span class="title function_">slice</span>(<span class="number">1</span>) + <span class="string">&#x27;~~&#x27;</span></span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment">// 如果想要定义多个全局过滤器就再写一个</span></span><br><span class="line"><span class="title class_">Vue</span>.<span class="title function_">filter</span>(<span class="string">&#x27;capi2&#x27;</span>,<span class="function">(<span class="params">str</span>)=&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> str + <span class="string">&#x27;--全局2&#x27;</span>;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p><font color="green">注意：如果私有过滤器和全局过滤器名字一致，此时按就近原则</font></p>
+<h3 id="其他用法-–-连续调用、传参"><a href="#其他用法-–-连续调用、传参" class="headerlink" title="其他用法 – 连续调用、传参"></a>其他用法 – 连续调用、传参</h3><ol>
+<li><p>连续调用多个过滤器 – 串联地调用<br>如：<code>&#123;&#123;message | filterA | filterB&#125;&#125;</code></p>
+</li>
+<li><p>过滤器传参</p>
+ <figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>&#123;&#123;message | filterA(arg1,arg2)&#125;&#125;<span class="tag">&lt;<span class="name">p</span>&gt;</span></span><br></pre></td></tr></table></figure>
+ <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="title class_">Vue</span>.<span class="title function_">filter</span>(<span class="string">&#x27;filterA&#x27;</span>,<span class="function">(<span class="params">msg,arg1,arg2</span>)=&gt;</span>&#123;...&#125;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>过滤器的兼容性<br>仅在vue 2.x 和 1.x中受支持<br>3.x建议使用 <strong>计算属性</strong> 或 <strong>方法</strong> 代替<br>具体的迁移指南参考官方文档给出的<a href="https://v3.vuejs.org/guide/migration/filters.html#migration-strategy">说明</a></p>
+</li>
+</ol>
+<h2 id="Watch侦听器"><a href="#Watch侦听器" class="headerlink" title="Watch侦听器"></a>Watch侦听器</h2><p>Watch侦听器 <strong>监视数据的变化，做出特定操作</strong>，变量名与监听的值对应。语法格式：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> vm = <span class="keyword">new</span> <span class="title class_">Vue</span>(&#123;</span><br><span class="line">    <span class="attr">el</span>:<span class="string">&#x27;#app&#x27;</span>,</span><br><span class="line">    <span class="attr">data</span>:&#123; <span class="attr">username</span>: <span class="string">&#x27;&#x27;</span>&#125;,</span><br><span class="line">    <span class="attr">watch</span>:&#123;</span><br><span class="line">        <span class="comment">// 监视username变化</span></span><br><span class="line">        <span class="comment">// newVal - 变化后的新值，oldVal - 旧值</span></span><br><span class="line">        <span class="title function_">username</span>(<span class="params">newVal,oldVal</span>)&#123;</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(newVal,oldVal)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p><font color="green">应用场景如：侦听用户输入的用户名，每次变化就去查找是否被占用</font></p>
+<h3 id="侦听器的格式"><a href="#侦听器的格式" class="headerlink" title="侦听器的格式"></a>侦听器的格式</h3><ol>
+<li>方法格式的侦听器<ul>
+<li>缺点1: 无法在刚进入页面的时候，自动触发！！</li>
+<li>缺点2: 如果侦听的是一个对象，对象中的属性发生了变化，不会触发侦听器！！</li>
+</ul>
+</li>
+<li><strong>对象格式的侦听器</strong><ul>
+<li>好处1: 可以通过<strong>immediate选项</strong>，让侦听器自动触发！！</li>
+<li>好处2：可以通过<strong>deep选项</strong>，让侦听器深度监听对象中每个属性的变化！！</li>
+</ul>
+</li>
+</ol>
+<ul>
+<li><font color="green">推荐：为了写起来方便，建议定义成方法格式，如果确实需要，再改成对象格式。</font></li>
+</ul>
+<h3 id="immediate选项"><a href="#immediate选项" class="headerlink" title="immediate选项"></a>immediate选项</h3><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> vm = <span class="keyword">new</span> <span class="title class_">Vue</span>(&#123;</span><br><span class="line">    <span class="attr">el</span>:<span class="string">&#x27;#app&#x27;</span>,</span><br><span class="line">    <span class="attr">data</span>:&#123; <span class="attr">username</span>: <span class="string">&#x27;admin&#x27;</span>&#125;,</span><br><span class="line">    <span class="attr">watch</span>:&#123;</span><br><span class="line">        <span class="attr">username</span>:&#123;</span><br><span class="line">            <span class="title function_">handler</span>(<span class="params">newVal,oldVal</span>)&#123;<span class="comment">// 侦听器的处理函数</span></span><br><span class="line">                <span class="variable language_">console</span>.<span class="title function_">log</span>(newVal,oldVal)</span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="attr">immediate</span>: <span class="literal">true</span> <span class="comment">// true表示一进入页面就触发，false是默认值，不写这个参数也是false</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="深度侦听-–-deep选项"><a href="#深度侦听-–-deep选项" class="headerlink" title="深度侦听 – deep选项"></a>深度侦听 – deep选项</h3><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> vm = <span class="keyword">new</span> <span class="title class_">Vue</span>(&#123;</span><br><span class="line">    <span class="attr">el</span>:<span class="string">&#x27;#app&#x27;</span>,</span><br><span class="line">    <span class="attr">data</span>:&#123; <span class="attr">info</span>:&#123;</span><br><span class="line">        <span class="attr">username</span>: <span class="string">&#x27;admin&#x27;</span></span><br><span class="line">    &#125; &#125;,</span><br><span class="line">    <span class="attr">watch</span>:&#123;</span><br><span class="line">        <span class="attr">info</span>:&#123;</span><br><span class="line">            <span class="title function_">handler</span>(<span class="params">newVal,oldVal</span>)&#123;<span class="comment">// 侦听器的处理函数</span></span><br><span class="line">                <span class="variable language_">console</span>.<span class="title function_">log</span>(newVal,oldVal)</span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="attr">deep</span>: <span class="literal">true</span> <span class="comment">// 对象里任意属性变化了，都会触发侦听器</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>如果要侦听的是对象的子属性的变化，则必须包裹一层单引号</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="attr">watch</span>:&#123;</span><br><span class="line">    <span class="string">&#x27;info.username&#x27;</span>(newVal)&#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(newVal,oldVal)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="computed计算属性"><a href="#computed计算属性" class="headerlink" title="computed计算属性"></a>computed计算属性</h2><ol>
+<li>什么是计算属性<br>计算属性指的是通过一系列运算之后，最终得到一个属性值。<br>这个动态计算出来的属性值可以被模板结构或 methods 方法使用。</li>
+<li>应用场景：<font color='red'>实现代码复用</font></li>
+</ol>
+<ul>
+<li>计算属性的使用<ol>
+<li>计算属性要定义到computed节点下，定义成方法格式</li>
+<li>虽然声明的方法格式，但是要当做普通的属性来用<blockquote>
+<p>打印出vue实例，可以发现定义的计算属性是被挂到属性上面的，和data节点上的属性一样</p>
+</blockquote>
+</li>
+</ol>
+</li>
+</ul>
+<p>示例代码如下︰</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> vm = <span class="keyword">new</span> <span class="title class_">Vue</span>(&#123;</span><br><span class="line">    <span class="attr">el</span>: <span class="string">&#x27;#app&#x27;</span>,</span><br><span class="line">    <span class="attr">data</span>: &#123;</span><br><span class="line">        <span class="attr">r</span>:<span class="number">0</span>,<span class="attr">g</span>:<span class="number">0</span>,<span class="attr">b</span>:<span class="number">0</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">computed</span>: &#123;</span><br><span class="line">        <span class="comment">// 计算属性要定义到computed节点下，定义成方法格式</span></span><br><span class="line">        <span class="title function_">rgb</span>(<span class="params"></span>)&#123;<span class="keyword">return</span> <span class="string">`rgb(<span class="subst">$&#123;<span class="variable language_">this</span>.r&#125;</span>,<span class="subst">$&#123;<span class="variable language_">this</span>.g&#125;</span>,<span class="subst">$&#123;<span class="variable language_">this</span>.b&#125;</span>)`</span>&#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">methods</span>: &#123;</span><br><span class="line">        <span class="title function_">show</span>(<span class="params"></span>) &#123;</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">this</span>.<span class="property">rgb</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; </span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="axios的基本用法"><a href="#axios的基本用法" class="headerlink" title="axios的基本用法"></a>axios的基本用法</h2><blockquote>
+<p>axios是一个<strong>专注于网络请求</strong>的库！它只负责发请求和拿数据<br>    中文官网地址：<a href="http://www.axios-js.com/">http://www.axios-js.com/</a></p>
+</blockquote>
+<ul>
+<li><p>基本语法：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="title function_">axios</span>(&#123;</span><br><span class="line">    <span class="attr">method</span>: <span class="string">&#x27;请求的类型&#x27;</span>,</span><br><span class="line">    <span class="attr">url</span>: <span class="string">&#x27;请求的 URL 地址&#x27;</span>,</span><br><span class="line">    <span class="comment">// 如果要携带请求体：</span></span><br><span class="line">    <span class="comment">// url中的查询参数，get请求体传参，可选</span></span><br><span class="line">    <span class="attr">params</span>:&#123;&#125;,</span><br><span class="line">    <span class="comment">// 请求体参数，post请求体传参，可选</span></span><br><span class="line">    <span class="attr">data</span>:&#123;&#125;</span><br><span class="line">&#125;).<span class="title function_">then</span>(<span class="function">(<span class="params">result</span>)=&gt;</span>&#123;</span><br><span class="line">    <span class="comment">// .then 用来指定请求成功之后的回调函数</span></span><br><span class="line">    <span class="comment">// 形参中的 result 是请求成功之后的结果</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>调用axios得到的返回值是一个 Promise 对象<br>axios在请求到数据之后，在真正的数据之外，套了一层壳,result得到的就是套完壳之后的结果。</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">config</span>: &#123;&#125;,</span><br><span class="line">    <span class="attr">data</span>: &#123; 真实的数据 &#125;,</span><br><span class="line">    <span class="attr">headers</span>: &#123;&#125;,</span><br><span class="line">    <span class="attr">request</span>: &#123;&#125;,</span><br><span class="line">    <span class="attr">status</span>: xxx,</span><br><span class="line">    <span class="attr">statusText</span>: <span class="string">&#x27;&#x27;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong><font color='red'>结合async和await调用axios</font></strong><br>这个<code>.then</code>用起来有点麻烦，我们可以使用await来进行简化<br><font color='green'>如果调用某个方法的返回值是 Promise 实例，则前面可以添加await！（这样得到的就直接是result）</font><br><font color='red'>await 只能用在被 async 修饰 的方法中</font></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">ele.<span class="title function_">addEventLister</span>(<span class="string">&#x27;click&#x27;</span>, <span class="keyword">async</span> <span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="keyword">const</span> result =  <span class="keyword">await</span> <span class="title function_">axios</span>(&#123;</span><br><span class="line">        <span class="attr">method</span>: <span class="string">&#x27;请求的类型&#x27;</span>,</span><br><span class="line">        <span class="attr">url</span>: <span class="string">&#x27;请求的 URL 地址&#x27;</span>,</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(result.<span class="property">data</span>);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>使用解构赋值来获取data</strong></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">ele.<span class="title function_">addEventLister</span>(<span class="string">&#x27;click&#x27;</span>, <span class="keyword">async</span> <span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="keyword">const</span> &#123; data &#125; =  <span class="keyword">await</span> <span class="title function_">axios</span>(&#123;</span><br><span class="line">        <span class="attr">method</span>: <span class="string">&#x27;请求的类型&#x27;</span>,</span><br><span class="line">        <span class="attr">url</span>: <span class="string">&#x27;请求的 URL 地址&#x27;</span>,</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(data);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="基于axios-get和axios-post发起请求"><a href="#基于axios-get和axios-post发起请求" class="headerlink" title="基于axios.get和axios.post发起请求"></a>基于axios.get和axios.post发起请求</h3><ol>
+<li>axois.get<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123;data&#125; = <span class="keyword">await</span> axios.<span class="title function_">get</span>(<span class="string">&#x27;url地址&#x27;</span>,&#123;</span><br><span class="line">    <span class="comment">//GET参数</span></span><br><span class="line">    <span class="attr">params</span>: &#123;&#125;</span><br><span class="line">&#125;)</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(data)</span><br></pre></td></tr></table></figure></li>
+<li>axios.post<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">//注意await要在async修饰的函数中使用</span></span><br><span class="line"><span class="keyword">const</span> &#123; data &#125; = <span class="keyword">await</span> axios.<span class="title function_">post</span>(<span class="string">&#x27;http://127.0.0.1:8080/form&#x27;</span>,&#123;</span><br><span class="line">    <span class="attr">unit</span>: <span class="string">&quot;00&quot;</span>,</span><br><span class="line">    <span class="attr">contact</span>: <span class="string">&quot;朱宇楼&quot;</span>,</span><br><span class="line">    <span class="attr">phone</span>: <span class="string">&#x27;15639038667&#x27;</span>,</span><br><span class="line">    <span class="attr">numVisitors</span>: <span class="number">25</span>,</span><br><span class="line">    <span class="attr">guide</span>: <span class="string">&#x27;yes&#x27;</span>,</span><br><span class="line">    <span class="attr">date</span>: <span class="string">&#x27;2025-05-15&#x27;</span>,</span><br><span class="line">    <span class="attr">time</span>: <span class="string">&#x27;14:30&#x27;</span></span><br><span class="line">&#125;)</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(data);</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h2 id="vue-cli的安装和使用"><a href="#vue-cli的安装和使用" class="headerlink" title="vue-cli的安装和使用"></a>vue-cli的安装和使用</h2><p>中文官网：<a href="https://cli.vuejs.org/zh/">https://cli.vuejs.org/zh/</a></p>
+<ol>
+<li><p>什么是单页面应用程序？<br><strong>单页面应用程序</strong>（英文名: Single Page Application）简称SPA，顾名思义，<strong>指的是一个Web 网站中只有唯一的一个HTML页面</strong>，所有的功能与交互都在这唯一的一个页面内完成。</p>
+</li>
+<li><p>什么是vue-cli<br><strong>vue-cli是Vue.js开发的标准工具</strong>。它简化了程序员基于webpack创建工程化的Vue项目的过程。</p>
+</li>
+<li><p>安装<br>vue-cli是npm上的一个全局包，使用<code>npm i</code>命令，即可方便的把它安装到自己电脑上：<code>npm i -g @vue/cli</code></p>
+<ul>
+<li><code>vue -V</code>查看安装的版本号</li>
+</ul>
+</li>
+<li><p>使用<br>基于vue-cli快速生成工程化的Vue项目：<code>vue create 项目名称</code>(建议名称用不带空格的英文)<br> 在想要创建项目的文件夹执行此命令，即会生成项目文件夹，命名即为 项目名称</p>
+<ul>
+<li>选择预设(用方向键)<br>  <strong>初学者建议选择最后一项 – 手动选择要安装哪些功能</strong><br>  按空格选中要安装的预设<br>  一开始建议选择：<br>  Choose Vue version(新版没有这个)、Babel、CSS Pre-processors,其他的不要选<br>  下面接着选择vue版本为2.x，css预处理器为less</li>
+</ul>
+</li>
+<li><p>vue项目中src目录的构成：</p>
+<ol>
+<li>assets 文件夹：存放项目中用到的静态资源文件，例如：css样式表、图片资源</li>
+<li>components 文件夹：程序员封装的、可复用的组件，都要放到components目录下。<br> 里面有一个默认组件HelloWorld.vue，给它删除</li>
+<li>main.js 是项目的入口文件。整个项目的运行，要先执行main.js</li>
+<li>app.Vue 是项目的根组件。我们创建项目之后，看到的页面就是app.Vue，如果想重新换一个页面出来，只需要把它给清空掉。里面的template是一个模版结构。</li>
+</ol>
+</li>
+<li><p>vue项目的运行流程<br> 在工程化的项目中，vue要做的事情很单纯: <strong>通过main.js把 App.vue渲染到index.html的指定区域中</strong>。<br> 其中：</p>
+<ul>
+<li><strong>App.vue</strong>用来编写待渲染的<strong>模板结构</strong></li>
+<li><strong>index.html</strong>中需要预留一个<strong>el区域</strong></li>
+<li><strong>main.js</strong> 把 App.vue渲染到了index.html所预留的区域中  <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 导入 vue 这个包，得到Vue构造函数</span></span><br><span class="line"><span class="keyword">import</span> <span class="title class_">Vue</span> <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span></span><br><span class="line"><span class="comment">// 导入App.vue根组件，将来要把App.vue中的模板结构，渲染到HTML页面中</span></span><br><span class="line"><span class="keyword">import</span> <span class="title class_">App</span> <span class="keyword">from</span> <span class="string">&#x27;./App.vue&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="title class_">Vue</span>.<span class="property">config</span>.<span class="property">productionTip</span> = <span class="literal">false</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建Vue的实例对象</span></span><br><span class="line"><span class="keyword">new</span> <span class="title class_">Vue</span>(&#123;</span><br><span class="line">    <span class="comment">// 把 render 函数指定的组件渲染到HTML页面中，这里指定了App</span></span><br><span class="line">    <span class="comment">// 我们最终的结果是，把这个指定的组件，放到id为app的所在的这个位置，把它给替换掉了</span></span><br><span class="line">    <span class="attr">render</span>: <span class="function"><span class="params">h</span> =&gt;</span> <span class="title function_">h</span>(<span class="title class_">App</span>),</span><br><span class="line">&#125;).$mount(<span class="string">&#x27;#app&#x27;</span>)</span><br><span class="line"><span class="comment">// vue实例的$mount()方法，作用和el属性完全一样</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ol>
+<h2 id="扩展知识"><a href="#扩展知识" class="headerlink" title="扩展知识"></a>扩展知识</h2><h3 id="字符串函数charAt"><a href="#字符串函数charAt" class="headerlink" title="字符串函数charAt()"></a>字符串函数charAt()</h3><p>接收索引值，从字符串中获取对应字符，如：<br><code>&#39;hello&#39;.charAt(4) //&#39;o&#39;</code></p>
+<h3 id="将字符串第一个字符变为大写"><a href="#将字符串第一个字符变为大写" class="headerlink" title="将字符串第一个字符变为大写"></a>将字符串第一个字符变为大写</h3><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> str = <span class="string">&#x27;hello&#x27;</span></span><br><span class="line"><span class="keyword">const</span> first = str.<span class="title function_">charAt</span>(<span class="number">0</span>).<span class="title function_">toUpperCase</span>()</span><br><span class="line"><span class="keyword">const</span> other = str.<span class="title function_">slice</span>(<span class="number">1</span>)<span class="comment">//从指定索引往后截取字符串，返回得到的结果</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(str)</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(first+other)</span><br></pre></td></tr></table></figure>
+
+<h3 id="ajax原生写法"><a href="#ajax原生写法" class="headerlink" title="ajax原生写法"></a>ajax原生写法</h3><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">xxx</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="keyword">const</span> xhr = <span class="keyword">new</span> <span class="title class_">XMLHttpRequest</span>()</span><br><span class="line">    xhr.<span class="title function_">addEventListener</span>(<span class="string">&#x27;load&#x27;</span>,<span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">        <span class="keyword">const</span> result = <span class="title class_">JSON</span>.<span class="title function_">parse</span>(xhr.<span class="property">responseText</span>)</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(result)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>Vue</category>
+        <category>Vue2</category>
+      </categories>
+      <tags>
+        <tag>Vue</tag>
+        <tag>Vue2</tag>
+        <tag>过滤器</tag>
+        <tag>侦听器</tag>
+        <tag>计算属性</tag>
+        <tag>axios</tag>
+        <tag>vue-cli</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Vue2 基本使用 &amp; 常用指令</title>
     <url>/tsukimiya.github.io/2024/04/20/Vue2/2.vue2%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8&amp;%E5%B8%B8%E7%94%A8%E6%8C%87%E4%BB%A4/</url>
     <content><![CDATA[<blockquote>
@@ -940,154 +1366,6 @@
       <tags>
         <tag>Vue</tag>
         <tag>Vue2</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Vue2 过滤器、侦听器、计算属性、axios &amp; vue-cli</title>
-    <url>/tsukimiya.github.io/2024/04/21/Vue2/3.%E8%BF%87%E6%BB%A4%E5%99%A8%20%E4%BE%A6%E5%90%AC%E5%99%A8%20%E8%AE%A1%E7%AE%97%E5%B1%9E%E6%80%A7%20axios&amp;vue-cli/</url>
-    <content><![CDATA[<blockquote>
-<p>目标：<br>在实际开发中合理运用过滤器、侦听器、计算属性解决问题<br>使用axios发起Ajax请求<br>使用vue-cli工具生成工程化的Vue项目</p>
-</blockquote>
-<p>[toc]</p>
-<h2 id="过滤器-Filters"><a href="#过滤器-Filters" class="headerlink" title="过滤器(Filters)"></a>过滤器(Filters)</h2><blockquote>
-<p>2020年9月 vue3发布。增加了很多新功能，但是也删掉了一些功能。 比如删掉了vue2中的过滤器filter功能。<br>与此同时，官方建议： <strong>用方法调用或计算属性替换过滤器</strong>。<br>filter过滤器能加工数据，computed计算属性和methods方法也都可以加工数据，这样的话，就功能重复了…(于是filter被开除了XDD)</p>
-</blockquote>
-<p>vue3已经把过滤器删掉了，只能在vue2中使用，会基础语法就行了。</p>
-<ul>
-<li><font color="green">过滤器要点</font><ol>
-<li>必须被定义到 <code>filters节点</code> 之下，本质是一个函数</li>
-<li>强调：过滤器中一定要有一个返回值</li>
-<li>过滤器函数中的 形参<code>val</code>(随意命名)，永远都是管道符前面的那个值。(多个形参，则第一个外都是undefined)</li>
-<li>过滤器函数 由 管道符 <code>|</code> 调用</li>
-<li>过滤器只能在 <code>差值表达式</code> 或 <code>属性绑定指令v-bind</code> 中调用</li>
-<li>最终得到的结果是过滤器的返回值</li>
-</ol>
-</li>
-</ul>
-<p><strong>过滤器常用于文本的格式化</strong>,应该被添加在JavaScript表达式的尾部，由“<strong>管道符</strong>”进行调用。示例:</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 在花括号中通过管道符调用capitalize过滤器，对message的值进行格式化 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>&#123;&#123;message | capitalize&#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 在v-bind中通过管道符调用formatId过滤器，对rawId的值进行格式化 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">v-bind:id</span>=<span class="string">&quot;rawId | formatId&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="私有过滤器-和-全局过滤器"><a href="#私有过滤器-和-全局过滤器" class="headerlink" title="私有过滤器 和 全局过滤器"></a>私有过滤器 和 全局过滤器</h3><p><strong>在 <code>filters节点</code> 下定义的过滤器</strong>，称为“<strong>私有过滤器</strong>”，因为它只能在当前vm实例所控制的el区域内使用。如果希望在多个vue实例之间共享过滤器，则可以按照如下的格式<strong>定义全局过滤器</strong>:</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 全局过滤器–独立于每个vm实例之外 </span></span><br><span class="line"><span class="comment">// Vue.filter()方法接收两个参数:</span></span><br><span class="line"><span class="comment">// 第1个参数，是全局过滤器的&quot;名字”</span></span><br><span class="line"><span class="comment">// 第2个参数，是全局过滤器的&quot;处理函数&quot;</span></span><br><span class="line"><span class="title class_">Vue</span>.<span class="title function_">filter</span>( <span class="string">&#x27;capitalize&#x27;</span>, <span class="function">(<span class="params">str</span>) =&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> str.<span class="title function_">charAt</span>(<span class="number">0</span>).<span class="title function_">toUpperCase</span>() + str.<span class="title function_">slice</span>(<span class="number">1</span>) + <span class="string">&#x27;~~&#x27;</span></span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment">// 如果想要定义多个全局过滤器就再写一个</span></span><br><span class="line"><span class="title class_">Vue</span>.<span class="title function_">filter</span>(<span class="string">&#x27;capi2&#x27;</span>,<span class="function">(<span class="params">str</span>)=&gt;</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> str + <span class="string">&#x27;--全局2&#x27;</span>;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-<p><font color="green">注意：如果私有过滤器和全局过滤器名字一致，此时按就近原则</font></p>
-<h3 id="其他用法-–-连续调用、传参"><a href="#其他用法-–-连续调用、传参" class="headerlink" title="其他用法 – 连续调用、传参"></a>其他用法 – 连续调用、传参</h3><ol>
-<li><p>连续调用多个过滤器 – 串联地调用<br>如：<code>&#123;&#123;message | filterA | filterB&#125;&#125;</code></p>
-</li>
-<li><p>过滤器传参</p>
- <figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>&#123;&#123;message | filterA(arg1,arg2)&#125;&#125;<span class="tag">&lt;<span class="name">p</span>&gt;</span></span><br></pre></td></tr></table></figure>
- <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="title class_">Vue</span>.<span class="title function_">filter</span>(<span class="string">&#x27;filterA&#x27;</span>,<span class="function">(<span class="params">msg,arg1,arg2</span>)=&gt;</span>&#123;...&#125;)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>过滤器的兼容性<br>仅在vue 2.x 和 1.x中受支持<br>3.x建议使用 <strong>计算属性</strong> 或 <strong>方法</strong> 代替<br>具体的迁移指南参考官方文档给出的<a href="https://v3.vuejs.org/guide/migration/filters.html#migration-strategy">说明</a></p>
-</li>
-</ol>
-<h2 id="Watch侦听器"><a href="#Watch侦听器" class="headerlink" title="Watch侦听器"></a>Watch侦听器</h2><p>Watch侦听器 <strong>监视数据的变化，做出特定操作</strong>，变量名与监听的值对应。语法格式：</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> vm = <span class="keyword">new</span> <span class="title class_">Vue</span>(&#123;</span><br><span class="line">    <span class="attr">el</span>:<span class="string">&#x27;#app&#x27;</span>,</span><br><span class="line">    <span class="attr">data</span>:&#123; <span class="attr">username</span>: <span class="string">&#x27;&#x27;</span>&#125;,</span><br><span class="line">    <span class="attr">watch</span>:&#123;</span><br><span class="line">        <span class="comment">// 监视username变化</span></span><br><span class="line">        <span class="comment">// newVal - 变化后的新值，oldVal - 旧值</span></span><br><span class="line">        <span class="title function_">username</span>(<span class="params">newVal,oldVal</span>)&#123;</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(newVal,oldVal)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-<p><font color="green">应用场景如：侦听用户输入的用户名，每次变化就去查找是否被占用</font></p>
-<h3 id="侦听器的格式"><a href="#侦听器的格式" class="headerlink" title="侦听器的格式"></a>侦听器的格式</h3><ol>
-<li>方法格式的侦听器<ul>
-<li>缺点1: 无法在刚进入页面的时候，自动触发！！</li>
-<li>缺点2: 如果侦听的是一个对象，对象中的属性发生了变化，不会触发侦听器！！</li>
-</ul>
-</li>
-<li><strong>对象格式的侦听器</strong><ul>
-<li>好处1: 可以通过<strong>immediate选项</strong>，让侦听器自动触发！！</li>
-<li>好处2：可以通过<strong>deep选项</strong>，让侦听器深度监听对象中每个属性的变化！！</li>
-</ul>
-</li>
-</ol>
-<ul>
-<li><font color="green">推荐：为了写起来方便，建议定义成方法格式，如果确实需要，再改成对象格式。</font></li>
-</ul>
-<h3 id="immediate选项"><a href="#immediate选项" class="headerlink" title="immediate选项"></a>immediate选项</h3><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> vm = <span class="keyword">new</span> <span class="title class_">Vue</span>(&#123;</span><br><span class="line">    <span class="attr">el</span>:<span class="string">&#x27;#app&#x27;</span>,</span><br><span class="line">    <span class="attr">data</span>:&#123; <span class="attr">username</span>: <span class="string">&#x27;admin&#x27;</span>&#125;,</span><br><span class="line">    <span class="attr">watch</span>:&#123;</span><br><span class="line">        <span class="attr">username</span>:&#123;</span><br><span class="line">            <span class="title function_">handler</span>(<span class="params">newVal,oldVal</span>)&#123;<span class="comment">// 侦听器的处理函数</span></span><br><span class="line">                <span class="variable language_">console</span>.<span class="title function_">log</span>(newVal,oldVal)</span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="attr">immediate</span>: <span class="literal">true</span> <span class="comment">// true表示一进入页面就触发，false是默认值，不写这个参数也是false</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-
-<h3 id="深度侦听-–-deep选项"><a href="#深度侦听-–-deep选项" class="headerlink" title="深度侦听 – deep选项"></a>深度侦听 – deep选项</h3><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> vm = <span class="keyword">new</span> <span class="title class_">Vue</span>(&#123;</span><br><span class="line">    <span class="attr">el</span>:<span class="string">&#x27;#app&#x27;</span>,</span><br><span class="line">    <span class="attr">data</span>:&#123; <span class="attr">info</span>:&#123;</span><br><span class="line">        <span class="attr">username</span>: <span class="string">&#x27;admin&#x27;</span></span><br><span class="line">    &#125; &#125;,</span><br><span class="line">    <span class="attr">watch</span>:&#123;</span><br><span class="line">        <span class="attr">info</span>:&#123;</span><br><span class="line">            <span class="title function_">handler</span>(<span class="params">newVal,oldVal</span>)&#123;<span class="comment">// 侦听器的处理函数</span></span><br><span class="line">                <span class="variable language_">console</span>.<span class="title function_">log</span>(newVal,oldVal)</span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="attr">deep</span>: <span class="literal">true</span> <span class="comment">// 对象里任意属性变化了，都会触发侦听器</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-<p>如果要侦听的是对象的子属性的变化，则必须包裹一层单引号</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="attr">watch</span>:&#123;</span><br><span class="line">    <span class="string">&#x27;info.username&#x27;</span>(newVal)&#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(newVal,oldVal)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="computed计算属性"><a href="#computed计算属性" class="headerlink" title="computed计算属性"></a>computed计算属性</h2><ol>
-<li>什么是计算属性<br>计算属性指的是通过一系列运算之后，最终得到一个属性值。<br>这个动态计算出来的属性值可以被模板结构或 methods 方法使用。</li>
-<li>应用场景：<font color='red'>实现代码复用</font></li>
-</ol>
-<ul>
-<li>计算属性的使用<ol>
-<li>计算属性要定义到computed节点下，定义成方法格式</li>
-<li>虽然声明的方法格式，但是要当做普通的属性来用<blockquote>
-<p>打印出vue实例，可以发现定义的计算属性是被挂到属性上面的，和data节点上的属性一样</p>
-</blockquote>
-</li>
-</ol>
-</li>
-</ul>
-<p>示例代码如下︰</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> vm = <span class="keyword">new</span> <span class="title class_">Vue</span>(&#123;</span><br><span class="line">    <span class="attr">el</span>: <span class="string">&#x27;#app&#x27;</span>,</span><br><span class="line">    <span class="attr">data</span>: &#123;</span><br><span class="line">        <span class="attr">r</span>:<span class="number">0</span>,<span class="attr">g</span>:<span class="number">0</span>,<span class="attr">b</span>:<span class="number">0</span></span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">computed</span>: &#123;</span><br><span class="line">        <span class="comment">// 计算属性要定义到computed节点下，定义成方法格式</span></span><br><span class="line">        <span class="title function_">rgb</span>(<span class="params"></span>)&#123;<span class="keyword">return</span> <span class="string">`rgb(<span class="subst">$&#123;<span class="variable language_">this</span>.r&#125;</span>,<span class="subst">$&#123;<span class="variable language_">this</span>.g&#125;</span>,<span class="subst">$&#123;<span class="variable language_">this</span>.b&#125;</span>)`</span>&#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">methods</span>: &#123;</span><br><span class="line">        <span class="title function_">show</span>(<span class="params"></span>) &#123;</span><br><span class="line">            <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="variable language_">this</span>.<span class="property">rgb</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; </span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-
-<h2 id="axios的基本用法"><a href="#axios的基本用法" class="headerlink" title="axios的基本用法"></a>axios的基本用法</h2><blockquote>
-<p>axios是一个<strong>专注于网络请求</strong>的库！它只负责发请求和拿数据<br>    中文官网地址：<a href="http://www.axios-js.com/">http://www.axios-js.com/</a></p>
-</blockquote>
-<ul>
-<li><p>基本语法：</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="title function_">axios</span>(&#123;</span><br><span class="line">    <span class="attr">method</span>: <span class="string">&#x27;请求的类型&#x27;</span>,</span><br><span class="line">    <span class="attr">url</span>: <span class="string">&#x27;请求的 URL 地址&#x27;</span>,</span><br><span class="line">    <span class="comment">// 如果要携带请求体：</span></span><br><span class="line">    <span class="comment">// url中的查询参数，get请求体传参，可选</span></span><br><span class="line">    <span class="attr">params</span>:&#123;&#125;,</span><br><span class="line">    <span class="comment">// 请求体参数，post请求体传参，可选</span></span><br><span class="line">    <span class="attr">data</span>:&#123;&#125;</span><br><span class="line">&#125;).<span class="title function_">then</span>(<span class="function">(<span class="params">result</span>)=&gt;</span>&#123;</span><br><span class="line">    <span class="comment">// .then 用来指定请求成功之后的回调函数</span></span><br><span class="line">    <span class="comment">// 形参中的 result 是请求成功之后的结果</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-<p>调用axios得到的返回值是一个 Promise 对象<br>axios在请求到数据之后，在真正的数据之外，套了一层壳,result得到的就是套完壳之后的结果。</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">config</span>: &#123;&#125;,</span><br><span class="line">    <span class="attr">data</span>: &#123; 真实的数据 &#125;,</span><br><span class="line">    <span class="attr">headers</span>: &#123;&#125;,</span><br><span class="line">    <span class="attr">request</span>: &#123;&#125;,</span><br><span class="line">    <span class="attr">status</span>: xxx,</span><br><span class="line">    <span class="attr">statusText</span>: <span class="string">&#x27;&#x27;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p><strong><font color='red'>结合async和await调用axios</font></strong><br>这个<code>.then</code>用起来有点麻烦，我们可以使用await来进行简化<br><font color='green'>如果调用某个方法的返回值是 Promise 实例，则前面可以添加await！（这样得到的就直接是result）</font><br><font color='red'>await 只能用在被 async 修饰 的方法中</font></p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">ele.<span class="title function_">addEventLister</span>(<span class="string">&#x27;click&#x27;</span>, <span class="keyword">async</span> <span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="keyword">const</span> result =  <span class="keyword">await</span> <span class="title function_">axios</span>(&#123;</span><br><span class="line">        <span class="attr">method</span>: <span class="string">&#x27;请求的类型&#x27;</span>,</span><br><span class="line">        <span class="attr">url</span>: <span class="string">&#x27;请求的 URL 地址&#x27;</span>,</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(result.<span class="property">data</span>);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p><strong>使用解构赋值来获取data</strong></p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">ele.<span class="title function_">addEventLister</span>(<span class="string">&#x27;click&#x27;</span>, <span class="keyword">async</span> <span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="keyword">const</span> &#123; data &#125; =  <span class="keyword">await</span> <span class="title function_">axios</span>(&#123;</span><br><span class="line">        <span class="attr">method</span>: <span class="string">&#x27;请求的类型&#x27;</span>,</span><br><span class="line">        <span class="attr">url</span>: <span class="string">&#x27;请求的 URL 地址&#x27;</span>,</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(data);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h3 id="基于axios-get和axios-post发起请求"><a href="#基于axios-get和axios-post发起请求" class="headerlink" title="基于axios.get和axios.post发起请求"></a>基于axios.get和axios.post发起请求</h3><ol>
-<li>axois.get<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123;data&#125; = <span class="keyword">await</span> axios.<span class="title function_">get</span>(<span class="string">&#x27;url地址&#x27;</span>,&#123;</span><br><span class="line">    <span class="comment">//GET参数</span></span><br><span class="line">    <span class="attr">params</span>: &#123;&#125;</span><br><span class="line">&#125;)</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(data)</span><br></pre></td></tr></table></figure></li>
-<li>axios.post<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">//注意await要在async修饰的函数中使用</span></span><br><span class="line"><span class="keyword">const</span> &#123; data &#125; = <span class="keyword">await</span> axios.<span class="title function_">post</span>(<span class="string">&#x27;http://127.0.0.1:8080/form&#x27;</span>,&#123;</span><br><span class="line">    <span class="attr">unit</span>: <span class="string">&quot;00&quot;</span>,</span><br><span class="line">    <span class="attr">contact</span>: <span class="string">&quot;朱宇楼&quot;</span>,</span><br><span class="line">    <span class="attr">phone</span>: <span class="string">&#x27;15639038667&#x27;</span>,</span><br><span class="line">    <span class="attr">numVisitors</span>: <span class="number">25</span>,</span><br><span class="line">    <span class="attr">guide</span>: <span class="string">&#x27;yes&#x27;</span>,</span><br><span class="line">    <span class="attr">date</span>: <span class="string">&#x27;2025-05-15&#x27;</span>,</span><br><span class="line">    <span class="attr">time</span>: <span class="string">&#x27;14:30&#x27;</span></span><br><span class="line">&#125;)</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(data);</span><br></pre></td></tr></table></figure></li>
-</ol>
-<h2 id="vue-cli的安装和使用"><a href="#vue-cli的安装和使用" class="headerlink" title="vue-cli的安装和使用"></a>vue-cli的安装和使用</h2><p>中文官网：<a href="https://cli.vuejs.org/zh/">https://cli.vuejs.org/zh/</a></p>
-<ol>
-<li><p>什么是单页面应用程序？<br><strong>单页面应用程序</strong>（英文名: Single Page Application）简称SPA，顾名思义，<strong>指的是一个Web 网站中只有唯一的一个HTML页面</strong>，所有的功能与交互都在这唯一的一个页面内完成。</p>
-</li>
-<li><p>什么是vue-cli<br><strong>vue-cli是Vue.js开发的标准工具</strong>。它简化了程序员基于webpack创建工程化的Vue项目的过程。</p>
-</li>
-<li><p>安装<br>vue-cli是npm上的一个全局包，使用<code>npm i</code>命令，即可方便的把它安装到自己电脑上：<code>npm i -g @vue/cli</code></p>
-<ul>
-<li><code>vue -V</code>查看安装的版本号</li>
-</ul>
-</li>
-<li><p>使用<br>基于vue-cli快速生成工程化的Vue项目：<code>vue create 项目名称</code>(建议名称用不带空格的英文)<br> 在想要创建项目的文件夹执行此命令，即会生成项目文件夹，命名即为 项目名称</p>
-<ul>
-<li>选择预设(用方向键)<br>  <strong>初学者建议选择最后一项 – 手动选择要安装哪些功能</strong><br>  按空格选中要安装的预设<br>  一开始建议选择：<br>  Choose Vue version(新版没有这个)、Babel、CSS Pre-processors,其他的不要选<br>  下面接着选择vue版本为2.x，css预处理器为less</li>
-</ul>
-</li>
-<li><p>vue项目中src目录的构成：</p>
-<ol>
-<li>assets 文件夹：存放项目中用到的静态资源文件，例如：css样式表、图片资源</li>
-<li>components 文件夹：程序员封装的、可复用的组件，都要放到components目录下。<br> 里面有一个默认组件HelloWorld.vue，给它删除</li>
-<li>main.js 是项目的入口文件。整个项目的运行，要先执行main.js</li>
-<li>app.Vue 是项目的根组件。我们创建项目之后，看到的页面就是app.Vue，如果想重新换一个页面出来，只需要把它给清空掉。里面的template是一个模版结构。</li>
-</ol>
-</li>
-<li><p>vue项目的运行流程<br> 在工程化的项目中，vue要做的事情很单纯: <strong>通过main.js把 App.vue渲染到index.html的指定区域中</strong>。<br> 其中：</p>
-<ul>
-<li><strong>App.vue</strong>用来编写待渲染的<strong>模板结构</strong></li>
-<li><strong>index.html</strong>中需要预留一个<strong>el区域</strong></li>
-<li><strong>main.js</strong> 把 App.vue渲染到了index.html所预留的区域中  <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 导入 vue 这个包，得到Vue构造函数</span></span><br><span class="line"><span class="keyword">import</span> <span class="title class_">Vue</span> <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span></span><br><span class="line"><span class="comment">// 导入App.vue根组件，将来要把App.vue中的模板结构，渲染到HTML页面中</span></span><br><span class="line"><span class="keyword">import</span> <span class="title class_">App</span> <span class="keyword">from</span> <span class="string">&#x27;./App.vue&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="title class_">Vue</span>.<span class="property">config</span>.<span class="property">productionTip</span> = <span class="literal">false</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建Vue的实例对象</span></span><br><span class="line"><span class="keyword">new</span> <span class="title class_">Vue</span>(&#123;</span><br><span class="line">    <span class="comment">// 把 render 函数指定的组件渲染到HTML页面中，这里指定了App</span></span><br><span class="line">    <span class="comment">// 我们最终的结果是，把这个指定的组件，放到id为app的所在的这个位置，把它给替换掉了</span></span><br><span class="line">    <span class="attr">render</span>: <span class="function"><span class="params">h</span> =&gt;</span> <span class="title function_">h</span>(<span class="title class_">App</span>),</span><br><span class="line">&#125;).$mount(<span class="string">&#x27;#app&#x27;</span>)</span><br><span class="line"><span class="comment">// vue实例的$mount()方法，作用和el属性完全一样</span></span><br></pre></td></tr></table></figure></li>
-</ul>
-</li>
-</ol>
-<h2 id="扩展知识"><a href="#扩展知识" class="headerlink" title="扩展知识"></a>扩展知识</h2><h3 id="字符串函数charAt"><a href="#字符串函数charAt" class="headerlink" title="字符串函数charAt()"></a>字符串函数charAt()</h3><p>接收索引值，从字符串中获取对应字符，如：<br><code>&#39;hello&#39;.charAt(4) //&#39;o&#39;</code></p>
-<h3 id="将字符串第一个字符变为大写"><a href="#将字符串第一个字符变为大写" class="headerlink" title="将字符串第一个字符变为大写"></a>将字符串第一个字符变为大写</h3><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> str = <span class="string">&#x27;hello&#x27;</span></span><br><span class="line"><span class="keyword">const</span> first = str.<span class="title function_">charAt</span>(<span class="number">0</span>).<span class="title function_">toUpperCase</span>()</span><br><span class="line"><span class="keyword">const</span> other = str.<span class="title function_">slice</span>(<span class="number">1</span>)<span class="comment">//从指定索引往后截取字符串，返回得到的结果</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(str)</span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(first+other)</span><br></pre></td></tr></table></figure>
-
-<h3 id="ajax原生写法"><a href="#ajax原生写法" class="headerlink" title="ajax原生写法"></a>ajax原生写法</h3><figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">xxx</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="keyword">const</span> xhr = <span class="keyword">new</span> <span class="title class_">XMLHttpRequest</span>()</span><br><span class="line">    xhr.<span class="title function_">addEventListener</span>(<span class="string">&#x27;load&#x27;</span>,<span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">        <span class="keyword">const</span> result = <span class="title class_">JSON</span>.<span class="title function_">parse</span>(xhr.<span class="property">responseText</span>)</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">log</span>(result)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>]]></content>
-      <categories>
-        <category>Vue</category>
-        <category>Vue2</category>
-      </categories>
-      <tags>
-        <tag>Vue</tag>
-        <tag>Vue2</tag>
-        <tag>过滤器</tag>
-        <tag>侦听器</tag>
-        <tag>计算属性</tag>
-        <tag>axios</tag>
-        <tag>vue-cli</tag>
       </tags>
   </entry>
   <entry>
@@ -1498,6 +1776,18 @@
         <tag>插槽</tag>
         <tag>自定义指令</tag>
         <tag>ESLint</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Trouble Set</title>
+    <url>/tsukimiya.github.io/2024/05/31/Problem/Trouble%20Set/</url>
+    <content><![CDATA[<h2 id="axios请求刷新页面的问题"><a href="#axios请求刷新页面的问题" class="headerlink" title="axios请求刷新页面的问题"></a>axios请求刷新页面的问题</h2><p>axios请求会导致页面刷新，这是vscode的live server插件的bug<br>不知道什么原因，但是只要在文件夹打开页面就可以了。</p>
+]]></content>
+      <categories>
+        <category>Problem</category>
+      </categories>
+      <tags>
+        <tag>Problem</tag>
       </tags>
   </entry>
   <entry>
@@ -1991,296 +2281,6 @@ vue的导航守卫中除了全局前置守卫之外，还有全局解析守卫�
         <tag>vue3</tag>
         <tag>ts</tag>
         <tag>标签报红</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>ES6模块化</title>
-    <url>/tsukimiya.github.io/2024/05/05/ES6/1.ES6%E6%A8%A1%E5%9D%97%E5%8C%96/</url>
-    <content><![CDATA[<blockquote>
-<p>ES6模块化 与 异步编程高级用法：<br>  E6的模块化语法<br>  使用Promise解决回调地狱的问题<br>  使用 async&#x2F;await 简化 Promise 的调用<br>  什么是 EventLoop<br>  宏任务 和 微任务 的执行顺序</p>
-</blockquote>
-<h2 id="模块化"><a href="#模块化" class="headerlink" title="模块化"></a>模块化</h2><ol>
-<li><p>node.js中如何实现模块化<br>node.js遵循了<strong>CommonJS</strong>的模块化规范。其中:</p>
-<ul>
-<li>导入其它模块使用<code>require()</code>方法</li>
-<li>模块对外共享成员使用<code>module.exports</code>对象</li>
-</ul>
-</li>
-<li><p><strong>模块化的好处</strong>：<br>大家都遵守同样的模块化规范写代码，<strong>降低了沟通的成本，极大方便了各个模块之间的相互调用</strong>，利人利己。</p>
-</li>
-</ol>
-<h3 id="前端模块化规范的分类"><a href="#前端模块化规范的分类" class="headerlink" title="前端模块化规范的分类"></a>前端模块化规范的分类</h3><p>在<strong>ES6模块化规范诞生之前</strong>，JavaScript 社区已经尝试并提出了<strong>AMD、CMD、CommonJS</strong>等模块化规范。</p>
-<blockquote>
-<p>这几个规范不是官方的模块化标准，而是社区的开发者经过反复的实践与尝试，提出来的规范</p>
-</blockquote>
-<p>但是，这些由社区提出的模块化标准，还是存在一定的<strong>差异性与局限性</strong>、<strong>并不是</strong>浏览器与服务器<strong>通用的模块化标准</strong>，例如:</p>
-<ul>
-<li>AMD和CMD适用于<strong>浏览器端</strong>的Javascript模块化</li>
-<li>CommonJS适用于<strong>服务器端</strong>的Javascript模块化</li>
-</ul>
-<p>太多的模块化规范给开发者增加了学习的难度与开发的成本。因此，<strong>大一统的ES6模块化规范诞生了</strong>!</p>
-<h3 id="ES6模块化规范"><a href="#ES6模块化规范" class="headerlink" title="ES6模块化规范"></a>ES6模块化规范</h3><p>ES6模块化规范是浏览器端与服务器端通用的模块化开发规范。</p>
-<p>ES6模块化规范中定义:</p>
-<ul>
-<li>每个js文件都是一个独立的模块</li>
-<li>导入其它模块成员使用<strong>import</strong>关键字</li>
-<li>向外共享模块成员使用<strong>export</strong>关键字</li>
-</ul>
-<h3 id="在node-js中使用ES6模块化"><a href="#在node-js中使用ES6模块化" class="headerlink" title="在node.js中使用ES6模块化"></a>在node.js中使用ES6模块化</h3><p>node.js默认支持CommonJS模块化规范，如果要使用ES6模块化语法，需要配置：</p>
-<ol>
-<li>确保安装了v14.15.1或更高版本的node.js</li>
-<li>在package.json的根节点中添加<code>&quot;type&quot;:&quot;module&quot;</code>节点</li>
-</ol>
-<h2 id="ES6模块化的基本语法"><a href="#ES6模块化的基本语法" class="headerlink" title="ES6模块化的基本语法"></a>ES6模块化的基本语法</h2><p>ES6的模块化主要包含如下3种用法:<br>    1. 默认导出与默认导入<br>    2. 按需导出与按需导入<br>    3. 直接导入并执行模块中的代码</p>
-<ol>
-<li><p>默认导出<br><code>export dufault 默认导出的成员</code></p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> n1 = <span class="number">10</span></span><br><span class="line"><span class="keyword">let</span> n2 = <span class="number">20</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">show</span>(<span class="params"></span>)&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  n1,</span><br><span class="line">  show</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>注意事项：<strong>只允许默认导出一次</strong>(使用唯一的一次export default)</p>
-</li>
-<li><p>默认导入<br><code>import 接收名称 from &#39;模块标识符&#39;</code></p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> m1 <span class="keyword">from</span> <span class="string">&#x27;./1.默认导出.js&#x27;</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(m1); <span class="comment">//&#123; n1: 10, show: [Function: show] &#125;</span></span><br></pre></td></tr></table></figure>
-<p>注意事项：<strong>接收名称</strong>可以是任意名称，只要是<strong>合法的成员名称即可</strong>(只能以字符_$开头，不能以数字)</p>
-</li>
-<li><p>按需导出<br><code>export 按需导出的成员</code></p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">let</span> s1 = <span class="string">&#x27;aaa&#x27;</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">let</span> s2 = <span class="string">&#x27;ccc&#x27;</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> <span class="title function_">say</span>(<span class="params"></span>)&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  <span class="attr">a</span>: <span class="number">20</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>注意事项：<strong>可以使用多次</strong>，可以和默认导出一起使用。</p>
-</li>
-<li><p>按需导入<br><code>import &#123;s1&#125; from &#39;模块标识符&#39;</code><br>导入多个模块成员<br><code>import &#123;s1,s2,s3&#125; from &#39;模块标识符&#39;</code></p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> info, &#123;s1, s2 <span class="keyword">as</span> str2, say&#125; <span class="keyword">from</span> <span class="string">&#x27;./3.按需导出.js&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(s1); <span class="comment">// aaa</span></span><br><span class="line"><span class="comment">// console.log(s2); // 报错，未定义</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(str2); <span class="comment">// ccc</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(say);<span class="comment">// [Function: say]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// info 接收的默认导出的对象</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(info); <span class="comment">// &#123; a:20 &#125;</span></span><br></pre></td></tr></table></figure>
-<p>注意事项：</p>
-<ol>
-<li>按需导入的成员<strong>名称必须</strong>和按需导出的名称<strong>保持一致</strong></li>
-<li>按需导入时，可以使用 <strong>as关键字</strong> 进行<strong>重命名</strong></li>
-<li>按需导入可以和默认导入一起使用</li>
-</ol>
-</li>
-<li><p><strong>直接导入并执行模块中的代码</strong><br>如果<strong>只想单纯地执行某个模块中的代码</strong>，并不需要得到模块中向外共享的成员。此时，可以直接导入并执行模块代码，示例代码如下:</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 05.js</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="number">3</span>; i++) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(i);  </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// test.js</span></span><br><span class="line"><span class="keyword">import</span> <span class="string">&#x27;./5.直接运行模块中的代码.js&#x27;</span></span><br><span class="line"><span class="comment">// node testjs 结果 --  0 1 2</span></span><br></pre></td></tr></table></figure></li>
-</ol>
-]]></content>
-      <categories>
-        <category>JS</category>
-        <category>ES6</category>
-      </categories>
-      <tags>
-        <tag>ES6</tag>
-        <tag>ES6模块化</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Promise</title>
-    <url>/tsukimiya.github.io/2024/05/06/ES6/2.Promise/</url>
-    <content><![CDATA[<h2 id="回调地狱"><a href="#回调地狱" class="headerlink" title="回调地狱"></a>回调地狱</h2><ol>
-<li><p>回调地狱<br>多层回调函数的相互嵌套，就形成了回调地狱。示例代码如:</p>
-<blockquote>
-<p>回调地狱更多导致的问题还是：<strong>难以阅读和维护</strong>，通常出现在异步操作中<br>其和递归问题导致的栈溢出还是不同的，两者是不同的问题</p>
-</blockquote>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="built_in">setTimeout</span>( <span class="function">() =&gt;</span>&#123; <span class="comment">//第1层回调函数</span></span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>( <span class="string">&#x27;延时1秒后输出&#x27;</span>)</span><br><span class="line">  </span><br><span class="line">  <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123; <span class="comment">//第2层回调函数</span></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;再延时2秒后输出&#x27;</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123; <span class="comment">//第3层回调函数</span></span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;再延时3秒后输出&#x27;</span>)</span><br><span class="line">    &#125;,<span class="number">3000</span>)</span><br><span class="line"></span><br><span class="line">  &#125;,<span class="number">2000</span>)</span><br><span class="line"></span><br><span class="line">&#125;,<span class="number">1000</span>)</span><br></pre></td></tr></table></figure>
-<p>回调地狱的缺点:<br>代码耦合性太强，牵一发而动全身，<strong>难以维护</strong><br>大量冗余的代码相互嵌套，代码的<strong>可读性变差</strong></p>
-</li>
-<li><p>如何解决<br>为了解决回调地狱的问题，ES6 (ECMAScript 2015)中新增了<strong>Promise</strong>的概念。</p>
-<blockquote>
-<p>解决回调地狱的方法包括使用 Promise、async&#x2F;await 等异步编程技术，以及使用函数式编程的方式来组织代码，使其更具可读性和可维护性。</p>
-</blockquote>
-</li>
-</ol>
-<h2 id="Promise基本概念"><a href="#Promise基本概念" class="headerlink" title="Promise基本概念"></a>Promise基本概念</h2><ol>
-<li><p><strong>Promise是一个构造函数</strong></p>
-<ul>
-<li>我们可以创建Promise 的实例 <code>const p = newPromise()</code></li>
-<li>new出来的Promise 实例对象，<strong>代表一个异步操作</strong></li>
-</ul>
-</li>
-<li><p><strong>Promise.prototype 上包含一个.then()方法</strong></p>
-<ul>
-<li>每一次new Promise()构造函数得到的实例对象，</li>
-<li>都可以<strong>通过原型链的方式</strong>访问到.then()方法，例如<code>p.then()</code></li>
-</ul>
-</li>
-<li><p><strong>.then()方法用来预先指定成功和失败的回调函数</strong></p>
-<ul>
-<li>p.then(<strong>成功的回调函数</strong>，<strong>失败的回调函数</strong>)</li>
-<li>p.then(result,&#x3D;&gt; {}, error &#x3D;&gt; {})</li>
-<li>调用.then()方法时，<strong>成功的回调函数是必选的</strong>、失败的回调函数是可选的</li>
-</ul>
-</li>
-</ol>
-<h2 id="基于-then-fs-异步的读取文件内容"><a href="#基于-then-fs-异步的读取文件内容" class="headerlink" title="基于 then-fs 异步的读取文件内容"></a>基于 then-fs 异步的读取文件内容</h2><ol>
-<li><p>基于回调函数按顺序读取文件内容<br>虽然可以保证文件的读取顺序，但是形成了一个回调地狱的问题<br><img src="/tsukimiya.github.io/images/ES6/%E5%9F%BA%E4%BA%8E%E5%9B%9E%E8%B0%83%E5%87%BD%E6%95%B0%E6%8C%89%E9%A1%BA%E5%BA%8F%E8%AF%BB%E5%8F%96%E6%96%87%E4%BB%B6%E5%86%85%E5%AE%B9.png" alt="img"></p>
-</li>
-<li><p>基于 then-fs 读取文件内容<br><strong>fs模块仅支持 以回调函数的方式 读取文件，不支持Promise的调用方式</strong>。因此，需要先安装 then-fs 第三方包，从而支持基于Promise的方式读取文件的内容： <code>npm install then-fs</code></p>
-</li>
-</ol>
-<ul>
-<li><strong>then-fs 的基本使用</strong><br>调用 then-fs 提供的<strong>readFile()<strong>方法，可以异步地读取文件的内容，</strong>它的返回值是 Promise 的实例对象</strong>。因此可以<strong>调用.then()方法</strong>为每个 Promise 异步操作指定<strong>成功</strong>和<strong>失败</strong>之后的回调函数。示例代码如下:<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 基于Promise的方式读取文件</span></span><br><span class="line"><span class="keyword">import</span> thenFs <span class="keyword">from</span> <span class="string">&#x27;then-fs&#x27;</span></span><br><span class="line"><span class="comment">// .then()中的失败回调是可选的，这里省略了</span></span><br><span class="line">thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/1.txt&#x27;</span>,<span class="string">&#x27;utf8&#x27;</span>).<span class="title function_">then</span>(<span class="function">(<span class="params">r1</span>)=&gt;</span>&#123;<span class="variable language_">console</span>.<span class="title function_">log</span>(r1);&#125;)</span><br><span class="line">thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/2.txt&#x27;</span>,<span class="string">&#x27;utf8&#x27;</span>).<span class="title function_">then</span>(<span class="function">(<span class="params">r2</span>)=&gt;</span>&#123;<span class="variable language_">console</span>.<span class="title function_">log</span>(r2);&#125;)</span><br><span class="line">thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/3.txt&#x27;</span>,<span class="string">&#x27;utf8&#x27;</span>).<span class="title function_">then</span>(<span class="function">(<span class="params">r3</span>)=&gt;</span>&#123;<span class="variable language_">console</span>.<span class="title function_">log</span>(r3);&#125;)</span><br></pre></td></tr></table></figure>
-当前只是异步的去读文件，<strong>无法保证文件的读取顺序</strong>，多次执行读取顺序不一</li>
-</ul>
-<h2 id="基于Promise按顺序读取文件的内容"><a href="#基于Promise按顺序读取文件的内容" class="headerlink" title="基于Promise按顺序读取文件的内容"></a>基于Promise按顺序读取文件的内容</h2><ul>
-<li><p><strong>.then方法的特性</strong><br>如果上一个.then()方法中<strong>返回了一个新的Promise实例对象</strong>，则可以通过下一个.then()继续进行处理。通过.then()方法的<strong>链式调用</strong>，就解决了回调地狱的问题。</p>
-</li>
-<li><p><strong>基于Promise</strong>按顺序读取文件的内容<br><strong>只要任何方法返回值是一个Promise实例对象，那就都可以继续调用.then()方法</strong></p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> thenFs <span class="keyword">from</span> <span class="string">&#x27;then-fs&#x27;</span></span><br><span class="line"></span><br><span class="line">thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/1.txt&#x27;</span>, <span class="string">&#x27;utf8&#x27;</span>)<span class="comment">// 返回值是Promise的实例对象</span></span><br><span class="line">  .<span class="title function_">then</span>(<span class="function">(<span class="params">r1</span>) =&gt;</span> &#123; <span class="comment">// 通过.then 为返回的promise实例指定成功之后的回调函数</span></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(r1)</span><br><span class="line">    <span class="keyword">return</span> thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/2.txt&#x27;</span>, <span class="string">&#x27;utf8&#x27;</span>)</span><br><span class="line">  &#125;).<span class="title function_">then</span>(<span class="function">(<span class="params">r2</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(r2)</span><br><span class="line">    <span class="keyword">return</span> thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/3.txt&#x27;</span>, <span class="string">&#x27;utf8&#x27;</span>)</span><br><span class="line">  &#125;).<span class="title function_">then</span>(<span class="function">(<span class="params">r3</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(r3)</span><br><span class="line">  &#125;)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>通过 .catch 捕获错误<br>在 Promise 的链式操作中如果发生了错误，可以使用Promise.prototype.catch方法进行捕获和处理:</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> thenFs <span class="keyword">from</span> <span class="string">&#x27;then-fs&#x27;</span></span><br><span class="line"></span><br><span class="line">thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/11.txt&#x27;</span>, <span class="string">&#x27;utf8&#x27;</span>) <span class="comment">// 文件不存在</span></span><br><span class="line">  .<span class="title function_">then</span>(<span class="function">(<span class="params">r1</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(r1)</span><br><span class="line">    <span class="keyword">return</span> thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/2.txt&#x27;</span>, <span class="string">&#x27;utf8&#x27;</span>)</span><br><span class="line">  &#125;)</span><br><span class="line">  .<span class="title function_">then</span>(<span class="function">(<span class="params">r2</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(r2)</span><br><span class="line">    <span class="keyword">return</span> thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/3.txt&#x27;</span>, <span class="string">&#x27;utf8&#x27;</span>)</span><br><span class="line">  &#125;)</span><br><span class="line">  .<span class="title function_">then</span>(<span class="function">(<span class="params">r3</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(r3)</span><br><span class="line">  &#125;)</span><br><span class="line">  .<span class="title function_">catch</span>(<span class="function">(<span class="params">err</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(err.<span class="property">message</span>)</span><br><span class="line">  &#125;) <span class="comment">// 只返回错误，没有读取的文件内容</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>如果不希望前面的错误导致后续的.then无法正常执行，<strong>可以将.catch的调用提前</strong>：</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> thenFs <span class="keyword">from</span> <span class="string">&#x27;then-fs&#x27;</span></span><br><span class="line"></span><br><span class="line">thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/11.txt&#x27;</span>, <span class="string">&#x27;utf8&#x27;</span>)</span><br><span class="line">  .<span class="title function_">catch</span>(<span class="function">(<span class="params">err</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(err.<span class="property">message</span>)</span><br><span class="line">  &#125;)</span><br><span class="line">  .<span class="title function_">then</span>(<span class="function">(<span class="params">r1</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(r1)</span><br><span class="line">    <span class="keyword">return</span> thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/2.txt&#x27;</span>, <span class="string">&#x27;utf8&#x27;</span>)</span><br><span class="line">  &#125;)</span><br><span class="line">  .<span class="title function_">then</span>(<span class="function">(<span class="params">r2</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(r2)</span><br><span class="line">    <span class="keyword">return</span> thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/3.txt&#x27;</span>, <span class="string">&#x27;utf8&#x27;</span>)</span><br><span class="line">  &#125;)</span><br><span class="line">  .<span class="title function_">then</span>(<span class="function">(<span class="params">r3</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(r3)</span><br><span class="line">  &#125;) <span class="comment">// 先打印错误，然后打印读取内容，r1为undefined，r2r3读取成功</span></span><br></pre></td></tr></table></figure></li>
-</ul>
-<h2 id="Promise-all-方法"><a href="#Promise-all-方法" class="headerlink" title="Promise.all()方法"></a>Promise.all()方法</h2><p>Promise.all()方法会发起并行的Promise异步操作，等<strong>所有的异步操作全部结束后</strong>才会执行下一步的.then操作（等待机制）。示例代码如下:</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> thenFs <span class="keyword">from</span> <span class="string">&#x27;then-fs&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> promiseArr = [</span><br><span class="line">  thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/1.txt&#x27;</span>, <span class="string">&#x27;utf8&#x27;</span>), </span><br><span class="line">  thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/2.txt&#x27;</span>, <span class="string">&#x27;utf8&#x27;</span>), </span><br><span class="line">  thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/3.txt&#x27;</span>, <span class="string">&#x27;utf8&#x27;</span>)</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="title class_">Promise</span>.<span class="title function_">all</span>(promiseArr).<span class="title function_">then</span>(<span class="function"><span class="params">result</span> =&gt;</span>&#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(result); <span class="comment">// [ &#x27;111&#x27;, &#x27;222&#x27;, &#x27;333&#x27; ]</span></span><br><span class="line">&#125;)</span><br><span class="line">.<span class="title function_">catch</span>(<span class="function"><span class="params">err</span>=&gt;</span>&#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(err.<span class="property">message</span>);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-<p>Promise示例的顺序，就是最终拿到的结果的顺序。如果有一个文件读取错误，所有数据都拿不到</p>
-<h2 id="Promise-race-方法"><a href="#Promise-race-方法" class="headerlink" title="Promise.race() 方法"></a>Promise.race() 方法</h2><p>Promise.race()方法会发起并行的Promise异步操作，<strong>只要任何一个异步操作完成，就立即执行下一步的.then操作</strong>（赛跑机制）。示例代码如下:</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> thenFs <span class="keyword">from</span> <span class="string">&#x27;then-fs&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> promiseArr = [</span><br><span class="line">  thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/1.txt&#x27;</span>, <span class="string">&#x27;utf8&#x27;</span>), </span><br><span class="line">  thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/2.txt&#x27;</span>, <span class="string">&#x27;utf8&#x27;</span>), </span><br><span class="line">  thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/3.txt&#x27;</span>, <span class="string">&#x27;utf8&#x27;</span>)</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="title class_">Promise</span>.<span class="title function_">race</span>(promiseArr).<span class="title function_">then</span>(<span class="function"><span class="params">result</span> =&gt;</span>&#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(result);</span><br><span class="line">&#125;)</span><br><span class="line">.<span class="title function_">catch</span>(<span class="function"><span class="params">err</span>=&gt;</span>&#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(err.<span class="property">message</span>);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-<p>只会拿到一个文件的读取结果，读取最快的那个，无法保证读取的文件是哪个</p>
-<h2 id="基于Promise封装异步读文件的方法"><a href="#基于Promise封装异步读文件的方法" class="headerlink" title="基于Promise封装异步读文件的方法"></a>基于Promise封装异步读文件的方法</h2><ul>
-<li><p>方法的封装要求:</p>
-<ol>
-<li>方法的名称要定义为getFile</li>
-<li>方法接收一个形参fpath，表示要读取的文件的路径</li>
-<li>方法的返回值为Promise 实例对象</li>
-</ol>
-</li>
-<li><p>getFile方法的基本定义</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">getFile</span>(<span class="params">fpath</span>)&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Promise</span>()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>注意：<strong>new Promise()</strong> 只是创建了一个<strong>形式上的异步操作</strong></p>
-</li>
-<li><p><strong>创建具体的异步操作</strong><br>如果想要创建具体的异步操作，则需要在new Promise()构造函数期间，<strong>传递一个function函数，将具体的<br>异步操作定义到function函数内部</strong>。示例代码如下:</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> fs <span class="keyword">from</span> <span class="string">&#x27;fs&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">getFile</span>(<span class="params">fpath</span>)&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">    fs.<span class="title function_">readFile</span>(fpath,<span class="string">&#x27;utf-8&#x27;</span>,<span class="function">(<span class="params">err,dataStr</span>)=&gt;</span>&#123; &#125;)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>获取.then的两个实参<br>通过.then()指定的成功和失败的回调函数，可以在 function的形参中 进行接收，示例代码如下:<br><img src="/tsukimiya.github.io/images/ES6/%E8%8E%B7%E5%8F%96.then%E7%9A%84%E4%B8%A4%E4%B8%AA%E5%AE%9E%E5%8F%82.png" alt="img"></p>
-</li>
-<li><p>调用 resolve 和 reject 回调函数<br>Promise<strong>异步操作的结果</strong>，可以调用 <strong>resolve</strong> 或 <strong>reject</strong> 回调函数进行处理。示例代码如下:</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> fs <span class="keyword">from</span> <span class="string">&#x27;fs&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">getFile</span>(<span class="params">fpath</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="keyword">function</span> (<span class="params">resolve,reject</span>) &#123;</span><br><span class="line">    fs.<span class="title function_">readFile</span>(fpath, <span class="string">&#x27;utf-8&#x27;</span>, <span class="function">(<span class="params">err, dataStr</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">if</span>(err) <span class="keyword">return</span> <span class="title function_">reject</span>(err) <span class="comment">// 发生错误</span></span><br><span class="line">      <span class="title function_">resolve</span>(dataStr) <span class="comment">// 读取成功</span></span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_">getFile</span>(<span class="string">&#x27;./files/1.txt&#x27;</span>).<span class="title function_">then</span>(<span class="function">(<span class="params">r1</span>)=&gt;</span>&#123;<span class="variable language_">console</span>.<span class="title function_">log</span>(r1)&#125;,<span class="function">(<span class="params">err</span>)=&gt;</span>&#123;<span class="variable language_">console</span>.<span class="title function_">log</span>(err.<span class="property">message</span>);&#125;)</span><br><span class="line"><span class="comment">// 失败的回调函数可以省略不写，可以用catch进行捕获</span></span><br><span class="line"><span class="title function_">getFile</span>(<span class="string">&#x27;./files/1.txt&#x27;</span>).<span class="title function_">then</span>(<span class="function">(<span class="params">r1</span>)=&gt;</span>&#123;<span class="variable language_">console</span>.<span class="title function_">log</span>(r1)&#125;).<span class="title function_">catch</span>(<span class="function">(<span class="params">err</span>)=&gt;</span>&#123;<span class="variable language_">console</span>.<span class="title function_">log</span>(err.<span class="property">message</span>)&#125;)</span><br></pre></td></tr></table></figure></li>
-</ul>
-]]></content>
-      <categories>
-        <category>JS</category>
-        <category>ES6</category>
-      </categories>
-      <tags>
-        <tag>ES6</tag>
-        <tag>Promise</tag>
-        <tag>回调地狱</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>async/await</title>
-    <url>/tsukimiya.github.io/2024/05/06/ES6/3.async-await/</url>
-    <content><![CDATA[<h2 id="什么是-async-await"><a href="#什么是-async-await" class="headerlink" title="什么是 async &#x2F; await"></a>什么是 async &#x2F; await</h2><p><strong>async&#x2F;await</strong> 是 <strong>ES8</strong>(ECMAScript 2017)引入的新语法，用来<strong>简化Promise异步操作</strong>。在async&#x2F;await出现之前，开发者只能通过<strong>链式.then()的方式</strong>处理Promise异步操作。示例代码如下:</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> thenFs <span class="keyword">from</span> <span class="string">&#x27;then-fs&#x27;</span></span><br><span class="line"></span><br><span class="line">thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/1.txt&#x27;</span>, <span class="string">&#x27;utf8&#x27;</span>)<span class="comment">// 返回值是Promise的实例对象</span></span><br><span class="line">  .<span class="title function_">then</span>(<span class="function">(<span class="params">r1</span>) =&gt;</span> &#123; <span class="comment">// 通过.then 为返回的promise实例指定成功之后的回调函数</span></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(r1)</span><br><span class="line">    <span class="keyword">return</span> thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/2.txt&#x27;</span>, <span class="string">&#x27;utf8&#x27;</span>)</span><br><span class="line">  &#125;).<span class="title function_">then</span>(<span class="function">(<span class="params">r2</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(r2)</span><br><span class="line">    <span class="keyword">return</span> thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/3.txt&#x27;</span>, <span class="string">&#x27;utf8&#x27;</span>)</span><br><span class="line">  &#125;).<span class="title function_">then</span>(<span class="function">(<span class="params">r3</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(r3)</span><br><span class="line">  &#125;)</span><br></pre></td></tr></table></figure>
-<p>.then链式调用的<strong>优点</strong>：解决了回调地狱的问题<br>.then链式调用的<strong>缺点</strong>：代码冗余、阅读性差、不易理解</p>
-<h2 id="async-await-的基本使用"><a href="#async-await-的基本使用" class="headerlink" title="async &#x2F; await 的基本使用"></a>async &#x2F; await 的基本使用</h2><p>使用async&#x2F; await简化 Promise异步操作的示例代码如下:</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> thenFs <span class="keyword">from</span> <span class="string">&#x27;then-fs&#x27;</span></span><br><span class="line"><span class="comment">// 按顺序读取文件 1 2 3 的内容</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">getAllFile</span>(<span class="params"></span>)&#123;</span><br><span class="line">  <span class="comment">// 如果不加await，它的返回值就是Promise实例，加了await，返回值就是最终读取到的文件中的内容</span></span><br><span class="line">  <span class="keyword">const</span> r1 = <span class="keyword">await</span> thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/1.txt&#x27;</span>,<span class="string">&#x27;utf-8&#x27;</span>)</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(r1) <span class="comment">// 111</span></span><br><span class="line">  <span class="keyword">const</span> r2 = <span class="keyword">await</span> thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/2.txt&#x27;</span>, <span class="string">&#x27;utf-8&#x27;</span>)</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(r2) <span class="comment">// 222</span></span><br><span class="line">  <span class="keyword">const</span> r3 = <span class="keyword">await</span> thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/3.txt&#x27;</span>, <span class="string">&#x27;utf-8&#x27;</span>)</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(r3) <span class="comment">// 333</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_">getAllFile</span>()</span><br></pre></td></tr></table></figure>
-<p>如果<strong>某个方法的返回值是个Promise实例对象</strong>，那么我们就可以在前面<strong>用await</strong>来进行<strong>修饰</strong>，修饰完毕之后，这个<strong>返回值就不再是Promise实例</strong>，而是<strong>变成一个真正的值</strong>。<br>而且需要注意：<font color='red'>如果这个方法内部用到了await，那么这个方法必须被async来修饰</font></p>
-<h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><ol>
-<li><font color='green'>如果在 function 中使用了 await ，则 function <strong>必须</strong>被 async 修饰</font></li>
-<li><font color='green'>在 async 方法中，<strong>第一个 await 之前的代码会同步执行</strong>，await之后的代码会异步执行</font><br>最终输出的顺序：A、B、C、111 222 333、D<br>碰到第一个await，主线程就退出了方法执行，立马输出了C，当1 2 3异步读取完成之后就按顺序输出，最后异步的输出了D<br><img src="/tsukimiya.github.io/images/ES6/async%E6%96%B9%E6%B3%95%E6%89%A7%E8%A1%8C%E9%A1%BA%E5%BA%8F.png" alt="async/await方法执行顺序"></li>
-</ol>
-]]></content>
-      <categories>
-        <category>JS</category>
-        <category>ES6</category>
-      </categories>
-      <tags>
-        <tag>ES6</tag>
-        <tag>async</tag>
-        <tag>await</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>EventLoop</title>
-    <url>/tsukimiya.github.io/2024/05/07/ES6/4.EventLoop/</url>
-    <content><![CDATA[<h2 id="JS的单线程"><a href="#JS的单线程" class="headerlink" title="JS的单线程"></a>JS的单线程</h2><p>JS是一门<strong>单线程执行</strong>的编程语言。同一事件只能做一件事情。</p>
-<p>JS的执行线程<br>↓<br>任务1 → 任务2 → 任务3 → 任务N（待执行的任务队列）</p>
-<p>单线程执行队列的问题：<br>如果<strong>前一个任务非常耗时</strong>，则后续的任务就不得不一直等待，从而导致<strong>程序假死</strong>的问题。</p>
-<h2 id="同步任务和异步任务"><a href="#同步任务和异步任务" class="headerlink" title="同步任务和异步任务"></a>同步任务和异步任务</h2><p>为了防止某个<strong>耗时任务</strong>导致<strong>程序假死</strong>的问题，JavaScript把待执行的任务分为了两类:</p>
-<ol>
-<li>同步任务 (synchronous)<ul>
-<li>又叫做<strong>非耗时任务</strong>，指的是在主线程上排队执行的那些任务</li>
-<li>只有前一个任务执行完毕，才能执行后一个任务</li>
-</ul>
-</li>
-<li>异步任务 (asynchronous)<ul>
-<li>又叫做<strong>耗时任务</strong>，异步任务由JavaScript<strong>委托给宿主环境</strong>进行执行</li>
-<li>当异步任务执行完成后，会<strong>通知JavaScript主线程</strong>执行异步任务的<strong>回调函数</strong><blockquote>
-<p>宿主环境就是JS的执行环境，在浏览器里面运行JS，浏览器就是JS的宿主环境，在Node.js…</p>
-</blockquote>
-</li>
-</ul>
-</li>
-</ol>
-<h2 id="同步任务和异步任务的执行过程"><a href="#同步任务和异步任务的执行过程" class="headerlink" title="同步任务和异步任务的执行过程"></a>同步任务和异步任务的执行过程</h2><p><img src="/tsukimiya.github.io/images/ES6/js%E6%89%A7%E8%A1%8C%E8%BF%87%E7%A8%8B.png" alt="js执行过程"></p>
-<h2 id="EventLoop的基本概念"><a href="#EventLoop的基本概念" class="headerlink" title="EventLoop的基本概念"></a>EventLoop的基本概念</h2><p><strong>JavaScript主线程从“任务队列”中读取异步任务的回调函数，放到执行栈中依次执行</strong>。这个过程是循环不断的，所以整个的这种运行机<br>制又称为<strong>EventLoop</strong>(事件循环)。</p>
-<ul>
-<li><p>练习<br><img src="/tsukimiya.github.io/images/ES6/%E7%BB%83%E4%B9%A0.png" alt="练习"></p>
-</li>
-<li><p>分享文章<br>面试必问之 JS 事件循环(Event Loop)，看这一篇足够(<a href="https://zhuanlan.zhihu.com/p/580956436">https://zhuanlan.zhihu.com/p/580956436</a>)</p>
-</li>
-</ul>
-]]></content>
-      <categories>
-        <category>JS</category>
-        <category>ES6</category>
-      </categories>
-      <tags>
-        <tag>ES6</tag>
-        <tag>EventLoop</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>宏任务和微任务</title>
-    <url>/tsukimiya.github.io/2024/05/08/ES6/5.%E5%AE%8F%E4%BB%BB%E5%8A%A1%E5%92%8C%E5%BE%AE%E4%BB%BB%E5%8A%A1/</url>
-    <content><![CDATA[<h2 id="什么是宏任务和微任务"><a href="#什么是宏任务和微任务" class="headerlink" title="什么是宏任务和微任务"></a>什么是宏任务和微任务</h2><p>JavaScript把异步任务又做了进一步的划分，异步任务又分为两类，分别是:</p>
-<ol>
-<li>宏任务( macrotask)<ul>
-<li>异步Ajax请求、</li>
-<li>setTimeout、setlnterval、</li>
-<li>文件操作</li>
-<li>其它宏任务</li>
-</ul>
-</li>
-<li>微任务( microtask)<ul>
-<li>Promise.then、.catch和.finally</li>
-<li>process.nextTick</li>
-<li>其它微任务</li>
-</ul>
-</li>
-</ol>
-<p><img src="/tsukimiya.github.io/images/ES6/%E5%AE%8F%E4%BB%BB%E5%8A%A1%E5%92%8C%E5%BE%AE%E4%BB%BB%E5%8A%A1.png" alt="宏任务和微任务"></p>
-<h2 id="划分依据"><a href="#划分依据" class="headerlink" title="划分依据"></a>划分依据</h2><p>异步任务是根据<strong>任务的触发时机</strong>和<strong>任务队列的不同</strong>来分为宏任务和微任务的。下面是它们的依据：</p>
-<ol>
-<li><p><strong>触发时机</strong>：</p>
-<ul>
-<li><strong>宏任务（Macro Task）</strong>：宏任务是由 JavaScript 引擎外部的任务触发的，比如 DOM 事件（如点击事件、鼠标移动事件）、<code>setTimeout</code>、<code>setInterval</code>、网络请求等。宏任务代表着一个独立的、顺序执行的任务单元，它们会被放入宏任务队列中等待执行。</li>
-<li><strong>微任务（Micro Task）</strong>：微任务是在当前任务执行完成之后立即执行的任务，它们一般是由 JavaScript 引擎内部触发的，比如 Promise 的状态改变、<code>queueMicrotask</code> 函数等。微任务的执行时机是在当前宏任务执行结束、事件循环进入下一次循环之前。</li>
-</ul>
-</li>
-<li><p><strong>任务队列</strong>：</p>
-<ul>
-<li><strong>宏任务队列</strong>：宏任务队列中存放着各种宏任务，包括了 DOM 事件、定时器、I&#x2F;O 操作等。在事件循环的每一轮中，只有一个宏任务会被执行。</li>
-<li><strong>微任务队列</strong>：微任务队列中存放着微任务，它们的执行顺序是按照它们进入队列的顺序执行的。在每个宏任务执行结束后，会检查并执行所有的微任务，直到微任务队列为空。</li>
-</ul>
-</li>
-</ol>
-<p>因此，异步任务是根据触发时机和任务队列的不同而被分为宏任务和微任务的。这种分化使得 JavaScript 引擎能够灵活地处理异步任务，并根据执行上下文的情况来调度它们的执行顺序。</p>
-<h2 id="执行顺序"><a href="#执行顺序" class="headerlink" title="执行顺序"></a>执行顺序</h2><p>宏任务和微任务是交替执行的。<br>在 JavaScript 中，<strong>执行完同步任务后</strong>，<strong>会先检查是否存在微任务</strong>，如果存在，则先执行微任务队列中的所有微任务。执行完所有微任务后，再去执行宏任务队列中的任务。<br><img src="/tsukimiya.github.io/images/ES6/%E5%AE%8F%E4%BB%BB%E5%8A%A1%E5%BE%AE%E4%BB%BB%E5%8A%A1%E6%89%A7%E8%A1%8C%E9%A1%BA%E5%BA%8F.png" alt="宏任务微任务执行顺序"></p>
-<ul>
-<li><p>场景举例<br><img src="/tsukimiya.github.io/images/ES6/%E5%9C%BA%E6%99%AF.png" alt="场景"></p>
-</li>
-<li><p>练习<br>new Promise 是同步任务，其调用的.then是微任务<br><img src="/tsukimiya.github.io/images/ES6/%E7%BB%83%E4%B9%A02.png" alt="练习2"></p>
-</li>
-<li><p>练习<br><img src="/tsukimiya.github.io/images/ES6/%E7%BB%83%E4%B9%A03.png" alt="练习3"></p>
-</li>
-</ul>
-]]></content>
-      <categories>
-        <category>JS</category>
-        <category>ES6</category>
-      </categories>
-      <tags>
-        <tag>ES6</tag>
-        <tag>宏任务和微任务</tag>
       </tags>
   </entry>
   <entry>
@@ -3733,7 +3733,7 @@ vue的导航守卫中除了全局前置守卫之外，还有全局解析守卫�
   <entry>
     <title>Hello Front-end</title>
     <url>/tsukimiya.github.io/index.html</url>
-    <content><![CDATA[<p>Welcome to my study blog! This is my continuously make up a main post. If you get any problems when using my blog, you can send the email to <a href="mailto:&#104;&#97;&#x72;&#x69;&#x69;&#106;&#x69;&#x63;&#111;&#x40;&#x6f;&#x75;&#116;&#x6c;&#x6f;&#x6f;&#107;&#46;&#x63;&#x6f;&#109;">&#104;&#97;&#x72;&#x69;&#x69;&#106;&#x69;&#x63;&#111;&#x40;&#x6f;&#x75;&#116;&#x6c;&#x6f;&#x6f;&#107;&#46;&#x63;&#x6f;&#109;</a></p>
+    <content><![CDATA[<p>Welcome to my study blog! This is my continuously make up a main post. If you get any problems when using my blog, you can send the email to <a href="mailto:&#x68;&#97;&#x72;&#x69;&#105;&#106;&#105;&#x63;&#x6f;&#x40;&#x6f;&#117;&#116;&#x6c;&#111;&#x6f;&#x6b;&#46;&#x63;&#111;&#x6d;">&#x68;&#97;&#x72;&#x69;&#105;&#106;&#105;&#x63;&#x6f;&#x40;&#x6f;&#117;&#116;&#x6c;&#111;&#x6f;&#x6b;&#46;&#x63;&#111;&#x6d;</a></p>
 <h2 id="Study-Guide"><a href="#Study-Guide" class="headerlink" title="Study Guide"></a>Study Guide</h2><center>Here provide you some study sources and study route.</center>
 <!-- This is [main tech](#Main-Line) -->
 <center>This is <a href='#Main-Line'>main tech</a></center>
@@ -4627,6 +4627,14 @@ forEach(callbackFn(element,index,array), thisArg)`,
 ]]></content>
   </entry>
   <entry>
+    <title>留言板</title>
+    <url>/tsukimiya.github.io/guestbook/index.html</url>
+    <content><![CDATA[<h1 id="欢迎来到我的博客！"><a href="#欢迎来到我的博客！" class="headerlink" title="欢迎来到我的博客！"></a>欢迎来到我的博客！</h1><blockquote>
+<p>欢迎在这里留言！任何问题都可以在这里留言，我会及时回复的。目前留言板块尚未配置完全，暂时无法使用，如有问题请邮箱：<br><a href="mailto:&#104;&#97;&#114;&#x69;&#x69;&#x6a;&#x69;&#x63;&#111;&#64;&#x6f;&#117;&#116;&#x6c;&#x6f;&#x6f;&#x6b;&#x2e;&#x63;&#111;&#x6d;">&#104;&#97;&#114;&#x69;&#x69;&#x6a;&#x69;&#x63;&#111;&#64;&#x6f;&#117;&#116;&#x6c;&#x6f;&#x6f;&#x6b;&#x2e;&#x63;&#111;&#x6d;</a><br><a href="mailto:&#x31;&#x38;&#51;&#50;&#55;&#x31;&#x35;&#56;&#51;&#x38;&#64;&#x71;&#113;&#x2e;&#99;&#111;&#x6d;">&#x31;&#x38;&#51;&#50;&#55;&#x31;&#x35;&#56;&#51;&#x38;&#64;&#x71;&#113;&#x2e;&#99;&#111;&#x6d;</a><br>欢迎给我发送邮件</p>
+</blockquote>
+]]></content>
+  </entry>
+  <entry>
     <title>前端八股</title>
     <url>/tsukimiya.github.io/custom/%E5%85%AB%E8%82%A1.html</url>
     <content><![CDATA[<h2 id="TODO"><a href="#TODO" class="headerlink" title="TODO"></a>TODO</h2><ol>
@@ -4649,8 +4657,7 @@ forEach(callbackFn(element,index,array), thisArg)`,
 <li><input disabled="" type="checkbox"> 复习一下webpack、nodejs、npm – 次要</li>
 <li><input disabled="" type="checkbox"> 手写promise</li>
 <li><input disabled="" type="checkbox"> 常问算法 – 冒泡排序、二分查找、快速排序、二叉树、堆栈、队列、贪心算法、动态规划、位运算、</li>
-<li><input disabled="" type="checkbox"> 刷一下 那些经典面试题</li>
-<li><input disabled="" type="checkbox"> 常见的安全协议如 HTTPS、SSH 等的原理和使用方法。</li>
+<li><input disabled="" type="checkbox"> 常用数组方法</li>
 </ol>
 <p>** 可以前两个八股总结的挑一些看看</p>
 <ul>
@@ -4681,6 +4688,8 @@ forEach(callbackFn(element,index,array), thisArg)`,
 <li><p>HTTP、Webpack、Node相关的问题</p>
 </li>
 <li><p>前端安全，算法（如果目标企业不是大厂，可以练习一些常用的算法，如排序，数组字符串的常用操作）</p>
+</li>
+<li><p>SSH网络协议？</p>
 </li>
 <li><p>数组常用方法</p>
 </li>
@@ -5552,19 +5561,6 @@ TreeMap：低
 <h3 id="-4"><a href="#-4" class="headerlink" title=""></a></h3>]]></content>
   </entry>
   <entry>
-    <title>留言板</title>
-    <url>/tsukimiya.github.io/guestbook/index.html</url>
-    <content><![CDATA[<h1 id="欢迎来到我的博客！"><a href="#欢迎来到我的博客！" class="headerlink" title="欢迎来到我的博客！"></a>欢迎来到我的博客！</h1><blockquote>
-<p>欢迎在这里留言！任何问题都可以在这里留言，我会及时回复的。目前留言板块尚未配置完全，暂时无法使用，如有问题请邮箱：<br><a href="mailto:&#x68;&#x61;&#114;&#x69;&#x69;&#106;&#105;&#x63;&#111;&#x40;&#x6f;&#117;&#116;&#108;&#111;&#111;&#107;&#x2e;&#99;&#111;&#x6d;">&#x68;&#x61;&#114;&#x69;&#x69;&#106;&#105;&#x63;&#111;&#x40;&#x6f;&#117;&#116;&#108;&#111;&#111;&#107;&#x2e;&#99;&#111;&#x6d;</a><br><a href="mailto:&#x31;&#56;&#51;&#x32;&#x37;&#x31;&#53;&#56;&#51;&#56;&#64;&#113;&#x71;&#x2e;&#x63;&#111;&#109;">&#x31;&#56;&#51;&#x32;&#x37;&#x31;&#53;&#56;&#51;&#56;&#64;&#113;&#x71;&#x2e;&#x63;&#111;&#109;</a><br>欢迎给我发送邮件</p>
-</blockquote>
-]]></content>
-  </entry>
-  <entry>
-    <title>标签</title>
-    <url>/tsukimiya.github.io/tags/index.html</url>
-    <content><![CDATA[]]></content>
-  </entry>
-  <entry>
     <title>日程表</title>
     <url>/tsukimiya.github.io/schedule/index.html</url>
     <content><![CDATA[<center style="width:100%;height:1px;position:relative">
@@ -5616,6 +5612,11 @@ TreeMap：低
 </tr>
 </tbody></table>
 ]]></content>
+  </entry>
+  <entry>
+    <title>标签</title>
+    <url>/tsukimiya.github.io/tags/index.html</url>
+    <content><![CDATA[]]></content>
   </entry>
   <entry>
     <title>Task</title>
