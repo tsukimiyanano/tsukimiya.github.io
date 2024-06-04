@@ -1,272 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>ES6模块化</title>
-    <url>/tsukimiya.github.io/2024/05/05/ES6/1.ES6%E6%A8%A1%E5%9D%97%E5%8C%96/</url>
-    <content><![CDATA[<blockquote>
-<p>ES6模块化 与 异步编程高级用法：<br>  E6的模块化语法<br>  使用Promise解决回调地狱的问题<br>  使用 async&#x2F;await 简化 Promise 的调用<br>  什么是 EventLoop<br>  宏任务 和 微任务 的执行顺序</p>
-</blockquote>
-<h2 id="模块化"><a href="#模块化" class="headerlink" title="模块化"></a>模块化</h2><ol>
-<li><p>node.js中如何实现模块化<br>node.js遵循了<strong>CommonJS</strong>的模块化规范。其中:</p>
-<ul>
-<li>导入其它模块使用<code>require()</code>方法</li>
-<li>模块对外共享成员使用<code>module.exports</code>对象</li>
-</ul>
-</li>
-<li><p><strong>模块化的好处</strong>：<br>大家都遵守同样的模块化规范写代码，<strong>降低了沟通的成本，极大方便了各个模块之间的相互调用</strong>，利人利己。</p>
-</li>
-</ol>
-<h3 id="前端模块化规范的分类"><a href="#前端模块化规范的分类" class="headerlink" title="前端模块化规范的分类"></a>前端模块化规范的分类</h3><p>在<strong>ES6模块化规范诞生之前</strong>，JavaScript 社区已经尝试并提出了<strong>AMD、CMD、CommonJS</strong>等模块化规范。</p>
-<blockquote>
-<p>这几个规范不是官方的模块化标准，而是社区的开发者经过反复的实践与尝试，提出来的规范</p>
-</blockquote>
-<p>但是，这些由社区提出的模块化标准，还是存在一定的<strong>差异性与局限性</strong>、<strong>并不是</strong>浏览器与服务器<strong>通用的模块化标准</strong>，例如:</p>
-<ul>
-<li>AMD和CMD适用于<strong>浏览器端</strong>的Javascript模块化</li>
-<li>CommonJS适用于<strong>服务器端</strong>的Javascript模块化</li>
-</ul>
-<p>太多的模块化规范给开发者增加了学习的难度与开发的成本。因此，<strong>大一统的ES6模块化规范诞生了</strong>!</p>
-<h3 id="ES6模块化规范"><a href="#ES6模块化规范" class="headerlink" title="ES6模块化规范"></a>ES6模块化规范</h3><p>ES6模块化规范是浏览器端与服务器端通用的模块化开发规范。</p>
-<p>ES6模块化规范中定义:</p>
-<ul>
-<li>每个js文件都是一个独立的模块</li>
-<li>导入其它模块成员使用<strong>import</strong>关键字</li>
-<li>向外共享模块成员使用<strong>export</strong>关键字</li>
-</ul>
-<h3 id="在node-js中使用ES6模块化"><a href="#在node-js中使用ES6模块化" class="headerlink" title="在node.js中使用ES6模块化"></a>在node.js中使用ES6模块化</h3><p>node.js默认支持CommonJS模块化规范，如果要使用ES6模块化语法，需要配置：</p>
-<ol>
-<li>确保安装了v14.15.1或更高版本的node.js</li>
-<li>在package.json的根节点中添加<code>&quot;type&quot;:&quot;module&quot;</code>节点</li>
-</ol>
-<h2 id="ES6模块化的基本语法"><a href="#ES6模块化的基本语法" class="headerlink" title="ES6模块化的基本语法"></a>ES6模块化的基本语法</h2><p>ES6的模块化主要包含如下3种用法:<br>    1. 默认导出与默认导入<br>    2. 按需导出与按需导入<br>    3. 直接导入并执行模块中的代码</p>
-<ol>
-<li><p>默认导出<br><code>export dufault 默认导出的成员</code></p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> n1 = <span class="number">10</span></span><br><span class="line"><span class="keyword">let</span> n2 = <span class="number">20</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">show</span>(<span class="params"></span>)&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  n1,</span><br><span class="line">  show</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>注意事项：<strong>只允许默认导出一次</strong>(使用唯一的一次export default)</p>
-</li>
-<li><p>默认导入<br><code>import 接收名称 from &#39;模块标识符&#39;</code></p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> m1 <span class="keyword">from</span> <span class="string">&#x27;./1.默认导出.js&#x27;</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(m1); <span class="comment">//&#123; n1: 10, show: [Function: show] &#125;</span></span><br></pre></td></tr></table></figure>
-<p>注意事项：<strong>接收名称</strong>可以是任意名称，只要是<strong>合法的成员名称即可</strong>(只能以字符_$开头，不能以数字)</p>
-</li>
-<li><p>按需导出<br><code>export 按需导出的成员</code></p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">let</span> s1 = <span class="string">&#x27;aaa&#x27;</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">let</span> s2 = <span class="string">&#x27;ccc&#x27;</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> <span class="title function_">say</span>(<span class="params"></span>)&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  <span class="attr">a</span>: <span class="number">20</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>注意事项：<strong>可以使用多次</strong>，可以和默认导出一起使用。</p>
-</li>
-<li><p>按需导入<br><code>import &#123;s1&#125; from &#39;模块标识符&#39;</code><br>导入多个模块成员<br><code>import &#123;s1,s2,s3&#125; from &#39;模块标识符&#39;</code></p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> info, &#123;s1, s2 <span class="keyword">as</span> str2, say&#125; <span class="keyword">from</span> <span class="string">&#x27;./3.按需导出.js&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(s1); <span class="comment">// aaa</span></span><br><span class="line"><span class="comment">// console.log(s2); // 报错，未定义</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(str2); <span class="comment">// ccc</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(say);<span class="comment">// [Function: say]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// info 接收的默认导出的对象</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(info); <span class="comment">// &#123; a:20 &#125;</span></span><br></pre></td></tr></table></figure>
-<p>注意事项：</p>
-<ol>
-<li>按需导入的成员<strong>名称必须</strong>和按需导出的名称<strong>保持一致</strong></li>
-<li>按需导入时，可以使用 <strong>as关键字</strong> 进行<strong>重命名</strong></li>
-<li>按需导入可以和默认导入一起使用</li>
-</ol>
-</li>
-<li><p><strong>直接导入并执行模块中的代码</strong><br>如果<strong>只想单纯地执行某个模块中的代码</strong>，并不需要得到模块中向外共享的成员。此时，可以直接导入并执行模块代码，示例代码如下:</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 05.js</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="number">3</span>; i++) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(i);  </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// test.js</span></span><br><span class="line"><span class="keyword">import</span> <span class="string">&#x27;./5.直接运行模块中的代码.js&#x27;</span></span><br><span class="line"><span class="comment">// node testjs 结果 --  0 1 2</span></span><br></pre></td></tr></table></figure></li>
-</ol>
-]]></content>
-      <categories>
-        <category>JS</category>
-        <category>ES6</category>
-      </categories>
-      <tags>
-        <tag>ES6</tag>
-        <tag>ES6模块化</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Promise</title>
-    <url>/tsukimiya.github.io/2024/05/06/ES6/2.Promise/</url>
-    <content><![CDATA[<h2 id="回调地狱"><a href="#回调地狱" class="headerlink" title="回调地狱"></a>回调地狱</h2><ol>
-<li><p>回调地狱<br>多层回调函数的相互嵌套，就形成了回调地狱。示例代码如:</p>
-<blockquote>
-<p>回调地狱更多导致的问题还是：<strong>难以阅读和维护</strong>，通常出现在异步操作中<br>其和递归问题导致的栈溢出还是不同的，两者是不同的问题</p>
-</blockquote>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="built_in">setTimeout</span>( <span class="function">() =&gt;</span>&#123; <span class="comment">//第1层回调函数</span></span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>( <span class="string">&#x27;延时1秒后输出&#x27;</span>)</span><br><span class="line">  </span><br><span class="line">  <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123; <span class="comment">//第2层回调函数</span></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;再延时2秒后输出&#x27;</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123; <span class="comment">//第3层回调函数</span></span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;再延时3秒后输出&#x27;</span>)</span><br><span class="line">    &#125;,<span class="number">3000</span>)</span><br><span class="line"></span><br><span class="line">  &#125;,<span class="number">2000</span>)</span><br><span class="line"></span><br><span class="line">&#125;,<span class="number">1000</span>)</span><br></pre></td></tr></table></figure>
-<p>回调地狱的缺点:<br>代码耦合性太强，牵一发而动全身，<strong>难以维护</strong><br>大量冗余的代码相互嵌套，代码的<strong>可读性变差</strong></p>
-</li>
-<li><p>如何解决<br>为了解决回调地狱的问题，ES6 (ECMAScript 2015)中新增了<strong>Promise</strong>的概念。</p>
-<blockquote>
-<p>解决回调地狱的方法包括使用 Promise、async&#x2F;await 等异步编程技术，以及使用函数式编程的方式来组织代码，使其更具可读性和可维护性。</p>
-</blockquote>
-</li>
-</ol>
-<h2 id="Promise基本概念"><a href="#Promise基本概念" class="headerlink" title="Promise基本概念"></a>Promise基本概念</h2><ol>
-<li><p><strong>Promise是一个构造函数</strong></p>
-<ul>
-<li>我们可以创建Promise 的实例 <code>const p = newPromise()</code></li>
-<li>new出来的Promise 实例对象，<strong>代表一个异步操作</strong></li>
-</ul>
-</li>
-<li><p><strong>Promise.prototype 上包含一个.then()方法</strong></p>
-<ul>
-<li>每一次new Promise()构造函数得到的实例对象，</li>
-<li>都可以<strong>通过原型链的方式</strong>访问到.then()方法，例如<code>p.then()</code></li>
-</ul>
-</li>
-<li><p><strong>.then()方法用来预先指定成功和失败的回调函数</strong></p>
-<ul>
-<li>p.then(<strong>成功的回调函数</strong>，<strong>失败的回调函数</strong>)</li>
-<li>p.then(result,&#x3D;&gt; {}, error &#x3D;&gt; {})</li>
-<li>调用.then()方法时，<strong>成功的回调函数是必选的</strong>、失败的回调函数是可选的</li>
-</ul>
-</li>
-</ol>
-<h2 id="基于-then-fs-异步的读取文件内容"><a href="#基于-then-fs-异步的读取文件内容" class="headerlink" title="基于 then-fs 异步的读取文件内容"></a>基于 then-fs 异步的读取文件内容</h2><ol>
-<li><p>基于回调函数按顺序读取文件内容<br>虽然可以保证文件的读取顺序，但是形成了一个回调地狱的问题<br><img src="/tsukimiya.github.io/images/ES6/%E5%9F%BA%E4%BA%8E%E5%9B%9E%E8%B0%83%E5%87%BD%E6%95%B0%E6%8C%89%E9%A1%BA%E5%BA%8F%E8%AF%BB%E5%8F%96%E6%96%87%E4%BB%B6%E5%86%85%E5%AE%B9.png" alt="img"></p>
-</li>
-<li><p>基于 then-fs 读取文件内容<br><strong>fs模块仅支持 以回调函数的方式 读取文件，不支持Promise的调用方式</strong>。因此，需要先安装 then-fs 第三方包，从而支持基于Promise的方式读取文件的内容： <code>npm install then-fs</code></p>
-</li>
-</ol>
-<ul>
-<li><strong>then-fs 的基本使用</strong><br>调用 then-fs 提供的<strong>readFile()<strong>方法，可以异步地读取文件的内容，</strong>它的返回值是 Promise 的实例对象</strong>。因此可以<strong>调用.then()方法</strong>为每个 Promise 异步操作指定<strong>成功</strong>和<strong>失败</strong>之后的回调函数。示例代码如下:<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 基于Promise的方式读取文件</span></span><br><span class="line"><span class="keyword">import</span> thenFs <span class="keyword">from</span> <span class="string">&#x27;then-fs&#x27;</span></span><br><span class="line"><span class="comment">// .then()中的失败回调是可选的，这里省略了</span></span><br><span class="line">thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/1.txt&#x27;</span>,<span class="string">&#x27;utf8&#x27;</span>).<span class="title function_">then</span>(<span class="function">(<span class="params">r1</span>)=&gt;</span>&#123;<span class="variable language_">console</span>.<span class="title function_">log</span>(r1);&#125;)</span><br><span class="line">thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/2.txt&#x27;</span>,<span class="string">&#x27;utf8&#x27;</span>).<span class="title function_">then</span>(<span class="function">(<span class="params">r2</span>)=&gt;</span>&#123;<span class="variable language_">console</span>.<span class="title function_">log</span>(r2);&#125;)</span><br><span class="line">thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/3.txt&#x27;</span>,<span class="string">&#x27;utf8&#x27;</span>).<span class="title function_">then</span>(<span class="function">(<span class="params">r3</span>)=&gt;</span>&#123;<span class="variable language_">console</span>.<span class="title function_">log</span>(r3);&#125;)</span><br></pre></td></tr></table></figure>
-当前只是异步的去读文件，<strong>无法保证文件的读取顺序</strong>，多次执行读取顺序不一</li>
-</ul>
-<h2 id="基于Promise按顺序读取文件的内容"><a href="#基于Promise按顺序读取文件的内容" class="headerlink" title="基于Promise按顺序读取文件的内容"></a>基于Promise按顺序读取文件的内容</h2><ul>
-<li><p><strong>.then方法的特性</strong><br>如果上一个.then()方法中<strong>返回了一个新的Promise实例对象</strong>，则可以通过下一个.then()继续进行处理。通过.then()方法的<strong>链式调用</strong>，就解决了回调地狱的问题。</p>
-</li>
-<li><p><strong>基于Promise</strong>按顺序读取文件的内容<br><strong>只要任何方法返回值是一个Promise实例对象，那就都可以继续调用.then()方法</strong></p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> thenFs <span class="keyword">from</span> <span class="string">&#x27;then-fs&#x27;</span></span><br><span class="line"></span><br><span class="line">thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/1.txt&#x27;</span>, <span class="string">&#x27;utf8&#x27;</span>)<span class="comment">// 返回值是Promise的实例对象</span></span><br><span class="line">  .<span class="title function_">then</span>(<span class="function">(<span class="params">r1</span>) =&gt;</span> &#123; <span class="comment">// 通过.then 为返回的promise实例指定成功之后的回调函数</span></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(r1)</span><br><span class="line">    <span class="keyword">return</span> thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/2.txt&#x27;</span>, <span class="string">&#x27;utf8&#x27;</span>)</span><br><span class="line">  &#125;).<span class="title function_">then</span>(<span class="function">(<span class="params">r2</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(r2)</span><br><span class="line">    <span class="keyword">return</span> thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/3.txt&#x27;</span>, <span class="string">&#x27;utf8&#x27;</span>)</span><br><span class="line">  &#125;).<span class="title function_">then</span>(<span class="function">(<span class="params">r3</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(r3)</span><br><span class="line">  &#125;)</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>通过 .catch 捕获错误<br>在 Promise 的链式操作中如果发生了错误，可以使用Promise.prototype.catch方法进行捕获和处理:</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> thenFs <span class="keyword">from</span> <span class="string">&#x27;then-fs&#x27;</span></span><br><span class="line"></span><br><span class="line">thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/11.txt&#x27;</span>, <span class="string">&#x27;utf8&#x27;</span>) <span class="comment">// 文件不存在</span></span><br><span class="line">  .<span class="title function_">then</span>(<span class="function">(<span class="params">r1</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(r1)</span><br><span class="line">    <span class="keyword">return</span> thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/2.txt&#x27;</span>, <span class="string">&#x27;utf8&#x27;</span>)</span><br><span class="line">  &#125;)</span><br><span class="line">  .<span class="title function_">then</span>(<span class="function">(<span class="params">r2</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(r2)</span><br><span class="line">    <span class="keyword">return</span> thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/3.txt&#x27;</span>, <span class="string">&#x27;utf8&#x27;</span>)</span><br><span class="line">  &#125;)</span><br><span class="line">  .<span class="title function_">then</span>(<span class="function">(<span class="params">r3</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(r3)</span><br><span class="line">  &#125;)</span><br><span class="line">  .<span class="title function_">catch</span>(<span class="function">(<span class="params">err</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(err.<span class="property">message</span>)</span><br><span class="line">  &#125;) <span class="comment">// 只返回错误，没有读取的文件内容</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>如果不希望前面的错误导致后续的.then无法正常执行，<strong>可以将.catch的调用提前</strong>：</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> thenFs <span class="keyword">from</span> <span class="string">&#x27;then-fs&#x27;</span></span><br><span class="line"></span><br><span class="line">thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/11.txt&#x27;</span>, <span class="string">&#x27;utf8&#x27;</span>)</span><br><span class="line">  .<span class="title function_">catch</span>(<span class="function">(<span class="params">err</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(err.<span class="property">message</span>)</span><br><span class="line">  &#125;)</span><br><span class="line">  .<span class="title function_">then</span>(<span class="function">(<span class="params">r1</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(r1)</span><br><span class="line">    <span class="keyword">return</span> thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/2.txt&#x27;</span>, <span class="string">&#x27;utf8&#x27;</span>)</span><br><span class="line">  &#125;)</span><br><span class="line">  .<span class="title function_">then</span>(<span class="function">(<span class="params">r2</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(r2)</span><br><span class="line">    <span class="keyword">return</span> thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/3.txt&#x27;</span>, <span class="string">&#x27;utf8&#x27;</span>)</span><br><span class="line">  &#125;)</span><br><span class="line">  .<span class="title function_">then</span>(<span class="function">(<span class="params">r3</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(r3)</span><br><span class="line">  &#125;) <span class="comment">// 先打印错误，然后打印读取内容，r1为undefined，r2r3读取成功</span></span><br></pre></td></tr></table></figure></li>
-</ul>
-<h2 id="Promise-all-方法"><a href="#Promise-all-方法" class="headerlink" title="Promise.all()方法"></a>Promise.all()方法</h2><p>Promise.all()方法会发起并行的Promise异步操作，等<strong>所有的异步操作全部结束后</strong>才会执行下一步的.then操作（等待机制）。示例代码如下:</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> thenFs <span class="keyword">from</span> <span class="string">&#x27;then-fs&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> promiseArr = [</span><br><span class="line">  thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/1.txt&#x27;</span>, <span class="string">&#x27;utf8&#x27;</span>), </span><br><span class="line">  thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/2.txt&#x27;</span>, <span class="string">&#x27;utf8&#x27;</span>), </span><br><span class="line">  thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/3.txt&#x27;</span>, <span class="string">&#x27;utf8&#x27;</span>)</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="title class_">Promise</span>.<span class="title function_">all</span>(promiseArr).<span class="title function_">then</span>(<span class="function"><span class="params">result</span> =&gt;</span>&#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(result); <span class="comment">// [ &#x27;111&#x27;, &#x27;222&#x27;, &#x27;333&#x27; ]</span></span><br><span class="line">&#125;)</span><br><span class="line">.<span class="title function_">catch</span>(<span class="function"><span class="params">err</span>=&gt;</span>&#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(err.<span class="property">message</span>);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-<p>Promise示例的顺序，就是最终拿到的结果的顺序。如果有一个文件读取错误，所有数据都拿不到</p>
-<h2 id="Promise-race-方法"><a href="#Promise-race-方法" class="headerlink" title="Promise.race() 方法"></a>Promise.race() 方法</h2><p>Promise.race()方法会发起并行的Promise异步操作，<strong>只要任何一个异步操作完成，就立即执行下一步的.then操作</strong>（赛跑机制）。示例代码如下:</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> thenFs <span class="keyword">from</span> <span class="string">&#x27;then-fs&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> promiseArr = [</span><br><span class="line">  thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/1.txt&#x27;</span>, <span class="string">&#x27;utf8&#x27;</span>), </span><br><span class="line">  thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/2.txt&#x27;</span>, <span class="string">&#x27;utf8&#x27;</span>), </span><br><span class="line">  thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/3.txt&#x27;</span>, <span class="string">&#x27;utf8&#x27;</span>)</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="title class_">Promise</span>.<span class="title function_">race</span>(promiseArr).<span class="title function_">then</span>(<span class="function"><span class="params">result</span> =&gt;</span>&#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(result);</span><br><span class="line">&#125;)</span><br><span class="line">.<span class="title function_">catch</span>(<span class="function"><span class="params">err</span>=&gt;</span>&#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(err.<span class="property">message</span>);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-<p>只会拿到一个文件的读取结果，读取最快的那个，无法保证读取的文件是哪个</p>
-<h2 id="基于Promise封装异步读文件的方法"><a href="#基于Promise封装异步读文件的方法" class="headerlink" title="基于Promise封装异步读文件的方法"></a>基于Promise封装异步读文件的方法</h2><ul>
-<li><p>方法的封装要求:</p>
-<ol>
-<li>方法的名称要定义为getFile</li>
-<li>方法接收一个形参fpath，表示要读取的文件的路径</li>
-<li>方法的返回值为Promise 实例对象</li>
-</ol>
-</li>
-<li><p>getFile方法的基本定义</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">getFile</span>(<span class="params">fpath</span>)&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Promise</span>()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>注意：<strong>new Promise()</strong> 只是创建了一个<strong>形式上的异步操作</strong></p>
-</li>
-<li><p><strong>创建具体的异步操作</strong><br>如果想要创建具体的异步操作，则需要在new Promise()构造函数期间，<strong>传递一个function函数，将具体的<br>异步操作定义到function函数内部</strong>。示例代码如下:</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> fs <span class="keyword">from</span> <span class="string">&#x27;fs&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">getFile</span>(<span class="params">fpath</span>)&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">    fs.<span class="title function_">readFile</span>(fpath,<span class="string">&#x27;utf-8&#x27;</span>,<span class="function">(<span class="params">err,dataStr</span>)=&gt;</span>&#123; &#125;)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>获取.then的两个实参<br>通过.then()指定的成功和失败的回调函数，可以在 function的形参中 进行接收，示例代码如下:<br><img src="/tsukimiya.github.io/images/ES6/%E8%8E%B7%E5%8F%96.then%E7%9A%84%E4%B8%A4%E4%B8%AA%E5%AE%9E%E5%8F%82.png" alt="img"></p>
-</li>
-<li><p>调用 resolve 和 reject 回调函数<br>Promise<strong>异步操作的结果</strong>，可以调用 <strong>resolve</strong> 或 <strong>reject</strong> 回调函数进行处理。示例代码如下:</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> fs <span class="keyword">from</span> <span class="string">&#x27;fs&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">getFile</span>(<span class="params">fpath</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="keyword">function</span> (<span class="params">resolve,reject</span>) &#123;</span><br><span class="line">    fs.<span class="title function_">readFile</span>(fpath, <span class="string">&#x27;utf-8&#x27;</span>, <span class="function">(<span class="params">err, dataStr</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">if</span>(err) <span class="keyword">return</span> <span class="title function_">reject</span>(err) <span class="comment">// 发生错误</span></span><br><span class="line">      <span class="title function_">resolve</span>(dataStr) <span class="comment">// 读取成功</span></span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_">getFile</span>(<span class="string">&#x27;./files/1.txt&#x27;</span>).<span class="title function_">then</span>(<span class="function">(<span class="params">r1</span>)=&gt;</span>&#123;<span class="variable language_">console</span>.<span class="title function_">log</span>(r1)&#125;,<span class="function">(<span class="params">err</span>)=&gt;</span>&#123;<span class="variable language_">console</span>.<span class="title function_">log</span>(err.<span class="property">message</span>);&#125;)</span><br><span class="line"><span class="comment">// 失败的回调函数可以省略不写，可以用catch进行捕获</span></span><br><span class="line"><span class="title function_">getFile</span>(<span class="string">&#x27;./files/1.txt&#x27;</span>).<span class="title function_">then</span>(<span class="function">(<span class="params">r1</span>)=&gt;</span>&#123;<span class="variable language_">console</span>.<span class="title function_">log</span>(r1)&#125;).<span class="title function_">catch</span>(<span class="function">(<span class="params">err</span>)=&gt;</span>&#123;<span class="variable language_">console</span>.<span class="title function_">log</span>(err.<span class="property">message</span>)&#125;)</span><br></pre></td></tr></table></figure></li>
-</ul>
-]]></content>
-      <categories>
-        <category>JS</category>
-        <category>ES6</category>
-      </categories>
-      <tags>
-        <tag>ES6</tag>
-        <tag>Promise</tag>
-        <tag>回调地狱</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>EventLoop</title>
-    <url>/tsukimiya.github.io/2024/05/07/ES6/4.EventLoop/</url>
-    <content><![CDATA[<h2 id="JS的单线程"><a href="#JS的单线程" class="headerlink" title="JS的单线程"></a>JS的单线程</h2><p>JS是一门<strong>单线程执行</strong>的编程语言。同一事件只能做一件事情。</p>
-<p>JS的执行线程<br>↓<br>任务1 → 任务2 → 任务3 → 任务N（待执行的任务队列）</p>
-<p>单线程执行队列的问题：<br>如果<strong>前一个任务非常耗时</strong>，则后续的任务就不得不一直等待，从而导致<strong>程序假死</strong>的问题。</p>
-<h2 id="同步任务和异步任务"><a href="#同步任务和异步任务" class="headerlink" title="同步任务和异步任务"></a>同步任务和异步任务</h2><p>为了防止某个<strong>耗时任务</strong>导致<strong>程序假死</strong>的问题，JavaScript把待执行的任务分为了两类:</p>
-<ol>
-<li>同步任务 (synchronous)<ul>
-<li>又叫做<strong>非耗时任务</strong>，指的是在主线程上排队执行的那些任务</li>
-<li>只有前一个任务执行完毕，才能执行后一个任务</li>
-</ul>
-</li>
-<li>异步任务 (asynchronous)<ul>
-<li>又叫做<strong>耗时任务</strong>，异步任务由JavaScript<strong>委托给宿主环境</strong>进行执行</li>
-<li>当异步任务执行完成后，会<strong>通知JavaScript主线程</strong>执行异步任务的<strong>回调函数</strong><blockquote>
-<p>宿主环境就是JS的执行环境，在浏览器里面运行JS，浏览器就是JS的宿主环境，在Node.js…</p>
-</blockquote>
-</li>
-</ul>
-</li>
-</ol>
-<h2 id="同步任务和异步任务的执行过程"><a href="#同步任务和异步任务的执行过程" class="headerlink" title="同步任务和异步任务的执行过程"></a>同步任务和异步任务的执行过程</h2><p><img src="/tsukimiya.github.io/images/ES6/js%E6%89%A7%E8%A1%8C%E8%BF%87%E7%A8%8B.png" alt="js执行过程"></p>
-<h2 id="EventLoop的基本概念"><a href="#EventLoop的基本概念" class="headerlink" title="EventLoop的基本概念"></a>EventLoop的基本概念</h2><p><strong>JavaScript主线程从“任务队列”中读取异步任务的回调函数，放到执行栈中依次执行</strong>。这个过程是循环不断的，所以整个的这种运行机<br>制又称为<strong>EventLoop</strong>(事件循环)。</p>
-<ul>
-<li><p>练习<br><img src="/tsukimiya.github.io/images/ES6/%E7%BB%83%E4%B9%A0.png" alt="练习"></p>
-</li>
-<li><p>分享文章<br>面试必问之 JS 事件循环(Event Loop)，看这一篇足够(<a href="https://zhuanlan.zhihu.com/p/580956436">https://zhuanlan.zhihu.com/p/580956436</a>)</p>
-</li>
-</ul>
-]]></content>
-      <categories>
-        <category>JS</category>
-        <category>ES6</category>
-      </categories>
-      <tags>
-        <tag>ES6</tag>
-        <tag>EventLoop</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>宏任务和微任务</title>
-    <url>/tsukimiya.github.io/2024/05/08/ES6/5.%E5%AE%8F%E4%BB%BB%E5%8A%A1%E5%92%8C%E5%BE%AE%E4%BB%BB%E5%8A%A1/</url>
-    <content><![CDATA[<h2 id="什么是宏任务和微任务"><a href="#什么是宏任务和微任务" class="headerlink" title="什么是宏任务和微任务"></a>什么是宏任务和微任务</h2><p>JavaScript把异步任务又做了进一步的划分，异步任务又分为两类，分别是:</p>
-<ol>
-<li>宏任务( macrotask)<ul>
-<li>异步Ajax请求、</li>
-<li>setTimeout、setlnterval、</li>
-<li>文件操作</li>
-<li>其它宏任务</li>
-</ul>
-</li>
-<li>微任务( microtask)<ul>
-<li>Promise.then、.catch和.finally</li>
-<li>process.nextTick</li>
-<li>其它微任务</li>
-</ul>
-</li>
-</ol>
-<p><img src="/tsukimiya.github.io/images/ES6/%E5%AE%8F%E4%BB%BB%E5%8A%A1%E5%92%8C%E5%BE%AE%E4%BB%BB%E5%8A%A1.png" alt="宏任务和微任务"></p>
-<h2 id="划分依据"><a href="#划分依据" class="headerlink" title="划分依据"></a>划分依据</h2><p>异步任务是根据<strong>任务的触发时机</strong>和<strong>任务队列的不同</strong>来分为宏任务和微任务的。下面是它们的依据：</p>
-<ol>
-<li><p><strong>触发时机</strong>：</p>
-<ul>
-<li><strong>宏任务（Macro Task）</strong>：宏任务是由 JavaScript 引擎外部的任务触发的，比如 DOM 事件（如点击事件、鼠标移动事件）、<code>setTimeout</code>、<code>setInterval</code>、网络请求等。宏任务代表着一个独立的、顺序执行的任务单元，它们会被放入宏任务队列中等待执行。</li>
-<li><strong>微任务（Micro Task）</strong>：微任务是在当前任务执行完成之后立即执行的任务，它们一般是由 JavaScript 引擎内部触发的，比如 Promise 的状态改变、<code>queueMicrotask</code> 函数等。微任务的执行时机是在当前宏任务执行结束、事件循环进入下一次循环之前。</li>
-</ul>
-</li>
-<li><p><strong>任务队列</strong>：</p>
-<ul>
-<li><strong>宏任务队列</strong>：宏任务队列中存放着各种宏任务，包括了 DOM 事件、定时器、I&#x2F;O 操作等。在事件循环的每一轮中，只有一个宏任务会被执行。</li>
-<li><strong>微任务队列</strong>：微任务队列中存放着微任务，它们的执行顺序是按照它们进入队列的顺序执行的。在每个宏任务执行结束后，会检查并执行所有的微任务，直到微任务队列为空。</li>
-</ul>
-</li>
-</ol>
-<p>因此，异步任务是根据触发时机和任务队列的不同而被分为宏任务和微任务的。这种分化使得 JavaScript 引擎能够灵活地处理异步任务，并根据执行上下文的情况来调度它们的执行顺序。</p>
-<h2 id="执行顺序"><a href="#执行顺序" class="headerlink" title="执行顺序"></a>执行顺序</h2><p>宏任务和微任务是交替执行的。<br>在 JavaScript 中，<strong>执行完同步任务后</strong>，<strong>会先检查是否存在微任务</strong>，如果存在，则先执行微任务队列中的所有微任务。执行完所有微任务后，再去执行宏任务队列中的任务。<br><img src="/tsukimiya.github.io/images/ES6/%E5%AE%8F%E4%BB%BB%E5%8A%A1%E5%BE%AE%E4%BB%BB%E5%8A%A1%E6%89%A7%E8%A1%8C%E9%A1%BA%E5%BA%8F.png" alt="宏任务微任务执行顺序"></p>
-<ul>
-<li><p>场景举例<br><img src="/tsukimiya.github.io/images/ES6/%E5%9C%BA%E6%99%AF.png" alt="场景"></p>
-</li>
-<li><p>练习<br>new Promise 是同步任务，其调用的.then是微任务<br><img src="/tsukimiya.github.io/images/ES6/%E7%BB%83%E4%B9%A02.png" alt="练习2"></p>
-</li>
-<li><p>练习<br><img src="/tsukimiya.github.io/images/ES6/%E7%BB%83%E4%B9%A03.png" alt="练习3"></p>
-</li>
-</ul>
-]]></content>
-      <categories>
-        <category>JS</category>
-        <category>ES6</category>
-      </categories>
-      <tags>
-        <tag>ES6</tag>
-        <tag>宏任务和微任务</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Less</title>
     <url>/tsukimiya.github.io/2024/06/01/CSS/Less/</url>
     <content><![CDATA[<h2 id="CSS的弊端"><a href="#CSS的弊端" class="headerlink" title="CSS的弊端"></a>CSS的弊端</h2><p>CSS是一门非程序的语言，没有变量、函数、作用域(SCOPE)等概念。</p>
@@ -372,6 +106,79 @@
       </tags>
   </entry>
   <entry>
+    <title>JS相等性比较陷阱揭秘：理解`[]==![]`为`true`背后的宽松相等运算符与类型转换</title>
+    <url>/tsukimiya.github.io/2024/05/23/JS/JS%E7%9A%84%E7%9B%B8%E7%AD%89%E6%80%A7%E6%AF%94%E8%BE%83%E9%99%B7%E9%98%B1/</url>
+    <content><![CDATA[<h1 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h1><p>JavaScript是一门弱类型（或称动态类型）语言，这意味着<strong>变量的类型可以在运行时改变</strong>，为开发者提供了极大的灵活性。然而，这也引入了类型转换的概念，尤其是在使用宽松相等运算符&#x3D;&#x3D;进行比较时。宽松相等不仅比较值，还会在必要时自动转换类型以进行比较，这一特性有时会导致预期之外的结果。</p>
+<hr>
+<p>下面来看一组比较运算符的例子：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">[] == []  <span class="comment">// false</span></span><br><span class="line">[] == ![] <span class="comment">// true</span></span><br><span class="line">[] == !&#123;&#125; <span class="comment">// true</span></span><br><span class="line">&#123;&#125; == !&#123;&#125; <span class="comment">// Uncaught SyntaxError: Unexpected token &#x27;==&#x27;</span></span><br><span class="line">&#123;&#125; == &#123;&#125;  <span class="comment">// Uncaught SyntaxError: Unexpected token &#x27;==&#x27;</span></span><br><span class="line">&#123;&#125; == ![] <span class="comment">// Uncaught SyntaxError: Unexpected token &#x27;==&#x27;</span></span><br><span class="line">&#123;&#125; == []  <span class="comment">// Uncaught SyntaxError: Unexpected token &#x27;==&#x27;</span></span><br><span class="line">(&#123;&#125; == !&#123;&#125;) <span class="comment">// false</span></span><br></pre></td></tr></table></figure>
+<p>提出问题：<strong>为什么[] &#x3D;&#x3D; ![]会得出true这样一个看似反直觉的结果？</strong><br>下面，我们将会逐步接近答案，揭开这个陷阱。</p>
+<hr>
+<h1 id="JavaScript中的比较运算符"><a href="#JavaScript中的比较运算符" class="headerlink" title="JavaScript中的比较运算符"></a>JavaScript中的比较运算符</h1><h2 id="严格相等与宽松相等"><a href="#严格相等与宽松相等" class="headerlink" title="严格相等与宽松相等"></a>严格相等与宽松相等</h2><ul>
+<li>严格相等运算符 <code>===</code> 要求<font color="red">两边的值及其类型完全一致</font>才能返回 <code>true</code>，是最安全的比较方式。</li>
+<li>宽松相等运算符 <code>==</code> 在比较前，<font color="red">如果两侧数据类型不匹配，会尝试将它们转换成相同类型后再比较</font>，这便是问题的根源所在。</li>
+</ul>
+<h2 id="类型转换规则"><a href="#类型转换规则" class="headerlink" title="类型转换规则"></a>类型转换规则</h2><p>类型转换发生在比较操作中，涉及多种类型间的转换逻辑，例如：</p>
+<ul>
+<li>布尔值转数字 (<code>true</code> 转换为 <code>1</code>, <code>false</code> 转换为 <code>0</code>)</li>
+<li>字符串与数字之间的相互转换</li>
+<li>对象转换为原始值（通常是字符串或数字）</li>
+</ul>
+<hr>
+<h1 id="深入解析"><a href="#深入解析" class="headerlink" title="深入解析[] == ![]"></a>深入解析<code>[] == ![]</code></h1><h2 id="逻辑非运算符"><a href="#逻辑非运算符" class="headerlink" title="逻辑非运算符!"></a>逻辑非运算符<code>!</code></h2><p>首先，理解<code>![]</code>是如何工作的。逻辑非运算符<code>!</code>会对表达式求布尔值，然后取反。对于数组（即使是空数组<code>[]</code>），在布尔上下文中被视为<code>true</code>，因此<code>![]</code>的结果是<code>false</code>。在宽松比较的上下文中，<code>false</code>进一步被转换为数字<code>0</code>。</p>
+<h2 id="数组到字符串再到数字"><a href="#数组到字符串再到数字" class="headerlink" title="数组到字符串再到数字"></a>数组到字符串再到数字</h2><p>接下来，考虑左侧的空数组<code>[]</code>。在宽松相等比较中，数组会首先转换为它的字符串表示形式，即<code>&quot;&quot;</code>（空字符串）。随后，空字符串在进一步的比较中会被转换为数字<code>0</code>。</p>
+<h2 id="比较””-0"><a href="#比较””-0" class="headerlink" title="比较”” &#x3D;&#x3D; 0"></a>比较”” &#x3D;&#x3D; 0</h2><p>因此，<code>[] == ![]</code> 的比较实质上变为<code>&quot;&quot; == 0</code>。在JavaScript的宽松比较规则下，空字符串<code>&quot;&quot;</code>和数字<code>0</code>都被认为是“空”或“假”值，在比较时被视作相等。这解释了为什么<code>[] == ![]</code>的结果是<code>true</code>，尽管直观上两者看似完全不同。</p>
+<hr>
+<h1 id="宽松相等运算符的其他陷阱示例"><a href="#宽松相等运算符的其他陷阱示例" class="headerlink" title="宽松相等运算符的其他陷阱示例"></a>宽松相等运算符的其他陷阱示例</h1><p>除了<code>[] == ![]</code>，宽松相等还可能导致其他令人迷惑的结果，例如：</p>
+<ul>
+<li><code>0 == &#39;0&#39;</code>：数字<code>0</code>与字符串<code>&#39;0&#39;</code>在宽松比较中相等。</li>
+<li><code>null == undefined</code>：这两种特殊的值在比较时也被认为是相等的。</li>
+</ul>
+<hr>
+<h1 id="最佳实践与建议"><a href="#最佳实践与建议" class="headerlink" title="最佳实践与建议"></a>最佳实践与建议</h1><p>为了避免由宽松相等引发的潜在问题，建议采取以下措施：</p>
+<ul>
+<li><font color="red">首选严格相等运算符 “&#x3D;&#x3D;&#x3D;”：除非你明确知道并期望类型转换发生，否则总是使用严格相等。</font></li>
+<li>显式类型转换：当你确实需要进行类型转换时，显式地进行，比如使用<code>Number()</code>, <code>String()</code>或<code>Boolean()</code>函数，以增强代码的可读性。</li>
+<li>代码审查：团队内部实施代码审查，可以帮助识别并纠正潜在的比较陷阱。</li>
+<li>单元测试：编写测试用例来验证比较逻辑的正确性，确保代码行为符合预期。</li>
+</ul>
+<hr>
+<h1 id="再次回顾开始的问题"><a href="#再次回顾开始的问题" class="headerlink" title="再次回顾开始的问题"></a>再次回顾开始的问题</h1><figure class="highlight js"><table><tr><td class="code"><pre><span class="line">[] == []  <span class="comment">// false</span></span><br><span class="line">[] == ![] <span class="comment">// true</span></span><br><span class="line">[] == !&#123;&#125; <span class="comment">// true</span></span><br><span class="line">&#123;&#125; == !&#123;&#125; <span class="comment">// Uncaught SyntaxError: Unexpected token &#x27;==&#x27;</span></span><br><span class="line">&#123;&#125; == &#123;&#125;  <span class="comment">// Uncaught SyntaxError: Unexpected token &#x27;==&#x27;</span></span><br><span class="line">&#123;&#125; == ![] <span class="comment">// Uncaught SyntaxError: Unexpected token &#x27;==&#x27;</span></span><br><span class="line">&#123;&#125; == []  <span class="comment">// Uncaught SyntaxError: Unexpected token &#x27;==&#x27;</span></span><br><span class="line">(&#123;&#125; == !&#123;&#125;) <span class="comment">// false</span></span><br></pre></td></tr></table></figure>
+
+<p>现在我们可以对它们挨个做出解释：</p>
+<ul>
+<li><p><code>[] == []  // false</code><br>这里两个空数组虽然内容相同，但在使用宽松相等<code>==</code>比较时，因为它们是两个不同的对象实例，所以结果为false。</p>
+</li>
+<li><p><code>[] == ![] // true</code><br>这个表达式实际上分两步理解：</p>
+<ol>
+<li><code>![]</code> 首先执行，<code>[]</code>转换为布尔值再取反，结果是false。</li>
+<li><code>[]</code>会转换为<code>&quot;&quot;</code>，而<code>false</code>被转换为<code>0</code>。就成了<code>&quot;&quot; == 0</code>的比较。根据JavaScript的类型转换规则，空字符串和数字0在比较时被认为是相等的（因为都转为了相同的布尔值false），所以结果为true。</li>
+</ol>
+</li>
+<li><p><code>[] == !&#123;&#125; // true</code><br><code>!&#123;&#125;</code>同样是非空对象转换为布尔值取反，与上面相同，结果为true。</p>
+</li>
+<li><p><code>&#123;&#125; == !&#123;&#125; 、&#123;&#125; == &#123;&#125; 、&#123;&#125; == ![] // Uncaught SyntaxError: Unexpected token &#39;==&#39;</code></p>
+<blockquote>
+<p>这里就不再是宽松相等比较类型转换的问题了<br>  这些表达式报错是因为在JS中，<font color="red">大括号 {} 既可以表示对象字面量也可以表示代码块。</font><br>  在这些情况下，解释器尝试将它们解释为代码块，但是紧接着的 <code>==</code> 或 <code>!=</code> 导致了语法错误，因为<strong>代码块后面直接跟比较操作符是不合法的</strong>。解决这个问题<strong>需要确保大括号用于创建对象时明确其意图</strong>，例如通过<strong>赋值或声明变量的方式</strong>：<code>(&#123;&#125; == !&#123;&#125;) // false</code>、<code>let obj = &#123;&#125;</code> 等。</p>
+</blockquote>
+</li>
+<li><p><code>(&#123;&#125; == !&#123;&#125;) // false</code><br>这里就是合法的比较了，<code>!&#123;&#125;</code>同样转换为<code>false</code>，然后<code>&#123;&#125;</code>转换为原始值字符串<code>[object Object]</code><br>所以表达式变成了<code>[object Object] == false</code>，结果为false。</p>
+</li>
+</ul>
+<hr>
+<p>理解JavaScript的宽松相等运算符及其隐含的类型转换机制，是成为高效JavaScript开发者的关键之一。尽管这些特性有时可能引入意料之外的行为，但通过掌握它们，我们可以编写出更加健壮、易于维护的代码。面对<code>[] == ![]</code>这样的谜题，我们不再困惑，而是能清晰地解析其背后的逻辑，进而避免类似的陷阱。</p>
+]]></content>
+      <categories>
+        <category>JS</category>
+      </categories>
+      <tags>
+        <tag>JS</tag>
+        <tag>==</tag>
+        <tag>比较运算符</tag>
+        <tag>类型转换</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Hexo使用emoji表情</title>
     <url>/tsukimiya.github.io/2024/05/07/Hexo/hexo%E4%BD%BF%E7%94%A8emoji%E8%A1%A8%E6%83%85/</url>
     <content><![CDATA[<blockquote>
@@ -471,130 +278,15 @@
       </tags>
   </entry>
   <entry>
-    <title>JS相等性比较陷阱揭秘：理解`[]==![]`为`true`背后的宽松相等运算符与类型转换</title>
-    <url>/tsukimiya.github.io/2024/05/23/JS/JS%E7%9A%84%E7%9B%B8%E7%AD%89%E6%80%A7%E6%AF%94%E8%BE%83%E9%99%B7%E9%98%B1/</url>
-    <content><![CDATA[<h1 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h1><p>JavaScript是一门弱类型（或称动态类型）语言，这意味着<strong>变量的类型可以在运行时改变</strong>，为开发者提供了极大的灵活性。然而，这也引入了类型转换的概念，尤其是在使用宽松相等运算符&#x3D;&#x3D;进行比较时。宽松相等不仅比较值，还会在必要时自动转换类型以进行比较，这一特性有时会导致预期之外的结果。</p>
-<hr>
-<p>下面来看一组比较运算符的例子：</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">[] == []  <span class="comment">// false</span></span><br><span class="line">[] == ![] <span class="comment">// true</span></span><br><span class="line">[] == !&#123;&#125; <span class="comment">// true</span></span><br><span class="line">&#123;&#125; == !&#123;&#125; <span class="comment">// Uncaught SyntaxError: Unexpected token &#x27;==&#x27;</span></span><br><span class="line">&#123;&#125; == &#123;&#125;  <span class="comment">// Uncaught SyntaxError: Unexpected token &#x27;==&#x27;</span></span><br><span class="line">&#123;&#125; == ![] <span class="comment">// Uncaught SyntaxError: Unexpected token &#x27;==&#x27;</span></span><br><span class="line">&#123;&#125; == []  <span class="comment">// Uncaught SyntaxError: Unexpected token &#x27;==&#x27;</span></span><br><span class="line">(&#123;&#125; == !&#123;&#125;) <span class="comment">// false</span></span><br></pre></td></tr></table></figure>
-<p>提出问题：<strong>为什么[] &#x3D;&#x3D; ![]会得出true这样一个看似反直觉的结果？</strong><br>下面，我们将会逐步接近答案，揭开这个陷阱。</p>
-<hr>
-<h1 id="JavaScript中的比较运算符"><a href="#JavaScript中的比较运算符" class="headerlink" title="JavaScript中的比较运算符"></a>JavaScript中的比较运算符</h1><h2 id="严格相等与宽松相等"><a href="#严格相等与宽松相等" class="headerlink" title="严格相等与宽松相等"></a>严格相等与宽松相等</h2><ul>
-<li>严格相等运算符 <code>===</code> 要求<font color="red">两边的值及其类型完全一致</font>才能返回 <code>true</code>，是最安全的比较方式。</li>
-<li>宽松相等运算符 <code>==</code> 在比较前，<font color="red">如果两侧数据类型不匹配，会尝试将它们转换成相同类型后再比较</font>，这便是问题的根源所在。</li>
-</ul>
-<h2 id="类型转换规则"><a href="#类型转换规则" class="headerlink" title="类型转换规则"></a>类型转换规则</h2><p>类型转换发生在比较操作中，涉及多种类型间的转换逻辑，例如：</p>
-<ul>
-<li>布尔值转数字 (<code>true</code> 转换为 <code>1</code>, <code>false</code> 转换为 <code>0</code>)</li>
-<li>字符串与数字之间的相互转换</li>
-<li>对象转换为原始值（通常是字符串或数字）</li>
-</ul>
-<hr>
-<h1 id="深入解析"><a href="#深入解析" class="headerlink" title="深入解析[] == ![]"></a>深入解析<code>[] == ![]</code></h1><h2 id="逻辑非运算符"><a href="#逻辑非运算符" class="headerlink" title="逻辑非运算符!"></a>逻辑非运算符<code>!</code></h2><p>首先，理解<code>![]</code>是如何工作的。逻辑非运算符<code>!</code>会对表达式求布尔值，然后取反。对于数组（即使是空数组<code>[]</code>），在布尔上下文中被视为<code>true</code>，因此<code>![]</code>的结果是<code>false</code>。在宽松比较的上下文中，<code>false</code>进一步被转换为数字<code>0</code>。</p>
-<h2 id="数组到字符串再到数字"><a href="#数组到字符串再到数字" class="headerlink" title="数组到字符串再到数字"></a>数组到字符串再到数字</h2><p>接下来，考虑左侧的空数组<code>[]</code>。在宽松相等比较中，数组会首先转换为它的字符串表示形式，即<code>&quot;&quot;</code>（空字符串）。随后，空字符串在进一步的比较中会被转换为数字<code>0</code>。</p>
-<h2 id="比较””-0"><a href="#比较””-0" class="headerlink" title="比较”” &#x3D;&#x3D; 0"></a>比较”” &#x3D;&#x3D; 0</h2><p>因此，<code>[] == ![]</code> 的比较实质上变为<code>&quot;&quot; == 0</code>。在JavaScript的宽松比较规则下，空字符串<code>&quot;&quot;</code>和数字<code>0</code>都被认为是“空”或“假”值，在比较时被视作相等。这解释了为什么<code>[] == ![]</code>的结果是<code>true</code>，尽管直观上两者看似完全不同。</p>
-<hr>
-<h1 id="宽松相等运算符的其他陷阱示例"><a href="#宽松相等运算符的其他陷阱示例" class="headerlink" title="宽松相等运算符的其他陷阱示例"></a>宽松相等运算符的其他陷阱示例</h1><p>除了<code>[] == ![]</code>，宽松相等还可能导致其他令人迷惑的结果，例如：</p>
-<ul>
-<li><code>0 == &#39;0&#39;</code>：数字<code>0</code>与字符串<code>&#39;0&#39;</code>在宽松比较中相等。</li>
-<li><code>null == undefined</code>：这两种特殊的值在比较时也被认为是相等的。</li>
-</ul>
-<hr>
-<h1 id="最佳实践与建议"><a href="#最佳实践与建议" class="headerlink" title="最佳实践与建议"></a>最佳实践与建议</h1><p>为了避免由宽松相等引发的潜在问题，建议采取以下措施：</p>
-<ul>
-<li><font color="red">首选严格相等运算符 “&#x3D;&#x3D;&#x3D;”：除非你明确知道并期望类型转换发生，否则总是使用严格相等。</font></li>
-<li>显式类型转换：当你确实需要进行类型转换时，显式地进行，比如使用<code>Number()</code>, <code>String()</code>或<code>Boolean()</code>函数，以增强代码的可读性。</li>
-<li>代码审查：团队内部实施代码审查，可以帮助识别并纠正潜在的比较陷阱。</li>
-<li>单元测试：编写测试用例来验证比较逻辑的正确性，确保代码行为符合预期。</li>
-</ul>
-<hr>
-<h1 id="再次回顾开始的问题"><a href="#再次回顾开始的问题" class="headerlink" title="再次回顾开始的问题"></a>再次回顾开始的问题</h1><figure class="highlight js"><table><tr><td class="code"><pre><span class="line">[] == []  <span class="comment">// false</span></span><br><span class="line">[] == ![] <span class="comment">// true</span></span><br><span class="line">[] == !&#123;&#125; <span class="comment">// true</span></span><br><span class="line">&#123;&#125; == !&#123;&#125; <span class="comment">// Uncaught SyntaxError: Unexpected token &#x27;==&#x27;</span></span><br><span class="line">&#123;&#125; == &#123;&#125;  <span class="comment">// Uncaught SyntaxError: Unexpected token &#x27;==&#x27;</span></span><br><span class="line">&#123;&#125; == ![] <span class="comment">// Uncaught SyntaxError: Unexpected token &#x27;==&#x27;</span></span><br><span class="line">&#123;&#125; == []  <span class="comment">// Uncaught SyntaxError: Unexpected token &#x27;==&#x27;</span></span><br><span class="line">(&#123;&#125; == !&#123;&#125;) <span class="comment">// false</span></span><br></pre></td></tr></table></figure>
-
-<p>现在我们可以对它们挨个做出解释：</p>
-<ul>
-<li><p><code>[] == []  // false</code><br>这里两个空数组虽然内容相同，但在使用宽松相等<code>==</code>比较时，因为它们是两个不同的对象实例，所以结果为false。</p>
-</li>
-<li><p><code>[] == ![] // true</code><br>这个表达式实际上分两步理解：</p>
-<ol>
-<li><code>![]</code> 首先执行，<code>[]</code>转换为布尔值再取反，结果是false。</li>
-<li><code>[]</code>会转换为<code>&quot;&quot;</code>，而<code>false</code>被转换为<code>0</code>。就成了<code>&quot;&quot; == 0</code>的比较。根据JavaScript的类型转换规则，空字符串和数字0在比较时被认为是相等的（因为都转为了相同的布尔值false），所以结果为true。</li>
-</ol>
-</li>
-<li><p><code>[] == !&#123;&#125; // true</code><br><code>!&#123;&#125;</code>同样是非空对象转换为布尔值取反，与上面相同，结果为true。</p>
-</li>
-<li><p><code>&#123;&#125; == !&#123;&#125; 、&#123;&#125; == &#123;&#125; 、&#123;&#125; == ![] // Uncaught SyntaxError: Unexpected token &#39;==&#39;</code></p>
-<blockquote>
-<p>这里就不再是宽松相等比较类型转换的问题了<br>  这些表达式报错是因为在JS中，<font color="red">大括号 {} 既可以表示对象字面量也可以表示代码块。</font><br>  在这些情况下，解释器尝试将它们解释为代码块，但是紧接着的 <code>==</code> 或 <code>!=</code> 导致了语法错误，因为<strong>代码块后面直接跟比较操作符是不合法的</strong>。解决这个问题<strong>需要确保大括号用于创建对象时明确其意图</strong>，例如通过<strong>赋值或声明变量的方式</strong>：<code>(&#123;&#125; == !&#123;&#125;) // false</code>、<code>let obj = &#123;&#125;</code> 等。</p>
-</blockquote>
-</li>
-<li><p><code>(&#123;&#125; == !&#123;&#125;) // false</code><br>这里就是合法的比较了，<code>!&#123;&#125;</code>同样转换为<code>false</code>，然后<code>&#123;&#125;</code>转换为原始值字符串<code>[object Object]</code><br>所以表达式变成了<code>[object Object] == false</code>，结果为false。</p>
-</li>
-</ul>
-<hr>
-<p>理解JavaScript的宽松相等运算符及其隐含的类型转换机制，是成为高效JavaScript开发者的关键之一。尽管这些特性有时可能引入意料之外的行为，但通过掌握它们，我们可以编写出更加健壮、易于维护的代码。面对<code>[] == ![]</code>这样的谜题，我们不再困惑，而是能清晰地解析其背后的逻辑，进而避免类似的陷阱。</p>
+    <title>Trouble Set</title>
+    <url>/tsukimiya.github.io/2024/05/31/Problem/Trouble%20Set/</url>
+    <content><![CDATA[<h2 id="axios请求刷新页面的问题"><a href="#axios请求刷新页面的问题" class="headerlink" title="axios请求刷新页面的问题"></a>axios请求刷新页面的问题</h2><p>axios请求会导致页面刷新，这是vscode的live server插件的bug<br>不知道什么原因，但是只要在文件夹打开页面就可以了。</p>
 ]]></content>
       <categories>
-        <category>JS</category>
+        <category>Problem</category>
       </categories>
       <tags>
-        <tag>JS</tag>
-        <tag>==</tag>
-        <tag>比较运算符</tag>
-        <tag>类型转换</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>简单的API接口案例</title>
-    <url>/tsukimiya.github.io/2024/05/08/Node/API%E6%8E%A5%E5%8F%A3%E6%A1%88%E4%BE%8B/</url>
-    <content><![CDATA[<h2 id="API接口案例"><a href="#API接口案例" class="headerlink" title="API接口案例"></a>API接口案例</h2><p>基于<strong>MySQL数据库 + Express</strong>对外提供<strong>用户列表</strong>的API接口服务</p>
-<ol>
-<li>技术栈：<ul>
-<li>第三方包express、mysql2</li>
-<li>ES6模块化</li>
-<li>Promise</li>
-<li>async&#x2F;await</li>
-</ul>
-</li>
-<li>主要实现步骤<ol>
-<li>搭建项目的基本结构</li>
-<li>创建基本的服务器</li>
-<li>创建db数据库操作模块</li>
-<li>创建user_ctrl 业务模块</li>
-<li>创建user_router路由模块</li>
-</ol>
-</li>
-</ol>
-<h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><ol>
-<li><p>初始化包管理配置文件package.json —— <code>npm init -y</code></p>
-</li>
-<li><p>启用ES6模块化支持</p>
-<ul>
-<li>在package.json中声明<code>&quot;type&quot;: &quot;module&quot;</code></li>
-</ul>
-</li>
-<li><p>安装第三方依赖包</p>
-<ul>
-<li>运行<code>npm install express@4.17.1 mysql2@2.2.5</code></li>
-</ul>
-</li>
-<li><p>创建最基本的web服务器</p>
- <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// app.js</span></span><br><span class="line"><span class="comment">//导入express模块</span></span><br><span class="line"><span class="keyword">import</span> express <span class="keyword">from</span> <span class="string">&#x27;express&#x27;</span></span><br><span class="line"><span class="comment">//创建express服务器实例</span></span><br><span class="line"><span class="keyword">const</span> app = <span class="title function_">express</span>()</span><br><span class="line"></span><br><span class="line"><span class="comment">//调用app.listen方法，指定端口号并启动web服务器</span></span><br><span class="line">app.<span class="title function_">listen</span>(<span class="number">8080</span>,<span class="function">()=&gt;</span>&#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;Express server running at http://127.0.0.1:8080&#x27;</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></li>
-<li><p>创建db数据库操作模块</p>
- <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// db/index.js</span></span><br><span class="line"><span class="keyword">import</span> mysql <span class="keyword">from</span> <span class="string">&#x27;mysql2&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> pool = mysql.<span class="title function_">createPool</span>(&#123;</span><br><span class="line">  <span class="attr">host</span>: <span class="string">&#x27;127.0.0.1&#x27;</span>, <span class="comment">// 指定操作哪台电脑</span></span><br><span class="line">  <span class="attr">port</span>: <span class="number">3306</span>, <span class="comment">// 指定端口号，一般mysql数据库的端口号都是3306</span></span><br><span class="line">  <span class="attr">database</span>: <span class="string">&#x27;my_db_01&#x27;</span>,</span><br><span class="line">  <span class="attr">user</span>: <span class="string">&#x27;root&#x27;</span>,</span><br><span class="line">  <span class="attr">password</span>: <span class="string">&#x27;ayu123+&#x27;</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 如果导出pool，它不支持以promise API的形式来操作数据库</span></span><br><span class="line"><span class="comment">// 此时我们需要调用pool提供的.promise()，把返回值导出出去</span></span><br><span class="line"><span class="comment">// 外界拿到数据库的连接对象之后，就可以以Promise的方式来操作数据库</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> pool.<span class="title function_">promise</span>()</span><br></pre></td></tr></table></figure></li>
-<li><p>创建user_ctrl 业务模块</p>
- <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// controller/user_ctrl.js</span></span><br><span class="line"><span class="keyword">import</span> db <span class="keyword">from</span> <span class="string">&#x27;../db/index.js&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用ES6的按需导出语法，将getALLUser语法导出出去</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">getAllUser</span>(<span class="params">req,res</span>)&#123;</span><br><span class="line">  <span class="comment">// 数组中，索引为0的那一项，是最终需要的数据，所以解构赋值出一个rows</span></span><br><span class="line">  <span class="keyword">const</span> [rows] = <span class="keyword">await</span> db.<span class="title function_">query</span>(<span class="string">&#x27;select id,username,nickname from users&#x27;</span>)</span><br><span class="line">  res.<span class="title function_">send</span>(&#123;</span><br><span class="line">    <span class="attr">status</span>: <span class="number">0</span>,</span><br><span class="line">    <span class="attr">messages</span>: <span class="string">&#x27;获取用户列表数据成功！&#x27;</span>,</span><br><span class="line">    <span class="attr">data</span>: rows,</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>创建user_router路由模块</p>
- <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// router/user_router.js</span></span><br><span class="line"><span class="keyword">import</span> express <span class="keyword">from</span> <span class="string">&#x27;express&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123; getAllUser &#125; <span class="keyword">from</span> <span class="string">&#x27;../controller/user_ctrl.js&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> router = <span class="keyword">new</span> express.<span class="title class_">Router</span>()</span><br><span class="line">router.<span class="title function_">get</span>(<span class="string">&#x27;/user&#x27;</span>, getAllUser)</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> router</span><br><span class="line"></span><br><span class="line"><span class="comment">// 在app.js注册路由</span></span><br><span class="line"><span class="keyword">import</span> userRouter <span class="keyword">from</span> <span class="string">&#x27;./router/user_router.js&#x27;</span></span><br><span class="line">app.<span class="title function_">use</span>(<span class="string">&#x27;/api&#x27;</span>, userRouter)</span><br></pre></td></tr></table></figure></li>
-<li><p>使用try…catch捕获异常<br>当报错之后，使用catch进行处理，程序不会发生崩溃</p>
- <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// controller/user_ctrl.js</span></span><br><span class="line"><span class="keyword">import</span> db <span class="keyword">from</span> <span class="string">&#x27;../db/index.js&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用ES6的按需导出语法，将getALLUser语法导出出去</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">getAllUser</span>(<span class="params">req,res</span>)&#123;</span><br><span class="line">  <span class="comment">// 数组中，索引为0的那一项，是最终需要的数据，所以解构赋值出一个rows</span></span><br><span class="line">  <span class="keyword">try</span>&#123;</span><br><span class="line">    <span class="keyword">const</span> [rows] = <span class="keyword">await</span> db.<span class="title function_">query</span>(<span class="string">&#x27;select id,username,nickname,xxx from users&#x27;</span>)</span><br><span class="line">    res.<span class="title function_">send</span>(&#123;</span><br><span class="line">      <span class="attr">status</span>: <span class="number">0</span>,</span><br><span class="line">      <span class="attr">messages</span>: <span class="string">&#x27;获取用户列表数据成功！&#x27;</span>,</span><br><span class="line">      <span class="attr">data</span>: rows,</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;<span class="keyword">catch</span>(err)&#123;</span><br><span class="line">    res.<span class="title function_">send</span>(&#123;</span><br><span class="line">      <span class="attr">status</span>: <span class="number">1</span>,</span><br><span class="line">      <span class="attr">messages</span>: <span class="string">&#x27;获取用户数据失败！&#x27;</span>,</span><br><span class="line">      <span class="attr">desc</span>: err.<span class="property">messages</span></span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
-</ol>
-]]></content>
-      <categories>
-        <category>Node.js</category>
-      </categories>
-      <tags>
-        <tag>Node.js</tag>
+        <tag>Problem</tag>
       </tags>
   </entry>
   <entry>
@@ -721,15 +413,57 @@
       </tags>
   </entry>
   <entry>
-    <title>Trouble Set</title>
-    <url>/tsukimiya.github.io/2024/05/31/Problem/Trouble%20Set/</url>
-    <content><![CDATA[<h2 id="axios请求刷新页面的问题"><a href="#axios请求刷新页面的问题" class="headerlink" title="axios请求刷新页面的问题"></a>axios请求刷新页面的问题</h2><p>axios请求会导致页面刷新，这是vscode的live server插件的bug<br>不知道什么原因，但是只要在文件夹打开页面就可以了。</p>
+    <title>简单的API接口案例</title>
+    <url>/tsukimiya.github.io/2024/05/08/Node/API%E6%8E%A5%E5%8F%A3%E6%A1%88%E4%BE%8B/</url>
+    <content><![CDATA[<h2 id="API接口案例"><a href="#API接口案例" class="headerlink" title="API接口案例"></a>API接口案例</h2><p>基于<strong>MySQL数据库 + Express</strong>对外提供<strong>用户列表</strong>的API接口服务</p>
+<ol>
+<li>技术栈：<ul>
+<li>第三方包express、mysql2</li>
+<li>ES6模块化</li>
+<li>Promise</li>
+<li>async&#x2F;await</li>
+</ul>
+</li>
+<li>主要实现步骤<ol>
+<li>搭建项目的基本结构</li>
+<li>创建基本的服务器</li>
+<li>创建db数据库操作模块</li>
+<li>创建user_ctrl 业务模块</li>
+<li>创建user_router路由模块</li>
+</ol>
+</li>
+</ol>
+<h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><ol>
+<li><p>初始化包管理配置文件package.json —— <code>npm init -y</code></p>
+</li>
+<li><p>启用ES6模块化支持</p>
+<ul>
+<li>在package.json中声明<code>&quot;type&quot;: &quot;module&quot;</code></li>
+</ul>
+</li>
+<li><p>安装第三方依赖包</p>
+<ul>
+<li>运行<code>npm install express@4.17.1 mysql2@2.2.5</code></li>
+</ul>
+</li>
+<li><p>创建最基本的web服务器</p>
+ <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// app.js</span></span><br><span class="line"><span class="comment">//导入express模块</span></span><br><span class="line"><span class="keyword">import</span> express <span class="keyword">from</span> <span class="string">&#x27;express&#x27;</span></span><br><span class="line"><span class="comment">//创建express服务器实例</span></span><br><span class="line"><span class="keyword">const</span> app = <span class="title function_">express</span>()</span><br><span class="line"></span><br><span class="line"><span class="comment">//调用app.listen方法，指定端口号并启动web服务器</span></span><br><span class="line">app.<span class="title function_">listen</span>(<span class="number">8080</span>,<span class="function">()=&gt;</span>&#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;Express server running at http://127.0.0.1:8080&#x27;</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></li>
+<li><p>创建db数据库操作模块</p>
+ <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// db/index.js</span></span><br><span class="line"><span class="keyword">import</span> mysql <span class="keyword">from</span> <span class="string">&#x27;mysql2&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> pool = mysql.<span class="title function_">createPool</span>(&#123;</span><br><span class="line">  <span class="attr">host</span>: <span class="string">&#x27;127.0.0.1&#x27;</span>, <span class="comment">// 指定操作哪台电脑</span></span><br><span class="line">  <span class="attr">port</span>: <span class="number">3306</span>, <span class="comment">// 指定端口号，一般mysql数据库的端口号都是3306</span></span><br><span class="line">  <span class="attr">database</span>: <span class="string">&#x27;my_db_01&#x27;</span>,</span><br><span class="line">  <span class="attr">user</span>: <span class="string">&#x27;root&#x27;</span>,</span><br><span class="line">  <span class="attr">password</span>: <span class="string">&#x27;ayu123+&#x27;</span></span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 如果导出pool，它不支持以promise API的形式来操作数据库</span></span><br><span class="line"><span class="comment">// 此时我们需要调用pool提供的.promise()，把返回值导出出去</span></span><br><span class="line"><span class="comment">// 外界拿到数据库的连接对象之后，就可以以Promise的方式来操作数据库</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> pool.<span class="title function_">promise</span>()</span><br></pre></td></tr></table></figure></li>
+<li><p>创建user_ctrl 业务模块</p>
+ <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// controller/user_ctrl.js</span></span><br><span class="line"><span class="keyword">import</span> db <span class="keyword">from</span> <span class="string">&#x27;../db/index.js&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用ES6的按需导出语法，将getALLUser语法导出出去</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">getAllUser</span>(<span class="params">req,res</span>)&#123;</span><br><span class="line">  <span class="comment">// 数组中，索引为0的那一项，是最终需要的数据，所以解构赋值出一个rows</span></span><br><span class="line">  <span class="keyword">const</span> [rows] = <span class="keyword">await</span> db.<span class="title function_">query</span>(<span class="string">&#x27;select id,username,nickname from users&#x27;</span>)</span><br><span class="line">  res.<span class="title function_">send</span>(&#123;</span><br><span class="line">    <span class="attr">status</span>: <span class="number">0</span>,</span><br><span class="line">    <span class="attr">messages</span>: <span class="string">&#x27;获取用户列表数据成功！&#x27;</span>,</span><br><span class="line">    <span class="attr">data</span>: rows,</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>创建user_router路由模块</p>
+ <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// router/user_router.js</span></span><br><span class="line"><span class="keyword">import</span> express <span class="keyword">from</span> <span class="string">&#x27;express&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123; getAllUser &#125; <span class="keyword">from</span> <span class="string">&#x27;../controller/user_ctrl.js&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> router = <span class="keyword">new</span> express.<span class="title class_">Router</span>()</span><br><span class="line">router.<span class="title function_">get</span>(<span class="string">&#x27;/user&#x27;</span>, getAllUser)</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> router</span><br><span class="line"></span><br><span class="line"><span class="comment">// 在app.js注册路由</span></span><br><span class="line"><span class="keyword">import</span> userRouter <span class="keyword">from</span> <span class="string">&#x27;./router/user_router.js&#x27;</span></span><br><span class="line">app.<span class="title function_">use</span>(<span class="string">&#x27;/api&#x27;</span>, userRouter)</span><br></pre></td></tr></table></figure></li>
+<li><p>使用try…catch捕获异常<br>当报错之后，使用catch进行处理，程序不会发生崩溃</p>
+ <figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// controller/user_ctrl.js</span></span><br><span class="line"><span class="keyword">import</span> db <span class="keyword">from</span> <span class="string">&#x27;../db/index.js&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 使用ES6的按需导出语法，将getALLUser语法导出出去</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">getAllUser</span>(<span class="params">req,res</span>)&#123;</span><br><span class="line">  <span class="comment">// 数组中，索引为0的那一项，是最终需要的数据，所以解构赋值出一个rows</span></span><br><span class="line">  <span class="keyword">try</span>&#123;</span><br><span class="line">    <span class="keyword">const</span> [rows] = <span class="keyword">await</span> db.<span class="title function_">query</span>(<span class="string">&#x27;select id,username,nickname,xxx from users&#x27;</span>)</span><br><span class="line">    res.<span class="title function_">send</span>(&#123;</span><br><span class="line">      <span class="attr">status</span>: <span class="number">0</span>,</span><br><span class="line">      <span class="attr">messages</span>: <span class="string">&#x27;获取用户列表数据成功！&#x27;</span>,</span><br><span class="line">      <span class="attr">data</span>: rows,</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;<span class="keyword">catch</span>(err)&#123;</span><br><span class="line">    res.<span class="title function_">send</span>(&#123;</span><br><span class="line">      <span class="attr">status</span>: <span class="number">1</span>,</span><br><span class="line">      <span class="attr">messages</span>: <span class="string">&#x27;获取用户数据失败！&#x27;</span>,</span><br><span class="line">      <span class="attr">desc</span>: err.<span class="property">messages</span></span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
 ]]></content>
       <categories>
-        <category>Problem</category>
+        <category>Node.js</category>
       </categories>
       <tags>
-        <tag>Problem</tag>
+        <tag>Node.js</tag>
       </tags>
   </entry>
   <entry>
@@ -1354,30 +1088,6 @@
         <tag>计算属性</tag>
         <tag>axios</tag>
         <tag>vue-cli</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>async/await</title>
-    <url>/tsukimiya.github.io/2024/05/06/ES6/3.async-await/</url>
-    <content><![CDATA[<h2 id="什么是-async-await"><a href="#什么是-async-await" class="headerlink" title="什么是 async &#x2F; await"></a>什么是 async &#x2F; await</h2><p><strong>async&#x2F;await</strong> 是 <strong>ES8</strong>(ECMAScript 2017)引入的新语法，用来<strong>简化Promise异步操作</strong>。在async&#x2F;await出现之前，开发者只能通过<strong>链式.then()的方式</strong>处理Promise异步操作。示例代码如下:</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> thenFs <span class="keyword">from</span> <span class="string">&#x27;then-fs&#x27;</span></span><br><span class="line"></span><br><span class="line">thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/1.txt&#x27;</span>, <span class="string">&#x27;utf8&#x27;</span>)<span class="comment">// 返回值是Promise的实例对象</span></span><br><span class="line">  .<span class="title function_">then</span>(<span class="function">(<span class="params">r1</span>) =&gt;</span> &#123; <span class="comment">// 通过.then 为返回的promise实例指定成功之后的回调函数</span></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(r1)</span><br><span class="line">    <span class="keyword">return</span> thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/2.txt&#x27;</span>, <span class="string">&#x27;utf8&#x27;</span>)</span><br><span class="line">  &#125;).<span class="title function_">then</span>(<span class="function">(<span class="params">r2</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(r2)</span><br><span class="line">    <span class="keyword">return</span> thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/3.txt&#x27;</span>, <span class="string">&#x27;utf8&#x27;</span>)</span><br><span class="line">  &#125;).<span class="title function_">then</span>(<span class="function">(<span class="params">r3</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(r3)</span><br><span class="line">  &#125;)</span><br></pre></td></tr></table></figure>
-<p>.then链式调用的<strong>优点</strong>：解决了回调地狱的问题<br>.then链式调用的<strong>缺点</strong>：代码冗余、阅读性差、不易理解</p>
-<h2 id="async-await-的基本使用"><a href="#async-await-的基本使用" class="headerlink" title="async &#x2F; await 的基本使用"></a>async &#x2F; await 的基本使用</h2><p>使用async&#x2F; await简化 Promise异步操作的示例代码如下:</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> thenFs <span class="keyword">from</span> <span class="string">&#x27;then-fs&#x27;</span></span><br><span class="line"><span class="comment">// 按顺序读取文件 1 2 3 的内容</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">getAllFile</span>(<span class="params"></span>)&#123;</span><br><span class="line">  <span class="comment">// 如果不加await，它的返回值就是Promise实例，加了await，返回值就是最终读取到的文件中的内容</span></span><br><span class="line">  <span class="keyword">const</span> r1 = <span class="keyword">await</span> thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/1.txt&#x27;</span>,<span class="string">&#x27;utf-8&#x27;</span>)</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(r1) <span class="comment">// 111</span></span><br><span class="line">  <span class="keyword">const</span> r2 = <span class="keyword">await</span> thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/2.txt&#x27;</span>, <span class="string">&#x27;utf-8&#x27;</span>)</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(r2) <span class="comment">// 222</span></span><br><span class="line">  <span class="keyword">const</span> r3 = <span class="keyword">await</span> thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/3.txt&#x27;</span>, <span class="string">&#x27;utf-8&#x27;</span>)</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(r3) <span class="comment">// 333</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_">getAllFile</span>()</span><br></pre></td></tr></table></figure>
-<p>如果<strong>某个方法的返回值是个Promise实例对象</strong>，那么我们就可以在前面<strong>用await</strong>来进行<strong>修饰</strong>，修饰完毕之后，这个<strong>返回值就不再是Promise实例</strong>，而是<strong>变成一个真正的值</strong>。<br>而且需要注意：<font color='red'>如果这个方法内部用到了await，那么这个方法必须被async来修饰</font></p>
-<h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><ol>
-<li><font color='green'>如果在 function 中使用了 await ，则 function <strong>必须</strong>被 async 修饰</font></li>
-<li><font color='green'>在 async 方法中，<strong>第一个 await 之前的代码会同步执行</strong>，await之后的代码会异步执行</font><br>最终输出的顺序：A、B、C、111 222 333、D<br>碰到第一个await，主线程就退出了方法执行，立马输出了C，当1 2 3异步读取完成之后就按顺序输出，最后异步的输出了D<br><img src="/tsukimiya.github.io/images/ES6/async%E6%96%B9%E6%B3%95%E6%89%A7%E8%A1%8C%E9%A1%BA%E5%BA%8F.png" alt="async/await方法执行顺序"></li>
-</ol>
-]]></content>
-      <categories>
-        <category>JS</category>
-        <category>ES6</category>
-      </categories>
-      <tags>
-        <tag>ES6</tag>
-        <tag>async</tag>
-        <tag>await</tag>
       </tags>
   </entry>
   <entry>
@@ -2281,6 +1991,296 @@ vue的导航守卫中除了全局前置守卫之外，还有全局解析守卫�
         <tag>vue3</tag>
         <tag>ts</tag>
         <tag>标签报红</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ES6模块化</title>
+    <url>/tsukimiya.github.io/2024/05/05/ES6/1.ES6%E6%A8%A1%E5%9D%97%E5%8C%96/</url>
+    <content><![CDATA[<blockquote>
+<p>ES6模块化 与 异步编程高级用法：<br>  E6的模块化语法<br>  使用Promise解决回调地狱的问题<br>  使用 async&#x2F;await 简化 Promise 的调用<br>  什么是 EventLoop<br>  宏任务 和 微任务 的执行顺序</p>
+</blockquote>
+<h2 id="模块化"><a href="#模块化" class="headerlink" title="模块化"></a>模块化</h2><ol>
+<li><p>node.js中如何实现模块化<br>node.js遵循了<strong>CommonJS</strong>的模块化规范。其中:</p>
+<ul>
+<li>导入其它模块使用<code>require()</code>方法</li>
+<li>模块对外共享成员使用<code>module.exports</code>对象</li>
+</ul>
+</li>
+<li><p><strong>模块化的好处</strong>：<br>大家都遵守同样的模块化规范写代码，<strong>降低了沟通的成本，极大方便了各个模块之间的相互调用</strong>，利人利己。</p>
+</li>
+</ol>
+<h3 id="前端模块化规范的分类"><a href="#前端模块化规范的分类" class="headerlink" title="前端模块化规范的分类"></a>前端模块化规范的分类</h3><p>在<strong>ES6模块化规范诞生之前</strong>，JavaScript 社区已经尝试并提出了<strong>AMD、CMD、CommonJS</strong>等模块化规范。</p>
+<blockquote>
+<p>这几个规范不是官方的模块化标准，而是社区的开发者经过反复的实践与尝试，提出来的规范</p>
+</blockquote>
+<p>但是，这些由社区提出的模块化标准，还是存在一定的<strong>差异性与局限性</strong>、<strong>并不是</strong>浏览器与服务器<strong>通用的模块化标准</strong>，例如:</p>
+<ul>
+<li>AMD和CMD适用于<strong>浏览器端</strong>的Javascript模块化</li>
+<li>CommonJS适用于<strong>服务器端</strong>的Javascript模块化</li>
+</ul>
+<p>太多的模块化规范给开发者增加了学习的难度与开发的成本。因此，<strong>大一统的ES6模块化规范诞生了</strong>!</p>
+<h3 id="ES6模块化规范"><a href="#ES6模块化规范" class="headerlink" title="ES6模块化规范"></a>ES6模块化规范</h3><p>ES6模块化规范是浏览器端与服务器端通用的模块化开发规范。</p>
+<p>ES6模块化规范中定义:</p>
+<ul>
+<li>每个js文件都是一个独立的模块</li>
+<li>导入其它模块成员使用<strong>import</strong>关键字</li>
+<li>向外共享模块成员使用<strong>export</strong>关键字</li>
+</ul>
+<h3 id="在node-js中使用ES6模块化"><a href="#在node-js中使用ES6模块化" class="headerlink" title="在node.js中使用ES6模块化"></a>在node.js中使用ES6模块化</h3><p>node.js默认支持CommonJS模块化规范，如果要使用ES6模块化语法，需要配置：</p>
+<ol>
+<li>确保安装了v14.15.1或更高版本的node.js</li>
+<li>在package.json的根节点中添加<code>&quot;type&quot;:&quot;module&quot;</code>节点</li>
+</ol>
+<h2 id="ES6模块化的基本语法"><a href="#ES6模块化的基本语法" class="headerlink" title="ES6模块化的基本语法"></a>ES6模块化的基本语法</h2><p>ES6的模块化主要包含如下3种用法:<br>    1. 默认导出与默认导入<br>    2. 按需导出与按需导入<br>    3. 直接导入并执行模块中的代码</p>
+<ol>
+<li><p>默认导出<br><code>export dufault 默认导出的成员</code></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">let</span> n1 = <span class="number">10</span></span><br><span class="line"><span class="keyword">let</span> n2 = <span class="number">20</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">show</span>(<span class="params"></span>)&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  n1,</span><br><span class="line">  show</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注意事项：<strong>只允许默认导出一次</strong>(使用唯一的一次export default)</p>
+</li>
+<li><p>默认导入<br><code>import 接收名称 from &#39;模块标识符&#39;</code></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> m1 <span class="keyword">from</span> <span class="string">&#x27;./1.默认导出.js&#x27;</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(m1); <span class="comment">//&#123; n1: 10, show: [Function: show] &#125;</span></span><br></pre></td></tr></table></figure>
+<p>注意事项：<strong>接收名称</strong>可以是任意名称，只要是<strong>合法的成员名称即可</strong>(只能以字符_$开头，不能以数字)</p>
+</li>
+<li><p>按需导出<br><code>export 按需导出的成员</code></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">let</span> s1 = <span class="string">&#x27;aaa&#x27;</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">let</span> s2 = <span class="string">&#x27;ccc&#x27;</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> <span class="title function_">say</span>(<span class="params"></span>)&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  <span class="attr">a</span>: <span class="number">20</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注意事项：<strong>可以使用多次</strong>，可以和默认导出一起使用。</p>
+</li>
+<li><p>按需导入<br><code>import &#123;s1&#125; from &#39;模块标识符&#39;</code><br>导入多个模块成员<br><code>import &#123;s1,s2,s3&#125; from &#39;模块标识符&#39;</code></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> info, &#123;s1, s2 <span class="keyword">as</span> str2, say&#125; <span class="keyword">from</span> <span class="string">&#x27;./3.按需导出.js&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(s1); <span class="comment">// aaa</span></span><br><span class="line"><span class="comment">// console.log(s2); // 报错，未定义</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(str2); <span class="comment">// ccc</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(say);<span class="comment">// [Function: say]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// info 接收的默认导出的对象</span></span><br><span class="line"><span class="variable language_">console</span>.<span class="title function_">log</span>(info); <span class="comment">// &#123; a:20 &#125;</span></span><br></pre></td></tr></table></figure>
+<p>注意事项：</p>
+<ol>
+<li>按需导入的成员<strong>名称必须</strong>和按需导出的名称<strong>保持一致</strong></li>
+<li>按需导入时，可以使用 <strong>as关键字</strong> 进行<strong>重命名</strong></li>
+<li>按需导入可以和默认导入一起使用</li>
+</ol>
+</li>
+<li><p><strong>直接导入并执行模块中的代码</strong><br>如果<strong>只想单纯地执行某个模块中的代码</strong>，并不需要得到模块中向外共享的成员。此时，可以直接导入并执行模块代码，示例代码如下:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 05.js</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="number">3</span>; i++) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(i);  </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// test.js</span></span><br><span class="line"><span class="keyword">import</span> <span class="string">&#x27;./5.直接运行模块中的代码.js&#x27;</span></span><br><span class="line"><span class="comment">// node testjs 结果 --  0 1 2</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+]]></content>
+      <categories>
+        <category>JS</category>
+        <category>ES6</category>
+      </categories>
+      <tags>
+        <tag>ES6</tag>
+        <tag>ES6模块化</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Promise</title>
+    <url>/tsukimiya.github.io/2024/05/06/ES6/2.Promise/</url>
+    <content><![CDATA[<h2 id="回调地狱"><a href="#回调地狱" class="headerlink" title="回调地狱"></a>回调地狱</h2><ol>
+<li><p>回调地狱<br>多层回调函数的相互嵌套，就形成了回调地狱。示例代码如:</p>
+<blockquote>
+<p>回调地狱更多导致的问题还是：<strong>难以阅读和维护</strong>，通常出现在异步操作中<br>其和递归问题导致的栈溢出还是不同的，两者是不同的问题</p>
+</blockquote>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="built_in">setTimeout</span>( <span class="function">() =&gt;</span>&#123; <span class="comment">//第1层回调函数</span></span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>( <span class="string">&#x27;延时1秒后输出&#x27;</span>)</span><br><span class="line">  </span><br><span class="line">  <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123; <span class="comment">//第2层回调函数</span></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;再延时2秒后输出&#x27;</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123; <span class="comment">//第3层回调函数</span></span><br><span class="line">      <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;再延时3秒后输出&#x27;</span>)</span><br><span class="line">    &#125;,<span class="number">3000</span>)</span><br><span class="line"></span><br><span class="line">  &#125;,<span class="number">2000</span>)</span><br><span class="line"></span><br><span class="line">&#125;,<span class="number">1000</span>)</span><br></pre></td></tr></table></figure>
+<p>回调地狱的缺点:<br>代码耦合性太强，牵一发而动全身，<strong>难以维护</strong><br>大量冗余的代码相互嵌套，代码的<strong>可读性变差</strong></p>
+</li>
+<li><p>如何解决<br>为了解决回调地狱的问题，ES6 (ECMAScript 2015)中新增了<strong>Promise</strong>的概念。</p>
+<blockquote>
+<p>解决回调地狱的方法包括使用 Promise、async&#x2F;await 等异步编程技术，以及使用函数式编程的方式来组织代码，使其更具可读性和可维护性。</p>
+</blockquote>
+</li>
+</ol>
+<h2 id="Promise基本概念"><a href="#Promise基本概念" class="headerlink" title="Promise基本概念"></a>Promise基本概念</h2><ol>
+<li><p><strong>Promise是一个构造函数</strong></p>
+<ul>
+<li>我们可以创建Promise 的实例 <code>const p = newPromise()</code></li>
+<li>new出来的Promise 实例对象，<strong>代表一个异步操作</strong></li>
+</ul>
+</li>
+<li><p><strong>Promise.prototype 上包含一个.then()方法</strong></p>
+<ul>
+<li>每一次new Promise()构造函数得到的实例对象，</li>
+<li>都可以<strong>通过原型链的方式</strong>访问到.then()方法，例如<code>p.then()</code></li>
+</ul>
+</li>
+<li><p><strong>.then()方法用来预先指定成功和失败的回调函数</strong></p>
+<ul>
+<li>p.then(<strong>成功的回调函数</strong>，<strong>失败的回调函数</strong>)</li>
+<li>p.then(result,&#x3D;&gt; {}, error &#x3D;&gt; {})</li>
+<li>调用.then()方法时，<strong>成功的回调函数是必选的</strong>、失败的回调函数是可选的</li>
+</ul>
+</li>
+</ol>
+<h2 id="基于-then-fs-异步的读取文件内容"><a href="#基于-then-fs-异步的读取文件内容" class="headerlink" title="基于 then-fs 异步的读取文件内容"></a>基于 then-fs 异步的读取文件内容</h2><ol>
+<li><p>基于回调函数按顺序读取文件内容<br>虽然可以保证文件的读取顺序，但是形成了一个回调地狱的问题<br><img src="/tsukimiya.github.io/images/ES6/%E5%9F%BA%E4%BA%8E%E5%9B%9E%E8%B0%83%E5%87%BD%E6%95%B0%E6%8C%89%E9%A1%BA%E5%BA%8F%E8%AF%BB%E5%8F%96%E6%96%87%E4%BB%B6%E5%86%85%E5%AE%B9.png" alt="img"></p>
+</li>
+<li><p>基于 then-fs 读取文件内容<br><strong>fs模块仅支持 以回调函数的方式 读取文件，不支持Promise的调用方式</strong>。因此，需要先安装 then-fs 第三方包，从而支持基于Promise的方式读取文件的内容： <code>npm install then-fs</code></p>
+</li>
+</ol>
+<ul>
+<li><strong>then-fs 的基本使用</strong><br>调用 then-fs 提供的<strong>readFile()<strong>方法，可以异步地读取文件的内容，</strong>它的返回值是 Promise 的实例对象</strong>。因此可以<strong>调用.then()方法</strong>为每个 Promise 异步操作指定<strong>成功</strong>和<strong>失败</strong>之后的回调函数。示例代码如下:<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 基于Promise的方式读取文件</span></span><br><span class="line"><span class="keyword">import</span> thenFs <span class="keyword">from</span> <span class="string">&#x27;then-fs&#x27;</span></span><br><span class="line"><span class="comment">// .then()中的失败回调是可选的，这里省略了</span></span><br><span class="line">thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/1.txt&#x27;</span>,<span class="string">&#x27;utf8&#x27;</span>).<span class="title function_">then</span>(<span class="function">(<span class="params">r1</span>)=&gt;</span>&#123;<span class="variable language_">console</span>.<span class="title function_">log</span>(r1);&#125;)</span><br><span class="line">thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/2.txt&#x27;</span>,<span class="string">&#x27;utf8&#x27;</span>).<span class="title function_">then</span>(<span class="function">(<span class="params">r2</span>)=&gt;</span>&#123;<span class="variable language_">console</span>.<span class="title function_">log</span>(r2);&#125;)</span><br><span class="line">thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/3.txt&#x27;</span>,<span class="string">&#x27;utf8&#x27;</span>).<span class="title function_">then</span>(<span class="function">(<span class="params">r3</span>)=&gt;</span>&#123;<span class="variable language_">console</span>.<span class="title function_">log</span>(r3);&#125;)</span><br></pre></td></tr></table></figure>
+当前只是异步的去读文件，<strong>无法保证文件的读取顺序</strong>，多次执行读取顺序不一</li>
+</ul>
+<h2 id="基于Promise按顺序读取文件的内容"><a href="#基于Promise按顺序读取文件的内容" class="headerlink" title="基于Promise按顺序读取文件的内容"></a>基于Promise按顺序读取文件的内容</h2><ul>
+<li><p><strong>.then方法的特性</strong><br>如果上一个.then()方法中<strong>返回了一个新的Promise实例对象</strong>，则可以通过下一个.then()继续进行处理。通过.then()方法的<strong>链式调用</strong>，就解决了回调地狱的问题。</p>
+</li>
+<li><p><strong>基于Promise</strong>按顺序读取文件的内容<br><strong>只要任何方法返回值是一个Promise实例对象，那就都可以继续调用.then()方法</strong></p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> thenFs <span class="keyword">from</span> <span class="string">&#x27;then-fs&#x27;</span></span><br><span class="line"></span><br><span class="line">thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/1.txt&#x27;</span>, <span class="string">&#x27;utf8&#x27;</span>)<span class="comment">// 返回值是Promise的实例对象</span></span><br><span class="line">  .<span class="title function_">then</span>(<span class="function">(<span class="params">r1</span>) =&gt;</span> &#123; <span class="comment">// 通过.then 为返回的promise实例指定成功之后的回调函数</span></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(r1)</span><br><span class="line">    <span class="keyword">return</span> thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/2.txt&#x27;</span>, <span class="string">&#x27;utf8&#x27;</span>)</span><br><span class="line">  &#125;).<span class="title function_">then</span>(<span class="function">(<span class="params">r2</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(r2)</span><br><span class="line">    <span class="keyword">return</span> thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/3.txt&#x27;</span>, <span class="string">&#x27;utf8&#x27;</span>)</span><br><span class="line">  &#125;).<span class="title function_">then</span>(<span class="function">(<span class="params">r3</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(r3)</span><br><span class="line">  &#125;)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>通过 .catch 捕获错误<br>在 Promise 的链式操作中如果发生了错误，可以使用Promise.prototype.catch方法进行捕获和处理:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> thenFs <span class="keyword">from</span> <span class="string">&#x27;then-fs&#x27;</span></span><br><span class="line"></span><br><span class="line">thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/11.txt&#x27;</span>, <span class="string">&#x27;utf8&#x27;</span>) <span class="comment">// 文件不存在</span></span><br><span class="line">  .<span class="title function_">then</span>(<span class="function">(<span class="params">r1</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(r1)</span><br><span class="line">    <span class="keyword">return</span> thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/2.txt&#x27;</span>, <span class="string">&#x27;utf8&#x27;</span>)</span><br><span class="line">  &#125;)</span><br><span class="line">  .<span class="title function_">then</span>(<span class="function">(<span class="params">r2</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(r2)</span><br><span class="line">    <span class="keyword">return</span> thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/3.txt&#x27;</span>, <span class="string">&#x27;utf8&#x27;</span>)</span><br><span class="line">  &#125;)</span><br><span class="line">  .<span class="title function_">then</span>(<span class="function">(<span class="params">r3</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(r3)</span><br><span class="line">  &#125;)</span><br><span class="line">  .<span class="title function_">catch</span>(<span class="function">(<span class="params">err</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(err.<span class="property">message</span>)</span><br><span class="line">  &#125;) <span class="comment">// 只返回错误，没有读取的文件内容</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>如果不希望前面的错误导致后续的.then无法正常执行，<strong>可以将.catch的调用提前</strong>：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> thenFs <span class="keyword">from</span> <span class="string">&#x27;then-fs&#x27;</span></span><br><span class="line"></span><br><span class="line">thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/11.txt&#x27;</span>, <span class="string">&#x27;utf8&#x27;</span>)</span><br><span class="line">  .<span class="title function_">catch</span>(<span class="function">(<span class="params">err</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(err.<span class="property">message</span>)</span><br><span class="line">  &#125;)</span><br><span class="line">  .<span class="title function_">then</span>(<span class="function">(<span class="params">r1</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(r1)</span><br><span class="line">    <span class="keyword">return</span> thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/2.txt&#x27;</span>, <span class="string">&#x27;utf8&#x27;</span>)</span><br><span class="line">  &#125;)</span><br><span class="line">  .<span class="title function_">then</span>(<span class="function">(<span class="params">r2</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(r2)</span><br><span class="line">    <span class="keyword">return</span> thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/3.txt&#x27;</span>, <span class="string">&#x27;utf8&#x27;</span>)</span><br><span class="line">  &#125;)</span><br><span class="line">  .<span class="title function_">then</span>(<span class="function">(<span class="params">r3</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(r3)</span><br><span class="line">  &#125;) <span class="comment">// 先打印错误，然后打印读取内容，r1为undefined，r2r3读取成功</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="Promise-all-方法"><a href="#Promise-all-方法" class="headerlink" title="Promise.all()方法"></a>Promise.all()方法</h2><p>Promise.all()方法会发起并行的Promise异步操作，等<strong>所有的异步操作全部结束后</strong>才会执行下一步的.then操作（等待机制）。示例代码如下:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> thenFs <span class="keyword">from</span> <span class="string">&#x27;then-fs&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> promiseArr = [</span><br><span class="line">  thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/1.txt&#x27;</span>, <span class="string">&#x27;utf8&#x27;</span>), </span><br><span class="line">  thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/2.txt&#x27;</span>, <span class="string">&#x27;utf8&#x27;</span>), </span><br><span class="line">  thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/3.txt&#x27;</span>, <span class="string">&#x27;utf8&#x27;</span>)</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="title class_">Promise</span>.<span class="title function_">all</span>(promiseArr).<span class="title function_">then</span>(<span class="function"><span class="params">result</span> =&gt;</span>&#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(result); <span class="comment">// [ &#x27;111&#x27;, &#x27;222&#x27;, &#x27;333&#x27; ]</span></span><br><span class="line">&#125;)</span><br><span class="line">.<span class="title function_">catch</span>(<span class="function"><span class="params">err</span>=&gt;</span>&#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(err.<span class="property">message</span>);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>Promise示例的顺序，就是最终拿到的结果的顺序。如果有一个文件读取错误，所有数据都拿不到</p>
+<h2 id="Promise-race-方法"><a href="#Promise-race-方法" class="headerlink" title="Promise.race() 方法"></a>Promise.race() 方法</h2><p>Promise.race()方法会发起并行的Promise异步操作，<strong>只要任何一个异步操作完成，就立即执行下一步的.then操作</strong>（赛跑机制）。示例代码如下:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> thenFs <span class="keyword">from</span> <span class="string">&#x27;then-fs&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> promiseArr = [</span><br><span class="line">  thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/1.txt&#x27;</span>, <span class="string">&#x27;utf8&#x27;</span>), </span><br><span class="line">  thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/2.txt&#x27;</span>, <span class="string">&#x27;utf8&#x27;</span>), </span><br><span class="line">  thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/3.txt&#x27;</span>, <span class="string">&#x27;utf8&#x27;</span>)</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="title class_">Promise</span>.<span class="title function_">race</span>(promiseArr).<span class="title function_">then</span>(<span class="function"><span class="params">result</span> =&gt;</span>&#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(result);</span><br><span class="line">&#125;)</span><br><span class="line">.<span class="title function_">catch</span>(<span class="function"><span class="params">err</span>=&gt;</span>&#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(err.<span class="property">message</span>);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>只会拿到一个文件的读取结果，读取最快的那个，无法保证读取的文件是哪个</p>
+<h2 id="基于Promise封装异步读文件的方法"><a href="#基于Promise封装异步读文件的方法" class="headerlink" title="基于Promise封装异步读文件的方法"></a>基于Promise封装异步读文件的方法</h2><ul>
+<li><p>方法的封装要求:</p>
+<ol>
+<li>方法的名称要定义为getFile</li>
+<li>方法接收一个形参fpath，表示要读取的文件的路径</li>
+<li>方法的返回值为Promise 实例对象</li>
+</ol>
+</li>
+<li><p>getFile方法的基本定义</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">getFile</span>(<span class="params">fpath</span>)&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Promise</span>()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>注意：<strong>new Promise()</strong> 只是创建了一个<strong>形式上的异步操作</strong></p>
+</li>
+<li><p><strong>创建具体的异步操作</strong><br>如果想要创建具体的异步操作，则需要在new Promise()构造函数期间，<strong>传递一个function函数，将具体的<br>异步操作定义到function函数内部</strong>。示例代码如下:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> fs <span class="keyword">from</span> <span class="string">&#x27;fs&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">getFile</span>(<span class="params">fpath</span>)&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="keyword">function</span>(<span class="params"></span>)&#123;</span><br><span class="line">    fs.<span class="title function_">readFile</span>(fpath,<span class="string">&#x27;utf-8&#x27;</span>,<span class="function">(<span class="params">err,dataStr</span>)=&gt;</span>&#123; &#125;)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>获取.then的两个实参<br>通过.then()指定的成功和失败的回调函数，可以在 function的形参中 进行接收，示例代码如下:<br><img src="/tsukimiya.github.io/images/ES6/%E8%8E%B7%E5%8F%96.then%E7%9A%84%E4%B8%A4%E4%B8%AA%E5%AE%9E%E5%8F%82.png" alt="img"></p>
+</li>
+<li><p>调用 resolve 和 reject 回调函数<br>Promise<strong>异步操作的结果</strong>，可以调用 <strong>resolve</strong> 或 <strong>reject</strong> 回调函数进行处理。示例代码如下:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> fs <span class="keyword">from</span> <span class="string">&#x27;fs&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">getFile</span>(<span class="params">fpath</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="keyword">function</span> (<span class="params">resolve,reject</span>) &#123;</span><br><span class="line">    fs.<span class="title function_">readFile</span>(fpath, <span class="string">&#x27;utf-8&#x27;</span>, <span class="function">(<span class="params">err, dataStr</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">if</span>(err) <span class="keyword">return</span> <span class="title function_">reject</span>(err) <span class="comment">// 发生错误</span></span><br><span class="line">      <span class="title function_">resolve</span>(dataStr) <span class="comment">// 读取成功</span></span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_">getFile</span>(<span class="string">&#x27;./files/1.txt&#x27;</span>).<span class="title function_">then</span>(<span class="function">(<span class="params">r1</span>)=&gt;</span>&#123;<span class="variable language_">console</span>.<span class="title function_">log</span>(r1)&#125;,<span class="function">(<span class="params">err</span>)=&gt;</span>&#123;<span class="variable language_">console</span>.<span class="title function_">log</span>(err.<span class="property">message</span>);&#125;)</span><br><span class="line"><span class="comment">// 失败的回调函数可以省略不写，可以用catch进行捕获</span></span><br><span class="line"><span class="title function_">getFile</span>(<span class="string">&#x27;./files/1.txt&#x27;</span>).<span class="title function_">then</span>(<span class="function">(<span class="params">r1</span>)=&gt;</span>&#123;<span class="variable language_">console</span>.<span class="title function_">log</span>(r1)&#125;).<span class="title function_">catch</span>(<span class="function">(<span class="params">err</span>)=&gt;</span>&#123;<span class="variable language_">console</span>.<span class="title function_">log</span>(err.<span class="property">message</span>)&#125;)</span><br></pre></td></tr></table></figure></li>
+</ul>
+]]></content>
+      <categories>
+        <category>JS</category>
+        <category>ES6</category>
+      </categories>
+      <tags>
+        <tag>ES6</tag>
+        <tag>Promise</tag>
+        <tag>回调地狱</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>async/await</title>
+    <url>/tsukimiya.github.io/2024/05/06/ES6/3.async-await/</url>
+    <content><![CDATA[<h2 id="什么是-async-await"><a href="#什么是-async-await" class="headerlink" title="什么是 async &#x2F; await"></a>什么是 async &#x2F; await</h2><p><strong>async&#x2F;await</strong> 是 <strong>ES8</strong>(ECMAScript 2017)引入的新语法，用来<strong>简化Promise异步操作</strong>。在async&#x2F;await出现之前，开发者只能通过<strong>链式.then()的方式</strong>处理Promise异步操作。示例代码如下:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> thenFs <span class="keyword">from</span> <span class="string">&#x27;then-fs&#x27;</span></span><br><span class="line"></span><br><span class="line">thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/1.txt&#x27;</span>, <span class="string">&#x27;utf8&#x27;</span>)<span class="comment">// 返回值是Promise的实例对象</span></span><br><span class="line">  .<span class="title function_">then</span>(<span class="function">(<span class="params">r1</span>) =&gt;</span> &#123; <span class="comment">// 通过.then 为返回的promise实例指定成功之后的回调函数</span></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(r1)</span><br><span class="line">    <span class="keyword">return</span> thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/2.txt&#x27;</span>, <span class="string">&#x27;utf8&#x27;</span>)</span><br><span class="line">  &#125;).<span class="title function_">then</span>(<span class="function">(<span class="params">r2</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(r2)</span><br><span class="line">    <span class="keyword">return</span> thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/3.txt&#x27;</span>, <span class="string">&#x27;utf8&#x27;</span>)</span><br><span class="line">  &#125;).<span class="title function_">then</span>(<span class="function">(<span class="params">r3</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(r3)</span><br><span class="line">  &#125;)</span><br></pre></td></tr></table></figure>
+<p>.then链式调用的<strong>优点</strong>：解决了回调地狱的问题<br>.then链式调用的<strong>缺点</strong>：代码冗余、阅读性差、不易理解</p>
+<h2 id="async-await-的基本使用"><a href="#async-await-的基本使用" class="headerlink" title="async &#x2F; await 的基本使用"></a>async &#x2F; await 的基本使用</h2><p>使用async&#x2F; await简化 Promise异步操作的示例代码如下:</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> thenFs <span class="keyword">from</span> <span class="string">&#x27;then-fs&#x27;</span></span><br><span class="line"><span class="comment">// 按顺序读取文件 1 2 3 的内容</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">getAllFile</span>(<span class="params"></span>)&#123;</span><br><span class="line">  <span class="comment">// 如果不加await，它的返回值就是Promise实例，加了await，返回值就是最终读取到的文件中的内容</span></span><br><span class="line">  <span class="keyword">const</span> r1 = <span class="keyword">await</span> thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/1.txt&#x27;</span>,<span class="string">&#x27;utf-8&#x27;</span>)</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(r1) <span class="comment">// 111</span></span><br><span class="line">  <span class="keyword">const</span> r2 = <span class="keyword">await</span> thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/2.txt&#x27;</span>, <span class="string">&#x27;utf-8&#x27;</span>)</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(r2) <span class="comment">// 222</span></span><br><span class="line">  <span class="keyword">const</span> r3 = <span class="keyword">await</span> thenFs.<span class="title function_">readFile</span>(<span class="string">&#x27;./files/3.txt&#x27;</span>, <span class="string">&#x27;utf-8&#x27;</span>)</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(r3) <span class="comment">// 333</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_">getAllFile</span>()</span><br></pre></td></tr></table></figure>
+<p>如果<strong>某个方法的返回值是个Promise实例对象</strong>，那么我们就可以在前面<strong>用await</strong>来进行<strong>修饰</strong>，修饰完毕之后，这个<strong>返回值就不再是Promise实例</strong>，而是<strong>变成一个真正的值</strong>。<br>而且需要注意：<font color='red'>如果这个方法内部用到了await，那么这个方法必须被async来修饰</font></p>
+<h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><ol>
+<li><font color='green'>如果在 function 中使用了 await ，则 function <strong>必须</strong>被 async 修饰</font></li>
+<li><font color='green'>在 async 方法中，<strong>第一个 await 之前的代码会同步执行</strong>，await之后的代码会异步执行</font><br>最终输出的顺序：A、B、C、111 222 333、D<br>碰到第一个await，主线程就退出了方法执行，立马输出了C，当1 2 3异步读取完成之后就按顺序输出，最后异步的输出了D<br><img src="/tsukimiya.github.io/images/ES6/async%E6%96%B9%E6%B3%95%E6%89%A7%E8%A1%8C%E9%A1%BA%E5%BA%8F.png" alt="async/await方法执行顺序"></li>
+</ol>
+]]></content>
+      <categories>
+        <category>JS</category>
+        <category>ES6</category>
+      </categories>
+      <tags>
+        <tag>ES6</tag>
+        <tag>async</tag>
+        <tag>await</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>EventLoop</title>
+    <url>/tsukimiya.github.io/2024/05/07/ES6/4.EventLoop/</url>
+    <content><![CDATA[<h2 id="JS的单线程"><a href="#JS的单线程" class="headerlink" title="JS的单线程"></a>JS的单线程</h2><p>JS是一门<strong>单线程执行</strong>的编程语言。同一事件只能做一件事情。</p>
+<p>JS的执行线程<br>↓<br>任务1 → 任务2 → 任务3 → 任务N（待执行的任务队列）</p>
+<p>单线程执行队列的问题：<br>如果<strong>前一个任务非常耗时</strong>，则后续的任务就不得不一直等待，从而导致<strong>程序假死</strong>的问题。</p>
+<h2 id="同步任务和异步任务"><a href="#同步任务和异步任务" class="headerlink" title="同步任务和异步任务"></a>同步任务和异步任务</h2><p>为了防止某个<strong>耗时任务</strong>导致<strong>程序假死</strong>的问题，JavaScript把待执行的任务分为了两类:</p>
+<ol>
+<li>同步任务 (synchronous)<ul>
+<li>又叫做<strong>非耗时任务</strong>，指的是在主线程上排队执行的那些任务</li>
+<li>只有前一个任务执行完毕，才能执行后一个任务</li>
+</ul>
+</li>
+<li>异步任务 (asynchronous)<ul>
+<li>又叫做<strong>耗时任务</strong>，异步任务由JavaScript<strong>委托给宿主环境</strong>进行执行</li>
+<li>当异步任务执行完成后，会<strong>通知JavaScript主线程</strong>执行异步任务的<strong>回调函数</strong><blockquote>
+<p>宿主环境就是JS的执行环境，在浏览器里面运行JS，浏览器就是JS的宿主环境，在Node.js…</p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="同步任务和异步任务的执行过程"><a href="#同步任务和异步任务的执行过程" class="headerlink" title="同步任务和异步任务的执行过程"></a>同步任务和异步任务的执行过程</h2><p><img src="/tsukimiya.github.io/images/ES6/js%E6%89%A7%E8%A1%8C%E8%BF%87%E7%A8%8B.png" alt="js执行过程"></p>
+<h2 id="EventLoop的基本概念"><a href="#EventLoop的基本概念" class="headerlink" title="EventLoop的基本概念"></a>EventLoop的基本概念</h2><p><strong>JavaScript主线程从“任务队列”中读取异步任务的回调函数，放到执行栈中依次执行</strong>。这个过程是循环不断的，所以整个的这种运行机<br>制又称为<strong>EventLoop</strong>(事件循环)。</p>
+<ul>
+<li><p>练习<br><img src="/tsukimiya.github.io/images/ES6/%E7%BB%83%E4%B9%A0.png" alt="练习"></p>
+</li>
+<li><p>分享文章<br>面试必问之 JS 事件循环(Event Loop)，看这一篇足够(<a href="https://zhuanlan.zhihu.com/p/580956436">https://zhuanlan.zhihu.com/p/580956436</a>)</p>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>JS</category>
+        <category>ES6</category>
+      </categories>
+      <tags>
+        <tag>ES6</tag>
+        <tag>EventLoop</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>宏任务和微任务</title>
+    <url>/tsukimiya.github.io/2024/05/08/ES6/5.%E5%AE%8F%E4%BB%BB%E5%8A%A1%E5%92%8C%E5%BE%AE%E4%BB%BB%E5%8A%A1/</url>
+    <content><![CDATA[<h2 id="什么是宏任务和微任务"><a href="#什么是宏任务和微任务" class="headerlink" title="什么是宏任务和微任务"></a>什么是宏任务和微任务</h2><p>JavaScript把异步任务又做了进一步的划分，异步任务又分为两类，分别是:</p>
+<ol>
+<li>宏任务( macrotask)<ul>
+<li>异步Ajax请求、</li>
+<li>setTimeout、setlnterval、</li>
+<li>文件操作</li>
+<li>其它宏任务</li>
+</ul>
+</li>
+<li>微任务( microtask)<ul>
+<li>Promise.then、.catch和.finally</li>
+<li>process.nextTick</li>
+<li>其它微任务</li>
+</ul>
+</li>
+</ol>
+<p><img src="/tsukimiya.github.io/images/ES6/%E5%AE%8F%E4%BB%BB%E5%8A%A1%E5%92%8C%E5%BE%AE%E4%BB%BB%E5%8A%A1.png" alt="宏任务和微任务"></p>
+<h2 id="划分依据"><a href="#划分依据" class="headerlink" title="划分依据"></a>划分依据</h2><p>异步任务是根据<strong>任务的触发时机</strong>和<strong>任务队列的不同</strong>来分为宏任务和微任务的。下面是它们的依据：</p>
+<ol>
+<li><p><strong>触发时机</strong>：</p>
+<ul>
+<li><strong>宏任务（Macro Task）</strong>：宏任务是由 JavaScript 引擎外部的任务触发的，比如 DOM 事件（如点击事件、鼠标移动事件）、<code>setTimeout</code>、<code>setInterval</code>、网络请求等。宏任务代表着一个独立的、顺序执行的任务单元，它们会被放入宏任务队列中等待执行。</li>
+<li><strong>微任务（Micro Task）</strong>：微任务是在当前任务执行完成之后立即执行的任务，它们一般是由 JavaScript 引擎内部触发的，比如 Promise 的状态改变、<code>queueMicrotask</code> 函数等。微任务的执行时机是在当前宏任务执行结束、事件循环进入下一次循环之前。</li>
+</ul>
+</li>
+<li><p><strong>任务队列</strong>：</p>
+<ul>
+<li><strong>宏任务队列</strong>：宏任务队列中存放着各种宏任务，包括了 DOM 事件、定时器、I&#x2F;O 操作等。在事件循环的每一轮中，只有一个宏任务会被执行。</li>
+<li><strong>微任务队列</strong>：微任务队列中存放着微任务，它们的执行顺序是按照它们进入队列的顺序执行的。在每个宏任务执行结束后，会检查并执行所有的微任务，直到微任务队列为空。</li>
+</ul>
+</li>
+</ol>
+<p>因此，异步任务是根据触发时机和任务队列的不同而被分为宏任务和微任务的。这种分化使得 JavaScript 引擎能够灵活地处理异步任务，并根据执行上下文的情况来调度它们的执行顺序。</p>
+<h2 id="执行顺序"><a href="#执行顺序" class="headerlink" title="执行顺序"></a>执行顺序</h2><p>宏任务和微任务是交替执行的。<br>在 JavaScript 中，<strong>执行完同步任务后</strong>，<strong>会先检查是否存在微任务</strong>，如果存在，则先执行微任务队列中的所有微任务。执行完所有微任务后，再去执行宏任务队列中的任务。<br><img src="/tsukimiya.github.io/images/ES6/%E5%AE%8F%E4%BB%BB%E5%8A%A1%E5%BE%AE%E4%BB%BB%E5%8A%A1%E6%89%A7%E8%A1%8C%E9%A1%BA%E5%BA%8F.png" alt="宏任务微任务执行顺序"></p>
+<ul>
+<li><p>场景举例<br><img src="/tsukimiya.github.io/images/ES6/%E5%9C%BA%E6%99%AF.png" alt="场景"></p>
+</li>
+<li><p>练习<br>new Promise 是同步任务，其调用的.then是微任务<br><img src="/tsukimiya.github.io/images/ES6/%E7%BB%83%E4%B9%A02.png" alt="练习2"></p>
+</li>
+<li><p>练习<br><img src="/tsukimiya.github.io/images/ES6/%E7%BB%83%E4%B9%A03.png" alt="练习3"></p>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>JS</category>
+        <category>ES6</category>
+      </categories>
+      <tags>
+        <tag>ES6</tag>
+        <tag>宏任务和微任务</tag>
       </tags>
   </entry>
   <entry>
@@ -3731,221 +3731,9 @@ vue的导航守卫中除了全局前置守卫之外，还有全局解析守卫�
 ]]></content>
   </entry>
   <entry>
-    <title>Pulled Post</title>
-    <url>/tsukimiya.github.io/PulledPost/index.html</url>
-    <content><![CDATA[<blockquote>
-<p><code>Here are many posts pulling for you, hope you&#39;ll gain something.</code></p>
-</blockquote>
-<h1 id="Pulled-Bloger-or-Community"><a href="#Pulled-Bloger-or-Community" class="headerlink" title="Pulled Bloger or Community"></a>Pulled Bloger or Community</h1><ol>
-<li><p><a href="https://www.ruanyifeng.com/blog/">阮一峰的网络日志</a></p>
-</li>
-<li><p><a href="https://juejin.cn/">掘金</a></p>
-</li>
-<li><p>沧沧凉凉 – <a href="https://juejin.cn/user/1380642337065421">掘金</a> | <a href="https://www.zhihu.com/people/hatsune-87/posts">知乎</a></p>
-</li>
-<li><p>CS_Joe – <a href="https://juejin.cn/user/1398234518156301">掘金</a></p>
-<blockquote>
-<p>three.js</p>
-</blockquote>
-</li>
-<li><p>小满zs – <a href="https://juejin.cn/user/2463384809252397">掘金</a> | <a href="https://space.bilibili.com/99210573">b站</a></p>
-</li>
-<li><p>CUGGZ – <a href="https://juejin.cn/user/3544481220801815">掘金</a></p>
-</li>
-<li><p>前端双越老师 – <a href="https://juejin.cn/user/1714893868765373">掘金</a></p>
-</li>
-<li><p><a href="https://antfu.me/">antfu – Anthony Fu</a></p>
-</li>
-<li><p><a href="https://javabetter.cn/blog.html">沉默王二的技术博客</a>（Java）</p>
-</li>
-<li><p>freecodecamp编程免费教学慈善组织 – <a href="https://www.freecodecamp.org/chinese/learn">官网</a> | <a href="https://www.freecodecamp.org/chinese/news/">专栏</a> | <a href="https://forum.freecodecamp.org/c/chinese/533">论坛</a></p>
-<blockquote>
-<p>官方支持中文，专栏和论坛有很多优质文章</p>
-</blockquote>
-</li>
-<li><p><a href="https://www.xuanfengge.com/">轩枫阁</a></p>
-<blockquote>
-<p>前端大神的个人博客！腾讯微信前端工程师！ orz_<br> <a href="https://www.xuanfengge.com/funny/">SOME NB H5&amp;C3&amp;Animation orz_</a>(H5元素周期表就出自这里)<br> look older，but niubility build from 2013</p>
-</blockquote>
-</li>
-</ol>
-<h1 id="Software"><a href="#Software" class="headerlink" title="Software"></a>Software</h1><center><font>`工欲善其事，必先利其器`</font></center>
-
-<ul>
-<li><p><a href="https://u.tools/">uTools</a></p>
-<blockquote>
-<p>本地搜索、聚合翻译、OCR文字识别、MD笔记、文件批量重命名。一切皆插件，效率利器！</p>
-</blockquote>
-</li>
-<li><p>Snipaste</p>
-<blockquote>
-<p>Windows截图工具，尚硅谷张天禹老师用的，可以缩放图片，比qq自带的强大！</p>
-</blockquote>
-</li>
-<li><p>Xmind</p>
-<blockquote>
-<p>思维导图，黑马老师有用过</p>
-</blockquote>
-</li>
-<li><p>Pxcook</p>
-<blockquote>
-<p>用来做一些网页样式设计图，可以测量尺寸和吸取颜色，渡一老师有用过</p>
-</blockquote>
-</li>
-<li><p>windows自带剪切板 win + v</p>
-<blockquote>
-<p>剪切板历史记录，足够用了<br>更多的需求可以看看<strong>Ditto</strong>，除了丑该有的功能都有，而且安装之后只有15M<br>MAC的话，可以试试<strong>Paste</strong></p>
-</blockquote>
-</li>
-<li><p>windows内置emoji键盘 win + .快捷键唤出</p>
-</li>
-</ul>
-<h2 id="vscode"><a href="#vscode" class="headerlink" title="vscode"></a>vscode</h2><ul>
-<li><p><a href="https://blog.csdn.net/weixin_40004212/article/details/113627387">VSCode 的快捷键及常用插件总结</a></p>
-<blockquote>
-<p>快速复制当前代码到下一行、移动行、新建窗口、行缩进<br>ctrl + alt + ↓ 在下一行末尾增加一个光标</p>
-</blockquote>
-</li>
-<li><p>ctrl + i ———— <strong>唤起代码提示</strong></p>
-</li>
-<li><p>复制链接 + 选中文字 + Ctrl v ———— <font color="red"><strong>vscode快速生成链接文字</strong></font></p>
-</li>
-</ul>
-<h1 id="MD"><a href="#MD" class="headerlink" title="MD"></a>MD</h1><ul>
-<li><p><a href="https://markdown.com.cn/extended-syntax/">Markdown官方教程</a><font color="red">Pull!!</font></p>
-</li>
-<li><p><a href="https://keatonlao.gitee.io/a-study-note-for-markdown/syntax/">markdown语法</a> <font color="red">Pull!!</font></p>
-</li>
-<li><p><a href="https://blog.csdn.net/qq_40896997/article/details/106551767">markdown表情大全</a> <font color="red">Pull!!</font> – emoji表情，及其表情符号简码</p>
-<blockquote>
-<p><a href="https://www.toolhelper.cn/Encoding/Emoji"><font color="red">在线工具-Emoji表情符号(可搜索)</font></a> – 附有表情说明，及其Unicode编码</p>
-</blockquote>
-</li>
-<li><p><a href="https://www.runoob.com/markdown/md-table.html">markdown表格语法</a>(菜鸟教程)</p>
-</li>
-</ul>
-<h1 id="Front-end"><a href="#Front-end" class="headerlink" title="Front-end"></a>Front-end</h1><ul>
-<li><p>推荐书籍</p>
-<ol>
-<li>JavaScript高级程序设计</li>
-<li>JavaScript权威指南</li>
-<li>你不知道的JavaScript</li>
-</ol>
-<ul>
-<li><a href="https://wangdoc.com/javascript/">JavaScript 教程 - 阮一峰 | 网道</a></li>
-<li>ECMAScript 6 教程 - 阮一峰 <a href="https://es6.ruanyifeng.com/"><font color='red'>官方</font></a> <a href="https://wangdoc.com/es6/">网道镜像</a> </li>
-<li><a href="https://wangdoc.com/typescript/">TypeScript 教程 - 阮一峰 | 网道</a></li>
-<li><a href="https://ts.xcatliu.com/introduction/what-is-typescript.html">TypeScript入门教程 - xcatliu</a></li>
-<li><a href="https://www.liaoxuefeng.com/wiki/896043488029600">Git教程 - 廖雪峰</a></li>
-</ul>
-</li>
-</ul>
-<ol>
-<li><a href="https://www.xuanfengge.com/fe-books.html">Web前端开发推荐阅读书籍、学习课程下载</a> <font color="green">推荐书籍可参考!!</font>(轩枫阁)<blockquote>
-<p>可惜太老了，15年的推荐，可以参考一下一些推荐的书籍</p>
-</blockquote>
-</li>
-</ol>
-<h2 id="HTML"><a href="#HTML" class="headerlink" title="HTML"></a>HTML</h2><ol>
-<li><a href="https://cloud.tencent.com/developer/article/1682440">谈谈HTML中锚点及其使用</a>(腾讯云)<blockquote>
-<p>深度理解a元素 超文本锚点</p>
-</blockquote>
-</li>
-</ol>
-<h3 id="H5页面应用"><a href="#H5页面应用" class="headerlink" title="H5页面应用"></a>H5页面应用</h3><ol>
-<li><a href="https://www.xuanfengge.com/funny/html5/spider/">逼真的蜘蛛</a>(轩枫阁)<blockquote>
-<p>感觉和之前见到的一个博客磁吸线条成网的背景原理相似<br>又见到一个，不过这个不太明显 -&gt; <a href="https://www.cnblogs.com/wwj007/p/14308569.html">这里</a></p>
-</blockquote>
-</li>
-</ol>
-<h2 id="CSS"><a href="#CSS" class="headerlink" title="CSS"></a>CSS</h2><ol>
-<li><p><a href="https://www.ruanyifeng.com/blog/2020/08/five-css-layouts-in-one-line.html">只要一行代码，实现五种 CSS 经典布局</a>（阮一峰 | 20.8.10）</p>
-</li>
-<li><p><a href="https://antfu.me/posts/reimagine-atomic-css-zh">重新构想原子化 CSS</a> （antfu | Oct 27, 2021）</p>
-</li>
-</ol>
-<h2 id="JS"><a href="#JS" class="headerlink" title="JS"></a>JS</h2><ol>
-<li><a href="https://juejin.cn/post/7371716384847364147?share_token=47e2d958-ced3-4c78-8d58-f2790fa85d3b">log打印美化</a>（掘金 | 24.5.22）</li>
-</ol>
-<h2 id="Vue"><a href="#Vue" class="headerlink" title="Vue"></a>Vue</h2><h3 id="组件库"><a href="#组件库" class="headerlink" title="组件库"></a>组件库</h3><ol>
-<li><a href="https://juejin.cn/post/7075162881498562590">Varlet，被尤雨溪推荐，这款开箱即用的Vue3组件库做对了什么</a>(掘金22&#x2F;3&#x2F;15)<blockquote>
-<p>Varlet：一个基于 Vue3 开发的 Material 风格移动端组件库</p>
-</blockquote>
-</li>
-</ol>
-<h1 id="Blog-Build"><a href="#Blog-Build" class="headerlink" title="Blog Build"></a>Blog Build</h1><ul>
-<li><a href="https://iknowwang.com/">如何架設網站：一個完全免費的教學（Blog推薦 + 網頁製作軟體 ）</a>(Wordpress)<blockquote>
-<p>讲到了很多建设网站的东西</p>
-</blockquote>
-</li>
-</ul>
-<h2 id="WordPress"><a href="#WordPress" class="headerlink" title="WordPress"></a>WordPress</h2><ol>
-<li><a href="https://zhuanlan.zhihu.com/p/37896471">WordPress搭建教程：手把手教你搭建WordPress博客</a>(知乎)<blockquote>
-<p>域名推荐在 <a href="https://www.namesilo.com/?rid=d27fa32do">Namesilo</a> 购买，价格便宜，赠送永久免费的隐私保护。(0.99$&#x2F;第一年)<br>注册账户。注册信息建议如实填写，并勾选“Keep my information private”默认使用隐私保护。<br> 设置域名续费规则、注册时长等。在“Have a Coupon……”处输入优惠码 okoff 或者 go2think，点击“Submit”应用，优惠一美元。<br> 完成后点击“CONTINUE”付款，支持支付宝和 Paypal 等。</p>
-</blockquote>
-</li>
-</ol>
-<h2 id="Hexo-Next"><a href="#Hexo-Next" class="headerlink" title="Hexo + Next"></a>Hexo + Next</h2><ul>
-<li><a href="https://hexo-next.readthedocs.io/zh-cn/latest/">Hexo-NexT官网文档</a></li>
-</ul>
-<ol>
-<li><p><a href="https://cloud.tencent.com/developer/article/2065803">Hexo图标样式参考</a>(腾讯云)</p>
-<blockquote>
-<p>Hexo 支持FontAwesome图标，就是在代码中出现名字以fa fa开头的类名，本文介绍具具体图标来源和使用方法。</p>
-</blockquote>
-</li>
-<li><p>post页面图片引用(self) </p>
-<blockquote>
-<p>hexo + next 似乎并不支持@作为索引根目录或source目录，至少试了不起作用<br> 可以将图片放到source的images文件下，然后用markdown引用<br> <code>![img](/images/xxx.png)</code><br> 在images前面有一个&#x2F;,表示根目录的意思，因为对于hexo来说它的资源文件的根目录就是source,如果想要更改可以修改_config.yml下的source_dir参数</p>
-</blockquote>
-<ul>
-<li>参考文章 – <a href="https://blog.csdn.net/Miracle_ps/article/details/114791335">Hexo 添加图片</a>(CSDN)</li>
-</ul>
-</li>
-<li><p>博客字体修改</p>
-<blockquote>
-<p>NexT默认使用微软雅黑，这里我将blog title修改为了 <a href="https://fonts.google.com/selection/embed">Miniver</a> 字体，size: 1.5<br> 详细请参考该文章：<a href="https://blog.csdn.net/sailist/article/details/104114578">Hexo-Next主题更改字体</a><br> 文中提到的字体网站：<a href="https://fonts.google.com/">Google Fonts</a></p>
-</blockquote>
-</li>
-<li><p><a href="https://blog.csdn.net/weixin_58068682/article/details/116611715">添加自定义html页面</a>(CSDN)</p>
-</li>
-</ol>
-<h1 id="408"><a href="#408" class="headerlink" title="408"></a>408</h1><h2 id="计算机网络原理"><a href="#计算机网络原理" class="headerlink" title="计算机网络原理"></a>计算机网络原理</h2><ul>
-<li><p>计算机网络原理 谢希仁（第8版）课后习题 及 参考答案</p>
-<ul>
-<li><a href="https://blog.csdn.net/weixin_45773137/article/details/126150861">第一章–分组交换 &#x2F; 时延 &#x2F; 性能指标 &#x2F; OSI七层模型和TCP&#x2F;IP五层模型–网络体系结构</a>(CSDN&#x2F;答案不全)<br>  不全的部分参考这个 <a href="https://cloud.tencent.com/developer/article/2055618">Post</a> (腾讯云&#x2F;Q10开始排版不好)</li>
-<li><a href="https://blog.csdn.net/weixin_62985813/article/details/134105653">第二章–物理层</a>(CSDN)</li>
-<li><a href="https://blog.csdn.net/weixin_45773137/article/details/126276788">第三章–数据链路层</a>(CSDN)<ul>
-<li><a href="https://blog.csdn.net/qq_51646682/article/details/124768543"><font color="green">单元测试(习题+答案+图文解析)</font></a>(CSDN)</li>
-</ul>
-</li>
-<li><a href="https://blog.csdn.net/qq_56919740/article/details/128908573">第四章–网络层</a>(CSDN)<ul>
-<li><a href="https://blog.csdn.net/qq_51646682/article/details/125360799"><font color="green">单元测试(习题+答案+图文解析)</font></a></li>
-</ul>
-</li>
-<li><a href="https://blog.csdn.net/qq_56919740/article/details/129649988">第五章–运输层</a>(CSDN&#x2F;答案不全)<br>  <a href="https://zhuanlan.zhihu.com/p/496603918?eqid=c1eba5ff0000988f00000006648b3851">参考这个，答案解释的比较详细</a>(知乎)<ul>
-<li><a href="https://blog.csdn.net/qq_51646682/article/details/125858505">单元测试(习题+答案+图文解析)</a>(CSDN) – 这个测试题就和学的不一样了</li>
-</ul>
-</li>
-<li><a href="https://blog.csdn.net/qq_51344334/article/details/121409933">第六章–应用层</a>(CSDN)<ul>
-<li><a href="https://blog.csdn.net/qq_51646682/article/details/126301611"><font color="green">单元测试(习题+答案+图文解析)</font></a>(CSDN)  </li>
-<li><a href="https://blog.csdn.net/qq_43518425/article/details/111828744">在浏览器输入http://xxx并按回车，直到网站显示在浏览器中。按照TCP/IP参考模型，从应用层到网络接口层都用到了哪些协议，作用是什么？简要描述该过程。</a>(CSDN)</li>
-</ul>
-</li>
-</ul>
-</li>
-<li><p><a href="https://blog.csdn.net/weixin_51261234/article/details/121876379"><font color="red">计算机网络重点回顾</font></a>(CSDN&#x2F;总结) —— 作者: <a href="https://blog.csdn.net/weixin_51261234?type=blog">高稚气菌</a></p>
-</li>
-</ul>
-<h1 id="ELSE"><a href="#ELSE" class="headerlink" title="ELSE"></a>ELSE</h1><ol>
-<li><a href="https://www.wangeditor.com/">wangEditor – 开源 Web 富文本编辑器</a> – <a href="https://www.wangeditor.com/demo/index.html">demo</a></li>
-</ol>
-]]></content>
-  </entry>
-  <entry>
     <title>Hello Front-end</title>
     <url>/tsukimiya.github.io/index.html</url>
-    <content><![CDATA[<p>Welcome to my study blog! This is my continuously make up a main post. If you get any problems when using my blog, you can send the email to <a href="mailto:&#104;&#x61;&#x72;&#x69;&#x69;&#106;&#105;&#99;&#111;&#64;&#111;&#117;&#116;&#108;&#111;&#x6f;&#107;&#46;&#x63;&#x6f;&#109;">&#104;&#x61;&#x72;&#x69;&#x69;&#106;&#105;&#99;&#111;&#64;&#111;&#117;&#116;&#108;&#111;&#x6f;&#107;&#46;&#x63;&#x6f;&#109;</a></p>
+    <content><![CDATA[<p>Welcome to my study blog! This is my continuously make up a main post. If you get any problems when using my blog, you can send the email to <a href="mailto:&#104;&#97;&#x72;&#x69;&#x69;&#106;&#x69;&#x63;&#111;&#x40;&#x6f;&#x75;&#116;&#x6c;&#x6f;&#x6f;&#107;&#46;&#x63;&#x6f;&#109;">&#104;&#97;&#x72;&#x69;&#x69;&#106;&#x69;&#x63;&#111;&#x40;&#x6f;&#x75;&#116;&#x6c;&#x6f;&#x6f;&#107;&#46;&#x63;&#x6f;&#109;</a></p>
 <h2 id="Study-Guide"><a href="#Study-Guide" class="headerlink" title="Study Guide"></a>Study Guide</h2><center>Here provide you some study sources and study route.</center>
 <!-- This is [main tech](#Main-Line) -->
 <center>This is <a href='#Main-Line'>main tech</a></center>
@@ -4215,6 +4003,223 @@ vue的导航守卫中除了全局前置守卫之外，还有全局解析守卫�
 ]]></content>
   </entry>
   <entry>
+    <title>Pulled Post</title>
+    <url>/tsukimiya.github.io/PulledPost/index.html</url>
+    <content><![CDATA[<blockquote>
+<p><code>Here are many posts pulling for you, hope you&#39;ll gain something.</code></p>
+</blockquote>
+<h1 id="Pulled-Bloger-or-Community"><a href="#Pulled-Bloger-or-Community" class="headerlink" title="Pulled Bloger or Community"></a>Pulled Bloger or Community</h1><ol>
+<li><p><a href="https://www.ruanyifeng.com/blog/">阮一峰的网络日志</a></p>
+</li>
+<li><p><a href="https://juejin.cn/">掘金</a></p>
+</li>
+<li><p>沧沧凉凉 – <a href="https://juejin.cn/user/1380642337065421">掘金</a> | <a href="https://www.zhihu.com/people/hatsune-87/posts">知乎</a></p>
+</li>
+<li><p>CS_Joe – <a href="https://juejin.cn/user/1398234518156301">掘金</a></p>
+<blockquote>
+<p>three.js</p>
+</blockquote>
+</li>
+<li><p>小满zs – <a href="https://juejin.cn/user/2463384809252397">掘金</a> | <a href="https://space.bilibili.com/99210573">b站</a></p>
+</li>
+<li><p>CUGGZ – <a href="https://juejin.cn/user/3544481220801815">掘金</a></p>
+</li>
+<li><p>前端双越老师 – <a href="https://juejin.cn/user/1714893868765373">掘金</a></p>
+</li>
+<li><p><a href="https://antfu.me/">antfu – Anthony Fu</a></p>
+</li>
+<li><p><a href="https://javabetter.cn/blog.html">沉默王二的技术博客</a>（Java）</p>
+</li>
+<li><p>freecodecamp编程免费教学慈善组织 – <a href="https://www.freecodecamp.org/chinese/learn">官网</a> | <a href="https://www.freecodecamp.org/chinese/news/">专栏</a> | <a href="https://forum.freecodecamp.org/c/chinese/533">论坛</a></p>
+<blockquote>
+<p>官方支持中文，专栏和论坛有很多优质文章</p>
+</blockquote>
+</li>
+<li><p><a href="https://www.xuanfengge.com/">轩枫阁</a></p>
+<blockquote>
+<p>前端大神的个人博客！腾讯微信前端工程师！ orz_<br> <a href="https://www.xuanfengge.com/funny/">SOME NB H5&amp;C3&amp;Animation orz_</a>(H5元素周期表就出自这里)<br> look older，but niubility build from 2013</p>
+</blockquote>
+</li>
+</ol>
+<h1 id="Software"><a href="#Software" class="headerlink" title="Software"></a>Software</h1><center><font>`工欲善其事，必先利其器`</font></center>
+
+<ul>
+<li><p><a href="https://u.tools/">uTools</a></p>
+<blockquote>
+<p>本地搜索、聚合翻译、OCR文字识别、MD笔记、文件批量重命名。一切皆插件，效率利器！</p>
+</blockquote>
+</li>
+<li><p>Snipaste</p>
+<blockquote>
+<p>Windows截图工具，尚硅谷张天禹老师用的，可以缩放图片，比qq自带的强大！</p>
+</blockquote>
+</li>
+<li><p>Xmind</p>
+<blockquote>
+<p>思维导图，黑马老师有用过</p>
+</blockquote>
+</li>
+<li><p>Pxcook</p>
+<blockquote>
+<p>用来做一些网页样式设计图，可以测量尺寸和吸取颜色，渡一老师有用过</p>
+</blockquote>
+</li>
+<li><p>windows自带剪切板 win + v</p>
+<blockquote>
+<p>剪切板历史记录，足够用了<br>更多的需求可以看看<strong>Ditto</strong>，除了丑该有的功能都有，而且安装之后只有15M<br>MAC的话，可以试试<strong>Paste</strong></p>
+</blockquote>
+</li>
+<li><p>windows内置emoji键盘 win + .快捷键唤出</p>
+</li>
+</ul>
+<h2 id="vscode"><a href="#vscode" class="headerlink" title="vscode"></a>vscode</h2><ul>
+<li><p><a href="https://blog.csdn.net/weixin_40004212/article/details/113627387">VSCode 的快捷键及常用插件总结</a></p>
+<blockquote>
+<p>快速复制当前代码到下一行、移动行、新建窗口、行缩进<br>ctrl + alt + ↓ 在下一行末尾增加一个光标</p>
+</blockquote>
+</li>
+<li><p>ctrl + i ———— <strong>唤起代码提示</strong></p>
+</li>
+<li><p>复制链接 + 选中文字 + Ctrl v ———— <font color="red"><strong>vscode快速生成链接文字</strong></font></p>
+</li>
+</ul>
+<h1 id="MD"><a href="#MD" class="headerlink" title="MD"></a>MD</h1><ul>
+<li><p><a href="https://markdown.com.cn/extended-syntax/">Markdown官方教程</a><font color="red">Pull!!</font></p>
+</li>
+<li><p><a href="https://keatonlao.gitee.io/a-study-note-for-markdown/syntax/">markdown语法</a> <font color="red">Pull!!</font></p>
+</li>
+<li><p><a href="https://blog.csdn.net/qq_40896997/article/details/106551767">markdown表情大全</a> <font color="red">Pull!!</font> – emoji表情，及其表情符号简码</p>
+<blockquote>
+<p><a href="https://www.toolhelper.cn/Encoding/Emoji"><font color="red">在线工具-Emoji表情符号(可搜索)</font></a> – 附有表情说明，及其Unicode编码</p>
+</blockquote>
+</li>
+<li><p><a href="https://www.runoob.com/markdown/md-table.html">markdown表格语法</a>(菜鸟教程)</p>
+</li>
+</ul>
+<h1 id="Front-end"><a href="#Front-end" class="headerlink" title="Front-end"></a>Front-end</h1><ul>
+<li><p>推荐书籍</p>
+<ol>
+<li>JavaScript高级程序设计</li>
+<li>JavaScript权威指南</li>
+<li>你不知道的JavaScript</li>
+</ol>
+<ul>
+<li><a href="https://wangdoc.com/javascript/">JavaScript 教程 - 阮一峰 | 网道</a></li>
+<li>ECMAScript 6 教程 - 阮一峰 <a href="https://es6.ruanyifeng.com/"><font color='red'>官方</font></a> <a href="https://wangdoc.com/es6/">网道镜像</a> </li>
+<li><a href="https://wangdoc.com/typescript/">TypeScript 教程 - 阮一峰 | 网道</a></li>
+<li><a href="https://ts.xcatliu.com/introduction/what-is-typescript.html">TypeScript入门教程 - xcatliu</a></li>
+<li><a href="https://www.liaoxuefeng.com/wiki/896043488029600">Git教程 - 廖雪峰</a></li>
+</ul>
+</li>
+</ul>
+<ol>
+<li><a href="https://www.xuanfengge.com/fe-books.html">Web前端开发推荐阅读书籍、学习课程下载</a> <font color="green">推荐书籍可参考!!</font>(轩枫阁)<blockquote>
+<p>可惜太老了，15年的推荐，可以参考一下一些推荐的书籍</p>
+</blockquote>
+</li>
+</ol>
+<h2 id="HTML"><a href="#HTML" class="headerlink" title="HTML"></a>HTML</h2><ol>
+<li><a href="https://cloud.tencent.com/developer/article/1682440">谈谈HTML中锚点及其使用</a>(腾讯云)<blockquote>
+<p>深度理解a元素 超文本锚点</p>
+</blockquote>
+</li>
+</ol>
+<h3 id="H5页面应用"><a href="#H5页面应用" class="headerlink" title="H5页面应用"></a>H5页面应用</h3><ol>
+<li><a href="https://www.xuanfengge.com/funny/html5/spider/">逼真的蜘蛛</a>(轩枫阁)<blockquote>
+<p>感觉和之前见到的一个博客磁吸线条成网的背景原理相似<br>又见到一个，不过这个不太明显 -&gt; <a href="https://www.cnblogs.com/wwj007/p/14308569.html">这里</a></p>
+</blockquote>
+</li>
+</ol>
+<h2 id="CSS"><a href="#CSS" class="headerlink" title="CSS"></a>CSS</h2><ol>
+<li><p><a href="https://www.ruanyifeng.com/blog/2020/08/five-css-layouts-in-one-line.html">只要一行代码，实现五种 CSS 经典布局</a>（阮一峰 | 20.8.10）</p>
+</li>
+<li><p><a href="https://antfu.me/posts/reimagine-atomic-css-zh">重新构想原子化 CSS</a> （antfu | Oct 27, 2021）</p>
+</li>
+</ol>
+<h2 id="JS"><a href="#JS" class="headerlink" title="JS"></a>JS</h2><ol>
+<li><a href="https://juejin.cn/post/7371716384847364147?share_token=47e2d958-ced3-4c78-8d58-f2790fa85d3b">log打印美化</a>（掘金 | 24.5.22）</li>
+</ol>
+<h2 id="Vue"><a href="#Vue" class="headerlink" title="Vue"></a>Vue</h2><h3 id="组件库"><a href="#组件库" class="headerlink" title="组件库"></a>组件库</h3><ol>
+<li><a href="https://juejin.cn/post/7075162881498562590">Varlet，被尤雨溪推荐，这款开箱即用的Vue3组件库做对了什么</a>(掘金22&#x2F;3&#x2F;15)<blockquote>
+<p>Varlet：一个基于 Vue3 开发的 Material 风格移动端组件库</p>
+</blockquote>
+</li>
+</ol>
+<h1 id="Blog-Build"><a href="#Blog-Build" class="headerlink" title="Blog Build"></a>Blog Build</h1><ul>
+<li><a href="https://iknowwang.com/">如何架設網站：一個完全免費的教學（Blog推薦 + 網頁製作軟體 ）</a>(Wordpress)<blockquote>
+<p>讲到了很多建设网站的东西</p>
+</blockquote>
+</li>
+</ul>
+<h2 id="WordPress"><a href="#WordPress" class="headerlink" title="WordPress"></a>WordPress</h2><ol>
+<li><a href="https://zhuanlan.zhihu.com/p/37896471">WordPress搭建教程：手把手教你搭建WordPress博客</a>(知乎)<blockquote>
+<p>域名推荐在 <a href="https://www.namesilo.com/?rid=d27fa32do">Namesilo</a> 购买，价格便宜，赠送永久免费的隐私保护。(0.99$&#x2F;第一年)<br>注册账户。注册信息建议如实填写，并勾选“Keep my information private”默认使用隐私保护。<br> 设置域名续费规则、注册时长等。在“Have a Coupon……”处输入优惠码 okoff 或者 go2think，点击“Submit”应用，优惠一美元。<br> 完成后点击“CONTINUE”付款，支持支付宝和 Paypal 等。</p>
+</blockquote>
+</li>
+</ol>
+<h2 id="Hexo-Next"><a href="#Hexo-Next" class="headerlink" title="Hexo + Next"></a>Hexo + Next</h2><ul>
+<li><a href="https://hexo-next.readthedocs.io/zh-cn/latest/">Hexo-NexT官网文档</a></li>
+</ul>
+<ol>
+<li><p><a href="https://cloud.tencent.com/developer/article/2065803">Hexo图标样式参考</a>(腾讯云)</p>
+<blockquote>
+<p>Hexo 支持FontAwesome图标，就是在代码中出现名字以fa fa开头的类名，本文介绍具具体图标来源和使用方法。</p>
+</blockquote>
+</li>
+<li><p>post页面图片引用(self) </p>
+<blockquote>
+<p>hexo + next 似乎并不支持@作为索引根目录或source目录，至少试了不起作用<br> 可以将图片放到source的images文件下，然后用markdown引用<br> <code>![img](/images/xxx.png)</code><br> 在images前面有一个&#x2F;,表示根目录的意思，因为对于hexo来说它的资源文件的根目录就是source,如果想要更改可以修改_config.yml下的source_dir参数</p>
+</blockquote>
+<ul>
+<li>参考文章 – <a href="https://blog.csdn.net/Miracle_ps/article/details/114791335">Hexo 添加图片</a>(CSDN)</li>
+</ul>
+</li>
+<li><p>博客字体修改</p>
+<blockquote>
+<p>NexT默认使用微软雅黑，这里我将blog title修改为了 <a href="https://fonts.google.com/selection/embed">Miniver</a> 字体，size: 1.5<br> 详细请参考该文章：<a href="https://blog.csdn.net/sailist/article/details/104114578">Hexo-Next主题更改字体</a><br> 文中提到的字体网站：<a href="https://fonts.google.com/">Google Fonts</a></p>
+</blockquote>
+</li>
+<li><p><a href="https://blog.csdn.net/weixin_58068682/article/details/116611715">添加自定义html页面</a>(CSDN)</p>
+</li>
+</ol>
+<h1 id="408"><a href="#408" class="headerlink" title="408"></a>408</h1><h2 id="计算机网络原理"><a href="#计算机网络原理" class="headerlink" title="计算机网络原理"></a>计算机网络原理</h2><ul>
+<li><p>计算机网络原理 谢希仁（第8版）课后习题 及 参考答案</p>
+<ul>
+<li><a href="https://blog.csdn.net/weixin_45773137/article/details/126150861">第一章–分组交换 &#x2F; 时延 &#x2F; 性能指标 &#x2F; OSI七层模型和TCP&#x2F;IP五层模型–网络体系结构</a>(CSDN&#x2F;答案不全)<br>  不全的部分参考这个 <a href="https://cloud.tencent.com/developer/article/2055618">Post</a> (腾讯云&#x2F;Q10开始排版不好)</li>
+<li><a href="https://blog.csdn.net/weixin_62985813/article/details/134105653">第二章–物理层</a>(CSDN)</li>
+<li><a href="https://blog.csdn.net/weixin_45773137/article/details/126276788">第三章–数据链路层</a>(CSDN)<ul>
+<li><a href="https://blog.csdn.net/qq_51646682/article/details/124768543"><font color="green">单元测试(习题+答案+图文解析)</font></a>(CSDN)</li>
+</ul>
+</li>
+<li><a href="https://blog.csdn.net/qq_56919740/article/details/128908573">第四章–网络层</a>(CSDN)<ul>
+<li><a href="https://blog.csdn.net/qq_51646682/article/details/125360799"><font color="green">单元测试(习题+答案+图文解析)</font></a></li>
+</ul>
+</li>
+<li><a href="https://blog.csdn.net/qq_56919740/article/details/129649988">第五章–运输层</a>(CSDN&#x2F;答案不全)<br>  <a href="https://zhuanlan.zhihu.com/p/496603918?eqid=c1eba5ff0000988f00000006648b3851">参考这个，答案解释的比较详细</a>(知乎)<ul>
+<li><a href="https://blog.csdn.net/qq_51646682/article/details/125858505">单元测试(习题+答案+图文解析)</a>(CSDN) – 这个测试题就和学的不一样了</li>
+</ul>
+</li>
+<li><a href="https://blog.csdn.net/qq_51344334/article/details/121409933">第六章–应用层</a>(CSDN)<ul>
+<li><a href="https://blog.csdn.net/qq_51646682/article/details/126301611"><font color="green">单元测试(习题+答案+图文解析)</font></a>(CSDN)  </li>
+<li><a href="https://blog.csdn.net/qq_43518425/article/details/111828744">在浏览器输入http://xxx并按回车，直到网站显示在浏览器中。按照TCP/IP参考模型，从应用层到网络接口层都用到了哪些协议，作用是什么？简要描述该过程。</a>(CSDN)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><a href="https://blog.csdn.net/weixin_51261234/article/details/121876379"><font color="red">计算机网络重点回顾</font></a>(CSDN&#x2F;总结) —— 作者: <a href="https://blog.csdn.net/weixin_51261234?type=blog">高稚气菌</a></p>
+</li>
+</ul>
+<h1 id="ELSE"><a href="#ELSE" class="headerlink" title="ELSE"></a>ELSE</h1><ol>
+<li><a href="https://www.wangeditor.com/">wangEditor – 开源 Web 富文本编辑器</a> – <a href="https://www.wangeditor.com/demo/index.html">demo</a></li>
+</ol>
+]]></content>
+  </entry>
+  <entry>
+    <title>分类</title>
+    <url>/tsukimiya.github.io/categories/index.html</url>
+    <content><![CDATA[]]></content>
+  </entry>
+  <entry>
     <title>Array API | 数组方法 | 数组函数</title>
     <url>/tsukimiya.github.io/custom/api.html</url>
     <content><![CDATA[
@@ -4279,11 +4284,6 @@ vue的导航守卫中除了全局前置守卫之外，还有全局解析守卫�
 </body>
 
 </html>]]></content>
-  </entry>
-  <entry>
-    <title>分类</title>
-    <url>/tsukimiya.github.io/categories/index.html</url>
-    <content><![CDATA[]]></content>
   </entry>
   <entry>
     <title></title>
@@ -4627,367 +4627,6 @@ forEach(callbackFn(element,index,array), thisArg)`,
 ]]></content>
   </entry>
   <entry>
-    <title>留言板</title>
-    <url>/tsukimiya.github.io/guestbook/index.html</url>
-    <content><![CDATA[<h1 id="欢迎来到我的博客！"><a href="#欢迎来到我的博客！" class="headerlink" title="欢迎来到我的博客！"></a>欢迎来到我的博客！</h1><blockquote>
-<p>欢迎在这里留言！任何问题都可以在这里留言，我会及时回复的。目前留言板块尚未配置完全，暂时无法使用，如有问题请邮箱：<br><a href="mailto:&#x68;&#97;&#114;&#x69;&#x69;&#106;&#x69;&#x63;&#x6f;&#x40;&#111;&#x75;&#116;&#x6c;&#111;&#111;&#107;&#x2e;&#99;&#111;&#x6d;">&#x68;&#97;&#114;&#x69;&#x69;&#106;&#x69;&#x63;&#x6f;&#x40;&#111;&#x75;&#116;&#x6c;&#111;&#111;&#107;&#x2e;&#99;&#111;&#x6d;</a><br><a href="mailto:&#49;&#x38;&#51;&#x32;&#x37;&#x31;&#53;&#x38;&#51;&#56;&#64;&#113;&#113;&#x2e;&#x63;&#111;&#109;">&#49;&#x38;&#51;&#x32;&#x37;&#x31;&#53;&#x38;&#51;&#56;&#64;&#113;&#113;&#x2e;&#x63;&#111;&#109;</a><br>欢迎给我发送邮件</p>
-</blockquote>
-]]></content>
-  </entry>
-  <entry>
-    <title>日程表</title>
-    <url>/tsukimiya.github.io/schedule/index.html</url>
-    <content><![CDATA[<center style="width:100%;height:1px;position:relative">
-    <p title="知无行则空，梦里看花。行非知犹盲，水中捞月。" 
-       style="position:absolute;top:-50px;left:50%;transform: translateX(-48%);font-size:16px;cursor:help;
-       background-image: linear-gradient(to right, purple, red, green);
-       background-clip: text;
-       color: transparent;"
-    >知行合一</p>
-</center>
-
-<center style="color:#888;">NOW</center>
-<hr style="height:1px;margin:2px 0 30px">
-
-<table>
-<thead>
-<tr>
-<th align="center">Stack</th>
-<th align="center"></th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">Uniapp</td>
-<td align="center"><a href="https://www.bilibili.com/video/BV1Bp4y1379L?p=1">Vue3+Ts+Pinia+uni-app黑马项目</a></td>
-</tr>
-</tbody></table>
-<center style="color:#888;margin:80px 0 0">NEXT</center>
-<hr style="height:1px;margin:2px 0 30px">
-
-
-<table>
-<thead>
-<tr>
-<th align="center">Stack</th>
-<th align="center"></th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">Git</td>
-<td align="center"><a href="https://www.liaoxuefeng.com/wiki/896043488029600">Git教程-廖雪峰</a></td>
-</tr>
-<tr>
-<td align="center">TS</td>
-<td align="center"><a href="https://ts.xcatliu.com/introduction/what-is-typescript.html">TS入门教程-xcatliu</a>、<a href="https://wangdoc.com/typescript/">TypeScript 教程 - 阮一峰-网道</a></td>
-</tr>
-<tr>
-<td align="center">React</td>
-<td align="center"></td>
-</tr>
-</tbody></table>
-]]></content>
-  </entry>
-  <entry>
-    <title>Task</title>
-    <url>/tsukimiya.github.io/schedule/task.html</url>
-    <content><![CDATA[<center style="width:100%;height:1px;position:relative">
-    <!-- 一直想不出令我满意的词，无灯夜航虽然意味上很好，但是音韵上总觉差点 -->
-    <!-- 一版：知无行则空，梦里看花。行非知犹盲，无灯夜航。 -->
-    <!-- 二版：知无行则空，梦里看花。行非知犹盲，海底捞月。 -->
-    <!-- 二版：知无行则空，梦里看花。行非知犹盲，水中捞月。 -->
-    <p title="知无行则空，梦里看花。行非知犹盲，水中捞月。" 
-       style="position:absolute;top:-50px;left:50%;transform: translateX(-48%);font-size:16px;cursor:help;
-       background-image: linear-gradient(to right, purple, red, green);
-       background-clip: text;
-       color: transparent;"
-    >知行合一</p>
-</center>
-
-<blockquote>
-<p>快给我滚去学习！给你一拳 👊👊👊</p>
-</blockquote>
-<h2 id="Study-Tech"><a href="#Study-Tech" class="headerlink" title="Study Tech"></a>Study Tech</h2><h3 id="NOW"><a href="#NOW" class="headerlink" title="NOW"></a>NOW</h3><ul>
-<li><p>pink html + css + 移动端后面这部分看一下</p>
-<blockquote>
-<p><a href="https://www.bilibili.com/video/BV14J4114768/?p=389">https://www.bilibili.com/video/BV14J4114768/?p=389</a><br>  p357-388为 CSS2D、3D(这里有空也看一下吧，正好做一下笔记)<br>  后面<br>  p389-p502大致都是移动端，包括流式布局，Less，响应式相关<br>  p503-513为bootStrap<br>  bootStrap BS 以 Less (Sass), OOCSS 与 SMACSS 为基础<br>  最后是项目</p>
-</blockquote>
-</li>
-<li><p>黑马程序员前端项目uniapp小兔鲜儿微信小程序项目视频教程，基于Vue3+Ts+Pinia+uni-app的最新组合技术栈开发的电商业务全流程（2023-8-8 | 20h40min）<br>  <a href="https://www.bilibili.com/video/BV1Bp4y1379L?p=1">https://www.bilibili.com/video/BV1Bp4y1379L?p=1</a><br>  &gt; Vue3移动端uni-app项目<br>  &gt; 老师也许是个大牛，但是讲课不行，不适合初学者，适合有经验的听一下</p>
-</li>
-<li><p>vue框架</p>
-<ul>
-<li><p>邓瑞编程 3小时学会Vue3 (24.1.23 | 2h16min)</p>
-<blockquote>
-<p><a href="https://www.bilibili.com/video/BV1nV411Q7RX">https://www.bilibili.com/video/BV1nV411Q7RX</a><br>  有个人博客教程<a href="https://www.dengruicode.com/">https://www.dengruicode.com/</a><br>  可以看看这个，反正很短</p>
-</blockquote>
-</li>
-<li><p><a href="https://cn.vuejs.org/guide/quick-start.html">Vue官方文档</a> <font color='red'> 推荐 </font></p>
-<blockquote>
-<p>写的很细，无论是基础还是进阶都可以看</p>
-</blockquote>
-</li>
-</ul>
-</li>
-<li><p>es6</p>
-<ul>
-<li>黑马视频<br>  <a href="https://www.bilibili.com/video/BV1Kt411w7MP?t=9.0&p=91">https://www.bilibili.com/video/BV1Kt411w7MP?t=9.0&amp;p=91</a></li>
-</ul>
-</li>
-<li><p>ajax + git</p>
-</li>
-<li><p><a href="https://www.bilibili.com/video/BV1zs411h74a/?p=75">黑马Git教程</a>(17.1.16 | 75-101p | 4h5min)</p>
-</li>
-<li><p>vue项目 双元 day9-p14 路由懒加载 、p15上线<br>  p12 通过CDN优化打包</p>
-</li>
-</ul>
-<h3 id="NEXT"><a href="#NEXT" class="headerlink" title="NEXT"></a>NEXT</h3><ul>
-<li><p>微信小程序 + uni-app （2021-12-17 | 30h）<br><a href="https://www.bilibili.com/video/BV1834y1676P?t=75.0">https://www.bilibili.com/video/BV1834y1676P?t=75.0</a></p>
-<blockquote>
-<p>有点老了，看下面这个尚硅谷的吧？或者直接下面的小兔鲜uniapp项目</p>
-</blockquote>
-</li>
-<li><p>尚硅谷微信小程序开发教程，2024最新版微信小程序项目实战！（2024-02-20 | 35h42min）<br><a href="https://www.bilibili.com/video/BV1LF4m1E7kB?p=1">https://www.bilibili.com/video/BV1LF4m1E7kB?p=1</a></p>
-<blockquote>
-<p>微信小程序教程 + 项目</p>
-</blockquote>
-</li>
-<li><p>react<br><a href="https://www.bilibili.com/video/BV1gh411U7JD?t=50.3">https://www.bilibili.com/video/BV1gh411U7JD?t=50.3</a></p>
-</li>
-<li><p>js面试<br>  黑马程序员前端面试必看视频教程（手写Promise+js设计模式+继承+函数柯里化等）（2023-9-5 | 12h）<br>  <a href="https://www.bilibili.com/video/BV1mH4y1Q7Z7?t=282.1">https://www.bilibili.com/video/BV1mH4y1Q7Z7?t=282.1</a></p>
-<p>  尚硅谷经典前端面试题精讲第一季(web前端大咖总结) （2018-11-1 | 5h07min）<br>  <a href="https://www.bilibili.com/video/BV1nb411P7tQ/?vd_source=8a77e97d04f83a8e2b569f53a587210a">https://www.bilibili.com/video/BV1nb411P7tQ/?vd_source=8a77e97d04f83a8e2b569f53a587210a</a></p>
-</li>
-<li><p>项目</p>
-<ul>
-<li><p>黑马程序员前端Vue项目《iHRM人力资源后台管理》全套教程，从vue基础模板开发到整体开发、nginx部署上线（2023-11-07 | 26h）<br>  <a href="https://www.bilibili.com/video/BV1Te411X7Wz?p=1">https://www.bilibili.com/video/BV1Te411X7Wz?p=1</a></p>
-<blockquote>
-<p>Vue2项目 </p>
-</blockquote>
-</li>
-<li><p>黑马程序员前端Vue3小兔鲜电商项目实战，vue3全家桶从入门到实战电商项目一套通关（2023-5-9 | 17h）<br>  <a href="https://www.bilibili.com/video/BV1Ac411K7EQ?p=1">https://www.bilibili.com/video/BV1Ac411K7EQ?p=1</a></p>
-<blockquote>
-<p>Vue3项目 </p>
-</blockquote>
-</li>
-<li><p>尚硅谷Vue项目实战硅谷甄选，vue3项目+TypeScript前端项目一套通关（2023-5-16 | 46h32min）<br>  <a href="https://www.bilibili.com/video/BV1Xh411V7b5?p=1">https://www.bilibili.com/video/BV1Xh411V7b5?p=1</a></p>
-<blockquote>
-<p>有时间还是学一遍这个吧！</p>
-</blockquote>
-</li>
-</ul>
-</li>
-<li><p>TS</p>
-<ul>
-<li>小满TypeScript基础教程全集（完结）（2021-12-28 | 6h31min）<br>  <a href="https://www.bilibili.com/video/BV1wR4y1377K/?spm_id_from=333.999.0.0&vd_source=8a77e97d04f83a8e2b569f53a587210a">https://www.bilibili.com/video/BV1wR4y1377K/?spm_id_from=333.999.0.0&amp;vd_source=8a77e97d04f83a8e2b569f53a587210a</a></li>
-</ul>
-</li>
-</ul>
-<p><a href="https://www.bilibili.com/video/BV19n4y1d7Gr/?vd_source=8a77e97d04f83a8e2b569f53a587210a">禹神：前端项目部署指南，前端项目打包上线</a></p>
-<ul>
-<li>阮一峰 TS教程 网道<br><a href="https://wangdoc.com/typescript/">https://wangdoc.com/typescript/</a></li>
-<li>阮一峰 JS教程 网道<br><a href="https://wangdoc.com/javascript/">https://wangdoc.com/javascript/</a></li>
-</ul>
-<h3 id="TODO"><a href="#TODO" class="headerlink" title="TODO"></a>TODO</h3><ul>
-<li><p>排序算法——冒泡排序原理动图详解及实现<br><a href="https://blog.csdn.net/qq_43792385/article/details/99466879">https://blog.csdn.net/qq_43792385/article/details/99466879</a></p>
-<blockquote>
-<p>小满模拟面试p1的图很好，老师讲的很好</p>
-</blockquote>
-</li>
-<li><p>TS<br>  <a href="https://xiaoman.blog.csdn.net/article/details/122167155?spm=1001.2014.3001.5502">https://xiaoman.blog.csdn.net/article/details/122167155?spm=1001.2014.3001.5502</a><br>  作者 小满zs B站有视频，讲的很好？<br>  <a href="https://blog.csdn.net/qq1195566313?type=blog">https://blog.csdn.net/qq1195566313?type=blog</a></p>
-</li>
-<li><p>防盗链<br>cdn资源如果不设置防盗链，会被爬虫或者别的网站引用，但是流量还是消耗你的，到时候你的流量嘎嘎跑，月底缴费直接破产，设置了防盗链就只能自己的网站才能拿这个资源</p>
-</li>
-<li><p>html页面如何使用emoji表情？js如何使用emoji？ <a href="https://zhuanlan.zhihu.com/p/328516890">参考一篇文章</a></p>
-</li>
-<li><p>面试必问之 JS 事件循环(Event Loop)，看这一篇足够 <a href="https://zhuanlan.zhihu.com/p/580956436">https://zhuanlan.zhihu.com/p/580956436</a></p>
-</li>
-<li><p>axios<br>结合async和await调用axios<br>如果想要处理报错 – try catch<br>更优雅的处理 – 拦截器 – 可以处理全部的错误</p>
-</li>
-<li><p>如果想要本地搜索排除某些页面，其余全部页面都会被搜索到<br>目前只有一个办法：将想要排除搜索的页面，排除渲染，不被渲染的页面上的内容是搜索不到的，<br>所以还是得手搓页面XD</p>
-</li>
-<li><p>移动端使用js的控制台<br>【探秘JavaScript移动调试神器：JS-Mobile-Console】<a href="https://mbd.baidu.com/ma/s/WNjqoqqA">https://mbd.baidu.com/ma/s/WNjqoqqA</a><br>【移动端调试神器vConsole】<a href="https://mbd.baidu.com/ma/s/ZTdBK5C1">https://mbd.baidu.com/ma/s/ZTdBK5C1</a><br>可以直接使用js在线工具就行了，因为我只是需要在移动端使用控制台来进行验证一些代码，所以js在线工具完全可以满足</p>
-</li>
-<li><p>写一个sleep函数？研究过promise的应该写个sleep函数很简单？</p>
-</li>
-<li><p>为什么v-if是把元素移除和添加进页面的，然而v-if添加进页面的元素上带有的id属性，页面上的a链接指向它的锚点不起作用，为什么？如果换成v-show就没关系，因为控制的是display的值<br>也就是说，新添加进页面的元素的id属性不能作为锚点使用？</p>
-</li>
-<li><p>如何记录网站每天的访问量及访问IP？</p>
-</li>
-<li><p>在首页和标签页添加 字数统计+阅读时长 以及 打赏 &#x2F;&#x2F; 应该要修改源模版文件代码</p>
-<blockquote>
-<p>要将字数统计和阅读时长设置添加到首页和标签页，你需要在网站的主题或模板文件中进行修改。具体来说，你需要找到首页和标签页的模板文件，并在其中添加相应的代码以显示字数统计和阅读时长。<br>  通常，这些模板文件可以在你的网站主题文件夹中找到。你可以查看主题的文档或者在主题文件夹中搜索包含首页和标签页内容的模板文件。<br>  一旦找到了这些模板文件，你可以根据需要修改它们，添加类似以下的代码来显示字数统计和阅读时长：<br>  <figure class="highlight html"><table><tr><td class="code"><pre><span class="line">&#123;% if page.symbols %&#125;</span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>字数统计: &#123;&#123; page.symbols &#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">&#123;% endif %&#125;</span><br><span class="line"></span><br><span class="line">&#123;% if page.time %&#125;</span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>阅读时长: &#123;&#123; page.time &#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">&#123;% endif %&#125;</span><br></pre></td></tr></table></figure><br>请注意，具体的代码可能会因为你使用的网站平台或主题而有所不同。最好查阅你使用的平台或主题的文档，以确保正确添加字数统计和阅读时长功能。</p>
-</blockquote>
-</li>
-<li><p>CSS 布局经典问题大全<br><a href="https://www.html-js.com/article/5889">https://www.html-js.com/article/5889</a></p>
-</li>
-<li><p>网站会DDOS攻击会有哪些反应，如何应对此现象？<br><a href="https://www.html-js.com/article/6657">https://www.html-js.com/article/6657</a></p>
-</li>
-<li><p>响应式网页设计——怎样让一个网站在手机、平板上好看<br><a href="https://www.freecodecamp.org/chinese/news/responsive-web-design-how-to-make-a-website-look-good-on-phones-and-tablets/">https://www.freecodecamp.org/chinese/news/responsive-web-design-how-to-make-a-website-look-good-on-phones-and-tablets/</a></p>
-</li>
-<li><p>什么是 XSS？如何保护网站免受 DOM 跨站脚本攻击<br><a href="https://www.freecodecamp.org/chinese/news/how-to-protect-against-dom-xss-attacks/">https://www.freecodecamp.org/chinese/news/how-to-protect-against-dom-xss-attacks/</a></p>
-</li>
-<li><p>SEO优化？<br><a href="https://www.bilibili.com/video/BV14J4114768?t=4.5&p=311">https://www.bilibili.com/video/BV14J4114768?t=4.5&amp;p=311</a></p>
-</li>
-<li><p>上传服务器？<br><a href="https://www.bilibili.com/video/BV14J4114768?t=2.5&p=355">https://www.bilibili.com/video/BV14J4114768?t=2.5&amp;p=355</a></p>
-</li>
-<li><p>多栏布局<br>多栏布局是最常见的css布局之一，实现的方式不下10种，它们分别应对各种各样的业务场景，而bs的流式布局堪称撑起一片天，它的响应式看似独霸天下能满足80%的要求，但开发者们仍会保留20%用于追逐更高效的技巧，而且随着前端的发展，原生bs流式布局已然有更优的实现方式了。</p>
-</li>
-<li><p>Layui – 快速实现页面布局效果，</p>
-</li>
-<li><p>防抖 节流<br><a href="https://www.bilibili.com/video/BV1zs411h74a?t=5.0&p=66">https://www.bilibili.com/video/BV1zs411h74a?t=5.0&amp;p=66</a></p>
-</li>
-<li><p>web APIs(页面适配，less，Sass等一些)</p>
-<blockquote>
-<p>Sass是css预处理器，提供了类似编程语言的功能，包括变量、嵌套规则、混合、继承、函数等。帮助开发者更高效的编写和组织样式表<br>  Sass并不能直接在浏览器执行，所以好需要配置IDE插件或者专门工具来将Sass文件编译成css文件才能使用</p>
-</blockquote>
-<blockquote>
-<p>Less受Sass的启发，为开发人员提供更加高效便捷的样式表编写方式</p>
-</blockquote>
-</li>
-<li><p>es6，模块化，组件化，css3，less，scss</p>
-</li>
-<li><p>QQ的卡片是怎么写的？随机给一张图片的那种卡片</p>
-</li>
-</ul>
-<p><a href="https://www.bilibili.com/video/BV1p84y1P7Z5">尚硅谷前端入门html+css零基础教程，零基础前端开发html5+css3视频</a></p>
-<ul>
-<li><p><input checked="" disabled="" type="checkbox"> 
-<a href="https://www.ruanyifeng.com/blog/2015/09/web-page-performance-in-depth.html">网页性能管理详解</a></p>
-</li>
-<li><p><a href="https://gongchenghuigch.github.io/2018/10/24/reactecharts/">echarts-for-react使用详解(雷达图)</a></p>
-</li>
-<li><p><a href="https://gongchenghuigch.github.io/2018/10/15/linuxbase/">Linux基本命令</a></p>
-</li>
-<li><p><a href="https://gongchenghuigch.github.io/2019/09/14/awat/">setTimeout,promise,async await的区别</a></p>
-<blockquote>
-<p>EventLoop - 同步任务、异步任务（宏任务微任务）</p>
-</blockquote>
-</li>
-<li><p><a href="https://github.com/lvwxx/blog/issues/3">SSL或TLS握手的概述</a>(Github)</p>
-</li>
-<li><p>虚拟DOM+diff算法，并不是比原生DOM操作快，而是让做了一个取舍：让开发者不需要过多考虑底层的DOM操作，并提供一个过得去的性能(相对较好)。这意味着在大多数情况下，开发者无需进行额外的优化就能获得不错的用户体验。<br><strong>虚拟dom算法去操作真实dom性能不一定比直接操作dom高，但它能”不管你的数据变化多少，每次重绘的性能都可以接受”</strong><br><a href="https://www.zhihu.com/question/31809713/answer/53544875">https://www.zhihu.com/question/31809713/answer/53544875</a><br><a href="https://juejin.cn/post/6994959998283907102?searchId=20240604103445B38B3580D74D050B96E2">https://juejin.cn/post/6994959998283907102?searchId=20240604103445B38B3580D74D050B96E2</a></p>
-</li>
-</ul>
-<h3 id="OWARI"><a href="#OWARI" class="headerlink" title="OWARI"></a>OWARI</h3><ol start="0">
-<li><p>前端</p>
-<ul>
-<li><a href="https://www.bilibili.com/video/BV1eC411p73m/">前端技术的十八年风雨(2006-2024)-bilibili</a></li>
-</ul>
-</li>
-<li><p>vue框架</p>
-<ul>
-<li>黑马vue课程（21.8 | vue2 - 12h）<br>  <a href="https://www.bilibili.com/video/BV1zq4y1p7ga?t=3.5&p=32">https://www.bilibili.com/video/BV1zq4y1p7ga?t=3.5&amp;p=32</a><blockquote>
-<p>vue3的部分和vue2的东西弄到一块了，不太好<br>  <a href="https://www.bilibili.com/video/BV1zq4y1p7ga?p=296">vue3-p296</a>开始是vue3，但是和vue2内容有绝大程度的重合，vue2部分挺不错，3就不推荐了</p>
-</blockquote>
-</li>
-<li>vue项目 双元 – day10 - vuex<blockquote>
-<p>传智 黑马课程 about 2 hours at 21years</p>
-</blockquote>
-</li>
-<li>尚硅谷 禹神 Vue3+TS（23.12.19 | 14h）<blockquote>
-<p>TypeScript+Vue3组合式API编码，讲的很好，就是有些东西没讲到，可以看官方文档补一下<br>      <a href="https://www.bilibili.com/video/BV1Za4y1r7KE">https://www.bilibili.com/video/BV1Za4y1r7KE</a></p>
-</blockquote>
-</li>
-</ul>
-</li>
-<li><p>ES6</p>
-<ul>
-<li>阮一峰es6教程<br> <a href="https://es6.ruanyifeng.com/">https://es6.ruanyifeng.com/</a><br> <a href="https://wangdoc.com/es6/intro">https://wangdoc.com/es6/intro</a></li>
-</ul>
-</li>
-</ol>
-<h2 id="Route"><a href="#Route" class="headerlink" title="Route"></a>Route</h2><ol>
-<li><p><a href="https://www.codefather.cn/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0%E8%B7%AF%E7%BA%BF-by-%E7%A8%8B%E5%BA%8F%E5%91%98%E9%B1%BC%E7%9A%AE/">鱼皮前端学习路线</a></p>
-<blockquote>
-<p><a href="https://www.codefather.cn/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0%E8%B7%AF%E7%BA%BF-by-%E7%A8%8B%E5%BA%8F%E5%91%98%E9%B1%BC%E7%9A%AE/">https://www.codefather.cn/前端学习路线-by-程序员鱼皮/</a></p>
-</blockquote>
-</li>
-<li><p><a href="https://developer.aliyun.com/learning/roadmap/frontend">阿里云前端开发学习路线</a></p>
-<blockquote>
-<p><a href="https://developer.aliyun.com/learning/roadmap/frontend">https://developer.aliyun.com/learning/roadmap/frontend</a></p>
-</blockquote>
-</li>
-</ol>
-<h2 id="Resourse"><a href="#Resourse" class="headerlink" title="Resourse"></a>Resourse</h2><ol>
-<li><p><a href="https://www.freecodecamp.org/chinese/learn">freecodecamp编程免费教学慈善组织</a></p>
-<blockquote>
-<p>编程学习课程(可以获得认证，有官方中文) <a href="https://www.freecodecamp.org/chinese/learn">https://www.freecodecamp.org/chinese/learn</a></p>
-</blockquote>
-<blockquote>
-<p>也有程序员英文学习课程——<a href="https://www.freecodecamp.org/chinese/learn/a2-english-for-developers/">学习面向开发者的英语课程</a></p>
-</blockquote>
-<blockquote>
-<p>对应的<a href="https://www.freecodecamp.org/chinese/news/">专栏</a> 可以阅读学习一些技术文章</p>
-</blockquote>
-<blockquote>
-<p>对应的<a href="https://forum.freecodecamp.org/c/chinese/533">学习论坛</a> 也是支持中文的</p>
-</blockquote>
-</li>
-<li><p><a href="https://www.w3cschool.cn/codecamp/">w3c编程入门实战训练</a></p>
-<blockquote>
-<p><a href="https://www.w3cschool.cn/codecamp/">https://www.w3cschool.cn/codecamp/</a></p>
-</blockquote>
-</li>
-<li><p><a href="https://developer.aliyun.com/learning/roadmap/frontend">阿里云前端开发学习</a></p>
-<blockquote>
-<p>同样是阿里云学习路线的网页，两者都在一个界面<br> <a href="https://developer.aliyun.com/learning/roadmap/frontend">https://developer.aliyun.com/learning/roadmap/frontend</a></p>
-</blockquote>
-</li>
-<li><p><a href="https://time.geekbang.org/column/intro/154">极客时间前端基础 ￥59</a></p>
-<blockquote>
-<p>主讲人 程劭非（winter）  前手机淘宝前端负责人<br> 讲解JS、HTML、CSS、浏览器<br> <a href="https://time.geekbang.org/column/intro/154">https://time.geekbang.org/column/intro/154</a></p>
-</blockquote>
-</li>
-</ol>
-<h2 id="简历"><a href="#简历" class="headerlink" title="简历"></a>简历</h2><ol>
-<li><p><a href="https://www.xuanfengge.com/it-job-seekers-resume-how-to-write.html">IT求职者的简历该如何编写</a>(轩枫阁)</p>
-<blockquote>
-<p>2014&#x2F;10&#x2F;14的帖子，不过还是有很多值得学习的地方</p>
-</blockquote>
-</li>
-<li><p><a href="https://www.laoyujianli.com/">老鱼简历</a>(鱼皮)</p>
-<blockquote>
-<p>根据模板快速制作简历，可惜模版太少，不好看</p>
-</blockquote>
-</li>
-<li><p><a href="https://www.canva.cn/"><font color="red">Canva可画</font></a>  </p>
-<blockquote>
-<p>非常好用的在线编辑工具，有很多简历模板，也可以自己制作<br>把老鱼简历薄纱了</p>
-</blockquote>
-</li>
-<li><p><a href="https://juejin.cn/post/7080765301175877640"><font color="red">前端校招简历点评</font></a>（掘金 | 2022-03-30）</p>
-<blockquote>
-<p>说了很多简历的点，非常值得借鉴</p>
-</blockquote>
-</li>
-</ol>
-<h2 id="面试"><a href="#面试" class="headerlink" title="面试"></a>面试</h2><ul>
-<li><input checked="" disabled="" type="checkbox"> <font color="red">小满模拟面试</font> 强烈推荐！！(非常值得多刷的东西，小满和康老师太牛了！)<br><a href="https://www.bilibili.com/video/BV1gB4y1V7cN?t=10.8">https://www.bilibili.com/video/BV1gB4y1V7cN?t=10.8</a></li>
-</ul>
-<p>先在郑州实习一个月？因为还没放假，要是学校再有啥事情，还得飞回来，<br>然后后面再去广州看看？俺姨在广州的哪里？看看附近有没有实习的工作吧。</p>
-<font color="red">
-4号5号先去那些不要求uniapp和小程序的投一下
-然后再去学校工作啦招聘投一下
-</font>
-
-<h3 id="前端经典面试题"><a href="#前端经典面试题" class="headerlink" title="前端经典面试题"></a>前端经典面试题</h3><ul>
-<li><p><a href="https://juejin.cn/post/7056400571967733774">前端常见面试题（56道）（掘金）</a></p>
-</li>
-<li><p><a href="https://gitcode.csdn.net/6628b83a9ab37021bfb0b886.html">前端经典面试题 30道 (gitcode)</a></p>
-</li>
-<li><p><a href="https://blog.csdn.net/weixin_39843414/article/details/120213065">前端经典面试题60道，附答案！(CSDN)</a></p>
-</li>
-<li><p><input checked="" disabled="" type="checkbox"> 
-<a href="https://blog.csdn.net/2301_76379381/article/details/138986137">前端经典面试题 30道(1)(CSDN)</a></p>
-</li>
-<li><p><input disabled="" type="checkbox"> 
-<a href="https://gongchenghuigch.github.io/2019/09/15/mianshi/#toc-heading-1">前端经典面试题大全 - gongchenhui博客</a></p>
-</li>
-<li><p><a href="https://gongchenghuigch.github.io/2021/02/02/300%E9%81%93%E5%9F%BA%E7%A1%80%E9%9D%A2%E8%AF%95%E9%A2%98/">300道基础面试题 - gongchenhui博客</a></p>
-</li>
-</ul>
-]]></content>
-  </entry>
-  <entry>
     <title>前端八股</title>
     <url>/tsukimiya.github.io/custom/%E5%85%AB%E8%82%A1.html</url>
     <content><![CDATA[<h2 id="TODO"><a href="#TODO" class="headerlink" title="TODO"></a>TODO</h2><ol>
@@ -5004,6 +4643,7 @@ forEach(callbackFn(element,index,array), thisArg)`,
 <li><input checked="" disabled="" type="checkbox"> vue的diff算法 – 双端比较、同级比较、深度优先</li>
 <li><input checked="" disabled="" type="checkbox"> vue如何定义全局组件<br> vue2-Vue.component(‘xx’,xx)<br> vue3-app.component(‘xx’,xx)</li>
 <li><input checked="" disabled="" type="checkbox"> 复习一下mysql、了解一下Linux</li>
+<li><input checked="" disabled="" type="checkbox"> HTTPS通信过程 - SSL&#x2F;TLS安全协议</li>
 <li><input disabled="" type="checkbox"> git再学一下</li>
 <li><input disabled="" type="checkbox"> 复习一下Vue，同时看一下H5 C3 JS的八股 </li>
 <li><input disabled="" type="checkbox"> 复习一下webpack、nodejs、npm – 次要</li>
@@ -5011,7 +4651,6 @@ forEach(callbackFn(element,index,array), thisArg)`,
 <li><input disabled="" type="checkbox"> 常问算法 – 冒泡排序、二分查找、快速排序、二叉树、堆栈、队列、贪心算法、动态规划、位运算、</li>
 <li><input disabled="" type="checkbox"> 刷一下 那些经典面试题</li>
 <li><input disabled="" type="checkbox"> 常见的安全协议如 HTTPS、SSH 等的原理和使用方法。</li>
-<li><input disabled="" type="checkbox"> SSL通信过程</li>
 </ol>
 <p>** 可以前两个八股总结的挑一些看看</p>
 <ul>
@@ -5913,8 +5552,369 @@ TreeMap：低
 <h3 id="-4"><a href="#-4" class="headerlink" title=""></a></h3>]]></content>
   </entry>
   <entry>
+    <title>留言板</title>
+    <url>/tsukimiya.github.io/guestbook/index.html</url>
+    <content><![CDATA[<h1 id="欢迎来到我的博客！"><a href="#欢迎来到我的博客！" class="headerlink" title="欢迎来到我的博客！"></a>欢迎来到我的博客！</h1><blockquote>
+<p>欢迎在这里留言！任何问题都可以在这里留言，我会及时回复的。目前留言板块尚未配置完全，暂时无法使用，如有问题请邮箱：<br><a href="mailto:&#x68;&#x61;&#114;&#x69;&#x69;&#106;&#105;&#x63;&#111;&#x40;&#x6f;&#117;&#116;&#108;&#111;&#111;&#107;&#x2e;&#99;&#111;&#x6d;">&#x68;&#x61;&#114;&#x69;&#x69;&#106;&#105;&#x63;&#111;&#x40;&#x6f;&#117;&#116;&#108;&#111;&#111;&#107;&#x2e;&#99;&#111;&#x6d;</a><br><a href="mailto:&#x31;&#56;&#51;&#x32;&#x37;&#x31;&#53;&#56;&#51;&#56;&#64;&#113;&#x71;&#x2e;&#x63;&#111;&#109;">&#x31;&#56;&#51;&#x32;&#x37;&#x31;&#53;&#56;&#51;&#56;&#64;&#113;&#x71;&#x2e;&#x63;&#111;&#109;</a><br>欢迎给我发送邮件</p>
+</blockquote>
+]]></content>
+  </entry>
+  <entry>
     <title>标签</title>
     <url>/tsukimiya.github.io/tags/index.html</url>
     <content><![CDATA[]]></content>
+  </entry>
+  <entry>
+    <title>日程表</title>
+    <url>/tsukimiya.github.io/schedule/index.html</url>
+    <content><![CDATA[<center style="width:100%;height:1px;position:relative">
+    <p title="知无行则空，梦里看花。行非知犹盲，水中捞月。" 
+       style="position:absolute;top:-50px;left:50%;transform: translateX(-48%);font-size:16px;cursor:help;
+       background-image: linear-gradient(to right, purple, red, green);
+       background-clip: text;
+       color: transparent;"
+    >知行合一</p>
+</center>
+
+<center style="color:#888;">NOW</center>
+<hr style="height:1px;margin:2px 0 30px">
+
+<table>
+<thead>
+<tr>
+<th align="center">Stack</th>
+<th align="center"></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">Uniapp</td>
+<td align="center"><a href="https://www.bilibili.com/video/BV1Bp4y1379L?p=1">Vue3+Ts+Pinia+uni-app黑马项目</a></td>
+</tr>
+</tbody></table>
+<center style="color:#888;margin:80px 0 0">NEXT</center>
+<hr style="height:1px;margin:2px 0 30px">
+
+
+<table>
+<thead>
+<tr>
+<th align="center">Stack</th>
+<th align="center"></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">Git</td>
+<td align="center"><a href="https://www.liaoxuefeng.com/wiki/896043488029600">Git教程-廖雪峰</a></td>
+</tr>
+<tr>
+<td align="center">TS</td>
+<td align="center"><a href="https://ts.xcatliu.com/introduction/what-is-typescript.html">TS入门教程-xcatliu</a>、<a href="https://wangdoc.com/typescript/">TypeScript 教程 - 阮一峰-网道</a></td>
+</tr>
+<tr>
+<td align="center">React</td>
+<td align="center"></td>
+</tr>
+</tbody></table>
+]]></content>
+  </entry>
+  <entry>
+    <title>Task</title>
+    <url>/tsukimiya.github.io/schedule/task.html</url>
+    <content><![CDATA[<center style="width:100%;height:1px;position:relative">
+    <!-- 一直想不出令我满意的词，无灯夜航虽然意味上很好，但是音韵上总觉差点 -->
+    <!-- 一版：知无行则空，梦里看花。行非知犹盲，无灯夜航。 -->
+    <!-- 二版：知无行则空，梦里看花。行非知犹盲，海底捞月。 -->
+    <!-- 二版：知无行则空，梦里看花。行非知犹盲，水中捞月。 -->
+    <p title="知无行则空，梦里看花。行非知犹盲，水中捞月。" 
+       style="position:absolute;top:-50px;left:50%;transform: translateX(-48%);font-size:16px;cursor:help;
+       background-image: linear-gradient(to right, purple, red, green);
+       background-clip: text;
+       color: transparent;"
+    >知行合一</p>
+</center>
+
+<blockquote>
+<p>快给我滚去学习！给你一拳 👊👊👊</p>
+</blockquote>
+<h2 id="Study-Tech"><a href="#Study-Tech" class="headerlink" title="Study Tech"></a>Study Tech</h2><h3 id="NOW"><a href="#NOW" class="headerlink" title="NOW"></a>NOW</h3><ul>
+<li><p>pink html + css + 移动端后面这部分看一下</p>
+<blockquote>
+<p><a href="https://www.bilibili.com/video/BV14J4114768/?p=389">https://www.bilibili.com/video/BV14J4114768/?p=389</a><br>  p357-388为 CSS2D、3D(这里有空也看一下吧，正好做一下笔记)<br>  后面<br>  p389-p502大致都是移动端，包括流式布局，Less，响应式相关<br>  p503-513为bootStrap<br>  bootStrap BS 以 Less (Sass), OOCSS 与 SMACSS 为基础<br>  最后是项目</p>
+</blockquote>
+</li>
+<li><p>黑马程序员前端项目uniapp小兔鲜儿微信小程序项目视频教程，基于Vue3+Ts+Pinia+uni-app的最新组合技术栈开发的电商业务全流程（2023-8-8 | 20h40min）<br>  <a href="https://www.bilibili.com/video/BV1Bp4y1379L?p=1">https://www.bilibili.com/video/BV1Bp4y1379L?p=1</a><br>  &gt; Vue3移动端uni-app项目<br>  &gt; 老师也许是个大牛，但是讲课不行，不适合初学者，适合有经验的听一下</p>
+</li>
+<li><p>vue框架</p>
+<ul>
+<li><p>邓瑞编程 3小时学会Vue3 (24.1.23 | 2h16min)</p>
+<blockquote>
+<p><a href="https://www.bilibili.com/video/BV1nV411Q7RX">https://www.bilibili.com/video/BV1nV411Q7RX</a><br>  有个人博客教程<a href="https://www.dengruicode.com/">https://www.dengruicode.com/</a><br>  可以看看这个，反正很短</p>
+</blockquote>
+</li>
+<li><p><a href="https://cn.vuejs.org/guide/quick-start.html">Vue官方文档</a> <font color='red'> 推荐 </font></p>
+<blockquote>
+<p>写的很细，无论是基础还是进阶都可以看</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p>es6</p>
+<ul>
+<li>黑马视频<br>  <a href="https://www.bilibili.com/video/BV1Kt411w7MP?t=9.0&p=91">https://www.bilibili.com/video/BV1Kt411w7MP?t=9.0&amp;p=91</a></li>
+</ul>
+</li>
+<li><p>ajax + git</p>
+</li>
+<li><p><a href="https://www.bilibili.com/video/BV1zs411h74a/?p=75">黑马Git教程</a>(17.1.16 | 75-101p | 4h5min)</p>
+</li>
+<li><p>vue项目 双元 day9-p14 路由懒加载 、p15上线<br>  p12 通过CDN优化打包</p>
+</li>
+</ul>
+<h3 id="NEXT"><a href="#NEXT" class="headerlink" title="NEXT"></a>NEXT</h3><ul>
+<li><p>微信小程序 + uni-app （2021-12-17 | 30h）<br><a href="https://www.bilibili.com/video/BV1834y1676P?t=75.0">https://www.bilibili.com/video/BV1834y1676P?t=75.0</a></p>
+<blockquote>
+<p>有点老了，看下面这个尚硅谷的吧？或者直接下面的小兔鲜uniapp项目</p>
+</blockquote>
+</li>
+<li><p>尚硅谷微信小程序开发教程，2024最新版微信小程序项目实战！（2024-02-20 | 35h42min）<br><a href="https://www.bilibili.com/video/BV1LF4m1E7kB?p=1">https://www.bilibili.com/video/BV1LF4m1E7kB?p=1</a></p>
+<blockquote>
+<p>微信小程序教程 + 项目</p>
+</blockquote>
+</li>
+<li><p>react<br><a href="https://www.bilibili.com/video/BV1gh411U7JD?t=50.3">https://www.bilibili.com/video/BV1gh411U7JD?t=50.3</a></p>
+</li>
+<li><p>js面试<br>  黑马程序员前端面试必看视频教程（手写Promise+js设计模式+继承+函数柯里化等）（2023-9-5 | 12h）<br>  <a href="https://www.bilibili.com/video/BV1mH4y1Q7Z7?t=282.1">https://www.bilibili.com/video/BV1mH4y1Q7Z7?t=282.1</a></p>
+<p>  尚硅谷经典前端面试题精讲第一季(web前端大咖总结) （2018-11-1 | 5h07min）<br>  <a href="https://www.bilibili.com/video/BV1nb411P7tQ/?vd_source=8a77e97d04f83a8e2b569f53a587210a">https://www.bilibili.com/video/BV1nb411P7tQ/?vd_source=8a77e97d04f83a8e2b569f53a587210a</a></p>
+</li>
+<li><p>项目</p>
+<ul>
+<li><p>黑马程序员前端Vue项目《iHRM人力资源后台管理》全套教程，从vue基础模板开发到整体开发、nginx部署上线（2023-11-07 | 26h）<br>  <a href="https://www.bilibili.com/video/BV1Te411X7Wz?p=1">https://www.bilibili.com/video/BV1Te411X7Wz?p=1</a></p>
+<blockquote>
+<p>Vue2项目 </p>
+</blockquote>
+</li>
+<li><p>黑马程序员前端Vue3小兔鲜电商项目实战，vue3全家桶从入门到实战电商项目一套通关（2023-5-9 | 17h）<br>  <a href="https://www.bilibili.com/video/BV1Ac411K7EQ?p=1">https://www.bilibili.com/video/BV1Ac411K7EQ?p=1</a></p>
+<blockquote>
+<p>Vue3项目 </p>
+</blockquote>
+</li>
+<li><p>尚硅谷Vue项目实战硅谷甄选，vue3项目+TypeScript前端项目一套通关（2023-5-16 | 46h32min）<br>  <a href="https://www.bilibili.com/video/BV1Xh411V7b5?p=1">https://www.bilibili.com/video/BV1Xh411V7b5?p=1</a></p>
+<blockquote>
+<p>有时间还是学一遍这个吧！</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p>TS</p>
+<ul>
+<li>小满TypeScript基础教程全集（完结）（2021-12-28 | 6h31min）<br>  <a href="https://www.bilibili.com/video/BV1wR4y1377K/?spm_id_from=333.999.0.0&vd_source=8a77e97d04f83a8e2b569f53a587210a">https://www.bilibili.com/video/BV1wR4y1377K/?spm_id_from=333.999.0.0&amp;vd_source=8a77e97d04f83a8e2b569f53a587210a</a></li>
+</ul>
+</li>
+</ul>
+<p><a href="https://www.bilibili.com/video/BV19n4y1d7Gr/?vd_source=8a77e97d04f83a8e2b569f53a587210a">禹神：前端项目部署指南，前端项目打包上线</a></p>
+<ul>
+<li>阮一峰 TS教程 网道<br><a href="https://wangdoc.com/typescript/">https://wangdoc.com/typescript/</a></li>
+<li>阮一峰 JS教程 网道<br><a href="https://wangdoc.com/javascript/">https://wangdoc.com/javascript/</a></li>
+</ul>
+<h3 id="TODO"><a href="#TODO" class="headerlink" title="TODO"></a>TODO</h3><ul>
+<li><p>排序算法——冒泡排序原理动图详解及实现<br><a href="https://blog.csdn.net/qq_43792385/article/details/99466879">https://blog.csdn.net/qq_43792385/article/details/99466879</a></p>
+<blockquote>
+<p>小满模拟面试p1的图很好，老师讲的很好</p>
+</blockquote>
+</li>
+<li><p>TS<br>  <a href="https://xiaoman.blog.csdn.net/article/details/122167155?spm=1001.2014.3001.5502">https://xiaoman.blog.csdn.net/article/details/122167155?spm=1001.2014.3001.5502</a><br>  作者 小满zs B站有视频，讲的很好？<br>  <a href="https://blog.csdn.net/qq1195566313?type=blog">https://blog.csdn.net/qq1195566313?type=blog</a></p>
+</li>
+<li><p>防盗链<br>cdn资源如果不设置防盗链，会被爬虫或者别的网站引用，但是流量还是消耗你的，到时候你的流量嘎嘎跑，月底缴费直接破产，设置了防盗链就只能自己的网站才能拿这个资源</p>
+</li>
+<li><p>html页面如何使用emoji表情？js如何使用emoji？ <a href="https://zhuanlan.zhihu.com/p/328516890">参考一篇文章</a></p>
+</li>
+<li><p>面试必问之 JS 事件循环(Event Loop)，看这一篇足够 <a href="https://zhuanlan.zhihu.com/p/580956436">https://zhuanlan.zhihu.com/p/580956436</a></p>
+</li>
+<li><p>axios<br>结合async和await调用axios<br>如果想要处理报错 – try catch<br>更优雅的处理 – 拦截器 – 可以处理全部的错误</p>
+</li>
+<li><p>如果想要本地搜索排除某些页面，其余全部页面都会被搜索到<br>目前只有一个办法：将想要排除搜索的页面，排除渲染，不被渲染的页面上的内容是搜索不到的，<br>所以还是得手搓页面XD</p>
+</li>
+<li><p>移动端使用js的控制台<br>【探秘JavaScript移动调试神器：JS-Mobile-Console】<a href="https://mbd.baidu.com/ma/s/WNjqoqqA">https://mbd.baidu.com/ma/s/WNjqoqqA</a><br>【移动端调试神器vConsole】<a href="https://mbd.baidu.com/ma/s/ZTdBK5C1">https://mbd.baidu.com/ma/s/ZTdBK5C1</a><br>可以直接使用js在线工具就行了，因为我只是需要在移动端使用控制台来进行验证一些代码，所以js在线工具完全可以满足</p>
+</li>
+<li><p>写一个sleep函数？研究过promise的应该写个sleep函数很简单？</p>
+</li>
+<li><p>为什么v-if是把元素移除和添加进页面的，然而v-if添加进页面的元素上带有的id属性，页面上的a链接指向它的锚点不起作用，为什么？如果换成v-show就没关系，因为控制的是display的值<br>也就是说，新添加进页面的元素的id属性不能作为锚点使用？</p>
+</li>
+<li><p>如何记录网站每天的访问量及访问IP？</p>
+</li>
+<li><p>在首页和标签页添加 字数统计+阅读时长 以及 打赏 &#x2F;&#x2F; 应该要修改源模版文件代码</p>
+<blockquote>
+<p>要将字数统计和阅读时长设置添加到首页和标签页，你需要在网站的主题或模板文件中进行修改。具体来说，你需要找到首页和标签页的模板文件，并在其中添加相应的代码以显示字数统计和阅读时长。<br>  通常，这些模板文件可以在你的网站主题文件夹中找到。你可以查看主题的文档或者在主题文件夹中搜索包含首页和标签页内容的模板文件。<br>  一旦找到了这些模板文件，你可以根据需要修改它们，添加类似以下的代码来显示字数统计和阅读时长：<br>  <figure class="highlight html"><table><tr><td class="code"><pre><span class="line">&#123;% if page.symbols %&#125;</span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>字数统计: &#123;&#123; page.symbols &#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">&#123;% endif %&#125;</span><br><span class="line"></span><br><span class="line">&#123;% if page.time %&#125;</span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>阅读时长: &#123;&#123; page.time &#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">&#123;% endif %&#125;</span><br></pre></td></tr></table></figure><br>请注意，具体的代码可能会因为你使用的网站平台或主题而有所不同。最好查阅你使用的平台或主题的文档，以确保正确添加字数统计和阅读时长功能。</p>
+</blockquote>
+</li>
+<li><p>CSS 布局经典问题大全<br><a href="https://www.html-js.com/article/5889">https://www.html-js.com/article/5889</a></p>
+</li>
+<li><p>网站会DDOS攻击会有哪些反应，如何应对此现象？<br><a href="https://www.html-js.com/article/6657">https://www.html-js.com/article/6657</a></p>
+</li>
+<li><p>响应式网页设计——怎样让一个网站在手机、平板上好看<br><a href="https://www.freecodecamp.org/chinese/news/responsive-web-design-how-to-make-a-website-look-good-on-phones-and-tablets/">https://www.freecodecamp.org/chinese/news/responsive-web-design-how-to-make-a-website-look-good-on-phones-and-tablets/</a></p>
+</li>
+<li><p>什么是 XSS？如何保护网站免受 DOM 跨站脚本攻击<br><a href="https://www.freecodecamp.org/chinese/news/how-to-protect-against-dom-xss-attacks/">https://www.freecodecamp.org/chinese/news/how-to-protect-against-dom-xss-attacks/</a></p>
+</li>
+<li><p>SEO优化？<br><a href="https://www.bilibili.com/video/BV14J4114768?t=4.5&p=311">https://www.bilibili.com/video/BV14J4114768?t=4.5&amp;p=311</a></p>
+</li>
+<li><p>上传服务器？<br><a href="https://www.bilibili.com/video/BV14J4114768?t=2.5&p=355">https://www.bilibili.com/video/BV14J4114768?t=2.5&amp;p=355</a></p>
+</li>
+<li><p>多栏布局<br>多栏布局是最常见的css布局之一，实现的方式不下10种，它们分别应对各种各样的业务场景，而bs的流式布局堪称撑起一片天，它的响应式看似独霸天下能满足80%的要求，但开发者们仍会保留20%用于追逐更高效的技巧，而且随着前端的发展，原生bs流式布局已然有更优的实现方式了。</p>
+</li>
+<li><p>Layui – 快速实现页面布局效果，</p>
+</li>
+<li><p>防抖 节流<br><a href="https://www.bilibili.com/video/BV1zs411h74a?t=5.0&p=66">https://www.bilibili.com/video/BV1zs411h74a?t=5.0&amp;p=66</a></p>
+</li>
+<li><p>web APIs(页面适配，less，Sass等一些)</p>
+<blockquote>
+<p>Sass是css预处理器，提供了类似编程语言的功能，包括变量、嵌套规则、混合、继承、函数等。帮助开发者更高效的编写和组织样式表<br>  Sass并不能直接在浏览器执行，所以好需要配置IDE插件或者专门工具来将Sass文件编译成css文件才能使用</p>
+</blockquote>
+<blockquote>
+<p>Less受Sass的启发，为开发人员提供更加高效便捷的样式表编写方式</p>
+</blockquote>
+</li>
+<li><p>es6，模块化，组件化，css3，less，scss</p>
+</li>
+<li><p>QQ的卡片是怎么写的？随机给一张图片的那种卡片</p>
+</li>
+</ul>
+<p><a href="https://www.bilibili.com/video/BV1p84y1P7Z5">尚硅谷前端入门html+css零基础教程，零基础前端开发html5+css3视频</a></p>
+<ul>
+<li><p><input checked="" disabled="" type="checkbox"> 
+<a href="https://www.ruanyifeng.com/blog/2015/09/web-page-performance-in-depth.html">网页性能管理详解</a></p>
+</li>
+<li><p><a href="https://gongchenghuigch.github.io/2018/10/24/reactecharts/">echarts-for-react使用详解(雷达图)</a></p>
+</li>
+<li><p><a href="https://gongchenghuigch.github.io/2018/10/15/linuxbase/">Linux基本命令</a></p>
+</li>
+<li><p><a href="https://gongchenghuigch.github.io/2019/09/14/awat/">setTimeout,promise,async await的区别</a></p>
+<blockquote>
+<p>EventLoop - 同步任务、异步任务（宏任务微任务）</p>
+</blockquote>
+</li>
+<li><p><a href="https://github.com/lvwxx/blog/issues/3">SSL或TLS握手的概述</a>(Github)</p>
+</li>
+<li><p>虚拟DOM+diff算法，并不是比原生DOM操作快，而是让做了一个取舍：让开发者不需要过多考虑底层的DOM操作，并提供一个过得去的性能(相对较好)。这意味着在大多数情况下，开发者无需进行额外的优化就能获得不错的用户体验。<br><strong>虚拟dom算法去操作真实dom性能不一定比直接操作dom高，但它能”不管你的数据变化多少，每次重绘的性能都可以接受”</strong><br><a href="https://www.zhihu.com/question/31809713/answer/53544875">https://www.zhihu.com/question/31809713/answer/53544875</a><br><a href="https://juejin.cn/post/6994959998283907102?searchId=20240604103445B38B3580D74D050B96E2">https://juejin.cn/post/6994959998283907102?searchId=20240604103445B38B3580D74D050B96E2</a></p>
+</li>
+</ul>
+<h3 id="OWARI"><a href="#OWARI" class="headerlink" title="OWARI"></a>OWARI</h3><ol start="0">
+<li><p>前端</p>
+<ul>
+<li><a href="https://www.bilibili.com/video/BV1eC411p73m/">前端技术的十八年风雨(2006-2024)-bilibili</a></li>
+</ul>
+</li>
+<li><p>vue框架</p>
+<ul>
+<li>黑马vue课程（21.8 | vue2 - 12h）<br>  <a href="https://www.bilibili.com/video/BV1zq4y1p7ga?t=3.5&p=32">https://www.bilibili.com/video/BV1zq4y1p7ga?t=3.5&amp;p=32</a><blockquote>
+<p>vue3的部分和vue2的东西弄到一块了，不太好<br>  <a href="https://www.bilibili.com/video/BV1zq4y1p7ga?p=296">vue3-p296</a>开始是vue3，但是和vue2内容有绝大程度的重合，vue2部分挺不错，3就不推荐了</p>
+</blockquote>
+</li>
+<li>vue项目 双元 – day10 - vuex<blockquote>
+<p>传智 黑马课程 about 2 hours at 21years</p>
+</blockquote>
+</li>
+<li>尚硅谷 禹神 Vue3+TS（23.12.19 | 14h）<blockquote>
+<p>TypeScript+Vue3组合式API编码，讲的很好，就是有些东西没讲到，可以看官方文档补一下<br>      <a href="https://www.bilibili.com/video/BV1Za4y1r7KE">https://www.bilibili.com/video/BV1Za4y1r7KE</a></p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p>ES6</p>
+<ul>
+<li>阮一峰es6教程<br> <a href="https://es6.ruanyifeng.com/">https://es6.ruanyifeng.com/</a><br> <a href="https://wangdoc.com/es6/intro">https://wangdoc.com/es6/intro</a></li>
+</ul>
+</li>
+</ol>
+<h2 id="Route"><a href="#Route" class="headerlink" title="Route"></a>Route</h2><ol>
+<li><p><a href="https://www.codefather.cn/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0%E8%B7%AF%E7%BA%BF-by-%E7%A8%8B%E5%BA%8F%E5%91%98%E9%B1%BC%E7%9A%AE/">鱼皮前端学习路线</a></p>
+<blockquote>
+<p><a href="https://www.codefather.cn/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0%E8%B7%AF%E7%BA%BF-by-%E7%A8%8B%E5%BA%8F%E5%91%98%E9%B1%BC%E7%9A%AE/">https://www.codefather.cn/前端学习路线-by-程序员鱼皮/</a></p>
+</blockquote>
+</li>
+<li><p><a href="https://developer.aliyun.com/learning/roadmap/frontend">阿里云前端开发学习路线</a></p>
+<blockquote>
+<p><a href="https://developer.aliyun.com/learning/roadmap/frontend">https://developer.aliyun.com/learning/roadmap/frontend</a></p>
+</blockquote>
+</li>
+</ol>
+<h2 id="Resourse"><a href="#Resourse" class="headerlink" title="Resourse"></a>Resourse</h2><ol>
+<li><p><a href="https://www.freecodecamp.org/chinese/learn">freecodecamp编程免费教学慈善组织</a></p>
+<blockquote>
+<p>编程学习课程(可以获得认证，有官方中文) <a href="https://www.freecodecamp.org/chinese/learn">https://www.freecodecamp.org/chinese/learn</a></p>
+</blockquote>
+<blockquote>
+<p>也有程序员英文学习课程——<a href="https://www.freecodecamp.org/chinese/learn/a2-english-for-developers/">学习面向开发者的英语课程</a></p>
+</blockquote>
+<blockquote>
+<p>对应的<a href="https://www.freecodecamp.org/chinese/news/">专栏</a> 可以阅读学习一些技术文章</p>
+</blockquote>
+<blockquote>
+<p>对应的<a href="https://forum.freecodecamp.org/c/chinese/533">学习论坛</a> 也是支持中文的</p>
+</blockquote>
+</li>
+<li><p><a href="https://www.w3cschool.cn/codecamp/">w3c编程入门实战训练</a></p>
+<blockquote>
+<p><a href="https://www.w3cschool.cn/codecamp/">https://www.w3cschool.cn/codecamp/</a></p>
+</blockquote>
+</li>
+<li><p><a href="https://developer.aliyun.com/learning/roadmap/frontend">阿里云前端开发学习</a></p>
+<blockquote>
+<p>同样是阿里云学习路线的网页，两者都在一个界面<br> <a href="https://developer.aliyun.com/learning/roadmap/frontend">https://developer.aliyun.com/learning/roadmap/frontend</a></p>
+</blockquote>
+</li>
+<li><p><a href="https://time.geekbang.org/column/intro/154">极客时间前端基础 ￥59</a></p>
+<blockquote>
+<p>主讲人 程劭非（winter）  前手机淘宝前端负责人<br> 讲解JS、HTML、CSS、浏览器<br> <a href="https://time.geekbang.org/column/intro/154">https://time.geekbang.org/column/intro/154</a></p>
+</blockquote>
+</li>
+</ol>
+<h2 id="简历"><a href="#简历" class="headerlink" title="简历"></a>简历</h2><ol>
+<li><p><a href="https://www.xuanfengge.com/it-job-seekers-resume-how-to-write.html">IT求职者的简历该如何编写</a>(轩枫阁)</p>
+<blockquote>
+<p>2014&#x2F;10&#x2F;14的帖子，不过还是有很多值得学习的地方</p>
+</blockquote>
+</li>
+<li><p><a href="https://www.laoyujianli.com/">老鱼简历</a>(鱼皮)</p>
+<blockquote>
+<p>根据模板快速制作简历，可惜模版太少，不好看</p>
+</blockquote>
+</li>
+<li><p><a href="https://www.canva.cn/"><font color="red">Canva可画</font></a>  </p>
+<blockquote>
+<p>非常好用的在线编辑工具，有很多简历模板，也可以自己制作<br>把老鱼简历薄纱了</p>
+</blockquote>
+</li>
+<li><p><a href="https://juejin.cn/post/7080765301175877640"><font color="red">前端校招简历点评</font></a>（掘金 | 2022-03-30）</p>
+<blockquote>
+<p>说了很多简历的点，非常值得借鉴</p>
+</blockquote>
+</li>
+</ol>
+<h2 id="面试"><a href="#面试" class="headerlink" title="面试"></a>面试</h2><ul>
+<li><input checked="" disabled="" type="checkbox"> <font color="red">小满模拟面试</font> 强烈推荐！！(非常值得多刷的东西，小满和康老师太牛了！)<br><a href="https://www.bilibili.com/video/BV1gB4y1V7cN?t=10.8">https://www.bilibili.com/video/BV1gB4y1V7cN?t=10.8</a></li>
+</ul>
+<p>先在郑州实习一个月？因为还没放假，要是学校再有啥事情，还得飞回来，<br>然后后面再去广州看看？俺姨在广州的哪里？看看附近有没有实习的工作吧。</p>
+<font color="red">
+4号5号先去那些不要求uniapp和小程序的投一下
+然后再去学校工作啦招聘投一下
+</font>
+
+<h3 id="前端经典面试题"><a href="#前端经典面试题" class="headerlink" title="前端经典面试题"></a>前端经典面试题</h3><ul>
+<li><p><a href="https://juejin.cn/post/7056400571967733774">前端常见面试题（56道）（掘金）</a></p>
+</li>
+<li><p><a href="https://gitcode.csdn.net/6628b83a9ab37021bfb0b886.html">前端经典面试题 30道 (gitcode)</a></p>
+</li>
+<li><p><a href="https://blog.csdn.net/weixin_39843414/article/details/120213065">前端经典面试题60道，附答案！(CSDN)</a></p>
+</li>
+<li><p><input checked="" disabled="" type="checkbox"> 
+<a href="https://blog.csdn.net/2301_76379381/article/details/138986137">前端经典面试题 30道(1)(CSDN)</a></p>
+</li>
+<li><p><input disabled="" type="checkbox"> 
+<a href="https://gongchenghuigch.github.io/2019/09/15/mianshi/#toc-heading-1">前端经典面试题大全 - gongchenhui博客</a></p>
+</li>
+<li><p><a href="https://gongchenghuigch.github.io/2021/02/02/300%E9%81%93%E5%9F%BA%E7%A1%80%E9%9D%A2%E8%AF%95%E9%A2%98/">300道基础面试题 - gongchenhui博客</a></p>
+</li>
+</ul>
+]]></content>
   </entry>
 </search>
