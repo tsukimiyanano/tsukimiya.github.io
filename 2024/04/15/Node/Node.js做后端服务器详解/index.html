@@ -28,7 +28,7 @@
 <meta property="og:description" content="该示例没有用到数据库，是通过创建POST表单路由进行处理数据，将数据保存到文件中，以及数据校验用到的npm包&#x2F;第三方模块：Express：npm i express@4.17.1 – Web 开发框架，快速创建 Web 服务器Joi：npm install joi --save – hapijs 自带的数据校验模块@escook&#x2F;express-joi中间件: npm i @">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-04-15T12:23:00.484Z">
-<meta property="article:modified_time" content="2024-04-29T09:32:20.722Z">
+<meta property="article:modified_time" content="2024-06-04T09:58:37.668Z">
 <meta property="article:author" content="Ayu">
 <meta property="article:tag" content="Node.js">
 <meta property="article:tag" content="前后端分离">
@@ -239,7 +239,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2024-04-29 17:32:20" itemprop="dateModified" datetime="2024-04-29T17:32:20+08:00">2024-04-29</time>
+      <time title="修改时间：2024-06-04 17:58:37" itemprop="dateModified" datetime="2024-06-04T17:58:37+08:00">2024-06-04</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -279,7 +279,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>6.8k</span>
+      <span>6.7k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -301,9 +301,6 @@
 </blockquote>
 <blockquote>
 <p>全局安装了nodemon工具，可以监听文件的更改，自动重新执行</p>
-</blockquote>
-<blockquote>
-<p>这个是航空文化馆项目的后端，还没写完<br>没有用到mysql模块：<code>npm i mysql</code><br>也没有用到express-session中间件：<code>npm i express-session</code>（这个干吗用的？）</p>
 </blockquote>
 <h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><ol start="0">
 <li>如果是拿被别人写好的项目，第一步是导入这个项目所用的包，<code>npm i</code>命令</li>
@@ -369,7 +366,7 @@
 <p>使用<strong>cors中间件</strong>解决跨域问题<br>cors 是Express的一个第三方中间件。通过安装和配置cors 中间件，可以很方便地解决跨域问题。<br>使用步骤分为如下3步:<br>    1. 运行<code>npm install cors</code>安装中间件<br>    2. 使用<code>const cors = require(&#39;cors&#39;)</code>导入中间件<br>    3. 在路由之前调用<code>app.use(cors())</code>配置中间件</p>
 <p>注意：<strong>一定要在路由之前配置cors中间件，从而解决接口跨域的问题</strong></p>
 <ul>
-<li>前端发送axios请求：<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">axios</span>(&#123;</span><br><span class="line">    <span class="attr">method</span>: <span class="string">&#x27;POST&#x27;</span>,</span><br><span class="line">    <span class="attr">url</span>: <span class="string">&#x27;http://127.0.0.1:8080/form&#x27;</span>,</span><br><span class="line">    <span class="comment">// 如果要携带请求体：</span></span><br><span class="line">    <span class="comment">// 请求体参数，post请求体传参，可选</span></span><br><span class="line">    <span class="attr">data</span>: &#123;</span><br><span class="line">        unit : <span class="string">&quot;00&quot;</span>,</span><br><span class="line">        contact : <span class="string">&quot;朱宇楼&quot;</span>,</span><br><span class="line">        <span class="attr">phone</span>: <span class="string">&#x27;15639038667&#x27;</span>,</span><br><span class="line">        <span class="attr">numVisitors</span>: <span class="number">25</span>,</span><br><span class="line">        <span class="attr">guide</span>: <span class="string">&#x27;yes&#x27;</span>,</span><br><span class="line">        <span class="attr">date</span>: <span class="string">&#x27;2025-05-15&#x27;</span>,</span><br><span class="line">        <span class="attr">time</span>: <span class="string">&#x27;14:30&#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;).<span class="title function_">then</span>(<span class="function">(<span class="params">result</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// .then 用来指定请求成功之后的回调函数</span></span><br><span class="line">    <span class="comment">// 形参中的 result 是请求成功之后的结果</span></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(result.<span class="property">data</span>);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<li>前端发送axios请求：<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">axios</span>(&#123;</span><br><span class="line">    <span class="attr">method</span>: <span class="string">&#x27;POST&#x27;</span>,</span><br><span class="line">    <span class="attr">url</span>: <span class="string">&#x27;http://127.0.0.1:8080/form&#x27;</span>,</span><br><span class="line">    <span class="comment">// 如果要携带请求体：</span></span><br><span class="line">    <span class="comment">// 请求体参数，post请求体传参，可选</span></span><br><span class="line">    <span class="attr">data</span>: &#123;</span><br><span class="line">        unit : <span class="string">&quot;00&quot;</span>,</span><br><span class="line">        contact : <span class="string">&quot;xxx&quot;</span>,</span><br><span class="line">        <span class="attr">phone</span>: <span class="string">&#x27;12345678901&#x27;</span>,</span><br><span class="line">        <span class="attr">numVisitors</span>: <span class="number">25</span>,</span><br><span class="line">        <span class="attr">guide</span>: <span class="string">&#x27;yes&#x27;</span>,</span><br><span class="line">        <span class="attr">date</span>: <span class="string">&#x27;2025-05-15&#x27;</span>,</span><br><span class="line">        <span class="attr">time</span>: <span class="string">&#x27;14:30&#x27;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;).<span class="title function_">then</span>(<span class="function">(<span class="params">result</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// .then 用来指定请求成功之后的回调函数</span></span><br><span class="line">    <span class="comment">// 形参中的 result 是请求成功之后的结果</span></span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(result.<span class="property">data</span>);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
 注意：axios 使用 post 发送数据时，默认是直接把 json 放到请求体中提交到后端的，然而我们没有配置解析JSON表单数据的中间件，所以后端能够接收到请求，但是拿不到参数</li>
 </ul>
 <p>配置解析JSON格式表单数据的中间件：<code>app.use(express.json())</code><br>再次在页面发送axois请求，测试成功</p>

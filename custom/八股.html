@@ -20,18 +20,18 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"tsukimiyanano.github.io","root":"/tsukimiya.github.io/","images":"/tsukimiya.github.io/images","scheme":"Pisces","darkmode":true,"version":"8.19.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/tsukimiya.github.io/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true}}</script><script src="/tsukimiya.github.io/js/config.js"></script>
 
-    <meta name="description" content="TODO  浏览器渲染  性能优化  Less、Sass学一下  React了解一下  Tailwind CSS了解一下  ts学一下  微前端   git再学一下  复习一下Vue，同时看一下H5 C3 JS的八股   复习一下webpack、nodejs、npm – 次要  复习一下mysql？了解一下Linux? – 次次要  vue的diff算法  vue如何定义全局组件？  vue的异步">
+    <meta name="description" content="TODO  浏览器渲染 – 回流、重绘  性能优化  Less、Sass学一下  React了解一下  Tailwind CSS了解一下  ts学一下  微前端   vue的异步组件suspense、动态组件 is属性 和keep-alive保持组件状态  如何使动态路由持久化？  回溯 – 一种搜索策略，经常用递归来实现(或者使用迭代 – 使用栈模拟递归)  vue的diff算法 – 双端比较、">
 <meta property="og:type" content="website">
 <meta property="og:title" content="前端八股">
 <meta property="og:url" content="https://tsukimiyanano.github.io/tsukimiya.github.io/custom/%E5%85%AB%E8%82%A1.html">
 <meta property="og:site_name" content="Ayu&#39;s Study Blog">
-<meta property="og:description" content="TODO  浏览器渲染  性能优化  Less、Sass学一下  React了解一下  Tailwind CSS了解一下  ts学一下  微前端   git再学一下  复习一下Vue，同时看一下H5 C3 JS的八股   复习一下webpack、nodejs、npm – 次要  复习一下mysql？了解一下Linux? – 次次要  vue的diff算法  vue如何定义全局组件？  vue的异步">
+<meta property="og:description" content="TODO  浏览器渲染 – 回流、重绘  性能优化  Less、Sass学一下  React了解一下  Tailwind CSS了解一下  ts学一下  微前端   vue的异步组件suspense、动态组件 is属性 和keep-alive保持组件状态  如何使动态路由持久化？  回溯 – 一种搜索策略，经常用递归来实现(或者使用迭代 – 使用栈模拟递归)  vue的diff算法 – 双端比较、">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://tsukimiyanano.github.io/tsukimiya.github.io/images/%E5%85%AB%E8%82%A1/%E5%AE%9A%E4%BD%8D%E7%89%B9%E6%AE%8A%E5%BA%94%E7%94%A81.png">
 <meta property="og:image" content="https://tsukimiyanano.github.io/tsukimiya.github.io/images/%E5%85%AB%E8%82%A1/%E5%AE%9A%E4%BD%8D%E7%89%B9%E6%AE%8A%E5%BA%94%E7%94%A82.png">
 <meta property="og:image" content="https://tsukimiyanano.github.io/tsukimiya.github.io/images/%E5%85%AB%E8%82%A1/%E5%AE%9A%E4%BD%8D%E7%89%B9%E6%AE%8A%E5%BA%94%E7%94%A81-2.png">
 <meta property="article:published_time" content="2024-05-30T02:10:10.000Z">
-<meta property="article:modified_time" content="2024-06-03T15:29:51.886Z">
+<meta property="article:modified_time" content="2024-06-04T09:48:57.788Z">
 <meta property="article:author" content="Ayu">
 <meta property="article:tag" content="hexo,next,ayu,tsukimiya,前端,node.js,nodejs,Node,nodeJS,vue,Vue,VUE,blog,博客">
 <meta name="twitter:card" content="summary">
@@ -146,7 +146,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#TODO"><span class="nav-number">1.</span> <span class="nav-text">TODO</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tostudylist"><span class="nav-number">2.</span> <span class="nav-text">tostudylist</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Vue"><span class="nav-number">3.</span> <span class="nav-text">Vue</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#v-if-%E5%92%8C-v-show-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">3.1.</span> <span class="nav-text">v-if 和 v-show 的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#v-for-%E5%92%8C-v-if-%E7%9A%84%E4%BC%98%E5%85%88%E7%BA%A7"><span class="nav-number">3.2.</span> <span class="nav-text">v-for 和 v-if 的优先级</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JS"><span class="nav-number">4.</span> <span class="nav-text">JS</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ES5%E5%92%8CES6%E7%BB%A7%E6%89%BF%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">4.1.</span> <span class="nav-text">ES5和ES6继承的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#parseInt"><span class="nav-number">4.2.</span> <span class="nav-text">parseInt()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-3-map-parseInt"><span class="nav-number">4.3.</span> <span class="nav-text">[&#39;1&#39;,&#39;2&#39;,&#39;3&#39;].map(parseInt)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">4.4.</span> <span class="nav-text"></span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CSS"><span class="nav-number">5.</span> <span class="nav-text">CSS</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A1%B5%E9%9D%A2%E9%80%82%E9%85%8D%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">5.1.</span> <span class="nav-text">页面适配的问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9A%E4%BD%8D%E7%9A%84%E7%89%B9%E6%AE%8A%E5%BA%94%E7%94%A8"><span class="nav-number">5.2.</span> <span class="nav-text">定位的特殊应用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#BFC"><span class="nav-number">5.3.</span> <span class="nav-text">BFC</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%87%E5%AD%97%E7%8E%AF%E7%BB%95%E5%9B%BE%E7%89%87%E6%98%BE%E7%A4%BA"><span class="nav-number">5.4.</span> <span class="nav-text">文字环绕图片显示</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%BE%E7%89%87%E5%BA%95%E9%83%A8%E7%A9%BA%E7%99%BD%E7%BC%9D%E9%9A%99"><span class="nav-number">5.5.</span> <span class="nav-text">图片底部空白缝隙</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%87%E6%9C%AC%E6%BA%A2%E5%87%BA%E6%98%BE%E7%A4%BA%E7%9C%81%E7%95%A5%E5%8F%B7"><span class="nav-number">5.6.</span> <span class="nav-text">文本溢出显示省略号</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BE%B9%E6%A1%86%E9%87%8D%E5%90%88%E5%8F%98%E7%B2%97%E9%97%AE%E9%A2%98"><span class="nav-number">5.7.</span> <span class="nav-text">边框重合变粗问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CSS%E4%B8%89%E8%A7%92%E6%A0%B7%E5%BC%8F%E7%AE%80%E5%86%99"><span class="nav-number">5.8.</span> <span class="nav-text">CSS三角样式简写</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#flxe%E5%B8%83%E5%B1%80%E5%B8%B8%E7%94%A8%E5%B1%9E%E6%80%A7"><span class="nav-number">5.9.</span> <span class="nav-text">flxe布局常用属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B1%9E%E6%80%A7%E9%80%89%E6%8B%A9%E5%99%A8%E5%89%8D%E7%BC%80%E5%86%99%E6%B3%95"><span class="nav-number">5.10.</span> <span class="nav-text">属性选择器前缀写法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AA%92%E4%BD%93%E6%9F%A5%E8%AF%A2"><span class="nav-number">5.11.</span> <span class="nav-text">媒体查询</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#rem%E9%80%82%E9%85%8D%E5%B8%83%E5%B1%80"><span class="nav-number">5.12.</span> <span class="nav-text">rem适配布局</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AA%92%E4%BD%93%E6%9F%A5%E8%AF%A2%E5%BC%95%E5%85%A5%E8%B5%84%E6%BA%90"><span class="nav-number">5.13.</span> <span class="nav-text">媒体查询引入资源</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%B7%E5%BC%8F%E6%96%87%E4%BB%B6import%E5%AF%BC%E5%85%A5"><span class="nav-number">5.14.</span> <span class="nav-text">样式文件import导入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B8%85%E9%99%A4%E6%B5%AE%E5%8A%A8%E7%9A%84%E6%96%B9%E5%BC%8F"><span class="nav-number">5.15.</span> <span class="nav-text">清除浮动的方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9A%90%E8%97%8F%E5%85%83%E7%B4%A0%E7%9A%84%E4%B8%89%E7%A7%8D%E6%96%B9%E5%BC%8F"><span class="nav-number">5.16.</span> <span class="nav-text">隐藏元素的三种方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#-1"><span class="nav-number">5.17.</span> <span class="nav-text"></span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HTML"><span class="nav-number">6.</span> <span class="nav-text">HTML</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%92%8C%E8%AF%AD%E4%B9%89%E5%8C%BA%E5%88%AB"><span class="nav-number">6.1.</span> <span class="nav-text">&lt;b&gt;和&lt;strong&gt;语义区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TDK%E4%B8%89%E5%A4%A7%E6%A0%87%E7%AD%BESEO%E4%BC%98%E5%8C%96"><span class="nav-number">6.2.</span> <span class="nav-text">TDK三大标签SEO优化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LOGO-SEO%E4%BC%98%E5%8C%96"><span class="nav-number">6.3.</span> <span class="nav-text">LOGO SEO优化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#meta%E8%A7%86%E5%8F%A3%E6%A0%87%E7%AD%BE"><span class="nav-number">6.4.</span> <span class="nav-text">meta视口标签</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A7%BB%E5%8A%A8%E7%AB%AF%E7%89%A9%E7%90%86%E5%83%8F%E7%B4%A0%E6%AF%94"><span class="nav-number">6.5.</span> <span class="nav-text">移动端物理像素比</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#-2"><span class="nav-number">6.6.</span> <span class="nav-text"></span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B5%8F%E8%A7%88%E5%99%A8"><span class="nav-number">7.</span> <span class="nav-text">浏览器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B5%8F%E8%A7%88%E5%99%A8%E8%B7%A8%E5%9F%9F%E9%97%AE%E9%A2%98"><span class="nav-number">7.1.</span> <span class="nav-text">浏览器跨域问题</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#iframe-%E5%92%8C%E5%A4%9A%E7%AA%97%E5%8F%A3%E9%80%9A%E4%BF%A1"><span class="nav-number">7.1.1.</span> <span class="nav-text">iframe 和多窗口通信</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#JSONP%E5%A4%84%E7%90%86%E8%B7%A8%E5%9F%9F"><span class="nav-number">7.1.2.</span> <span class="nav-text">JSONP处理跨域</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#WebSocket%E5%A4%84%E7%90%86%E8%B7%A8%E5%9F%9F"><span class="nav-number">7.1.3.</span> <span class="nav-text">WebSocket处理跨域</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CORS%E5%A4%84%E7%90%86%E8%B7%A8%E5%9F%9F"><span class="nav-number">7.1.4.</span> <span class="nav-text">CORS处理跨域</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#WebSocket"><span class="nav-number">7.2.</span> <span class="nav-text">WebSocket</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Web-Worker"><span class="nav-number">7.3.</span> <span class="nav-text">Web Worker</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%83%E4%B8%87%E7%BA%A7%E5%88%AB%E7%9A%84%E6%95%B0%E6%8D%AE%E5%A6%82%E4%BD%95%E5%A4%84%E7%90%86%EF%BC%9F"><span class="nav-number">7.4.</span> <span class="nav-text">千万级别的数据如何处理？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%8D%E7%AB%AF%E4%BC%98%E5%8C%96%E7%AD%96%E7%95%A5"><span class="nav-number">7.5.</span> <span class="nav-text">前端优化策略</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#-3"><span class="nav-number">7.6.</span> <span class="nav-text"></span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Java"><span class="nav-number">8.</span> <span class="nav-text">Java</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#equals%E5%92%8C-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">8.1.</span> <span class="nav-text">equals和&#x3D;&#x3D;的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#list%E3%80%81set%E3%80%81map%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">8.2.</span> <span class="nav-text">list、set、map的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#hashmap%E3%80%81treemap%E7%9A%84%E5%8C%BA%E5%88%AB%EF%BC%8C%E5%88%86%E5%88%AB%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E4%BD%BF%E7%94%A8%EF%BC%9F"><span class="nav-number">8.3.</span> <span class="nav-text">hashmap、treemap的区别，分别什么时候使用？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NIO%E5%92%8CIO%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">8.4.</span> <span class="nav-text">NIO和IO的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#-4"><span class="nav-number">8.5.</span> <span class="nav-text"></span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#TODO"><span class="nav-number">1.</span> <span class="nav-text">TODO</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tostudylist"><span class="nav-number">2.</span> <span class="nav-text">tostudylist</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Vue"><span class="nav-number">3.</span> <span class="nav-text">Vue</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#v-if-%E5%92%8C-v-show-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">3.1.</span> <span class="nav-text">v-if 和 v-show 的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#v-for-%E5%92%8C-v-if-%E7%9A%84%E4%BC%98%E5%85%88%E7%BA%A7"><span class="nav-number">3.2.</span> <span class="nav-text">v-for 和 v-if 的优先级</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JS"><span class="nav-number">4.</span> <span class="nav-text">JS</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ES5%E5%92%8CES6%E7%BB%A7%E6%89%BF%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">4.1.</span> <span class="nav-text">ES5和ES6继承的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#parseInt"><span class="nav-number">4.2.</span> <span class="nav-text">parseInt()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-3-map-parseInt"><span class="nav-number">4.3.</span> <span class="nav-text">[&#39;1&#39;,&#39;2&#39;,&#39;3&#39;].map(parseInt)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">4.4.</span> <span class="nav-text"></span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CSS"><span class="nav-number">5.</span> <span class="nav-text">CSS</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A1%B5%E9%9D%A2%E9%80%82%E9%85%8D%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">5.1.</span> <span class="nav-text">页面适配的问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9A%E4%BD%8D%E7%9A%84%E7%89%B9%E6%AE%8A%E5%BA%94%E7%94%A8"><span class="nav-number">5.2.</span> <span class="nav-text">定位的特殊应用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#BFC"><span class="nav-number">5.3.</span> <span class="nav-text">BFC</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%87%E5%AD%97%E7%8E%AF%E7%BB%95%E5%9B%BE%E7%89%87%E6%98%BE%E7%A4%BA"><span class="nav-number">5.4.</span> <span class="nav-text">文字环绕图片显示</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%BE%E7%89%87%E5%BA%95%E9%83%A8%E7%A9%BA%E7%99%BD%E7%BC%9D%E9%9A%99"><span class="nav-number">5.5.</span> <span class="nav-text">图片底部空白缝隙</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%87%E6%9C%AC%E6%BA%A2%E5%87%BA%E6%98%BE%E7%A4%BA%E7%9C%81%E7%95%A5%E5%8F%B7"><span class="nav-number">5.6.</span> <span class="nav-text">文本溢出显示省略号</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BE%B9%E6%A1%86%E9%87%8D%E5%90%88%E5%8F%98%E7%B2%97%E9%97%AE%E9%A2%98"><span class="nav-number">5.7.</span> <span class="nav-text">边框重合变粗问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CSS%E4%B8%89%E8%A7%92%E6%A0%B7%E5%BC%8F%E7%AE%80%E5%86%99"><span class="nav-number">5.8.</span> <span class="nav-text">CSS三角样式简写</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#flxe%E5%B8%83%E5%B1%80%E5%B8%B8%E7%94%A8%E5%B1%9E%E6%80%A7"><span class="nav-number">5.9.</span> <span class="nav-text">flxe布局常用属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B1%9E%E6%80%A7%E9%80%89%E6%8B%A9%E5%99%A8%E5%89%8D%E7%BC%80%E5%86%99%E6%B3%95"><span class="nav-number">5.10.</span> <span class="nav-text">属性选择器前缀写法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AA%92%E4%BD%93%E6%9F%A5%E8%AF%A2"><span class="nav-number">5.11.</span> <span class="nav-text">媒体查询</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#rem%E9%80%82%E9%85%8D%E5%B8%83%E5%B1%80"><span class="nav-number">5.12.</span> <span class="nav-text">rem适配布局</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AA%92%E4%BD%93%E6%9F%A5%E8%AF%A2%E5%BC%95%E5%85%A5%E8%B5%84%E6%BA%90"><span class="nav-number">5.13.</span> <span class="nav-text">媒体查询引入资源</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%B7%E5%BC%8F%E6%96%87%E4%BB%B6import%E5%AF%BC%E5%85%A5"><span class="nav-number">5.14.</span> <span class="nav-text">样式文件import导入</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B8%85%E9%99%A4%E6%B5%AE%E5%8A%A8%E7%9A%84%E6%96%B9%E5%BC%8F"><span class="nav-number">5.15.</span> <span class="nav-text">清除浮动的方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9A%90%E8%97%8F%E5%85%83%E7%B4%A0%E7%9A%84%E4%B8%89%E7%A7%8D%E6%96%B9%E5%BC%8F"><span class="nav-number">5.16.</span> <span class="nav-text">隐藏元素的三种方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#-1"><span class="nav-number">5.17.</span> <span class="nav-text"></span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HTML"><span class="nav-number">6.</span> <span class="nav-text">HTML</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%92%8C%E8%AF%AD%E4%B9%89%E5%8C%BA%E5%88%AB"><span class="nav-number">6.1.</span> <span class="nav-text">&lt;b&gt;和&lt;strong&gt;语义区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TDK%E4%B8%89%E5%A4%A7%E6%A0%87%E7%AD%BESEO%E4%BC%98%E5%8C%96"><span class="nav-number">6.2.</span> <span class="nav-text">TDK三大标签SEO优化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#LOGO-SEO%E4%BC%98%E5%8C%96"><span class="nav-number">6.3.</span> <span class="nav-text">LOGO SEO优化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#meta%E8%A7%86%E5%8F%A3%E6%A0%87%E7%AD%BE"><span class="nav-number">6.4.</span> <span class="nav-text">meta视口标签</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A7%BB%E5%8A%A8%E7%AB%AF%E7%89%A9%E7%90%86%E5%83%8F%E7%B4%A0%E6%AF%94"><span class="nav-number">6.5.</span> <span class="nav-text">移动端物理像素比</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#-2"><span class="nav-number">6.6.</span> <span class="nav-text"></span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B5%8F%E8%A7%88%E5%99%A8"><span class="nav-number">7.</span> <span class="nav-text">浏览器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B5%8F%E8%A7%88%E5%99%A8%E8%B7%A8%E5%9F%9F%E9%97%AE%E9%A2%98"><span class="nav-number">7.1.</span> <span class="nav-text">浏览器跨域问题</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#iframe-%E5%92%8C%E5%A4%9A%E7%AA%97%E5%8F%A3%E9%80%9A%E4%BF%A1"><span class="nav-number">7.1.1.</span> <span class="nav-text">iframe 和多窗口通信</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#JSONP%E5%A4%84%E7%90%86%E8%B7%A8%E5%9F%9F"><span class="nav-number">7.1.2.</span> <span class="nav-text">JSONP处理跨域</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#WebSocket%E5%A4%84%E7%90%86%E8%B7%A8%E5%9F%9F"><span class="nav-number">7.1.3.</span> <span class="nav-text">WebSocket处理跨域</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CORS%E5%A4%84%E7%90%86%E8%B7%A8%E5%9F%9F"><span class="nav-number">7.1.4.</span> <span class="nav-text">CORS处理跨域</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#WebSocket"><span class="nav-number">7.2.</span> <span class="nav-text">WebSocket</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Web-Worker"><span class="nav-number">7.3.</span> <span class="nav-text">Web Worker</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%83%E4%B8%87%E7%BA%A7%E5%88%AB%E7%9A%84%E6%95%B0%E6%8D%AE%E5%A6%82%E4%BD%95%E5%A4%84%E7%90%86%EF%BC%9F"><span class="nav-number">7.4.</span> <span class="nav-text">千万级别的数据如何处理？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%8D%E7%AB%AF%E4%BC%98%E5%8C%96%E7%AD%96%E7%95%A5"><span class="nav-number">7.5.</span> <span class="nav-text">前端优化策略</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B5%8F%E8%A7%88%E5%99%A8%E8%AE%BF%E9%97%AE%E7%BD%91%E9%A1%B5%E8%BF%87%E7%A8%8B"><span class="nav-number">7.6.</span> <span class="nav-text">浏览器访问网页过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HTTPS%E5%8A%A0%E5%AF%86%E9%80%9A%E4%BF%A1%E8%BF%87%E7%A8%8B"><span class="nav-number">7.7.</span> <span class="nav-text">HTTPS加密通信过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#-3"><span class="nav-number">7.8.</span> <span class="nav-text"></span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Java"><span class="nav-number">8.</span> <span class="nav-text">Java</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#equals%E5%92%8C-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">8.1.</span> <span class="nav-text">equals和&#x3D;&#x3D;的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#list%E3%80%81set%E3%80%81map%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">8.2.</span> <span class="nav-text">list、set、map的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#hashmap%E3%80%81treemap%E7%9A%84%E5%8C%BA%E5%88%AB%EF%BC%8C%E5%88%86%E5%88%AB%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E4%BD%BF%E7%94%A8%EF%BC%9F"><span class="nav-number">8.3.</span> <span class="nav-text">hashmap、treemap的区别，分别什么时候使用？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NIO%E5%92%8CIO%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">8.4.</span> <span class="nav-text">NIO和IO的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#-4"><span class="nav-number">8.5.</span> <span class="nav-text"></span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -215,35 +215,50 @@
       
       
       <div class="post-body">
-          <h2 id="TODO"><a href="#TODO" class="headerlink" title="TODO"></a>TODO</h2><ol start="0">
-<li><input checked="" disabled="" type="checkbox"> 浏览器渲染</li>
+          <h2 id="TODO"><a href="#TODO" class="headerlink" title="TODO"></a>TODO</h2><ol>
+<li><input checked="" disabled="" type="checkbox"> 浏览器渲染 – 回流、重绘</li>
 <li><input checked="" disabled="" type="checkbox"> 性能优化</li>
 <li><input checked="" disabled="" type="checkbox"> Less、Sass学一下</li>
 <li><input checked="" disabled="" type="checkbox"> React了解一下</li>
 <li><input checked="" disabled="" type="checkbox"> Tailwind CSS了解一下</li>
 <li><input checked="" disabled="" type="checkbox"> ts学一下</li>
 <li><input checked="" disabled="" type="checkbox"> 微前端 </li>
+<li><input checked="" disabled="" type="checkbox"> vue的异步组件suspense、动态组件 is属性 和keep-alive保持组件状态</li>
+<li><input checked="" disabled="" type="checkbox"> 如何使动态路由持久化？</li>
+<li><input checked="" disabled="" type="checkbox"> 回溯 – 一种搜索策略，经常用递归来实现(或者使用迭代 – 使用栈模拟递归)</li>
+<li><input checked="" disabled="" type="checkbox"> vue的diff算法 – 双端比较、同级比较、深度优先</li>
+<li><input checked="" disabled="" type="checkbox"> vue如何定义全局组件<br> vue2-Vue.component(‘xx’,xx)<br> vue3-app.component(‘xx’,xx)</li>
+<li><input checked="" disabled="" type="checkbox"> 复习一下mysql、了解一下Linux</li>
 <li><input disabled="" type="checkbox"> git再学一下</li>
 <li><input disabled="" type="checkbox"> 复习一下Vue，同时看一下H5 C3 JS的八股 </li>
 <li><input disabled="" type="checkbox"> 复习一下webpack、nodejs、npm – 次要</li>
-<li><input disabled="" type="checkbox"> 复习一下mysql？了解一下Linux? – 次次要</li>
-<li><input disabled="" type="checkbox"> vue的diff算法</li>
-<li><input disabled="" type="checkbox"> vue如何定义全局组件？</li>
-<li><input disabled="" type="checkbox"> vue的异步组件？动态组件？</li>
-<li>如何使动态路由持久化？</li>
-<li><input disabled="" type="checkbox"> 回溯是什么？ </li>
 <li><input disabled="" type="checkbox"> 手写promise</li>
-<li><input disabled="" type="checkbox"> 常问算法 – 冒泡排序、二分查找、快速排序、二叉树、链表、堆栈、队列、递归、回溯、贪心算法、动态规划、位运算、排序算法</li>
+<li><input disabled="" type="checkbox"> 常问算法 – 冒泡排序、二分查找、快速排序、二叉树、堆栈、队列、贪心算法、动态规划、位运算、</li>
 <li><input disabled="" type="checkbox"> 刷一下 那些经典面试题</li>
 <li><input disabled="" type="checkbox"> 常见的安全协议如 HTTPS、SSH 等的原理和使用方法。</li>
+<li><input disabled="" type="checkbox"> SSL通信过程</li>
 </ol>
+<p>** 可以前两个八股总结的挑一些看看</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://fe.ecool.fun/topic-list?mode=light"><font color="red">前端面试题宝典</font></a><blockquote>
+<p>提供分类和搜索功能，以及有难易度标注<br>适合长时间学习使用，保持更新</p>
+</blockquote>
+</li>
+<li><a target="_blank" rel="noopener" href="https://github.com/wxlvip/Interviewer/blob/master/01.%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C.md#http-%E5%92%8C-https">八股总结 - github</a></li>
+<li><a target="_blank" rel="noopener" href="https://juejin.cn/post/7016593221815910408?share_token=d3db69f2-0924-4a84-9e44-72779c0c9dd5">八股总结 - 掘金</a></li>
+<li><a target="_blank" rel="noopener" href="https://juejin.cn/post/7349136892334047247?share_token=55fcf98d-de35-4c8a-99c0-76381b929a8c">八股总结2 - 掘金</a></li>
+</ul>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.yuque.com/hyqwan/fe-plan/irgtabu9ou5ve1f0">前端反卷计划</a></li>
+<li><a target="_blank" rel="noopener" href="https://wuzhouwei.github.io/docs/tutorial-zwzj/zwzj_js/">御心狐博客</a></li>
+</ul>
 <h2 id="tostudylist"><a href="#tostudylist" class="headerlink" title="tostudylist"></a>tostudylist</h2><ul>
 <li><p>算法 力扣hot100、150 , 剑指offer （大厂是比较看重算法的）</p>
 <blockquote>
 <p>大厂是比较看重算法的</p>
 </blockquote>
 </li>
-<li><p>HTML&#x2F;CSS 常见的面试题 flex布局 盒子模型 BFC 重绘、重排 常见布局 HTML5 CSS3新特性等等</p>
+<li><p>HTML&#x2F;CSS 常见的面试题 flex布局 盒子模型 常见布局 HTML5 CSS3新特性等等</p>
 </li>
 <li><p>JS中的数据类型 闭包 作用域 原型 原型链 数组常见操作 字符串常见操作 事件循环 深浅拷贝 事件代理 DOM、BOM操作 防抖节流 ES6相关的等等</p>
 </li>
@@ -251,13 +266,11 @@
 </li>
 <li><p>HTTP、Webpack、Node相关的问题</p>
 </li>
-<li><p>性能优化，前端安全，算法（如果目标企业不是大厂，可以练习一些常用的算法，如排序，数组字符串的常用操作）</p>
+<li><p>前端安全，算法（如果目标企业不是大厂，可以练习一些常用的算法，如排序，数组字符串的常用操作）</p>
 </li>
 <li><p>数组常用方法</p>
 </li>
 <li><p>vue父子传值方式</p>
-</li>
-<li><p>跨域原因及处理方案</p>
 </li>
 <li><p>HTTPS 中间人攻击<br>中间人攻击过程如下：</p>
 <ol>
@@ -400,7 +413,7 @@
 </li>
 <li><p>变量提升？let和const有提升吗？</p>
 </li>
-<li><p>闭包？es6的let和const有闭包吗？</p>
+<li><p>闭包。es6的let和const有闭包吗？</p>
 </li>
 </ul>
 <h2 id="Vue"><a href="#Vue" class="headerlink" title="Vue"></a>Vue</h2><h3 id="v-if-和-v-show-的区别"><a href="#v-if-和-v-show-的区别" class="headerlink" title="v-if 和 v-show 的区别"></a>v-if 和 v-show 的区别</h3><pre><code>* 两者都是用来控制元素是否显示
@@ -1026,6 +1039,39 @@ Worker 线程一旦新建成功，就会始终运行，不会被主线程上的�
 13. 缓存 -- 浏览器缓存
 14. 减少JS执行时间 -- 避免复杂的计算和循环，减少时间监听器的数量，避免在页面加载时执行大量脚本
 15. Web Workers -- 将复杂或耗时的计算任务放到Web Workers中执行，避免阻塞主线程，保持UI响应性。
+</code></pre>
+<h3 id="浏览器访问网页过程"><a href="#浏览器访问网页过程" class="headerlink" title="浏览器访问网页过程"></a>浏览器访问网页过程</h3><pre><code>1. 输入域名，开始访问
+2. 检查DNS缓存：浏览器首先会检查本地DNS缓存中是否存在该域名对应的IP地址记录。
+   如果找到且记录有效（未过期），则跳过DNS解析，使用该IP地址
+3. DNS查询：若DNS缓存中没有找到有效记录，浏览器会向DNS服务器发起请求，进行域名解析，最终获得目标网站的IP地址。
+4. 检查HTTP缓存：在得到IP地址后，浏览器先检查其HTTP缓存中是否有与请求URL相匹配的缓存资源。
+   如果存在有效（未过期且遵循缓存控制策略）的缓存，浏览器可以直接使用这些资源，无需向服务器发送请求。
+5. 发送HTTP请求：如果缓存检查失败，或者缓存策略要求重新验证资源状态，浏览器会向服务器发送HTTP请求。
+6. 接收响应并处理：服务器接收到请求后，会根据请求内容和当前资源状态返回响应。
+
+* 通过以上流程，浏览器能够高效地管理缓存，减少不必要的网络传输，提高网页加载速度和用户体验。
+</code></pre>
+<h3 id="HTTPS加密通信过程"><a href="#HTTPS加密通信过程" class="headerlink" title="HTTPS加密通信过程"></a>HTTPS加密通信过程</h3><pre><code>HTTPS加密方式：SSL/TLS安全协议 
+采用非对称加密和对称加密相结合的方式
+1. 客户端首先向服务器请求HTTPS连接
+  ** HTTPS连接是建立在TCP连接之上的，TCP三次握手建立连接之后，才会进行HTTPS连接
+2. 服务器响应客户端请求，将CA证书发送给客户端。证书包含公钥和大量的信息，如颁发机构信息，有效期等。
+  ** 证书用来验证服务器的身份，防止被中间人攻击
+  ** 证书本身携带电子签名，可以用来验证证书的完整性和真实性，防止证书被篡改。
+3. 客户端解析证书并对其进行验证。
+   如果证书不是可信机构颁布，或者证书上的域名与实际域名不一致，或者证书已经过期，就会显示警告
+   如果证书没有问题，客户端会从证书中取出公钥，然后生成一个随机密钥，用公钥加密后发送给服务器。
+      ** 这个随机密钥，就是后面HTTPS通信的对称加密密钥。
+      ** 有些文章会说“随机码key”或是“随机数A”
+      ** 每次建立HTTPS连接时，都会生成一个随机密钥，每次密钥都是不同的。
+      ** 这就保证了如果服务器的公钥泄漏，之前通信的数据还是无法被破解。
+4. 服务器使用私钥解密，得到密钥。
+   ** 经过以上步骤，客户端和服务端就建立了安全连接，完美解决了对称加密的密钥泄漏问题。
+   ** 也就是中间人攻击的问题。
+5. 服务器使用密钥对数据进行对称加密，发送给客户端，客户端使用相同的密钥解密数据。
+
+* 这篇文章解释的非常好！
+https://segmentfault.com/a/1190000021494676
 </code></pre>
 <h3 id="-3"><a href="#-3" class="headerlink" title=""></a></h3><h2 id="Java"><a href="#Java" class="headerlink" title="Java"></a>Java</h2><h3 id="equals和-的区别"><a href="#equals和-的区别" class="headerlink" title="equals和&#x3D;&#x3D;的区别"></a>equals和&#x3D;&#x3D;的区别</h3><pre><code>1. “==”操作符用于比较两个对象的地址是否相等。
 2. .equals() 方法用于比较两个对象的内容是否相等。
